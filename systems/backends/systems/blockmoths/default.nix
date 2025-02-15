@@ -12,9 +12,10 @@
   ];
   localModules = [
     ./disko.nix
+    ./modules/caddy
     ../../modules/haproxy
     ./modules/haproxy
-    ./modules/caddy
+    ./modules/motd
     ../../../../modules/muffin-button.nix
     ../../../../modules/tgs
     ../../../../modules/podman.nix
@@ -88,13 +89,6 @@ in {
 
   networking.hosts = {
     "127.0.0.1" = ["terry.tgstation13.org" "blockmoths.eu.tgstation13.org" "tgs.blockmoths.eu.tgstation13.org" "s3.blockmoths.eu.tgstation13.org" "s3.tgstation13.org"];
-  };
-
-  programs.rust-motd = {
-    settings.banner = {
-      color = "light_magenta";
-      command = "${pkgs.bash}/bin/bash ${./blockmoths_banner.sh}";
-    };
   };
 
   boot.initrd.postResumeCommands = lib.mkAfter ''
