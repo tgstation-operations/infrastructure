@@ -25,7 +25,8 @@
     ../../../../modules/kanidm
     ../../modules/haproxy
     ./modules/haproxy
-    ./caddy
+    ./modules/motd
+    ./modules/caddy.nix
   ];
 in {
   networking.hostName = "wiggle";
@@ -84,13 +85,6 @@ in {
   };
 
   swapDevices = [];
-
-  programs.rust-motd = {
-    settings.banner = {
-      color = "blue";
-      command = "${pkgs.bash}/bin/bash ${./banner.sh}";
-    };
-  };
 
   services.kanidm = {
     serverSettings = {
