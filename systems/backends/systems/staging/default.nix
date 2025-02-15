@@ -21,11 +21,11 @@
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../../../modules/maria.nix
-    ../../../../modules/kanidm
     ../../modules/grafana.nix
     ./modules/haproxy
     ./modules/motd
     ./modules/caddy.nix
+    ./modules/kanidm.nix
   ];
 in {
   networking.hostName = "wiggle";
