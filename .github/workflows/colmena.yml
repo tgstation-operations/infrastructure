@@ -10,23 +10,15 @@ jobs:
     name: Build
     strategy:
       matrix:
+        runner: [ubuntu-24.04]
         node:
-          - tgsatan
-          - blockmoths
-          - vpn
-          - \@relay-amd64
-          - \@relay-arm
-          - \@staging
+          - "tgsatan"
+          - "blockmoths"
+          - "vpn"
+          - "@relay-amd64"
+          - "@staging"
         include:
-          - node:
-              - tgsatan
-              - blockmoths
-              - vpn
-              - \@relay-amd64
-              - \@staging
-            runner: ubuntu-24.04
-          - node:
-              - \@relay-arm
+          - node: "@relay-arm"
             runner: ubuntu-24.04-arm
     runs-on: ${{ matrix.runner }}
     steps:
