@@ -227,7 +227,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/relay-node/staging/warsaw.nix)
+          (import ./systems/relay-node/systems/staging)
         ];
     };
     lime = {

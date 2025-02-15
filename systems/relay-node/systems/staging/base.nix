@@ -5,10 +5,10 @@
 }: {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
-    ../../../modules/fail2ban.nix
-    ../../../modules/openssh.nix
-    ../../../modules/tailscale.nix
-    ../../../modules/colmena_ci.nix
+    ../../../../modules/fail2ban.nix
+    ../../../../modules/openssh.nix
+    ../../../../modules/tailscale.nix
+    ../../../../modules/colmena_ci.nix
     ./haproxy
     ./tailscale
     ./caddy
