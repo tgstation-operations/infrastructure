@@ -2,7 +2,7 @@
 
 **/haproxy @RigglePrime
 /modules/ssh_keys.nix @RigglePrime
-/modules/redbot @RigglePrime
-/modules/monitoring/relay-nodes.nix @RigglePrime
-/nixos_systems/haproxy_byond_global.conf @RigglePrime
-/nixos_systems/haproxy_relay_global.conf @RigglePrime
+/systems/backends/systems/tgsatan/modules/redbot.nix @RigglePrime
+/systems/backends/systems/tgsatan/modules/monitoring/relay-nodes.nix @RigglePrime
+/systems/backends/modules/haproxy_base/haproxy.conf @RigglePrime
+/systems/frontends/modules/haproxy_base/haproxy.conf @RigglePrime
