@@ -18,7 +18,6 @@
     ../../../../modules/systemd-exporter.nix
     ../../../../modules/tgs
     ../../../../modules/fail2ban.nix
-    ../../../../modules/motd.nix
     ../../../../modules/nvidia.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
@@ -26,6 +25,7 @@
     ../../modules/garage.nix
     ../../modules/grafana.nix
     ../../modules/maria.nix
+    ../../modules/motd.nix
     ./modules/monitoring
     ./modules/atticd.nix
   ];

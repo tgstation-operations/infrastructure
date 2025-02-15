@@ -19,11 +19,11 @@
     ../../../../modules/tgs
     ../../../../modules/podman.nix
     ../../../../modules/fail2ban.nix
-    ../../../../modules/motd.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../../../modules/systemd-exporter.nix
     ../../modules/garage.nix
+    ../../modules/motd.nix
   ];
 in {
   networking.hostName = "blockmoths";
