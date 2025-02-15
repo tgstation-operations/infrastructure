@@ -10,8 +10,8 @@
   services.haproxy = {
     enable = true;
     config =
-      "# ==== GLOBAL CONFIG ====\n" +
-      builtins.readFile ./haproxy.conf;
+      "# ==== GLOBAL CONFIG ====\n"
+      + builtins.readFile ./haproxy.conf;
   };
   systemd.services.haproxy = {
     serviceConfig = {

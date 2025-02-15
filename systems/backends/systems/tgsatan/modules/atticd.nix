@@ -1,12 +1,16 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   age.secrets.attic.file = ../secrets/attic.age;
   services.atticd = {
     enable = true;
     user = "atticd";
     group = "atticd";
-    settings = { # <https://github.com/zhaofengli/attic/blob/main/server/src/config-template.toml>
+    settings = {
+      # <https://github.com/zhaofengli/attic/blob/main/server/src/config-template.toml>
       listen = "127.0.0.1:9228";
       api-endpoint = "https://attic.tgstation13.org/";
       allowed-hosts = [
@@ -34,9 +38,11 @@
     ensureDatabases = [
       config.services.atticd.user
     ];
-    ensureUsers = [{
-      name = config.services.atticd.user;
-      ensureDBOwnership = true; # Grants the user ownership to a database with the same name
-    }];
+    ensureUsers = [
+      {
+        name = config.services.atticd.user;
+        ensureDBOwnership = true; # Grants the user ownership to a database with the same name
+      }
+    ];
   };
 }

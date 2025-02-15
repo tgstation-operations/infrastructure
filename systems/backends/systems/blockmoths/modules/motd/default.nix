@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-{
+{pkgs, ...}: {
   programs.rust-motd = {
     settings.banner = {
       color = "light_magenta";

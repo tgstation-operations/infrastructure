@@ -1,6 +1,4 @@
-{
-  ...
-}: {
+{...}: {
   imports = [
     ../haproxy_base
   ];
@@ -15,6 +13,6 @@
   ];
 
   services.haproxy.config =
-    "\n\n# ==== LOCAL CONFIG ====\n" +
-    builtins.readFile ./haproxy.conf;
+    "\n\n# ==== LOCAL CONFIG ====\n"
+    + builtins.readFile ./haproxy.conf;
 }
