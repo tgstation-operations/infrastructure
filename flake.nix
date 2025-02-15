@@ -81,7 +81,7 @@
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/backends/systems/tgsatan)
+          (import ./systems/game-servers/systems/tgsatan)
         ];
     };
 
@@ -112,7 +112,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/frontends/systems/us-dallas.nix)
+          (import ./systems/edge-nodes/systems/us-dallas.nix)
         ];
     };
 
@@ -129,7 +129,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/frontends/systems/us-chicago.nix)
+          (import ./systems/edge-nodes/systems/us-chicago.nix)
         ];
     };
 
@@ -146,7 +146,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/frontends/systems/us-atlanta.nix)
+          (import ./systems/edge-nodes/systems/us-atlanta.nix)
         ];
     };
 
@@ -161,7 +161,7 @@
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/backends/systems/blockmoths)
+          (import ./systems/game-servers/systems/blockmoths)
         ];
     };
     wiggle = {
@@ -177,7 +177,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/backends/systems/staging)
+          (import ./systems/game-servers/systems/staging)
         ];
     };
     warsaw = {
@@ -193,7 +193,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/frontends/systems/staging)
+          (import ./systems/edge-nodes/systems/staging)
         ];
     };
     lime = {
@@ -209,7 +209,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/frontends/systems/us-lime.nix)
+          (import ./systems/edge-nodes/systems/us-lime.nix)
         ];
     };
     bratwurst = {
@@ -226,7 +226,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/frontends/systems/eu-bratwurst.nix)
+          (import ./systems/edge-nodes/systems/eu-bratwurst.nix)
         ];
     };
     dachshund = {
@@ -243,7 +243,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/frontends/systems/eu-dachshund.nix)
+          (import ./systems/edge-nodes/systems/eu-dachshund.nix)
         ];
     };
     knipp = {
@@ -260,7 +260,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/frontends/systems/eu-knipp.nix)
+          (import ./systems/edge-nodes/systems/eu-knipp.nix)
         ];
     };
   in {

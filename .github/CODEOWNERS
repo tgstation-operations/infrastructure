@@ -2,7 +2,7 @@
 
 **/haproxy @RigglePrime
 /modules/ssh_keys.nix @RigglePrime
-/systems/backends/systems/tgsatan/modules/redbot.nix @RigglePrime
-/systems/backends/systems/tgsatan/modules/monitoring/relay-nodes.nix @RigglePrime
-/systems/backends/modules/haproxy_base/haproxy.conf @RigglePrime
-/systems/frontends/modules/haproxy_base/haproxy.conf @RigglePrime
+/systems/game-servers/systems/tgsatan/modules/redbot.nix @RigglePrime
+/systems/game-servers/systems/tgsatan/modules/monitoring/relay-nodes.nix @RigglePrime
+/systems/game-servers/modules/haproxy_base/haproxy.conf @RigglePrime
+/systems/edge-nodes/modules/haproxy_base/haproxy.conf @RigglePrime
