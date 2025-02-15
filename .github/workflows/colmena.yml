@@ -8,15 +8,27 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-24.04
+    runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
         node:
           - tgsatan
           - blockmoths
           - vpn
-          - \@relay
+          - \@relay-amd64
+          - \@relay-arm
           - \@staging
+        include:
+          - node:
+              - tgsatan
+              - blockmoths
+              - vpn
+              - \@relay-amd64
+              - \@staging
+            runner: ubuntu-24.04
+          - node:
+              - \@relay-arm
+            runner: ubuntu-24.04-arm
     steps:
       # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
       - name: Login to headscale
@@ -53,7 +65,7 @@ jobs:
   deploy:
     name: Deploy
     needs: build
-    runs-on: ubuntu-24.04
+    runs-on: ${{ matrix.runner }}
     if: ${{ github.repository == 'tgstation-operations/tgstation-nix' && github.ref == 'refs/heads/main' }}
     environment: ${{ matrix.environment }}
     strategy:
@@ -62,9 +74,21 @@ jobs:
           - tgsatan
           - blockmoths
           - vpn
-          - \@relay
+          - \@relay-amd64
+          - \@relay-arm
           - \@staging
         environment: [staging, production]
+        include:
+          - node:
+              - tgsatan
+              - blockmoths
+              - vpn
+              - \@relay-amd64
+              - \@staging
+            runner: ubuntu-24.04
+          - node:
+              - \@relay-arm
+            runner: ubuntu-24.04-arm
         exclude:
           - node: \@staging
             environment: production
@@ -72,7 +96,8 @@ jobs:
               - tgsatan
               - blockmoths
               - vpn
-              - \@relay
+              - \@relay-amd64
+              - \@relay-arm
             environment: staging
     steps:
       - name: Install private ssh key

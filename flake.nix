@@ -121,7 +121,7 @@
         targetHost = "chicago.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-amd64"
         ];
       };
       imports =
@@ -138,7 +138,7 @@
         targetHost = "atlanta.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-amd64"
         ];
       };
       imports =
@@ -147,40 +147,6 @@
           (import ./modules/base.nix)
           (import ./users)
           (import ./nixos_systems/relay-node/us/atlanta.nix)
-        ];
-    };
-
-    frankfurt2 = {
-      deployment = {
-        targetHost = "frankfurt2.tg.lan";
-        targetUser = "deploy";
-        tags = [
-          "relay"
-        ];
-      };
-      imports =
-        flakeModules
-        ++ [
-          (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/eu/frankfurt2.nix)
-        ];
-    };
-
-    frankfurt3 = {
-      deployment = {
-        targetHost = "frankfurt3.tg.lan";
-        targetUser = "deploy";
-        tags = [
-          "relay"
-        ];
-      };
-      imports =
-        flakeModules
-        ++ [
-          (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/eu/frankfurt3.nix)
         ];
     };
 
@@ -235,7 +201,7 @@
         targetHost = "lime.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-amd64"
         ];
       };
       imports =
@@ -268,7 +234,7 @@
         targetHost = "dachshund.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-arm"
         ];
       };
       nixpkgs.system = "aarch64-linux";
@@ -285,7 +251,7 @@
         targetHost = "knipp.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-arm"
         ];
       };
       nixpkgs.system = "aarch64-linux";
@@ -305,8 +271,6 @@
         vpn
         chicago
         atlanta
-        frankfurt2
-        frankfurt3
         blockmoths
         wiggle
         warsaw
@@ -342,19 +306,19 @@
           };
           bratwurst = {
             pkgs-unstable = import nixpkgs-unstable {
-              system = "x86_64-linux";
+              system = "aarch64-linux";
               config.allowUnfree = true;
             };
           };
           dachshund = {
             pkgs-unstable = import nixpkgs-unstable {
-              system = "x86_64-linux";
+              system = "aarch64-linux";
               config.allowUnfree = true;
             };
           };
           knipp = {
             pkgs-unstable = import nixpkgs-unstable {
-              system = "x86_64-linux";
+              system = "aarch64-linux";
               config.allowUnfree = true;
             };
           };
@@ -434,28 +398,6 @@
       atlanta = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = flakeModules ++ atlanta.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-        };
-      };
-      frankfurt2 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = flakeModules ++ frankfurt2.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-        };
-      };
-      frankfurt3 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = flakeModules ++ frankfurt3.imports;
         specialArgs = {
           inherit self inputs nixpkgs fenix;
           pkgs-unstable = import nixpkgs-unstable {
