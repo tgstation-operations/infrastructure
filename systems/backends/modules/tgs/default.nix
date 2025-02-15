@@ -16,37 +16,37 @@ in {
   # Secrets used by the game servers
   age.secrets = {
     tg13-comms = {
-      file = ./secrets/tg13-comms.age;
+      file = ../../secrets/tg13-comms.age;
       owner = "${config.services.tgstation-server.username}";
       group = "${config.services.tgstation-server.groupname}";
     };
     tg13-dbconfig = {
-      file = ./secrets/tg13-dbconfig.age;
+      file = ../../secrets/tg13-dbconfig.age;
       owner = "${config.services.tgstation-server.username}";
       group = "${config.services.tgstation-server.groupname}";
     };
     tg13-tts_secrets = {
-      file = ./secrets/tg13-tts_secrets.age;
+      file = ../../secrets/tg13-tts_secrets.age;
       owner = "${config.services.tgstation-server.username}";
       group = "${config.services.tgstation-server.groupname}";
     };
     tg13-extra_config-rclone = {
-      file = ./secrets/tg13-extra_config-rclone.age;
+      file = ../../secrets/tg13-extra_config-rclone.age;
       owner = "${config.services.tgstation-server.username}";
       group = "${config.services.tgstation-server.groupname}";
     };
     tgmc-dbconfig = {
-      file = ./secrets/tgmc-dbconfig.age;
+      file = ../../secrets/tgmc-dbconfig.age;
       owner = "${config.services.tgstation-server.username}";
       group = "${config.services.tgstation-server.groupname}";
     };
     tgmc-tts_secrets = {
-      file = ./secrets/tgmc-tts_secrets.age;
+      file = ../../secrets/tgmc-tts_secrets.age;
       owner = "${config.services.tgstation-server.username}";
       group = "${config.services.tgstation-server.groupname}";
     };
     tgmc-extra_config-rclone = {
-      file = ./secrets/tgmc-extra_config-rclone.age;
+      file = ../../secrets/tgmc-extra_config-rclone.age;
       owner = "${config.services.tgstation-server.username}";
       group = "${config.services.tgstation-server.groupname}";
     };
@@ -82,7 +82,7 @@ in {
     );
   };
   age.secrets.rsc-cdn = {
-    file = ./secrets/rsc-cdn.age;
+    file = ../../secrets/rsc-cdn.age;
     owner = "${config.services.tgstation-server.username}";
     group = "${config.services.tgstation-server.groupname}";
   };

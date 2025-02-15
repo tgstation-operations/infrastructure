@@ -14,7 +14,6 @@
   ];
   localModules = [
     ../../../../modules/systemd-exporter.nix
-    ../../../../modules/tgs
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
@@ -24,6 +23,7 @@
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/podman.nix
+    ../../modules/tgs
     ./modules/monitoring
     ./modules/atticd.nix
     ./modules/nvidia.nix
