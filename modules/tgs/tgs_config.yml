@@ -1,0 +1,20 @@
+Database:
+  DatabaseType: MariaDB
+  ResetAdminPassword: false
+General:
+  ConfigVersion: 5.4.0
+  GitHubAccessToken: # TODO
+  HostApiDocumentation: true
+  ValidInstancePaths:
+  - /persist/tgs-data/instances
+FileLogging:
+  Disable: false
+Kestrel:
+  Endpoints:
+    Http:
+      Url: http://localhost:5000 # This is hardcoded in the TGS codebase to be bind all, but we keep this here just in case it gets fixed
+ControlPanel:
+  Enable: true
+  AllowAnyOrigin: true
+Swarm:
+  UpdateRequiredNodeCount: 2

@@ -1,0 +1,5 @@
+## Nix
+*.qcow2
+result
+# gcroots left over by colmena's --keep-result option
+.gcroots

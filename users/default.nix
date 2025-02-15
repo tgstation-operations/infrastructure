@@ -1,0 +1,7 @@
+{...}: {
+  imports = [
+    ./bot
+    ./keyholder
+    ./operator
+  ];
+}
