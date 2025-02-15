@@ -211,7 +211,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/staging/wiggle)
+          (import ./nixos_systems/backends/staging)
         ];
     };
     warsaw = {
