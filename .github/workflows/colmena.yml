@@ -9,7 +9,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-24.04
-    environment: ${{ matrix.environment }}
     strategy:
       matrix:
         node:
@@ -18,16 +17,6 @@ jobs:
           - vpn
           - \@relay
           - \@staging
-        environment: [staging, production]
-        exclude:
-          - node: \@staging
-            environment: production
-          - node:
-              - tgsatan
-              - blockmoths
-              - vpn
-              - \@relay
-            environment: staging
     steps:
       # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
       - name: Login to headscale
