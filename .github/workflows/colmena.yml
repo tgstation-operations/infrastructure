@@ -34,14 +34,14 @@ jobs:
         with:
           extra_nix_config: |
             accept-flake-config = true
-            extra-substituters = https://attic.tgstation13.org/tgstation-infrastructure
-            extra-trusted-public-keys = tgstation-infrastructure:tNpjd5GxK1xymRHsJdBLTpeDScA2mVPdKA/eIOLOE0I=
 
       - name: Setup attic Binary Cache
+        if: github.repository == 'tgstation-operations/tgstation-nix' && github.ref == 'refs/heads/main'
         # Format for pointing to caches is server:cache in these commands
         run: |
           nix profile install nixpkgs#attic-client
           attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
+          attic use tgstation:tgstation-infrastructure
 
       - name: Build closure
         run: nix run github:zhaofengli/colmena -- build --impure -v --eval-node-limit 2 --keep-result --on ${{ matrix.node }}
