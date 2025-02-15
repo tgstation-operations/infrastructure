@@ -18,7 +18,6 @@
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
-    ../../../../modules/redbot
     ../../modules/garage.nix
     ../../modules/grafana.nix
     ../../modules/maria.nix
@@ -28,6 +27,7 @@
     ./modules/monitoring
     ./modules/atticd.nix
     ./modules/nvidia.nix
+    ./modules/redbot.nix
   ];
 in {
   networking.hostName = "tgsatan";
