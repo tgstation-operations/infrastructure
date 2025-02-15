@@ -81,7 +81,7 @@
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/tgsatan)
+          (import ./nixos_systems/backends/tgsatan)
         ];
     };
 
