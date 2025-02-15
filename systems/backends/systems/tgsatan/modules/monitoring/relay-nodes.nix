@@ -10,7 +10,7 @@
           then values.deployment.targetHost + ":" + (toString portNum)
           else ""
         )
-        ((import ../../flake.nix).outputs
+        ((import ../../../../../../flake.nix).outputs
           {
             self = {};
             nixpkgs = {};

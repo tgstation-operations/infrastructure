@@ -15,9 +15,7 @@
   localModules = [
     ../../../../modules/muffin-button.nix
     ../../../../modules/podman.nix
-    ../../../../modules/monitoring/node-exporter.nix
     ../../../../modules/systemd-exporter.nix
-    ../../../../modules/monitoring/prometheus.nix
     ../../../../modules/tgs
     ../../../../modules/fail2ban.nix
     ../../../../modules/motd.nix
@@ -28,6 +26,7 @@
     ../../modules/garage.nix
     ../../modules/grafana.nix
     ../../modules/maria.nix
+    ./modules/monitoring
     ./modules/atticd.nix
   ];
 in {
