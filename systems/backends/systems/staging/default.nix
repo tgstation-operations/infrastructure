@@ -17,12 +17,12 @@
     ../../../../modules/tgs
     ../../../../modules/fail2ban.nix
     ../../../../modules/monitoring/systemd-exporter.nix
-    ../../../../modules/grafana.nix
     ../../../../modules/motd.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../../../modules/maria.nix
     ../../../../modules/kanidm
+    ../../modules/grafana.nix
     ./modules/haproxy
     ./modules/motd
     ./modules/caddy.nix

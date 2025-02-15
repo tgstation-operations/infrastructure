@@ -20,7 +20,6 @@
     ../../../../modules/monitoring/prometheus.nix
     ../../../../modules/tgs
     ../../../../modules/fail2ban.nix
-    ../../../../modules/grafana.nix
     ../../../../modules/motd.nix
     ../../../../modules/nvidia.nix
     ../../../../modules/openssh.nix
@@ -28,6 +27,7 @@
     ../../../../modules/maria.nix
     ../../../../modules/redbot
     ../../modules/garage.nix
+    ../../modules/grafana.nix
     ./modules/atticd.nix
   ];
 in {
