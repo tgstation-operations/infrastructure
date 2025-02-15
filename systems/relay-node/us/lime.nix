@@ -2,7 +2,7 @@
   imports = [
     ../base.nix
     ../disko-ovh.nix
-    ../caddy
+    ../modules/caddy.nix
   ];
   ## LIME - Vint Hill, VA. Owned by orangesnz
   networking.hostName = "lime";

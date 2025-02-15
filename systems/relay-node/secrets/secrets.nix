@@ -1,5 +1,5 @@
 let
-  users = import ../../../../modules/ssh_keys.nix;
+  users = import ../../../modules/ssh_keys.nix;
 
   # Systems
   dallas = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBxPsWAhIwv7iaVd2uJCjC/BqZDgXkMEQ5ZfWHESVAyT";

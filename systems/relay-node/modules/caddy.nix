@@ -51,7 +51,7 @@
     } accept
   '';
 
-  age.secrets.cloudflare_api.file = ./secrets/cloudflare_api.age;
+  age.secrets.cloudflare_api.file = ../secrets/cloudflare_api.age;
   security.acme = {
     acceptTerms = true;
     defaults = {
