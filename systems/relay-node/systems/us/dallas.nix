@@ -1,9 +1,9 @@
 {...}: {
   imports = [
-    ../base.nix
+    ../../base.nix
   ];
-  ## FRANKFURT3 - Frankfurt, Germany. Owned by host
-  networking.hostName = "frankfurt3";
+  ## DALLAS - Dallas, Owned by Host
+  networking.hostName = "dallas";
   system.stateVersion = "24.11";
   boot.loader.grub = {
     efiSupport = true;
@@ -11,7 +11,7 @@
     device = "nodev";
   };
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/E997-16AB";
+    device = "/dev/disk/by-uuid/3B3A-7736";
     fsType = "vfat";
   };
   boot.initrd.availableKernelModules = [

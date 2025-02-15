@@ -1,6 +1,6 @@
 {...}: {
   imports = [
-    ../base.nix
+    ../../base.nix
   ];
   ## CHICAGO - Chicago IL. Owned by Host
   networking.hostName = "chicago";

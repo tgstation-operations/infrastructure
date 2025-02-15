@@ -112,7 +112,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/relay-node/us/dallas.nix)
+          (import ./systems/relay-node/systems/us/dallas.nix)
         ];
     };
 
@@ -129,7 +129,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/relay-node/us/chicago.nix)
+          (import ./systems/relay-node/systems/us/chicago.nix)
         ];
     };
 
@@ -146,7 +146,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/relay-node/us/atlanta.nix)
+          (import ./systems/relay-node/systems/us/atlanta.nix)
         ];
     };
 
@@ -163,7 +163,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/relay-node/eu/frankfurt2.nix)
+          (import ./systems/relay-node/systems/eu/frankfurt2.nix)
         ];
     };
 
@@ -180,7 +180,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/relay-node/eu/frankfurt3.nix)
+          (import ./systems/relay-node/systems/eu/frankfurt3.nix)
         ];
     };
 
@@ -243,7 +243,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/relay-node/us/lime.nix)
+          (import ./systems/relay-node/systems/us/lime.nix)
         ];
     };
     bratwurst = {
@@ -260,7 +260,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/relay-node/eu/bratwurst.nix)
+          (import ./systems/relay-node/systems/eu/bratwurst.nix)
         ];
     };
     dachshund = {
@@ -277,7 +277,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/relay-node/eu/dachshund.nix)
+          (import ./systems/relay-node/systems/eu/dachshund.nix)
         ];
     };
     knipp = {
@@ -294,7 +294,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/relay-node/eu/knipp.nix)
+          (import ./systems/relay-node/systems/eu/knipp.nix)
         ];
     };
   in {
