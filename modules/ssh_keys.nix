@@ -15,4 +15,4 @@ builtins.concatLists
         })
         .users
         .users)
-      ((import ../users/operator) {}).imports)))
+      ((import ./users/operator) {}).imports)))

@@ -80,7 +80,7 @@
         ++ [
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/tgsatan)
         ];
     };
@@ -94,7 +94,7 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/vpn.nix)
         ];
     };
@@ -111,7 +111,7 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/relay-node/us/dallas.nix)
         ];
     };
@@ -128,7 +128,7 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/relay-node/us/chicago.nix)
         ];
     };
@@ -145,7 +145,7 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/relay-node/us/atlanta.nix)
         ];
     };
@@ -162,7 +162,7 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/relay-node/eu/frankfurt2.nix)
         ];
     };
@@ -179,7 +179,7 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/relay-node/eu/frankfurt3.nix)
         ];
     };
@@ -194,7 +194,7 @@
         ++ [
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/blockmoths)
         ];
     };
@@ -210,7 +210,7 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/staging/wiggle)
         ];
     };
@@ -226,7 +226,7 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/relay-node/staging/warsaw.nix)
         ];
     };
@@ -242,7 +242,7 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/relay-node/us/lime.nix)
         ];
     };
@@ -259,7 +259,7 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/relay-node/eu/bratwurst.nix)
         ];
     };
@@ -276,7 +276,7 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/relay-node/eu/dachshund.nix)
         ];
     };
@@ -293,7 +293,7 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
+          (import ./modules/users)
           (import ./nixos_systems/relay-node/eu/knipp.nix)
         ];
     };
