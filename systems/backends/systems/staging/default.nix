@@ -13,11 +13,11 @@
   ];
   localModules = [
     (modulesPath + "/profiles/qemu-guest.nix")
+    ../../../../modules/colmena_ci_staging.nix
     ../../../../modules/fail2ban.nix
     ../../../../modules/systemd-exporter.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
-    ../../../modules/colmena_ci_staging.nix
     ../../modules/grafana.nix
     ../../modules/maria.nix
     ../../modules/motd.nix
