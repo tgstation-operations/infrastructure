@@ -81,7 +81,7 @@
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/backends/tgsatan)
+          (import ./systems/backends/systems/tgsatan)
         ];
     };
 
@@ -195,7 +195,7 @@
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/backends/blockmoths)
+          (import ./systems/backends/systems/blockmoths)
         ];
     };
     wiggle = {
@@ -211,7 +211,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/backends/staging)
+          (import ./systems/backends/systems/staging)
         ];
     };
     warsaw = {

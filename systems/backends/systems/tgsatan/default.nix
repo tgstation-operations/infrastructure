@@ -13,22 +13,22 @@
     self.inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
-    ../../../modules/muffin-button.nix
-    ../../../modules/podman.nix
-    ../../../modules/monitoring/node-exporter.nix
-    ../../../modules/monitoring/systemd-exporter.nix
-    ../../../modules/monitoring/prometheus.nix
-    ../../../modules/tgs
-    ../../../modules/fail2ban.nix
-    ../../../modules/grafana.nix
-    ../../../modules/motd.nix
-    ../../../modules/nvidia.nix
-    ../../../modules/openssh.nix
-    ../../../modules/tailscale.nix
-    ../../../modules/garage
-    ../../../modules/maria.nix
-    ../../../modules/redbot
-    ../../../modules/atticd
+    ../../../../modules/muffin-button.nix
+    ../../../../modules/podman.nix
+    ../../../../modules/monitoring/node-exporter.nix
+    ../../../../modules/monitoring/systemd-exporter.nix
+    ../../../../modules/monitoring/prometheus.nix
+    ../../../../modules/tgs
+    ../../../../modules/fail2ban.nix
+    ../../../../modules/grafana.nix
+    ../../../../modules/motd.nix
+    ../../../../modules/nvidia.nix
+    ../../../../modules/openssh.nix
+    ../../../../modules/tailscale.nix
+    ../../../../modules/garage
+    ../../../../modules/maria.nix
+    ../../../../modules/redbot
+    ../../../../modules/atticd
   ];
 in {
   networking.hostName = "tgsatan";

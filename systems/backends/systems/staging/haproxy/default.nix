@@ -9,9 +9,7 @@
     6001
     20002
     # Game Servers
-    11337 # Sybil
-    11447 # Manuel
-    15337 # TGMC
+    8989 # funnyname
   ];
   systemd.tmpfiles.rules = [
     "d /var/lib/haproxy 770 ${config.services.haproxy.user} ${config.services.haproxy.group}"
@@ -20,7 +18,7 @@
     enable = true;
     config =
       "# ==== GLOBAL CONFIG ====\n" +
-      builtins.readFile ../../../haproxy_byond_global.conf +
+      builtins.readFile ../../../../haproxy_byond_global.conf +
       "\n\n# ==== LOCAL CONFIG ====\n" +
       builtins.readFile ./haproxy.conf;
   };
