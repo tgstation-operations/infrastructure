@@ -22,8 +22,8 @@
     ../../../../modules/motd.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
-    ../../../../modules/garage
     ../../../../modules/monitoring/systemd-exporter.nix
+    ../../modules/garage.nix
   ];
 in {
   networking.hostName = "blockmoths";

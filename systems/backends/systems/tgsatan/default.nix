@@ -25,9 +25,9 @@
     ../../../../modules/nvidia.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
-    ../../../../modules/garage
     ../../../../modules/maria.nix
     ../../../../modules/redbot
+    ../../modules/garage.nix
     ./modules/atticd.nix
   ];
 in {

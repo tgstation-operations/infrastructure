@@ -8,7 +8,7 @@
   networking.firewall.allowedTCPPorts = [
     3901 # RPC
   ];
-  age.secrets.garage.file = ./secrets/garage.age;
+  age.secrets.garage.file = ../secrets/garage.age;
 
   services.garage = {
     enable = true;
