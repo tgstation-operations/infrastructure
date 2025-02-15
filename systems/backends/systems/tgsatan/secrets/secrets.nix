@@ -19,4 +19,6 @@ in {
   "tgstation-web-apikey.age".publicKeys = users ++ systems;
   # AWS Route 53 DNS-01
   "aws_credentials.age".publicKeys = users ++ systems;
+  # Atticd
+  "attic.age".publicKeys = users ++ systems;
 }

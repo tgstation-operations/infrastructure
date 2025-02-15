@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  age.secrets.attic.file = ./secrets/attic.age;
+  age.secrets.attic.file = ../secrets/attic.age;
   services.atticd = {
     enable = true;
     user = "atticd";

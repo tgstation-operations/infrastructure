@@ -28,7 +28,7 @@
     ../../../../modules/garage
     ../../../../modules/maria.nix
     ../../../../modules/redbot
-    ../../../../modules/atticd
+    ./modules/atticd.nix
   ];
 in {
   networking.hostName = "tgsatan";
