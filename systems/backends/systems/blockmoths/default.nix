@@ -16,7 +16,6 @@
     ./modules/haproxy
     ./modules/motd
     ../../../../modules/tgs
-    ../../../../modules/podman.nix
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
@@ -24,6 +23,7 @@
     ../../modules/garage.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
+    ../../modules/podman.nix
   ];
 in {
   networking.hostName = "blockmoths";

@@ -13,7 +13,6 @@
     self.inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
-    ../../../../modules/podman.nix
     ../../../../modules/systemd-exporter.nix
     ../../../../modules/tgs
     ../../../../modules/fail2ban.nix
@@ -25,6 +24,7 @@
     ../../modules/maria.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
+    ../../modules/podman.nix
     ./modules/monitoring
     ./modules/atticd.nix
     ./modules/nvidia.nix
