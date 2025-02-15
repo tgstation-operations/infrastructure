@@ -17,6 +17,7 @@
     ../../../../modules/systemd-exporter.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
+    ../../../modules/colmena_ci_staging.nix
     ../../modules/grafana.nix
     ../../modules/maria.nix
     ../../modules/motd.nix
@@ -41,7 +42,15 @@ in {
 
   programs.nix-ld.enable = true;
 
-  # FIXME: Add networking info here
+  systemd.network = {
+    enable = true;
+    networks = {
+      "10-en" = {
+        matchConfig.name = "en*";
+        networkConfig.DHCP = "yes";
+      };
+    };
+  };
 
   networking.nameservers = [
     "9.9.9.9"

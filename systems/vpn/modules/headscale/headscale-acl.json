@@ -48,6 +48,12 @@
     "tag:ci": [
       "group:op"
     ],
+    "tag:ci-staging": [
+      "group:op"
+    ],
+    "tag:ci-build": [
+      "group:op"
+    ],
     "tag:dbcluster": [
       "group:op"
     ],
@@ -69,6 +75,27 @@
       ],
       "dst": [
         "tag:backend:22",
+        "tag:backend:80",
+        "tag:backend:443"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:ci-build"
+      ],
+      "dst": [
+        "tag:backend:80",
+        "tag:backend:443"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:ci-staging"
+      ],
+      "dst": [
+        "tag:staging:22",
         "tag:backend:80",
         "tag:backend:443"
       ]
