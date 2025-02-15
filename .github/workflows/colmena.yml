@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
         node:
@@ -29,6 +28,7 @@ jobs:
           - node:
               - \@relay-arm
             runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
     steps:
       # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
       - name: Login to headscale
@@ -65,7 +65,6 @@ jobs:
   deploy:
     name: Deploy
     needs: build
-    runs-on: ${{ matrix.runner }}
     if: ${{ github.repository == 'tgstation-operations/tgstation-nix' && github.ref == 'refs/heads/main' }}
     environment: ${{ matrix.environment }}
     strategy:
@@ -99,6 +98,7 @@ jobs:
               - \@relay-amd64
               - \@relay-arm
             environment: staging
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: Install private ssh key
         uses: shimataro/ssh-key-action@d4fffb50872869abe2d9a9098a6d9c5aa7d16be4 # Install our ssh key. TODO: Replace with our own bash script
