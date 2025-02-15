@@ -10,6 +10,7 @@ jobs:
     name: Build
     strategy:
       matrix:
+        runner: [ubuntu-24.04, ubuntu-24.04-arm]
         node:
           - tgsatan
           - blockmoths
@@ -17,17 +18,17 @@ jobs:
           - \@relay-amd64
           - \@relay-arm
           - \@staging
-        include:
-          - runner: ubuntu-24.04
-            node:
+        exclude:
+          - node:
               - tgsatan
               - blockmoths
               - vpn
               - \@relay-amd64
               - \@staging
-          - runner: ubuntu-24.04-arm
-            node:
+            runner: ubuntu-24.04-arm
+          - node:
               - \@relay-arm
+            runner: ubuntu-24.04
     runs-on: ${{ matrix.runner }}
     steps:
       # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
@@ -78,16 +79,16 @@ jobs:
           - \@staging
         environment: [staging, production]
         include:
-          - runner: ubuntu-24.04
-            node:
+          - node:
               - tgsatan
               - blockmoths
               - vpn
               - \@relay-amd64
               - \@staging
-          - runner: ubuntu-24.04-arm
-            node:
+            runner: ubuntu-24.04
+          - node:
               - \@relay-arm
+            runner: ubuntu-24.04-arm
         exclude:
           - node: \@staging
             environment: production
