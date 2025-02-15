@@ -1,10 +1,10 @@
 {...}: {
   imports = [
-    ../../base.nix
-    ../../disko-hetzner-arm-uefi.nix
+    ../base.nix
+    ../disko-hetzner-arm-uefi.nix
   ];
-  ## BRATWURST - Nuremberg, Germany. Owned by Mothblocks
-  networking.hostName = "bratwurst";
+  ## KNIPP - Nuremberg, Germany. Owned by Mothblocks
+  networking.hostName = "knipp";
   system.stateVersion = "24.11";
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
