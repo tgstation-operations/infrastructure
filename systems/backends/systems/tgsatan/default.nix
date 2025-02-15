@@ -24,10 +24,10 @@
     ../../../../modules/nvidia.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
-    ../../../../modules/maria.nix
     ../../../../modules/redbot
     ../../modules/garage.nix
     ../../modules/grafana.nix
+    ../../modules/maria.nix
     ./modules/atticd.nix
   ];
 in {

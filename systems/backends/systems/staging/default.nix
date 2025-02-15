@@ -20,8 +20,8 @@
     ../../../../modules/motd.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
-    ../../../../modules/maria.nix
     ../../modules/grafana.nix
+    ../../modules/maria.nix
     ./modules/haproxy
     ./modules/motd
     ./modules/caddy.nix
