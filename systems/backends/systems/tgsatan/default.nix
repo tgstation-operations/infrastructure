@@ -16,7 +16,7 @@
     ../../../../modules/muffin-button.nix
     ../../../../modules/podman.nix
     ../../../../modules/monitoring/node-exporter.nix
-    ../../../../modules/monitoring/systemd-exporter.nix
+    ../../../../modules/systemd-exporter.nix
     ../../../../modules/monitoring/prometheus.nix
     ../../../../modules/tgs
     ../../../../modules/fail2ban.nix

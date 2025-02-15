@@ -16,7 +16,7 @@
     ../../../../modules/muffin-button.nix
     ../../../../modules/tgs
     ../../../../modules/fail2ban.nix
-    ../../../../modules/monitoring/systemd-exporter.nix
+    ../../../../modules/systemd-exporter.nix
     ../../../../modules/motd.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix

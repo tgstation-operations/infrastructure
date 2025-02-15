@@ -22,7 +22,7 @@
     ../../../../modules/motd.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
-    ../../../../modules/monitoring/systemd-exporter.nix
+    ../../../../modules/systemd-exporter.nix
     ../../modules/garage.nix
   ];
 in {

@@ -9,7 +9,7 @@
     ../../modules/openssh.nix
     ../../modules/tailscale.nix
     ../../modules/colmena_ci.nix
-    ../../modules/monitoring/systemd-exporter.nix
+    ../../modules/systemd-exporter.nix
     ./modules/tailscale.nix
     ./modules/haproxy
   ];
