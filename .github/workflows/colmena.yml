@@ -19,13 +19,6 @@ jobs:
           - \@staging
     steps:
       # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
-      - name: Install private ssh key
-        uses: shimataro/ssh-key-action@d4fffb50872869abe2d9a9098a6d9c5aa7d16be4 # Install our ssh key. TODO: Replace with our own bash script
-        with:
-          key: ${{ secrets.COLMENA_SSH_KEY }}
-          name: id_ed25519
-          known_hosts: ${{ secrets.COLMENA_KNOWN_HOSTS }}
-
       - name: Login to headscale
         uses: tailscale/github-action@8688eb839e58e6b25c1ae96cd99d1c173299b842 # Connect to headscale
         with:
@@ -61,6 +54,7 @@ jobs:
     needs: build
     runs-on: ubuntu-24.04
     if: ${{ github.repository == 'tgstation-operations/tgstation-nix' && github.ref == 'refs/heads/main' }}
+    environment: ${{ matrix.environment }}
     strategy:
       matrix:
         node:
@@ -69,13 +63,23 @@ jobs:
           - vpn
           - \@relay
           - \@staging
+        environment: [staging, production]
+        exclude:
+          - node: \@staging
+            environment: production
+          - node:
+              - tgsatan
+              - blockmoths
+              - vpn
+              - \@relay
+            environment: staging
     steps:
       - name: Install private ssh key
         uses: shimataro/ssh-key-action@d4fffb50872869abe2d9a9098a6d9c5aa7d16be4 # Install our ssh key. TODO: Replace with our own bash script
         with:
           key: ${{ secrets.COLMENA_SSH_KEY }}
           name: id_ed25519
-          known_hosts: ${{ secrets.COLMENA_KNOWN_HOSTS }}
+          known_hosts: ${{ vars.COLMENA_KNOWN_HOSTS }}
 
       - name: Login to headscale
         uses: tailscale/github-action@8688eb839e58e6b25c1ae96cd99d1c173299b842 # Connect to headscale
