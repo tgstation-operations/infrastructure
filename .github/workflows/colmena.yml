@@ -22,7 +22,7 @@ jobs:
       - name: Login to headscale
         uses: tailscale/github-action@8688eb839e58e6b25c1ae96cd99d1c173299b842 # Connect to headscale
         with:
-          authkey: ${{ secrets.TS_AUTHKEY }}
+          authkey: ${{ secrets.TS_BUILD_AUTHKEY }}
           args: --login-server=https://vpn.tgstation13.org
 
       - name: Checkout Repository
