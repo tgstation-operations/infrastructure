@@ -12,6 +12,7 @@
   ];
   localModules = [
     ./disko.nix
+    ../../modules/haproxy
     ./modules/haproxy
     ./modules/caddy
     ../../../../modules/muffin-button.nix

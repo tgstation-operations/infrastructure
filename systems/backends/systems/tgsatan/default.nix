@@ -43,7 +43,8 @@ in {
     ++ localModules
     ++ [
       ./disko.nix
-      ./haproxy
+      ../../modules/haproxy
+      ./modules/haproxy
       ./caddy
     ];
 
@@ -57,11 +58,6 @@ in {
     loader.systemd-boot.enable = true;
   };
 
-  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
-    1447 # TGS Manuel
-    1337 # TGS Sybil
-    5337 # TGMC
-  ];
   programs.fuse.userAllowOther = true;
 
   environment.persistence."/persist/system" = {

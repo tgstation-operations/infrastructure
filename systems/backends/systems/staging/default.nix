@@ -23,7 +23,8 @@
     ../../../../modules/tailscale.nix
     ../../../../modules/maria.nix
     ../../../../modules/kanidm
-    ./haproxy
+    ../../modules/haproxy
+    ./modules/haproxy
     ./caddy
   ];
 in {
@@ -47,9 +48,6 @@ in {
     "1.1.1.1"
   ];
 
-  networking.firewall.allowedTCPPorts = [
-    8989
-  ];
   age.secrets.tgs = {
     file = ./secrets/tgs.age;
     owner = "${config.services.tgstation-server.username}";
