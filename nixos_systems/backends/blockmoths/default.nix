@@ -14,15 +14,15 @@
     ./disko.nix
     ./haproxy
     ./caddy
-    ../../modules/muffin-button.nix
-    ../../modules/tgs
-    ../../modules/podman.nix
-    ../../modules/fail2ban.nix
-    ../../modules/motd.nix
-    ../../modules/openssh.nix
-    ../../modules/tailscale.nix
-    ../../modules/garage
-    ../../modules/monitoring/systemd-exporter.nix
+    ../../../modules/muffin-button.nix
+    ../../../modules/tgs
+    ../../../modules/podman.nix
+    ../../../modules/fail2ban.nix
+    ../../../modules/motd.nix
+    ../../../modules/openssh.nix
+    ../../../modules/tailscale.nix
+    ../../../modules/garage
+    ../../../modules/monitoring/systemd-exporter.nix
   ];
 in {
   networking.hostName = "blockmoths";

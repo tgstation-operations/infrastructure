@@ -1,5 +1,5 @@
 let
-  users = import ../../../modules/ssh_keys.nix;
+  users = import ../../../../modules/ssh_keys.nix;
 
   # Systems
   blockmoths = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHhSMBihD1sohp9h6tKYUd/BuyAsl0zOh/Uv86Gk/E/z";

@@ -195,7 +195,7 @@
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/blockmoths)
+          (import ./nixos_systems/backends/blockmoths)
         ];
     };
     wiggle = {
