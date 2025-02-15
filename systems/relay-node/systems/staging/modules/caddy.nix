@@ -23,7 +23,7 @@
   networking.hosts = {
     "100.64.0.25" = ["idm.staging.tgstation13.org"];
   };
-  age.secrets.cloudflare_api.file = ./secrets/cloudflare_api.age;
+  age.secrets.cloudflare_api.file = ../secrets/cloudflare_api.age;
   security.acme = {
     acceptTerms = true;
     defaults = {

@@ -9,9 +9,9 @@
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../../../modules/colmena_ci.nix
-    ./haproxy
-    ./tailscale
-    ./caddy
+    ./modules/haproxy
+    ./modules/caddy.nix
+    ./modules/tailscale.nix
   ];
 
   services.tailscale.useRoutingFeatures = lib.mkForce "server";

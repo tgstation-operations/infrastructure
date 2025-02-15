@@ -2,7 +2,7 @@
   ...
 }: {
   imports = [
-    ../../../modules/haproxy_base
+    ../../../../modules/haproxy_base
   ];
 
   networking.firewall.allowedTCPPorts = [
