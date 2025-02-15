@@ -17,7 +17,7 @@ in {
     openssh.authorizedKeys.keys =
       deployUsers
       ++ [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINerE77pg5ziJ2adbSZ7ftCa3kX49C1C2FSJd6h6XVP+ deploy@tgstation-nix"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPQx1+Obgbo+YUubcQNFr4ry5Iob3U0fW3myAcG4PS79 deploy@tgstation-infra"
       ];
   };
 
