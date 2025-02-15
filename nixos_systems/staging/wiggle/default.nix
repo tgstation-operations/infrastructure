@@ -13,6 +13,7 @@
   ];
   localModules = [
     (modulesPath + "/profiles/qemu-guest.nix")
+    ../../../modules/colmena_ci_staging.nix
     ../../../modules/muffin-button.nix
     ../../../modules/tgs
     ../../../modules/fail2ban.nix
@@ -40,7 +41,15 @@ in {
 
   programs.nix-ld.enable = true;
 
-  # FIXME: Add networking info here
+  systemd.network = {
+    enable = true;
+    networks = {
+      "10-en" = {
+        matchConfig.name = "en*";
+        networkConfig.DHCP = "yes";
+      };
+    };
+  };
 
   networking.nameservers = [
     "9.9.9.9"
