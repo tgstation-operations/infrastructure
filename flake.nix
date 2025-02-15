@@ -81,7 +81,7 @@
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/backends/tgsatan)
+          (import ./systems/backends/tgsatan)
         ];
     };
 
@@ -95,7 +95,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/vpn.nix)
+          (import ./systems/vpn.nix)
         ];
     };
 
@@ -112,7 +112,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/relay-node/us/dallas.nix)
+          (import ./systems/relay-node/us/dallas.nix)
         ];
     };
 
@@ -129,7 +129,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/relay-node/us/chicago.nix)
+          (import ./systems/relay-node/us/chicago.nix)
         ];
     };
 
@@ -146,7 +146,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/relay-node/us/atlanta.nix)
+          (import ./systems/relay-node/us/atlanta.nix)
         ];
     };
 
@@ -163,7 +163,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/relay-node/eu/frankfurt2.nix)
+          (import ./systems/relay-node/eu/frankfurt2.nix)
         ];
     };
 
@@ -180,7 +180,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/relay-node/eu/frankfurt3.nix)
+          (import ./systems/relay-node/eu/frankfurt3.nix)
         ];
     };
 
@@ -195,7 +195,7 @@
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/backends/blockmoths)
+          (import ./systems/backends/blockmoths)
         ];
     };
     wiggle = {
@@ -211,7 +211,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/backends/staging)
+          (import ./systems/backends/staging)
         ];
     };
     warsaw = {
@@ -227,7 +227,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/relay-node/staging/warsaw.nix)
+          (import ./systems/relay-node/staging/warsaw.nix)
         ];
     };
     lime = {
@@ -243,7 +243,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/relay-node/us/lime.nix)
+          (import ./systems/relay-node/us/lime.nix)
         ];
     };
     bratwurst = {
@@ -260,7 +260,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/relay-node/eu/bratwurst.nix)
+          (import ./systems/relay-node/eu/bratwurst.nix)
         ];
     };
     dachshund = {
@@ -277,7 +277,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/relay-node/eu/dachshund.nix)
+          (import ./systems/relay-node/eu/dachshund.nix)
         ];
     };
     knipp = {
@@ -294,7 +294,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./nixos_systems/relay-node/eu/knipp.nix)
+          (import ./systems/relay-node/eu/knipp.nix)
         ];
     };
   in {
