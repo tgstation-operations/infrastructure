@@ -23,7 +23,6 @@
     ../../../../modules/tailscale.nix
     ../../../../modules/maria.nix
     ../../../../modules/kanidm
-    ../../modules/haproxy
     ./modules/haproxy
     ./modules/motd
     ./modules/caddy.nix
