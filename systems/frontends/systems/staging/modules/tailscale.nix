@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  import = [
+  imports = [
     ../../../../../modules/tailscale.nix
   ];
 
