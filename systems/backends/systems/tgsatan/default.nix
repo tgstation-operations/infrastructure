@@ -45,7 +45,7 @@ in {
       ./disko.nix
       ../../modules/haproxy
       ./modules/haproxy
-      ./caddy
+      ./modules/caddy
     ];
 
   hardware.nvidia-container-toolkit.enable = true;
@@ -93,13 +93,6 @@ in {
         type = "ed25519";
       }
     ];
-  };
-
-  programs.rust-motd = {
-    settings.banner = {
-      color = "red";
-      command = "${pkgs.bash}/bin/bash ${./tgsatan_banner.sh}";
-    };
   };
 
   services.zfs = {
