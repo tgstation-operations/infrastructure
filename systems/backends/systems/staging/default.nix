@@ -13,7 +13,6 @@
   ];
   localModules = [
     (modulesPath + "/profiles/qemu-guest.nix")
-    ../../../../modules/muffin-button.nix
     ../../../../modules/tgs
     ../../../../modules/fail2ban.nix
     ../../../../modules/systemd-exporter.nix
@@ -22,6 +21,7 @@
     ../../modules/grafana.nix
     ../../modules/maria.nix
     ../../modules/motd.nix
+    ../../modules/muffin-button.nix
     ./modules/haproxy
     ./modules/motd
     ./modules/caddy.nix

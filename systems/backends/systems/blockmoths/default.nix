@@ -15,7 +15,6 @@
     ./modules/caddy
     ./modules/haproxy
     ./modules/motd
-    ../../../../modules/muffin-button.nix
     ../../../../modules/tgs
     ../../../../modules/podman.nix
     ../../../../modules/fail2ban.nix
@@ -24,6 +23,7 @@
     ../../../../modules/systemd-exporter.nix
     ../../modules/garage.nix
     ../../modules/motd.nix
+    ../../modules/muffin-button.nix
   ];
 in {
   networking.hostName = "blockmoths";
