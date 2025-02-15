@@ -7,7 +7,6 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     ../../modules/fail2ban.nix
     ../../modules/openssh.nix
-    ../../modules/tailscale.nix
     ../../modules/colmena_ci.nix
     ../../modules/systemd-exporter.nix
     ./modules/tailscale.nix
