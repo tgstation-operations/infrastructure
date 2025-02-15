@@ -95,7 +95,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/vpn.nix)
+          (import ./systems/vpn)
         ];
     };
 

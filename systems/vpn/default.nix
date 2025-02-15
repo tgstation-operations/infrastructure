@@ -1,11 +1,11 @@
 {modulesPath, ...}: {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
-    ../modules/headscale
-    ../modules/openssh.nix
-    ../modules/tailscale.nix
-    ../modules/fail2ban.nix
-    ../modules/monitoring/systemd-exporter.nix
+    ../../modules/headscale
+    ../../modules/openssh.nix
+    ../../modules/tailscale.nix
+    ../../modules/fail2ban.nix
+    ../../modules/monitoring/systemd-exporter.nix
   ];
 
   networking.hostName = "vpn";
