@@ -10,7 +10,7 @@
     ../../modules/tailscale.nix
     ../../modules/colmena_ci.nix
     ../../modules/monitoring/systemd-exporter.nix
-    ./tailscale
+    ./modules/tailscale.nix
     ./modules/haproxy
   ];
 
