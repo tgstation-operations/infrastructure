@@ -18,7 +18,7 @@
     enable = true;
     config =
       "# ==== GLOBAL CONFIG ====\n" +
-      builtins.readFile ../../../haproxy_byond_global.conf +
+      builtins.readFile ../../../../haproxy_byond_global.conf +
       "\n\n# ==== LOCAL CONFIG ====\n" +
       builtins.readFile ./haproxy.conf;
   };

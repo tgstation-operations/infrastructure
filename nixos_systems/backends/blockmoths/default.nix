@@ -12,8 +12,8 @@
   ];
   localModules = [
     ./disko.nix
-    ./haproxy
-    ./caddy
+    ./modules/haproxy
+    ./modules/caddy
     ../../../modules/muffin-button.nix
     ../../../modules/tgs
     ../../../modules/podman.nix

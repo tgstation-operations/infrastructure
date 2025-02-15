@@ -18,8 +18,8 @@
     80
   ];
   age.secrets = {
-    cloudflare_api.file = ../secrets/cloudflare_api.age;
-    aws_credentials.file = ../secrets/aws_credentials.age;
+    cloudflare_api.file = ../../secrets/cloudflare_api.age;
+    aws_credentials.file = ../../secrets/aws_credentials.age;
   };
   security.acme = {
     acceptTerms = true;
