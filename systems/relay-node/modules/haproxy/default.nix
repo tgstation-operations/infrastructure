@@ -5,10 +5,6 @@
   ...
 }: {
   networking.firewall.allowedTCPPorts = [
-    # byond
-    6001
-    20002
-    # Game Servers
     1337 # Sybil
     3336 # Terry
     1447 # Manuel
@@ -23,7 +19,7 @@
     enable = true;
     config =
       "# ==== GLOBAL CONFIG ====\n" +
-      builtins.readFile ../../haproxy_relay_global.conf +
+      builtins.readFile ../../../haproxy_relay_global.conf +
       "\n\n# ==== LOCAL CONFIG ====\n" +
       builtins.readFile ./haproxy.conf;
   };

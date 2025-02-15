@@ -11,7 +11,7 @@
     ../../modules/colmena_ci.nix
     ../../modules/monitoring/systemd-exporter.nix
     ./tailscale
-    ./haproxy
+    ./modules/haproxy
   ];
 
   services.tailscale.useRoutingFeatures = lib.mkForce "server";
