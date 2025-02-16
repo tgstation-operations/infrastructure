@@ -82,7 +82,7 @@ in {
     );
   };
   systemd.services.tgstation-server = {
-    After = ["mysql.service"];
+    wants = ["mysql.service"];
   };
   age.secrets.rsc-cdn = {
     file = ./secrets/rsc-cdn.age;
