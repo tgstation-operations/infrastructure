@@ -439,11 +439,11 @@
     "tgstation-server": {
       "locked": {
         "dir": "build/package/nix",
-        "lastModified": 1739664977,
+        "lastModified": 1739726012,
         "narHash": "sha256-JVN/0ITiefJLjFXzXlu8FkdvaUyNGsVRNQ8RWfNqesY=",
         "owner": "tgstation",
         "repo": "tgstation-server",
-        "rev": "eabacaa5478d19653f43cd16bf7529607938c1f9",
+        "rev": "65e4e9abc2d08de13d59ae23ac94710d86d17892",
         "type": "github"
       },
       "original": {
@@ -458,11 +458,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1739724846,
-        "narHash": "sha256-ckDdav5ryUq+QXjkyU/2i0xExZbbh7oitfkzQF7l5/0=",
+        "lastModified": 1739726167,
+        "narHash": "sha256-kNezGxqHfVAE+ZPynum0OomjRKIKMTHOzIURYeJuJqE=",
         "owner": "tgstation-operations",
         "repo": "website-v2",
-        "rev": "0f06d419fb19d3555f2537b8bfdfabd691032950",
+        "rev": "56b339e4e9140c5eada777007790abd8f295f327",
         "type": "github"
       },
       "original": {
