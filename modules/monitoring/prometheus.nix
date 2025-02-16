@@ -4,7 +4,8 @@
   ...
 }: let
     promPort = toString config.services.prometheus.exporters.systemd.port;
-    # TODO: move into a shared variable
+    # TODO: move these into shared variables
+    tgsPromPort = "5001";
     haproxyPromPort = "8405";
   in
 {
@@ -38,6 +39,17 @@
           "blockmoths.tg.lan:${promPort}"
           "wiggle.tg.lan:${promPort}"
           "vpn.tg.lan:${promPort}"
+        ];
+      }];
+    }
+    {
+      job_name = "TGS servers";
+      static_configs = [{
+        targets = [
+          "tgsatan.tg.lan:${tgsPromPort}"
+          "blockmoths.tg.lan:${tgsPromPort}"
+          "wiggle.tg.lan:${tgsPromPort}"
+          "vpn.tg.lan:${tgsPromPort}"
         ];
       }];
     }

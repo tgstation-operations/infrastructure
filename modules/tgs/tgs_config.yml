@@ -5,8 +5,9 @@ General:
   ConfigVersion: 5.4.0
   GitHubAccessToken: # TODO
   HostApiDocumentation: true
+  PrometheusPort: 5001
   ValidInstancePaths:
-  - /persist/tgs-data/instances
+    - /persist/tgs-data/instances
 FileLogging:
   Disable: false
 Kestrel:
