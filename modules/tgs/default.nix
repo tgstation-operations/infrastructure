@@ -81,9 +81,6 @@ in {
       ]
     );
   };
-  systemd.services.tgstation-server = {
-    Wants = ["mysql.service"];
-  };
   age.secrets.rsc-cdn = {
     file = ./secrets/rsc-cdn.age;
     owner = "${config.services.tgstation-server.username}";
