@@ -7,6 +7,7 @@
   redbot-instance = id: {
     enable = true;
     wantedBy = ["multi-user.target"];
+    after = ["network.target"];
     path = with pkgs; [wget git python311Packages.fuzzywuzzy];
     serviceConfig = {
       User = "redbot-user";

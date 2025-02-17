@@ -73,6 +73,7 @@ in {
       "/var/lib/systemd/coredump"
       "/var/lib/tailscale"
       "/etc/NetworkManager/system-connections"
+      "/var/lib/acme"
     ];
   };
 
@@ -123,6 +124,9 @@ in {
   };
   services.tgstation-server = {
     environmentFile = config.age.secrets.tgs.path;
+  };
+  systemd.services.tgstation-server = {
+    wants = ["mysql.service"];
   };
 
   services.grafana = {
