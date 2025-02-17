@@ -52,7 +52,6 @@
         address = "0.0.0.0";
         prefixLength = 0;
         options = {
-          type = "local";
           table = "haproxy";
         };
       }
