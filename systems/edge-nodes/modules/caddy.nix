@@ -151,8 +151,8 @@
             src = pkgs.fetchFromGitHub {
               owner = "tgstation-operations";
               repo = pname;
-              rev = "e6964f414101be212d12e4510767b54e45160e53";
-              hash = "sha256-I5tVl9Wh4sovO9bVJRPpIQOn4S9dfa5mYad/AB8WPNs=";
+              rev = "481c04b83946e6314afeb0a443ef08f069a1ae8c";
+              hash = "sha256:0rwas0c9kxpf7dqbyd516xkam5hxdij7fillk7nxhx62z8gzcgcj";
             };
             cargoHash = "sha256-vRVVGVXAvKbQ8lpgDknTKnIL+HYgkPy1R//TbUG4F6o=";
           }
