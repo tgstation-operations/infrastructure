@@ -35,6 +35,7 @@ in {
 
   boot.loader.grub.device = "/dev/sda";
   services.xserver.xkb.layout = "us";
+  services.qemuGuest.enable = true;
 
   imports = baseModules ++ localModules;
 
