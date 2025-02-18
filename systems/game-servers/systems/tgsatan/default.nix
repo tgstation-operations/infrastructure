@@ -67,6 +67,7 @@ in {
       "/var/lib/systemd/coredump"
       "/var/lib/tailscale"
       "/etc/NetworkManager/system-connections"
+      "/var/lib/acme"
     ];
   };
 

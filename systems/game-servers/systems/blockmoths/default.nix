@@ -67,6 +67,7 @@ in {
       "/var/lib/headscale"
       "/var/lib/tailscale"
       "/etc/NetworkManager/system-connections"
+      "/var/lib/acme"
     ];
   };
 
