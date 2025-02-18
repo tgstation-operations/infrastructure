@@ -17,7 +17,6 @@
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../modules/garage.nix
-    ../../modules/grafana.nix
     ../../modules/postgres.nix
     ../../modules/maria.nix
     ../../modules/motd.nix
@@ -25,7 +24,7 @@
     ../../modules/podman.nix
     ../../modules/tgs
     ./modules/monitoring
-    ./modules/grafana.nix
+    ./modules/grafana
     ./modules/atticd.nix
     ./modules/nvidia.nix
     ./modules/redbot.nix
