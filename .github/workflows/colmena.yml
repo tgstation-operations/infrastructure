@@ -5,31 +5,33 @@ on:
     branches: [main]
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-24.04
     strategy:
       matrix:
+        runner: [ubuntu-24.04]
         node:
-          - tgsatan
-          - blockmoths
-          - vpn
-          - \@relay
-          - \@staging
+          - "tgsatan"
+          - "blockmoths"
+          - "vpn"
+          - "@relay-amd64"
+          - "@staging"
+        include:
+          - node: "@relay-arm"
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
     steps:
       # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
-      - name: Install private ssh key
-        uses: shimataro/ssh-key-action@d4fffb50872869abe2d9a9098a6d9c5aa7d16be4 # Install our ssh key. TODO: Replace with our own bash script
-        with:
-          key: ${{ secrets.COLMENA_SSH_KEY }}
-          name: id_ed25519
-          known_hosts: ${{ secrets.COLMENA_KNOWN_HOSTS }}
-
       - name: Login to headscale
         uses: tailscale/github-action@8688eb839e58e6b25c1ae96cd99d1c173299b842 # Connect to headscale
+        if: github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main'
         with:
-          authkey: ${{ secrets.TS_AUTHKEY }}
+          authkey: ${{ secrets.TS_BUILD_AUTHKEY }}
           args: --login-server=https://vpn.tgstation13.org
 
       - name: Checkout Repository
@@ -40,14 +42,20 @@ jobs:
         with:
           extra_nix_config: |
             accept-flake-config = true
-            extra-substituters = https://attic.tgstation13.org/tgstation-infrastructure
-            extra-trusted-public-keys = tgstation-infrastructure:tNpjd5GxK1xymRHsJdBLTpeDScA2mVPdKA/eIOLOE0I=
+            extra-substituters = https://nix-community.cachix.org
+            extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
+
 
       - name: Setup attic Binary Cache
+        if: github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main'
         # Format for pointing to caches is server:cache in these commands
         run: |
           nix profile install nixpkgs#attic-client
           attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
+          attic use tgstation:tgstation-infrastructure
+
+      - name: Print nix config before Build
+        run: nix config show
 
       - name: Build closure
         run: nix run github:zhaofengli/colmena -- build --impure -v --eval-node-limit 2 --keep-result --on ${{ matrix.node }}
@@ -59,23 +67,33 @@ jobs:
   deploy:
     name: Deploy
     needs: build
-    runs-on: ubuntu-24.04
-    if: ${{ github.repository == 'tgstation-operations/tgstation-nix' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main' }}
+    environment: ${{ matrix.environment }}
     strategy:
       matrix:
+        runner: [ubuntu-24.04]
         node:
-          - tgsatan
-          - blockmoths
-          - vpn
-          - \@relay
-          - \@staging
+          - "tgsatan"
+          - "blockmoths"
+          - "vpn"
+          - "@relay-amd64"
+        environment:
+          - production
+        include:
+          - runner: ubuntu-24.04-arm
+            node: "@relay-arm"
+            environment: production
+          - runner: ubuntu-24.04
+            node: "@staging"
+            environment: staging
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: Install private ssh key
         uses: shimataro/ssh-key-action@d4fffb50872869abe2d9a9098a6d9c5aa7d16be4 # Install our ssh key. TODO: Replace with our own bash script
         with:
           key: ${{ secrets.COLMENA_SSH_KEY }}
           name: id_ed25519
-          known_hosts: ${{ secrets.COLMENA_KNOWN_HOSTS }}
+          known_hosts: ${{ vars.COLMENA_KNOWN_HOSTS }}
 
       - name: Login to headscale
         uses: tailscale/github-action@8688eb839e58e6b25c1ae96cd99d1c173299b842 # Connect to headscale
@@ -98,6 +116,9 @@ jobs:
         run: |
           nix profile install nixpkgs#attic-client
           attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
+      
+      - name: Print nix config before Build
+        run: nix config show
 
       - name: Deploy closure to Nodes
         run: nix run github:zhaofengli/colmena -- apply --impure -v --on ${{ matrix.node }}
