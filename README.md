@@ -5,6 +5,31 @@ This repository holds the IaC Config for the /tg/station Space Station 13 Server
 
 This place is not a place of honor... no highly esteemed deed is commemorated here... nothing valued is here.
 
+# Repository structure
+```
+<blorbo_name> = placeholder for the name of a blorbo
+[/root/some/path] = this folder follows the same structure as /root/some/path 
+
+root/
+|-  modules/
+|   |-  <single_file_module_name>.nix
+|   |-  <module_name>/
+|   |   |-  <file_name>
+|   |   |-  default.nix
+|-  secrets/
+|   |-  secrets.nix
+|   |-  <secret_name>.age
+|-  systems/
+|   |-  <system_name>/
+|   |   |-  default.nix
+|   |   |-  modules/ [root/modules]
+|   |   |-  secrets/ [root/secrets]
+|   |-  <system_group_name>/
+|   |   |-  modules/ [root/modules]
+|   |   |-  secrets/ [root/secrets]  
+|   |   |-  systems/ [root/systems]  
+``` 
+
 # Flow of byond packets through infrastructure
 ```mermaid
 architecture-beta
