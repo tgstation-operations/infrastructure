@@ -13,6 +13,7 @@
   ];
   localModules = [
     (modulesPath + "/profiles/qemu-guest.nix")
+    ../../../modules/colmena_ci_staging.nix
     ../../../modules/muffin-button.nix
     ../../../modules/tgs
     ../../../modules/fail2ban.nix
@@ -35,12 +36,12 @@ in {
 
   boot.loader.grub.device = "/dev/sda";
   services.xserver.xkb.layout = "us";
+  services.qemuGuest.enable = true;
 
   imports = baseModules ++ localModules;
 
   programs.nix-ld.enable = true;
 
-  # FIXME: Add networking info here
 
   networking.nameservers = [
     "9.9.9.9"
@@ -104,8 +105,16 @@ in {
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
+  # networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.ens18.useDHCP = lib.mkDefault true;
+
+  networking.interfaces.ens18.ipv4.addresses = [
+    {
+      address = "10.113.2.181";
+      prefixLength = 24;
+    }
+  ];
+  networking.defaultGateway = "10.113.2.1";
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
