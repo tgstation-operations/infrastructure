@@ -69,7 +69,7 @@ jobs:
         run: nix run github:zhaofengli/colmena -- build --impure -v --eval-node-limit 2 --keep-result --on ${{ matrix.node }}
 
       - name: Push closure to attic
-        if: github.repository == 'tgstation-operations/tgstation-nix' && github.ref == 'refs/heads/main'
+        if: github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main'
         run: attic push tgstation:tgstation-infrastructure .gcroots/*
 
   deploy:
