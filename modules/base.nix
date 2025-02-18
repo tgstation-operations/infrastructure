@@ -89,11 +89,16 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  nix.gc.automatic = true;
-  nix.gc.dates = "daily";
-
-  nix.optimise.automatic = true;
-  nix.optimise.dates = "daily";
+  nix = {
+    gc = {
+      automatic = true;
+      dates = ["daily"];
+    };
+    optimise = {
+      automatic = true;
+      dates = ["daily"];
+    };
+  };
 
   programs.git = {
     enable = true;
