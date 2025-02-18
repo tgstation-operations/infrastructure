@@ -47,6 +47,9 @@ jobs:
           attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
           attic use tgstation:tgstation-infrastructure
 
+      - name: Print nix config before Build
+        run: nix config show
+
       - name: Build closure
         run: nix run github:zhaofengli/colmena -- build --impure -v --eval-node-limit 2 --keep-result --on ${{ matrix.node }}
 
@@ -106,6 +109,9 @@ jobs:
         run: |
           nix profile install nixpkgs#attic-client
           attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
+      
+      - name: Print nix config before Build
+        run: nix config show
 
       - name: Deploy closure to Nodes
         run: nix run github:zhaofengli/colmena -- apply --impure -v --on ${{ matrix.node }}
