@@ -42,15 +42,6 @@ in {
 
   programs.nix-ld.enable = true;
 
-  systemd.network = {
-    enable = true;
-    networks = {
-      "10-en" = {
-        matchConfig.name = "en*";
-        networkConfig.DHCP = "yes";
-      };
-    };
-  };
 
   networking.nameservers = [
     "9.9.9.9"
