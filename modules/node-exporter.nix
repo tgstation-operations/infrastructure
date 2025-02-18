@@ -12,6 +12,7 @@
         "--collector.softirqs"
         "--collector.tcpstat"
       ];
+      port = 9100;
     };
   };
 }

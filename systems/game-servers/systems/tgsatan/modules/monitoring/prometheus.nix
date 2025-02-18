@@ -3,9 +3,10 @@
   pkgs,
   ...
 }: let
-  promPort = toString config.services.prometheus.exporters.systemd.port;
-  # TODO: move into a shared variable
-  haproxyPromPort = "8405";
+  systemdPromPort = toString config.services.prometheus.exporters.systemd.port;
+  nodeExporterPort = toString config.services.prometheus.exporters.node.port;
+  # The following is already a string, so no need to convert it
+  haproxyPromPort = systemd.services.haproxy.environment.PROMETHEUS_PORT;
 in {
   services.prometheus = {
     enable = true;
@@ -34,10 +35,23 @@ in {
         static_configs = [
           {
             targets = [
-              "tgsatan.tg.lan:${promPort}"
-              "blockmoths.tg.lan:${promPort}"
-              "wiggle.tg.lan:${promPort}"
-              "vpn.tg.lan:${promPort}"
+              "tgsatan.tg.lan:${systemdPromPort}"
+              "blockmoths.tg.lan:${systemdPromPort}"
+              "wiggle.tg.lan:${systemdPromPort}"
+              "vpn.tg.lan:${systemdPromPort}"
+            ];
+          }
+        ];
+      }
+      {
+        job_name = "stats core servers";
+        static_configs = [
+          {
+            targets = [
+              "tgsatan.tg.lan:${NodeExporterPort}"
+              "blockmoths.tg.lan:${NodeExporterPort}"
+              "wiggle.tg.lan:${NodeExporterPort}"
+              "vpn.tg.lan:${NodeExporterPort}"
             ];
           }
         ];
@@ -60,9 +74,21 @@ in {
           {
             targets =
               [
-                "warsaw.tg.lan:${promPort}"
+                "warsaw.tg.lan:${systemdPromPort}"
               ]
-              ++ (import ./relay-nodes.nix) promPort;
+              ++ (import ./relay-nodes.nix) systemdPromPort;
+          }
+        ];
+      }
+      {
+        job_name = "systemd relay node";
+        static_configs = [
+          {
+            targets =
+              [
+                "warsaw.tg.lan:${nodeExporterPort}"
+              ]
+              ++ (import ./relay-nodes.nix) nodeExporterPort;
           }
         ];
       }

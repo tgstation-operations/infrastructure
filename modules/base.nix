@@ -4,6 +4,11 @@
   lib,
   ...
 }: {
+  imports = [
+    ./node-exporter.nix
+    ./systemd-exporter.nix
+  ];
+
   environment.variables."FLAKE" = "${self}";
 
   security.sudo.execWheelOnly = true;

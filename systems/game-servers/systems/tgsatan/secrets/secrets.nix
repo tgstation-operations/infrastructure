@@ -21,4 +21,7 @@ in {
   "aws_credentials.age".publicKeys = users ++ systems;
   # Atticd
   "attic.age".publicKeys = users ++ systems;
+  # Grafana
+  "grafana_db.age".publicKeys = users ++ systems;
+  "grafana_smtp.age".publicKeys = users ++ systems;
 }

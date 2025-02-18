@@ -4,7 +4,6 @@
     ../../modules/openssh.nix
     ../../modules/tailscale.nix
     ../../modules/fail2ban.nix
-    ../../modules/systemd-exporter.nix
     ./modules/headscale
   ];
 
