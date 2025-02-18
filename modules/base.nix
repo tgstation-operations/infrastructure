@@ -92,11 +92,11 @@
   nix = {
     gc = {
       automatic = true;
-      dates = ["daily"];
+      dates = "daily";
     };
     optimise = {
       automatic = true;
-      dates = ["daily"];
+      dates = ["3:00"];
     };
   };
 
