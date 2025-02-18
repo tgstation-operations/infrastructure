@@ -37,7 +37,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # Checkout the repository
 
-      - name: Install Nix
+      - name: Install Nix (Without Attic)
+        if: github.ref != 'refs/heads/main'
         uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72 # Install nix itself. We don't need to specify a channel since we're using flakes
         with:
           extra_nix_config: |
@@ -45,6 +46,14 @@ jobs:
             extra-substituters = https://nix-community.cachix.org
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
 
+      - name: Install Nix (With Attic)
+        if: github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main'
+        uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72
+        with:
+          extra_nix_config: |
+            accept-flake-config = true
+            extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
+            extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:tNpjd5GxK1xymRHsJdBLTpeDScA2mVPdKA/eIOLOE0I=
 
       - name: Setup attic Binary Cache
         if: github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main'
@@ -52,12 +61,6 @@ jobs:
         run: |
           nix profile install nixpkgs#attic-client
           attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
-
-      - name: Add attic cache to subsituters
-        if: github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main'
-        run: |
-          echo "extra-substituters = https://attic.tgstation13.org/tgstation-infrastructure" >> /etc/nix/nix.conf
-          echo "extra-trusted-public-keys = tgstation-infrastructure:tNpjd5GxK1xymRHsJdBLTpeDScA2mVPdKA/eIOLOE0I="
 
       - name: Print nix config before Build
         run: nix config show
@@ -121,7 +124,7 @@ jobs:
         run: |
           nix profile install nixpkgs#attic-client
           attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
-      
+
       - name: Print nix config before Build
         run: nix config show
 
