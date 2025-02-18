@@ -37,7 +37,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # Checkout the repository
 
-      - name: Install Nix
+      - name: Install Nix (Without Attic)
+        if: github.ref != 'refs/heads/main'
         uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72 # Install nix itself. We don't need to specify a channel since we're using flakes
         with:
           extra_nix_config: |
@@ -45,6 +46,14 @@ jobs:
             extra-substituters = https://nix-community.cachix.org
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
 
+      - name: Install Nix (With Attic)
+        if: github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main'
+        uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72
+        with:
+          extra_nix_config: |
+            accept-flake-config = true
+            extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
+            extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:aaSrfZGLWk7a+RtcX0NaFYkOs6E4QlJ+5MZ8padOt3o=
 
       - name: Setup attic Binary Cache
         if: github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main'
@@ -52,7 +61,6 @@ jobs:
         run: |
           nix profile install nixpkgs#attic-client
           attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
-          attic use tgstation:tgstation-infrastructure
 
       - name: Print nix config before Build
         run: nix config show
@@ -61,7 +69,7 @@ jobs:
         run: nix run github:zhaofengli/colmena -- build --impure -v --eval-node-limit 2 --keep-result --on ${{ matrix.node }}
 
       - name: Push closure to attic
-        if: github.repository == 'tgstation-operations/tgstation-nix' && github.ref == 'refs/heads/main'
+        if: github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main'
         run: attic push tgstation:tgstation-infrastructure .gcroots/*
 
   deploy:
@@ -69,6 +77,7 @@ jobs:
     needs: build
     if: ${{ github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main' }}
     environment: ${{ matrix.environment }}
+    continue-on-error: true
     strategy:
       matrix:
         runner: [ubuntu-24.04]
@@ -109,14 +118,14 @@ jobs:
         with:
           extra_nix_config: |
             accept-flake-config = true
-            extra-substituters = https://attic.tgstation13.org/tgstation-infrastructure
-            extra-trusted-public-keys = tgstation-infrastructure:tNpjd5GxK1xymRHsJdBLTpeDScA2mVPdKA/eIOLOE0I=
+            extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
+            extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:aaSrfZGLWk7a+RtcX0NaFYkOs6E4QlJ+5MZ8padOt3o=
 
       - name: Authenticate Attic Binary Cache
         run: |
           nix profile install nixpkgs#attic-client
           attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
-      
+
       - name: Print nix config before Build
         run: nix config show
 

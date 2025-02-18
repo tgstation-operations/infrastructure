@@ -10,7 +10,7 @@
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "alejandra.cachix.org-1:NjZ8kI0mf4HCq8yPnBfiTurb96zp1TBWl8EC54Pzjm0="
-      "tgstation-infrastructure:tNpjd5GxK1xymRHsJdBLTpeDScA2mVPdKA/eIOLOE0I="
+      "tgstation-infrastructure:aaSrfZGLWk7a+RtcX0NaFYkOs6E4QlJ+5MZ8padOt3o="
     ];
   };
   inputs = {
@@ -80,8 +80,8 @@
         ++ [
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/tgsatan)
+          (import ./modules/users)
+          (import ./systems/game-servers/systems/tgsatan)
         ];
     };
 
@@ -94,8 +94,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/vpn.nix)
+          (import ./modules/users)
+          (import ./systems/vpn)
         ];
     };
 
@@ -111,8 +111,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/us/dallas.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/us-dallas.nix)
         ];
     };
 
@@ -128,8 +128,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/us/chicago.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/us-chicago.nix)
         ];
     };
 
@@ -145,8 +145,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/us/atlanta.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/us-atlanta.nix)
         ];
     };
 
@@ -160,8 +160,8 @@
         ++ [
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/blockmoths)
+          (import ./modules/users)
+          (import ./systems/game-servers/systems/blockmoths)
         ];
     };
     wiggle = {
@@ -176,8 +176,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/staging/wiggle)
+          (import ./modules/users)
+          (import ./systems/game-servers/systems/staging)
         ];
     };
     warsaw = {
@@ -192,8 +192,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/staging/warsaw.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/staging)
         ];
     };
     lime = {
@@ -208,8 +208,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/us/lime.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/us-lime.nix)
         ];
     };
     bratwurst = {
@@ -225,8 +225,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/eu/bratwurst.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/eu-bratwurst.nix)
         ];
     };
     dachshund = {
@@ -242,8 +242,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/eu/dachshund.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/eu-dachshund.nix)
         ];
     };
     knipp = {
@@ -259,8 +259,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/eu/knipp.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/eu-knipp.nix)
         ];
     };
   in {
