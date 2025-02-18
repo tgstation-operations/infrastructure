@@ -89,6 +89,12 @@
 
   security.sudo.wheelNeedsPassword = false;
 
+  nix.gc.automatic = true;
+  nix.gc.dates = "daily";
+
+  nix.optimise.automatic = true;
+  nix.optimise.dates = "daily";
+
   programs.git = {
     enable = true;
     lfs.enable = true;
