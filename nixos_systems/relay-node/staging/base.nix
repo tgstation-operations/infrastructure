@@ -8,7 +8,7 @@
     ../../../modules/fail2ban.nix
     ../../../modules/openssh.nix
     ../../../modules/tailscale.nix
-    ../../../modules/colmena_ci.nix
+    ../../../modules/colmena_ci_staging.nix
     ./haproxy
     ./tailscale
     ./caddy
