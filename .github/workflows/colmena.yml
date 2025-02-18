@@ -53,7 +53,7 @@ jobs:
           extra_nix_config: |
             accept-flake-config = true
             extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
-            extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:tNpjd5GxK1xymRHsJdBLTpeDScA2mVPdKA/eIOLOE0I=
+            extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:aaSrfZGLWk7a+RtcX0NaFYkOs6E4QlJ+5MZ8padOt3o=
 
       - name: Setup attic Binary Cache
         if: github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main'
@@ -117,8 +117,8 @@ jobs:
         with:
           extra_nix_config: |
             accept-flake-config = true
-            extra-substituters = https://attic.tgstation13.org/tgstation-infrastructure
-            extra-trusted-public-keys = tgstation-infrastructure:tNpjd5GxK1xymRHsJdBLTpeDScA2mVPdKA/eIOLOE0I=
+            extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
+            extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:aaSrfZGLWk7a+RtcX0NaFYkOs6E4QlJ+5MZ8padOt3o=
 
       - name: Authenticate Attic Binary Cache
         run: |
