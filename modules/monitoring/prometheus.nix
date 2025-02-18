@@ -49,7 +49,6 @@
           "tgsatan.tg.lan:${tgsPromPort}"
           "blockmoths.tg.lan:${tgsPromPort}"
           "wiggle.tg.lan:${tgsPromPort}"
-          "vpn.tg.lan:${tgsPromPort}"
         ];
       }];
     }
