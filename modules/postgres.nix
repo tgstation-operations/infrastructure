@@ -19,7 +19,6 @@
     ensureUsers = [
       {
         name = "root";
-        ensureDBOwnership = true;
       }
       # {
       #   name = "tgstation";

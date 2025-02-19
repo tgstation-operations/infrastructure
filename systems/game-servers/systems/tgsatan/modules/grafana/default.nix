@@ -11,6 +11,7 @@
   ];
   services.grafana = {
     enable = true;
+    dataDir  = "/persist/grafana";
 
     settings = {
       analytics.reporting_enabled = false;
