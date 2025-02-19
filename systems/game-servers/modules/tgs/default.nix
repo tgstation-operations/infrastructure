@@ -86,4 +86,7 @@ in {
     owner = "${config.services.tgstation-server.username}";
     group = "${config.services.tgstation-server.groupname}";
   };
+  systemd.services.tgstation-server = {
+    after = [ "tailscaled.service" ]; # Make sure this only starts once tailscaled is up, for our db connection
+  };
 }
