@@ -2,7 +2,7 @@ Database:
   DatabaseType: MariaDB
   ResetAdminPassword: false
 General:
-  ConfigVersion: 5.4.0
+  ConfigVersion: 5.5.0
   GitHubAccessToken: # TODO
   HostApiDocumentation: true
   PrometheusPort: 5001
