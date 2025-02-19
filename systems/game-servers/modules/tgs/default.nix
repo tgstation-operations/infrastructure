@@ -10,7 +10,6 @@
   pkgs-i686 = nixpkgs.legacyPackages.i686-linux;
 in {
   environment.systemPackages = with pkgs; [
-    dotnetCorePackages.sdk_8_0
     rclone
   ];
   # Secrets used by the game servers
@@ -60,6 +59,7 @@ in {
       with pkgs; [
         git
         nodejs_22
+        dotnetCorePackages.sdk_8_0
         pkgs-i686.gcc
         pkgs-i686.clang
         pkgs-i686.libclang
