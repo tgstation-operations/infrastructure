@@ -13,9 +13,9 @@ let
   knipp = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKpM1arHuexcm4OB8dASh2yHNbZKyDXwXwCxosGUhe5A";
   systems = [dallas chicago atlanta frankfurt2 frankfurt3 lime bratwurst dachshund knipp];
 
-  # TODO: Restrict to only systems that need it. I can't rekey, so im keeping it to the old set of keys
-  cloudflare_systems = [dallas chicago atlanta frankfurt2 frankfurt3 lime];
+  frontend_systems = [lime];
 in {
-  "cloudflare_api.age".publicKeys = users ++ cloudflare_systems;
+  "cloudflare_api.age".publicKeys = users ++ frontend_systems;
   "tailscaleAuthKey.age".publicKeys = users ++ systems;
+  "phpbb_db.age".publicKeys = users ++ frontend_systems;
 }
