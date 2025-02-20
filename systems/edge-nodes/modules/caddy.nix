@@ -140,6 +140,7 @@
             root /run/tgstation-website-v2/serverinfo.json
             file_server
           }
+          redir /phpBB https://forums.tgstation13.org/{http.request.orig_uri.path}
         '';
       };
       "forums.tgstation13.org" = {
