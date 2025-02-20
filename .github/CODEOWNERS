@@ -1,6 +1,7 @@
 # Riggle
 
 **/haproxy @RigglePrime
+**/haproxy_base @RigglePrime
 /modules/ssh_keys.nix @RigglePrime
 /systems/game-servers/systems/tgsatan/modules/redbot.nix @RigglePrime
 /systems/game-servers/systems/tgsatan/modules/monitoring/relay-nodes.nix @RigglePrime
