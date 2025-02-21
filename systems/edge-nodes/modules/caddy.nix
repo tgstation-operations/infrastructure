@@ -63,7 +63,10 @@
       };
       server = "https://acme-v02.api.letsencrypt.org/directory"; # Production
     };
-    certs = {"tgstation13.org" = {};};
+    certs = {
+      "tgstation13.org" = {};
+      "forums.tgstation13.org" = {};
+    };
   };
 
   users.users.php-caddy = {
@@ -76,6 +79,7 @@
     php-caddy = {
       user = "php-caddy";
       group = "caddy";
+      phpPackage = pkgs.php83;
       settings = {
         "pm" = "dynamic";
         "pm.max_children" = 75;
@@ -86,6 +90,12 @@
         "listen.owner" = config.services.caddy.user;
         "listen.group" = config.services.caddy.group;
       };
+    };
+  };
+  age.secrets.phpbb_db.file = ../secrets/phpbb_db.age;
+  systemd.services.caddy = {
+    serviceConfig = {
+      EnvironmentFile = config.age.secrets.phpbb_db.path;
     };
   };
   services.caddy = {
@@ -130,6 +140,20 @@
             root /run/tgstation-website-v2/serverinfo.json
             file_server
           }
+          redir /phpBB https://forums.tgstation13.org/{http.request.orig_uri.path}
+        '';
+      };
+      "forums.tgstation13.org" = {
+        useACMEHost = "forums.tgstation13.org";
+        extraConfig = ''
+          encode gzip zstd
+          root /persist/phpbb
+          file_server
+          php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket}
+          @blocked {
+            path cache/* files/* includes/* phpbb/* store/* vendor/* config.php common.php
+          }
+          respond @blocked 403
         '';
       };
     };
