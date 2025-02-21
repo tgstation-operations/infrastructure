@@ -69,13 +69,29 @@
     };
   };
 
+  # For manual usage of composer or php
+  environment.systemPackages = [
+    pkgs.php83Packages.composer
+    pkgs.php83
+  ];
   users.users.php-caddy = {
     isSystemUser = true;
     extraGroups = ["caddy"];
     group = "php-caddy";
   };
   users.groups.php-caddy = {};
-  services.phpfpm.pools = {
+  services.phpfpm = {
+    settings = {
+      "syslog.facility" = "daemon";
+      "syslog.ident" = "phpfpm";
+      "error_log" = "syslog";
+    };
+    phpOptions = ''
+      log_errors = On
+      error_log = syslog
+      variables_order = EGPCS
+    '';
+    pools = {
     php-caddy = {
       user = "php-caddy";
       group = "caddy";
@@ -91,6 +107,7 @@
         "listen.group" = config.services.caddy.group;
       };
     };
+  };
   };
   age.secrets.phpbb_db.file = ../secrets/phpbb_db.age;
   systemd.services.caddy = {
@@ -149,11 +166,13 @@
           encode gzip zstd
           root /persist/phpbb
           file_server
-          php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket}
-          @blocked {
-            path cache/* files/* includes/* phpbb/* store/* vendor/* config.php common.php
+          php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
+            env DB_HOST {env.DB_HOST}
+            env DB_PORT {env.DB_PORT}
+            env DB_NAME {env.DB_NAME}
+            env DB_USER {env.DB_USER}
+            env DB_PASSWORD {env.DB_PASSWORD}
           }
-          respond @blocked 403
         '';
       };
     };
