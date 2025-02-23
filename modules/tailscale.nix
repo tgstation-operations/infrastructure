@@ -33,6 +33,7 @@
       ethtool
       iproute2
       coreutils
+      gawk
     ];
     script = ''
       ethtool -K $(ip -o route get 1.1.1.1 | gawk 'match($0, /dev (\w+) /, m) { print m[1] }') rx-udp-gro-forwarding on rx-gro-list off
