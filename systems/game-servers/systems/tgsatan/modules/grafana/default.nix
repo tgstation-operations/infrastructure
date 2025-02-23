@@ -58,5 +58,5 @@
     };
   };
 
-  age.secrets.grafana_smtp.owner = "${systemd.services.grafana.serviceConfig.user}";
+  age.secrets.grafana_smtp.owner = "${config.systemd.services.grafana.serviceConfig.user}";
 }
