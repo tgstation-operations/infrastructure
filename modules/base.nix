@@ -88,12 +88,6 @@
 
   networking.networkmanager.enable = true;
 
-  # NetworkManager-wait-online always fails if it's run after boot
-  # More info: https://github.com/NixOS/nixpkgs/issues/180175
-  # Enable it again if the above issue gets resolved.
-  systemd.network.wait-online.enable = false;
-  boot.initrd.systemd.network.wait-online.enable = false;
-
   networking.nftables.enable = true;
 
   hardware.enableRedistributableFirmware = true;

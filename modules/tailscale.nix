@@ -9,8 +9,12 @@
     useRoutingFeatures = "client";
   };
 
-  systemd.services.tailscaled.environment = {
-    "TS_DEBUG_FIREWALL_MODE" = "nftables";
+  systemd.services.tailscaled = {
+    environment = {
+      "TS_DEBUG_FIREWALL_MODE" = "nftables";
+    };
+    # Required due to https://github.com/NixOS/nixpkgs/issues/180175
+    after = ["systemd-networkd-wait-online.service" "NetworkManager-wait-online.service"];
   };
 
   networking.firewall.trustedInterfaces = ["tailscale0"];
