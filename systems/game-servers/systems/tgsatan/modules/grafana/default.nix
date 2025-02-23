@@ -58,6 +58,7 @@
       # enable = true; # TODO
       datasources.settings.datasources = [
         {
+          name = "prometheus";
           type = "prometheus";
           access = "proxy";
           url = "http://tgsatan.tg.lan:9090"; # Change when prometheus is moved
