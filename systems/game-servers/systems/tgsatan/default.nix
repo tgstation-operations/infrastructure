@@ -16,7 +16,6 @@
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
-    ../../../../modules/postgres.nix
     ../../modules/garage.nix
     ../../modules/maria.nix
     ../../modules/motd.nix
@@ -25,6 +24,7 @@
     ../../modules/tgs
     ./modules/monitoring
     ./modules/grafana
+    ./modules/postgres.nix
     ./modules/atticd.nix
     ./modules/nvidia.nix
     ./modules/redbot.nix
