@@ -22,35 +22,28 @@
       }
       # {
       #   name = "tgstation";
+      #   ensureDBOwnership = true;
       # }
       # {
       #   name = "tgmc";
+      #   ensureDBOwnership = true;
       # }
       {
         name = "grafana";
+        ensureDBOwnership = true;
       }
       {
         name = "atticd";
+        ensureDBOwnership = true;
       }
     ];
 
     ensureDatabases = [
-      # {
-      #   name = "tgstation";
-      #   owner = "tgstation";
-      # }
-      # {
-      #   name = "tgmc";
-      #   owner = "tgmc";
-      # }
-      {
-        name = "grafana";
-        owner = "grafana";
-      }
-      {
-        name = "atticd";
-        owner = "atticd";
-      }
+        # "tgstation";
+        # "tgmc";
+        "grafana"
+        "atticd"
+      ];
     ];
 
     # https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
