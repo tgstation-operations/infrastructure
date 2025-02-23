@@ -46,14 +46,15 @@
 
     provision = {
       # enable = true; # TODO
-      datasources.settings.datasources = {
-        prometheus = {
+      datasources.settings.datasources = [
+        {
           type = "prometheus";
           access = "proxy";
           url = "http://tgsatan.tg.lan:9090"; # Change when prometheus is moved
           isDefault = true;
-        };
-      };
+        }
+      ];
+
       dashboards.path = "./dashboards"; # TODO
     };
   };
