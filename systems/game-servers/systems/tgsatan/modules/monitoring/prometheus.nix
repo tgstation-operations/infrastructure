@@ -7,7 +7,7 @@
   nodeExporterPort = toString config.services.prometheus.exporters.node.port;
   tgsPromPort = "5001";
   # The following is already a string, so no need to convert it
-  haproxyPromPort = systemd.services.haproxy.environment.PROMETHEUS_PORT;
+  haproxyPromPort = config.systemd.services.haproxy.environment.PROMETHEUS_PORT;
 in {
   services.prometheus = {
     enable = true;
