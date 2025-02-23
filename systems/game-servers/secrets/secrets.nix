@@ -15,6 +15,7 @@ in {
   "tg13-dbconfig.age".publicKeys = users ++ systems ++ [wiggle];
   "tg13-comms.age".publicKeys = users ++ systems ++ [wiggle];
   "tg13-tts_secrets.age".publicKeys = users ++ systems ++ [wiggle];
+  "tg13-webhooks.age".publicKeys = users ++ systems ++ [wiggle];
   "tg13-extra_config-rclone.age".publicKeys = users ++ systems ++ [wiggle];
   # TGMC Secret
   "tgmc-dbconfig.age".publicKeys = users ++ systems ++ [wiggle];
