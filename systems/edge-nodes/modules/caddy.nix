@@ -63,19 +63,39 @@
       };
       server = "https://acme-v02.api.letsencrypt.org/directory"; # Production
     };
-    certs = {"tgstation13.org" = {};};
+    certs = {
+      "tgstation13.org" = {};
+      "forums.tgstation13.org" = {};
+    };
   };
 
+  # For manual usage of composer or php
+  environment.systemPackages = [
+    pkgs.php83Packages.composer
+    pkgs.php83
+  ];
   users.users.php-caddy = {
     isSystemUser = true;
     extraGroups = ["caddy"];
     group = "php-caddy";
   };
   users.groups.php-caddy = {};
-  services.phpfpm.pools = {
+  services.phpfpm = {
+    settings = {
+      "syslog.facility" = "daemon";
+      "syslog.ident" = "phpfpm";
+      "error_log" = "syslog";
+    };
+    phpOptions = ''
+      log_errors = On
+      error_log = syslog
+      variables_order = EGPCS
+    '';
+    pools = {
     php-caddy = {
       user = "php-caddy";
       group = "caddy";
+      phpPackage = pkgs.php83;
       settings = {
         "pm" = "dynamic";
         "pm.max_children" = 75;
@@ -86,6 +106,13 @@
         "listen.owner" = config.services.caddy.user;
         "listen.group" = config.services.caddy.group;
       };
+    };
+  };
+  };
+  age.secrets.phpbb_db.file = ../secrets/phpbb_db.age;
+  systemd.services.caddy = {
+    serviceConfig = {
+      EnvironmentFile = config.age.secrets.phpbb_db.path;
     };
   };
   services.caddy = {
@@ -108,7 +135,8 @@
           interval 12h
           timeout 15s
         }
-        #trusted_proxies_strict # <https://caddyserver.com/docs/caddyfile/options#trusted-proxies-strict>
+        # <https://caddyserver.com/docs/caddyfile/options#trusted-proxies-strict>
+        trusted_proxies_strict
       }
     '';
     virtualHosts = {
@@ -129,6 +157,23 @@
           handle_path /serverinfo.json {
             root /run/tgstation-website-v2/serverinfo.json
             file_server
+          }
+          redir /phpBB/ https://forums.tgstation13.org/
+          redir /phpBB/*.php* https://forums.tgstation13.org/{http.request.orig_uri.path.file}?{http.request.orig_uri.query}{http.request.orig_uri.path.*/}
+        '';
+      };
+      "forums.tgstation13.org" = {
+        useACMEHost = "forums.tgstation13.org";
+        extraConfig = ''
+          encode gzip zstd
+          root /persist/phpbb
+          file_server
+          php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
+            env DB_HOST {env.DB_HOST}
+            env DB_PORT {env.DB_PORT}
+            env DB_NAME {env.DB_NAME}
+            env DB_USER {env.DB_USER}
+            env DB_PASSWORD {env.DB_PASSWORD}
           }
         '';
       };

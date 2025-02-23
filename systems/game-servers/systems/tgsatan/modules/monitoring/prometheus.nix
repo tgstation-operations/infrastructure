@@ -5,6 +5,7 @@
 }: let
   systemdPromPort = toString config.services.prometheus.exporters.systemd.port;
   nodeExporterPort = toString config.services.prometheus.exporters.node.port;
+  tgsPromPort = "5001";
   # The following is already a string, so no need to convert it
   haproxyPromPort = systemd.services.haproxy.environment.PROMETHEUS_PORT;
 in {
@@ -64,6 +65,18 @@ in {
               "tgsatan.tg.lan:${haproxyPromPort}"
               "blockmoths.tg.lan:${haproxyPromPort}"
               "wiggle.tg.lan:${haproxyPromPort}"
+            ];
+          }
+        ];
+      }
+      {
+        job_name = "TGS servers";
+        static_configs = [
+          {
+            targets = [
+              "tgsatan.tg.lan:${tgsPromPort}"
+              "blockmoths.tg.lan:${tgsPromPort}"
+              "wiggle.tg.lan:${tgsPromPort}"
             ];
           }
         ];

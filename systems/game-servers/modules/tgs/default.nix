@@ -10,7 +10,6 @@
   pkgs-i686 = nixpkgs.legacyPackages.i686-linux;
 in {
   environment.systemPackages = with pkgs; [
-    dotnetCorePackages.sdk_8_0
     rclone
   ];
   # Secrets used by the game servers
@@ -60,6 +59,7 @@ in {
       with pkgs; [
         git
         nodejs_22
+        dotnetCorePackages.sdk_8_0
         pkgs-i686.gcc
         pkgs-i686.clang
         pkgs-i686.libclang
@@ -85,5 +85,8 @@ in {
     file = ../../secrets/rsc-cdn.age;
     owner = "${config.services.tgstation-server.username}";
     group = "${config.services.tgstation-server.groupname}";
+  };
+  systemd.services.tgstation-server = {
+    after = [ "tailscaled.service" ]; # Make sure this only starts once tailscaled is up, for our db connection
   };
 }
