@@ -32,9 +32,6 @@ in {
   networking.hostName = "wiggle";
   system.stateVersion = "24.11";
 
-  systemd.network.wait-online.enable = false;
-  boot.initrd.systemd.network.wait-online.enable = false;
-
   boot.loader.grub.device = "/dev/sda";
   services.xserver.xkb.layout = "us";
   services.qemuGuest.enable = true;
