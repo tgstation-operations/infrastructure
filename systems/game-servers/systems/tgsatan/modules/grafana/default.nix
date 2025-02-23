@@ -10,7 +10,7 @@
 
   age.secrets.grafana_db = {
     file = ../../secrets/grafana_db.age;
-    owner = "${config.systemd.services.grafana.serviceConfig.user}"
+    owner = "${config.systemd.services.grafana.serviceConfig.user}";
   };
 
   networking.firewall.allowedTCPPorts = [
