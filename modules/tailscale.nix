@@ -9,8 +9,11 @@
     useRoutingFeatures = "client";
   };
 
-  systemd.services.tailscaled.environment = {
-    "TS_DEBUG_FIREWALL_MODE" = "nftables";
+  systemd.services.tailscaled = {
+    environment = {
+      "TS_DEBUG_FIREWALL_MODE" = "nftables";
+    };
+    after = ["systemd-networkd-wait-online.service"];
   };
 
   networking.firewall.trustedInterfaces = ["tailscale0"];
