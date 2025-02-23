@@ -5,12 +5,12 @@
 }: {
   age.secrets.grafana_smtp = {
     file = ../../secrets/grafana_smtp.age;
-    owner = "${config.systemd.services.grafana.serviceConfig.user}";
+    owner = "${config.systemd.services.grafana.serviceConfig.User}";
   };
 
   age.secrets.grafana_db = {
     file = ../../secrets/grafana_db.age;
-    owner = "${config.systemd.services.grafana.serviceConfig.user}";
+    owner = "${config.systemd.services.grafana.serviceConfig.User}";
   };
 
   networking.firewall.allowedTCPPorts = [
