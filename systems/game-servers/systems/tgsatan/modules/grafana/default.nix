@@ -32,8 +32,7 @@
       };
 
       smtp = {
-        # TODO
-        enabled = false;
+        enabled = true;
         host = "email-smtp.us-east-1.amazonaws.com";
         user = "AKIAQXPZC5MPNBDMISOP";
         password = "$__file{${config.age.secrets.grafana_smtp.path}}";
