@@ -63,6 +63,9 @@
 
   networking.firewall.enable = true;
 
+  systemd.network.wait-online.enable = false;
+  boot.initrd.systemd.network.wait-online.enable = false;
+
   security.apparmor.enable = true;
 
   i18n.defaultLocale = "en_US.UTF-8";
