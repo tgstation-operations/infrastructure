@@ -39,11 +39,10 @@
     ];
 
     ensureDatabases = [
-        # "tgstation";
-        # "tgmc";
-        "grafana"
-        "atticd"
-      ];
+      # "tgstation";
+      # "tgmc";
+      "grafana"
+      "atticd"
     ];
 
     # https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
