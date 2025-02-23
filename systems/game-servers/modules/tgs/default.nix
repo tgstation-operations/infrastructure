@@ -29,6 +29,11 @@ in {
       owner = "${config.services.tgstation-server.username}";
       group = "${config.services.tgstation-server.groupname}";
     };
+    tg13-webhooks = {
+      file = ../../secrets/tg13-webhooks.age;
+      owner = "${config.services.tgstation-server.username}";
+      group = "${config.services.tgstation-server.groupname}";
+    };
     tg13-extra_config-rclone = {
       file = ../../secrets/tg13-extra_config-rclone.age;
       owner = "${config.services.tgstation-server.username}";
