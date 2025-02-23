@@ -13,18 +13,18 @@
     self.inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
-    ../../../../modules/systemd-exporter.nix
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../modules/garage.nix
-    ../../modules/grafana.nix
     ../../modules/maria.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/podman.nix
     ../../modules/tgs
     ./modules/monitoring
+    ./modules/grafana
+    ./modules/postgres.nix
     ./modules/atticd.nix
     ./modules/nvidia.nix
     ./modules/redbot.nix
@@ -118,7 +118,7 @@ in {
     enable = true;
     settings = {
       server = {
-        domain = "tgsatan.tgstation13.lan";
+        domain = "tgsatan.tg.lan";
       };
     };
   };

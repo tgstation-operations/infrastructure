@@ -33,16 +33,4 @@
     };
     environmentFile = config.age.secrets.attic.path;
   };
-  services.postgresql = {
-    enable = true;
-    ensureDatabases = [
-      config.services.atticd.user
-    ];
-    ensureUsers = [
-      {
-        name = config.services.atticd.user;
-        ensureDBOwnership = true; # Grants the user ownership to a database with the same name
-      }
-    ];
-  };
 }
