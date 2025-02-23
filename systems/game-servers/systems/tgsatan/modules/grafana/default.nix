@@ -46,7 +46,7 @@
 
     provision = {
       # enable = true; # TODO
-      datasources = {
+      datasources.settings.datasources = {
         prometheus = {
           type = "prometheus";
           access = "proxy";
