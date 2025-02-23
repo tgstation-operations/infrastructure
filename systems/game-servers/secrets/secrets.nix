@@ -13,6 +13,8 @@ in {
   "rsc-cdn.age".publicKeys = users ++ systems ++ [wiggle];
   # /tg/station13 main server secrets
   "tg13-dbconfig.age".publicKeys = users ++ systems ++ [wiggle];
+  # The comms key in here is also used in the PR announcer
+  # If you change it here change it there as well
   "tg13-comms.age".publicKeys = users ++ systems ++ [wiggle];
   "tg13-tts_secrets.age".publicKeys = users ++ systems ++ [wiggle];
   "tg13-webhooks.age".publicKeys = users ++ systems ++ [wiggle];
