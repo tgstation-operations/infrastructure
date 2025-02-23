@@ -49,10 +49,10 @@ in {
         static_configs = [
           {
             targets = [
-              "tgsatan.tg.lan:${NodeExporterPort}"
-              "blockmoths.tg.lan:${NodeExporterPort}"
-              "wiggle.tg.lan:${NodeExporterPort}"
-              "vpn.tg.lan:${NodeExporterPort}"
+              "tgsatan.tg.lan:${nodeExporterPort}"
+              "blockmoths.tg.lan:${nodeExporterPort}"
+              "wiggle.tg.lan:${nodeExporterPort}"
+              "vpn.tg.lan:${nodeExporterPort}"
             ];
           }
         ];
