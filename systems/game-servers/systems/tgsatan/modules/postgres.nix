@@ -10,9 +10,7 @@
     package = pkgs.postgresql_17; # I like to live dangerously
     enableJIT = true;
     checkConfig = true;
-    settings = {
-      dataDir = "/persist/postgres/data";
-    };
+    dataDir = "/persist/postgres/data";
 
     # If you change this, you will need to perform manual cleanup
     # of removed users
