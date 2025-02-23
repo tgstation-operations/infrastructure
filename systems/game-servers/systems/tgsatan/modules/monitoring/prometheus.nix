@@ -95,7 +95,7 @@ in {
         ];
       }
       {
-        job_name = "systemd relay node";
+        job_name = "stats relay node";
         static_configs = [
           {
             targets =
