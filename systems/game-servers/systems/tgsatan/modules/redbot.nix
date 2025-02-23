@@ -7,7 +7,8 @@
   redbot-instance = id: {
     enable = true;
     wantedBy = ["multi-user.target"];
-    after = ["network.target"];
+    # nss-lookup.target ensures DNS is available
+    after = ["network.target" "nss-lookup.target"];
     path = with pkgs; [wget git python311Packages.fuzzywuzzy];
     serviceConfig = {
       User = "redbot-user";
