@@ -35,9 +35,6 @@ in {
   networking.hostId = "8f33c04a";
   system.stateVersion = "24.05";
 
-  systemd.network.wait-online.enable = false;
-  boot.initrd.systemd.network.wait-online.enable = false;
-
   imports =
     baseModules
     ++ localModules

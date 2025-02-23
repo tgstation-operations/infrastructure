@@ -38,9 +38,6 @@ in {
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
-  systemd.network.wait-online.enable = false;
-  boot.initrd.systemd.network.wait-online.enable = false;
-
   services.xserver.xkb.layout = "us";
 
   imports = baseModules ++ localModules;
