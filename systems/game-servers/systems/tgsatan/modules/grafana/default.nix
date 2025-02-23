@@ -3,7 +3,6 @@
   pkgs,
   ...
 }: {
-
   age.secrets.grafana_smtp = {
     file = ../../secrets/grafana_smtp.age;
     owner = "${config.systemd.services.grafana.serviceConfig.user}";
