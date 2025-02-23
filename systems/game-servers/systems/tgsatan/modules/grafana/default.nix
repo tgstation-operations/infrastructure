@@ -35,7 +35,7 @@
         # TODO
         enabled = false;
         host = "email-smtp.us-east-1.amazonaws.com";
-        user = "grafana";
+        user = "AKIAQXPZC5MPNBDMISOP";
         password = "$__file{${config.age.secrets.grafana_smtp.path}}";
       };
     };
@@ -57,4 +57,6 @@
       dashboards.path = "./dashboards"; # TODO
     };
   };
+
+  age.secrets.grafana_smtp.owner = "${systemd.services.grafana.serviceConfig.user}";
 }
