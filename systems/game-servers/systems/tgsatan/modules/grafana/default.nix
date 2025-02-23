@@ -66,7 +66,7 @@
         }
       ];
 
-      dashboards.path = "./dashboards"; # TODO
+      dashboards.path = ./dashboards; # TODO
     };
   };
 }
