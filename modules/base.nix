@@ -83,8 +83,9 @@
 
   networking.networkmanager.enable = true;
 
-  # This is needed since the service always fails. Why it does so
-  # was not known at this time, more investigation is needed.
+  # NetworkManager-wait-online always fails if it's run after boot
+  # More info: https://github.com/NixOS/nixpkgs/issues/180175
+  # Enable it again if the above issue gets resolved.
   systemd.network.wait-online.enable = false;
   boot.initrd.systemd.network.wait-online.enable = false;
 
