@@ -3,6 +3,17 @@
   pkgs,
   ...
 }: {
+
+  age.secrets.grafana_smtp = {
+    file = ../../secrets/grafana_smtp.age;
+    owner = "${config.systemd.services.grafana.serviceConfig.user}";
+  };
+
+  age.secrets.grafana_db = {
+    file = ../../secrets/grafana_db.age;
+    owner = "${config.systemd.services.grafana.serviceConfig.user}"
+  };
+
   networking.firewall.allowedTCPPorts = [
     3000
   ];
@@ -58,6 +69,4 @@
       dashboards.path = "./dashboards"; # TODO
     };
   };
-
-  age.secrets.grafana_smtp.owner = "${config.systemd.services.grafana.serviceConfig.user}";
 }
