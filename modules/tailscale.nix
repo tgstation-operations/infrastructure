@@ -35,7 +35,7 @@
       coreutils
     ];
     script = ''
-      ethtool -K $(ip -o route get 1.1.1.1 | cut -f 5 -d " ") rx-udp-gro-forwarding on rx-gro-list off
+      ethtool -K $(ip -o route get 1.1.1.1 | cut -f 3 -d " ") rx-udp-gro-forwarding on rx-gro-list off
     '';
   };
 }
