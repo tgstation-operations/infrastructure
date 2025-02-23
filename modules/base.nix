@@ -63,6 +63,8 @@
 
   networking.firewall.enable = true;
 
+  # This is needed since the service always fails. Why it does so
+  # was not known at this time, more investigation is needed.
   systemd.network.wait-online.enable = false;
   boot.initrd.systemd.network.wait-online.enable = false;
 
