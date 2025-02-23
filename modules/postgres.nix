@@ -50,10 +50,7 @@
     # type  database  user  [address]  [mask]  auth-method  [auth-options]
     # mkForce so we override defaults
     authentication = lib.mkForce ''
-      # host    tgstation tgstation 127.0.0.1/32    scram-sha-256
       # hostssl tgstation tgstation 100.64.0.11/32  scram-sha-256
-      # host    tgmc      tgmc      127.0.0.1/32    scram-sha-256
-      host    grafana   grafana   127.0.0.1/32    scram-sha-256
 
       # Default values
       local all all              peer
