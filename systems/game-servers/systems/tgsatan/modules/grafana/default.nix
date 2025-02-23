@@ -35,7 +35,7 @@
 
       database = {
         type = "postgres";
-        host = "tgsatan.tg.lan";
+        host = "127.0.0.1"; # Currently ran on tgsatan
         port = config.services.postgresql.port;
         user = "grafana";
         password = "$__file{${config.age.secrets.grafana_db.path}}";
