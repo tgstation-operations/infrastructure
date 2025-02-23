@@ -11,6 +11,7 @@
     (import hw.common-gpu-nvidia)
     (import hw.common-cpu-amd)
     self.inputs.tgstation-server.nixosModules.default
+    self.inputs.tgstation-pr-announcer.nixosModules.default
   ];
   localModules = [
     ../../../../modules/fail2ban.nix
@@ -112,6 +113,17 @@ in {
   };
   systemd.services.tgstation-server = {
     wants = ["mysql.service"];
+  };
+
+  age.secrets.tgstation-pr-announcer = {
+    file = ./secrets/tgstation-pr-announcer.age;
+    owner = "${config.services.tgstation-pr-announcer.username}";
+    group = "${config.services.tgstation-pr-announcer.groupname}";
+  };
+  services.tgstation-pr-announcer = {
+    enable = true;
+    production-appsettings = ./tgstation_pr_announcer_config.json;
+    environmentFile = config.age.secrets.tgstation-pr-announcer.path;
   };
 
   services.grafana = {

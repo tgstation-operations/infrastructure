@@ -35,6 +35,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
     dragon-bot.url = "github:tgstation/dragon-bot";
     tgstation-server.url = "github:tgstation/tgstation-server/e7d2a23450a7cb00e0b2bb87dc0815fec04d1855?dir=build/package/nix";
+    tgstation-pr-announcer.url = "github:tgstation/tgstation/165c357a7402db5be680fb1dfd23a816c950706d?dir=tools/Tgstation.PRAnnouncer";
     tgstation-website.url = "github:tgstation-operations/website-v2";
     impermanence.url = "github:scriptis/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
