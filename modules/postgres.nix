@@ -29,6 +29,9 @@
       {
         name = "grafana";
       }
+      {
+        name = "atticd";
+      }
     ];
 
     ensureDatabases = [
@@ -43,6 +46,10 @@
       {
         name = "grafana";
         owner = "grafana";
+      }
+      {
+        name = "atticd";
+        owner = "atticd";
       }
     ];
 
