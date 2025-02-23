@@ -122,7 +122,7 @@ in {
   };
   services.tgstation-pr-announcer = {
     enable = true;
-    production-appsettings = ./tgstation_pr_announcer_config.json;
+    production-appsettings = ./tgstation-pr-announcer/tgstation_pr_announcer_config.json;
     environmentFile = config.age.secrets.tgstation-pr-announcer.path;
   };
 
