@@ -11,7 +11,6 @@
 in {
   services.prometheus = {
     enable = true;
-    stateDir = "/persist/prometheus";
     globalConfig.scrape_interval = "10s";
     scrapeConfigs = [
       {
