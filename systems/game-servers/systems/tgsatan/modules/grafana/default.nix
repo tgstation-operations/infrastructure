@@ -13,12 +13,6 @@
     owner = "${config.systemd.services.grafana.serviceConfig.User}";
   };
 
-  networking.firewall.allowedTCPPorts = [
-    3000
-  ];
-  networking.firewall.allowedUDPPorts = [
-    3000
-  ];
   services.grafana = {
     enable = true;
     dataDir  = "/persist/grafana";
