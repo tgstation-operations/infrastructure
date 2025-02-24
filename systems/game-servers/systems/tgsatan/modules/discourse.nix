@@ -59,7 +59,6 @@
     };
     redis = {
       host = "127.0.0.1";
-      port = config.services.dragonflydb.port;
     };
     secretKeyBaseFile = "/persist/discourse/key"; # has to be a string
     plugins = with config.services.discourse.package.plugins; [
