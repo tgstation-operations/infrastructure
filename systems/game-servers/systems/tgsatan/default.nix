@@ -28,6 +28,8 @@
     ./modules/atticd.nix
     ./modules/nvidia.nix
     ./modules/redbot.nix
+    ./modules/discourse.nix
+    ./modules/dragonflydb.nix
     ./modules/motd
   ];
 in {
