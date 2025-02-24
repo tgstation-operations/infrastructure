@@ -26,11 +26,21 @@
     settings = {
       analytics.reporting_enabled = false;
 
+      security = {
+        admin_email = "admin@tgstation13.org";
+        admin_username = "admin";
+        admin_password = "$__file{${config.age.secrets.grafana_admin.path}}";
+        strict_transport_security = true;
+      };
+
       server = {
         http_addr = "100.64.0.1"; # tailscale IP
         http_port = 3000;
+        protocol = "https";
         enforce_domain = false;
         enable_gzip = true;
+        domain = "tgsatan.tg.lan";
+        cookie_secure = true;
       };
 
       database = {
