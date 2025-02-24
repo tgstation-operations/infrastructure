@@ -22,7 +22,8 @@
     database = {
       ignorePostgresqlVersion = true; # We're NOT using postgres 13
       host = "127.0.0.1";
-      port = 5432;
+      name = "discourse";
+      username = "discourse";
       passwordFile = config.age.secrets.discourse_db.file;
     };
     hostname = "forum.tgstation13.org";
