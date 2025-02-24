@@ -13,6 +13,11 @@
     owner = "${config.systemd.services.grafana.serviceConfig.User}";
   };
 
+  age.secrets.grafana_admin = {
+    file = ../../secrets/grafana_admin.age;
+    owner = "${config.systemd.services.grafana.serviceConfig.User}";
+  };
+
   services.grafana = {
     enable = true;
     dataDir  = "/persist/grafana";
