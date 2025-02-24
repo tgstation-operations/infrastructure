@@ -34,7 +34,7 @@
       email = "forum@tgstation13.org";
       username = "tgstation";
       fullName = "Kadence Kelley"; # ;)
-      passwordFile = age.secrets.discourse_admin.file;
+      passwordFile = config.age.secrets.discourse_admin.file;
     };
     mail = {
       contactEmailAddress = "forum@tgstation13.org";
