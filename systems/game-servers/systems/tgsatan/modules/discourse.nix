@@ -28,9 +28,6 @@
     };
     hostname = "forum.tgstation13.org";
     nginx.enable = false;
-    backendSettings = {
-
-    };
     admin = {
       email = "forum@tgstation13.org";
       username = "tgstation";
