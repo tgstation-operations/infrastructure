@@ -5,7 +5,9 @@
 }: let
   systemdPromPort = toString config.services.prometheus.exporters.systemd.port;
   nodeExporterPort = toString config.services.prometheus.exporters.node.port;
+  # Needs moved into a common config
   tgsPromPort = "5001";
+  prAnnouncerPort = "5004";
   # The following is already a string, so no need to convert it
   haproxyPromPort = config.systemd.services.haproxy.environment.PROMETHEUS_PORT;
 in {
@@ -77,6 +79,16 @@ in {
               "tgsatan.tg.lan:${tgsPromPort}"
               "blockmoths.tg.lan:${tgsPromPort}"
               "wiggle.tg.lan:${tgsPromPort}"
+            ];
+          }
+        ];
+      }
+      {
+        job_name = "GitHub Webhook PR Announcer";
+        static_configs = [
+          {
+            targets = [
+              "tgsatan.tg.lan:${prAnnouncerPort}"
             ];
           }
         ];
