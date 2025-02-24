@@ -3,17 +3,17 @@
   ...
 }: {
     age.secrets.discourse_smtp = {
-    file = ../../secrets/discourse_smtp.age;
+    file = ../secrets/discourse_smtp.age;
     owner = "${config.systemd.services.discourse.serviceConfig.User}";
   };
 
   age.secrets.discourse_db = {
-    file = ../../secrets/discourse_db.age;
+    file = ../secrets/discourse_db.age;
     owner = "${config.systemd.services.discourse.serviceConfig.User}";
   };
 
   age.secrets.discourse_admin = {
-    file = ../../secrets/discourse_admin.age;
+    file = ../secrets/discourse_admin.age;
     owner = "${config.systemd.services.discourse.serviceConfig.User}";
   };
 
