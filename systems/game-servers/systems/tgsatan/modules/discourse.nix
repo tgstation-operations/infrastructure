@@ -24,7 +24,8 @@
       host = "127.0.0.1";
       name = "discourse";
       username = "discourse";
-      passwordFile = config.age.secrets.discourse_db.file;
+      # Requires a string
+      passwordFile = toString config.age.secrets.discourse_db.file;
     };
     hostname = "forum.tgstation13.org";
     nginx.enable = false;
@@ -45,7 +46,8 @@
         serverAddress = "email-smtp.us-east-1.amazonaws.com";
         port = 587;
         username = "AKIAQXPZC5MPJRHMR3VE";
-        passwordFile = config.age.secrets.discourse_smtp.file;
+        # Requires a string
+        passwordFile = toString config.age.secrets.discourse_smtp.file;
       };
     };
     siteSettings = {
