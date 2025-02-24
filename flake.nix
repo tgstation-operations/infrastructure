@@ -104,7 +104,7 @@
         targetHost = "dallas.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-amd64"
         ];
       };
       imports =
@@ -217,7 +217,7 @@
         targetHost = "bratwurst.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-arm"
         ];
       };
       nixpkgs.system = "aarch64-linux";
