@@ -4,6 +4,11 @@
   lib,
   ...
 }: {
+  imports = [
+    ./node-exporter.nix
+    ./systemd-exporter.nix
+  ];
+
   environment.variables."FLAKE" = "${self}";
 
   security.sudo.execWheelOnly = true;
@@ -22,7 +27,7 @@
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "tgstation-infrastructure:tNpjd5GxK1xymRHsJdBLTpeDScA2mVPdKA/eIOLOE0I="
+      "tgstation-infrastructure:aaSrfZGLWk7a+RtcX0NaFYkOs6E4QlJ+5MZ8padOt3o="
     ];
     trusted-users = ["@wheel"];
   };
@@ -88,6 +93,18 @@
   hardware.enableRedistributableFirmware = true;
 
   security.sudo.wheelNeedsPassword = false;
+
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "daily";
+      options = "--delete-older-than 3d";
+    };
+    optimise = {
+      automatic = true;
+      dates = ["3:00"];
+    };
+  };
 
   programs.git = {
     enable = true;

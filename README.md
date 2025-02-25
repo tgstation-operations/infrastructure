@@ -1,9 +1,34 @@
 # /tg/station Infrastructure
-[![Run Colmena](https://github.com/tgstation-operations/tgstation-nix/actions/workflows/colmena.yml/badge.svg)](https://github.com/tgstation-operations/tgstation-nix/actions/workflows/colmena.yml)
+[![Run Colmena](https://github.com/tgstation-operations/infrastructure/actions/workflows/colmena.yml/badge.svg)](https://github.com/tgstation-operations/infrastructure/actions/workflows/colmena.yml)
 
 This repository holds the IaC Config for the /tg/station Space Station 13 Server. This is built primarily using nix with [Colmena](https://github.com/zhaofengli/colmena)
 
 This place is not a place of honor... no highly esteemed deed is commemorated here... nothing valued is here.
+
+# Repository structure
+```
+<blorbo_name> = placeholder for the name of a blorbo
+[/root/some/path] = this folder follows the same structure as /root/some/path 
+
+root/
+|-  modules/
+|   |-  <single_file_module_name>.nix
+|   |-  <module_name>/
+|   |   |-  <file_name>
+|   |   |-  default.nix
+|-  secrets/
+|   |-  secrets.nix
+|   |-  <secret_name>.age
+|-  systems/
+|   |-  <system_name>/
+|   |   |-  default.nix
+|   |   |-  modules/ [root/modules]
+|   |   |-  secrets/ [root/secrets]
+|   |-  <system_group_name>/
+|   |   |-  modules/ [root/modules]
+|   |   |-  secrets/ [root/secrets]  
+|   |   |-  systems/ [root/systems]  
+``` 
 
 # Flow of byond packets through infrastructure
 ```mermaid
@@ -84,3 +109,4 @@ sequenceDiagram
    Byond(10.248.1.1/24)->>Loopback:Packet from 10.248.1.1/24 to client in range 0.0.0.0/0,<br/>intercepted by custom routing rule and sent to loopback adapter
    Loopback->>Backend: HAproxy picks the packet up from loopback<br/>Sets correct destination and rewraps
    Backend->>Relay: Packet is sent to appropriate relay server for final delivery
+```

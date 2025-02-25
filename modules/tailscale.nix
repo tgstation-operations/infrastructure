@@ -9,8 +9,12 @@
     useRoutingFeatures = "client";
   };
 
-  systemd.services.tailscaled.environment = {
-    "TS_DEBUG_FIREWALL_MODE" = "nftables";
+  systemd.services.tailscaled = {
+    environment = {
+      "TS_DEBUG_FIREWALL_MODE" = "nftables";
+    };
+    # Required due to https://github.com/NixOS/nixpkgs/issues/180175
+    after = ["systemd-networkd-wait-online.service" "NetworkManager-wait-online.service"];
   };
 
   networking.firewall.trustedInterfaces = ["tailscale0"];
@@ -33,9 +37,10 @@
       ethtool
       iproute2
       coreutils
+      gawk
     ];
     script = ''
-      ethtool -K $(ip -o route get 1.1.1.1 | cut -f 5 -d " ") rx-udp-gro-forwarding on rx-gro-list off
+      ethtool -K $(ip -o route get 1.1.1.1 | gawk 'match($0, /dev (\w+) /, m) { print m[1] }') rx-udp-gro-forwarding on rx-gro-list off
     '';
   };
 }

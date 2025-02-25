@@ -10,7 +10,7 @@
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "alejandra.cachix.org-1:NjZ8kI0mf4HCq8yPnBfiTurb96zp1TBWl8EC54Pzjm0="
-      "tgstation-infrastructure:tNpjd5GxK1xymRHsJdBLTpeDScA2mVPdKA/eIOLOE0I="
+      "tgstation-infrastructure:aaSrfZGLWk7a+RtcX0NaFYkOs6E4QlJ+5MZ8padOt3o="
     ];
   };
   inputs = {
@@ -34,7 +34,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
     dragon-bot.url = "github:tgstation/dragon-bot";
-    tgstation-server.url = "github:tgstation/tgstation-server?dir=build/package/nix";
+    tgstation-server.url = "github:tgstation/tgstation-server/e7d2a23450a7cb00e0b2bb87dc0815fec04d1855?dir=build/package/nix";
+    tgstation-pr-announcer.url = "github:tgstation/tgstation/c1ceeb35edfe1f72e9ed362a451ffd5bae9d2ede?dir=tools/Tgstation.PRAnnouncer";
     tgstation-website.url = "github:tgstation-operations/website-v2";
     impermanence.url = "github:scriptis/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -80,8 +81,8 @@
         ++ [
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/tgsatan)
+          (import ./modules/users)
+          (import ./systems/game-servers/systems/tgsatan)
         ];
     };
 
@@ -94,8 +95,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/vpn.nix)
+          (import ./modules/users)
+          (import ./systems/vpn)
         ];
     };
 
@@ -111,8 +112,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/us/dallas.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/us-dallas.nix)
         ];
     };
 
@@ -121,15 +122,15 @@
         targetHost = "chicago.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-amd64"
         ];
       };
       imports =
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/us/chicago.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/us-chicago.nix)
         ];
     };
 
@@ -138,49 +139,15 @@
         targetHost = "atlanta.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-amd64"
         ];
       };
       imports =
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/us/atlanta.nix)
-        ];
-    };
-
-    frankfurt2 = {
-      deployment = {
-        targetHost = "frankfurt2.tg.lan";
-        targetUser = "deploy";
-        tags = [
-          "relay"
-        ];
-      };
-      imports =
-        flakeModules
-        ++ [
-          (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/eu/frankfurt2.nix)
-        ];
-    };
-
-    frankfurt3 = {
-      deployment = {
-        targetHost = "frankfurt3.tg.lan";
-        targetUser = "deploy";
-        tags = [
-          "relay"
-        ];
-      };
-      imports =
-        flakeModules
-        ++ [
-          (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/eu/frankfurt3.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/us-atlanta.nix)
         ];
     };
 
@@ -194,8 +161,8 @@
         ++ [
           inputs.impermanence.nixosModules.impermanence
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/blockmoths)
+          (import ./modules/users)
+          (import ./systems/game-servers/systems/blockmoths)
         ];
     };
     wiggle = {
@@ -210,8 +177,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/staging/wiggle)
+          (import ./modules/users)
+          (import ./systems/game-servers/systems/staging)
         ];
     };
     warsaw = {
@@ -226,8 +193,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/staging/warsaw.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/staging)
         ];
     };
     lime = {
@@ -235,15 +202,15 @@
         targetHost = "lime.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-amd64"
         ];
       };
       imports =
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/us/lime.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/us-lime.nix)
         ];
     };
     bratwurst = {
@@ -259,8 +226,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/eu/bratwurst.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/eu-bratwurst.nix)
         ];
     };
     dachshund = {
@@ -268,7 +235,7 @@
         targetHost = "dachshund.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-arm"
         ];
       };
       nixpkgs.system = "aarch64-linux";
@@ -276,8 +243,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/eu/dachshund.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/eu-dachshund.nix)
         ];
     };
     knipp = {
@@ -285,7 +252,7 @@
         targetHost = "knipp.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-arm"
         ];
       };
       nixpkgs.system = "aarch64-linux";
@@ -293,8 +260,8 @@
         flakeModules
         ++ [
           (import ./modules/base.nix)
-          (import ./users)
-          (import ./nixos_systems/relay-node/eu/knipp.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/eu-knipp.nix)
         ];
     };
   in {
@@ -305,8 +272,6 @@
         vpn
         chicago
         atlanta
-        frankfurt2
-        frankfurt3
         blockmoths
         wiggle
         warsaw
@@ -342,19 +307,19 @@
           };
           bratwurst = {
             pkgs-unstable = import nixpkgs-unstable {
-              system = "x86_64-linux";
+              system = "aarch64-linux";
               config.allowUnfree = true;
             };
           };
           dachshund = {
             pkgs-unstable = import nixpkgs-unstable {
-              system = "x86_64-linux";
+              system = "aarch64-linux";
               config.allowUnfree = true;
             };
           };
           knipp = {
             pkgs-unstable = import nixpkgs-unstable {
-              system = "x86_64-linux";
+              system = "aarch64-linux";
               config.allowUnfree = true;
             };
           };
@@ -434,28 +399,6 @@
       atlanta = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = flakeModules ++ atlanta.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-        };
-      };
-      frankfurt2 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = flakeModules ++ frankfurt2.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-        };
-      };
-      frankfurt3 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = flakeModules ++ frankfurt3.imports;
         specialArgs = {
           inherit self inputs nixpkgs fenix;
           pkgs-unstable = import nixpkgs-unstable {

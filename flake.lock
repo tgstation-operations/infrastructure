@@ -57,11 +57,11 @@
         "stable": "stable"
       },
       "locked": {
-        "lastModified": 1734897875,
-        "narHash": "sha256-LLpiqfOGBippRax9F33kSJ/Imt8gJXb6o0JwSBiNHCk=",
+        "lastModified": 1739900653,
+        "narHash": "sha256-hPSLvw6AZQYrZyGI6Uq4XgST7benF/0zcCpugn/P0yM=",
         "owner": "zhaofengli",
         "repo": "colmena",
-        "rev": "a6b51f5feae9bfb145daa37fd0220595acb7871e",
+        "rev": "2370d4336eda2a9ef29fce10fa7076ae011983ab",
         "type": "github"
       },
       "original": {
@@ -99,11 +99,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1738765162,
-        "narHash": "sha256-3Z40qHaFScWUCVQrGc4Y+RdoPsh1R/wIh+AN4cTXP0I=",
+        "lastModified": 1739841949,
+        "narHash": "sha256-lSOXdgW/1zi/SSu7xp71v+55D5Egz8ACv0STkj7fhbs=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "ff3568858c54bd306e9e1f2886f0f781df307dff",
+        "rev": "15dbf8cebd8e2655a883b74547108e089f051bf0",
         "type": "github"
       },
       "original": {
@@ -157,11 +157,11 @@
         "rust-analyzer-src": "rust-analyzer-src_2"
       },
       "locked": {
-        "lastModified": 1739255730,
-        "narHash": "sha256-RkZx53J5UZu58DclU13tKzwo0oaTIiHgT+ncbaaCnT8=",
+        "lastModified": 1740292204,
+        "narHash": "sha256-ZbptkmqaenRhUKsodSEcVzBw+kXZ8DcZpTGutU1HEiI=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "c023dde9e8b73c78348384661cf3d5e5f209558d",
+        "rev": "93d59130e3fc121f927c03e406142df8d544b901",
         "type": "github"
       },
       "original": {
@@ -224,11 +224,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1736373539,
-        "narHash": "sha256-dinzAqCjenWDxuy+MqUQq0I4zUSfaCvN9rzuCmgMZJY=",
+        "lastModified": 1739757849,
+        "narHash": "sha256-Gs076ot1YuAAsYVcyidLKUMIc4ooOaRGO0PqTY7sBzA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "bd65bc3cde04c16755955630b344bc9e35272c56",
+        "rev": "9d3d080aec2a35e05a15cedd281c2384767c2cfe",
         "type": "github"
       },
       "original": {
@@ -276,11 +276,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1738816619,
-        "narHash": "sha256-5yRlg48XmpcX5b5HesdGMOte+YuCy9rzQkJz+imcu6I=",
+        "lastModified": 1740089251,
+        "narHash": "sha256-Y78mDBWoO8CLLTjQfPfII+KXFb6lAmF9GrLbyVBsIMM=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "2eccff41bab80839b1d25b303b53d339fbb07087",
+        "rev": "18e9f9753e9ae261bcc7d3abe15745686991fd30",
         "type": "github"
       },
       "original": {
@@ -308,11 +308,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1739184465,
-        "narHash": "sha256-7Z9kNbr6qZwPG1z/6Hn/re4SS9nu1krxyknyNeCBh/o=",
+        "lastModified": 1740301968,
+        "narHash": "sha256-eDAiNagpMExcLoSIgjdef2ZYyvjuy1VTF8r9OZXCMGc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "58edd1e2acbc9be9fe29964344c6419db013141e",
+        "rev": "b7fe81518095c48a8ba94fc7cfe5c0fc8370851b",
         "type": "github"
       },
       "original": {
@@ -324,11 +324,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1739055578,
-        "narHash": "sha256-2MhC2Bgd06uI1A0vkdNUyDYsMD0SLNGKtD8600mZ69A=",
+        "lastModified": 1740162160,
+        "narHash": "sha256-SSYxFhqCOb3aiPb6MmN68yEzBIltfom8IgRz7phHscM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a45fa362d887f4d4a7157d95c28ca9ce2899b70e",
+        "rev": "11415c7ae8539d6292f2928317ee7a8410b28bb9",
         "type": "github"
       },
       "original": {
@@ -367,6 +367,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "tgstation-pr-announcer": "tgstation-pr-announcer",
         "tgstation-server": "tgstation-server",
         "tgstation-website": "tgstation-website"
       }
@@ -391,11 +392,11 @@
     "rust-analyzer-src_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1739201154,
-        "narHash": "sha256-jP/Z+X28XQMqR6fWkIokJ45dVBkvsTe4dQOq5s/sA+4=",
+        "lastModified": 1740259966,
+        "narHash": "sha256-FJU9qiELvmJzNRr7wLFtJUy4bSk1PNqsRB7wOQz6zUE=",
         "owner": "rust-lang",
         "repo": "rust-analyzer",
-        "rev": "f5e7172e96ff8a75af99ac570085d22a4afab09b",
+        "rev": "9df88ff0f65f8de9f73684d2bb96e1b62669d083",
         "type": "github"
       },
       "original": {
@@ -436,20 +437,39 @@
         "type": "github"
       }
     },
+    "tgstation-pr-announcer": {
+      "locked": {
+        "dir": "tools/Tgstation.PRAnnouncer",
+        "lastModified": 1740347597,
+        "narHash": "sha256-AdnA3Z2mZ8LhmIPMtLhEDmD26OMoRTIb9X6suT6ve2w=",
+        "owner": "tgstation",
+        "repo": "tgstation",
+        "rev": "c1ceeb35edfe1f72e9ed362a451ffd5bae9d2ede",
+        "type": "github"
+      },
+      "original": {
+        "dir": "tools/Tgstation.PRAnnouncer",
+        "owner": "tgstation",
+        "repo": "tgstation",
+        "rev": "c1ceeb35edfe1f72e9ed362a451ffd5bae9d2ede",
+        "type": "github"
+      }
+    },
     "tgstation-server": {
       "locked": {
         "dir": "build/package/nix",
-        "lastModified": 1739208298,
-        "narHash": "sha256-0kh4Gc+SzIolyhCaPPWPX9Xd+V3wdtX7umeIdy7O0xI=",
+        "lastModified": 1739745506,
+        "narHash": "sha256-urGEfOBw7oQMbzxlVxJEuRyIVg7MUKZgFI/5wSRy3JY=",
         "owner": "tgstation",
         "repo": "tgstation-server",
-        "rev": "145ec3939c2e51216fa4a7ee4656a07b2a92757b",
+        "rev": "e7d2a23450a7cb00e0b2bb87dc0815fec04d1855",
         "type": "github"
       },
       "original": {
         "dir": "build/package/nix",
         "owner": "tgstation",
         "repo": "tgstation-server",
+        "rev": "e7d2a23450a7cb00e0b2bb87dc0815fec04d1855",
         "type": "github"
       }
     },
@@ -458,11 +478,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1738192641,
-        "narHash": "sha256-GfwHOr015dOVniyqbEiQX+ys0pJ15ZHpMxxlSBieEiU=",
+        "lastModified": 1739726167,
+        "narHash": "sha256-kNezGxqHfVAE+ZPynum0OomjRKIKMTHOzIURYeJuJqE=",
         "owner": "tgstation-operations",
         "repo": "website-v2",
-        "rev": "b29ab5c83a9deccb2f1f96cd0a3f51b90ca42cfa",
+        "rev": "56b339e4e9140c5eada777007790abd8f295f327",
         "type": "github"
       },
       "original": {
