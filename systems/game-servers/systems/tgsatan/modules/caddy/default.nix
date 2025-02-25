@@ -62,7 +62,7 @@
         environmentFile = ./aws.env;
       };
       "attic.tgstation13.org" = {};
-      "github_webhooks.tgstation13.org" = {};
+      "github-webhooks.tgstation13.org" = {};
     };
   };
   services.caddy = {
@@ -87,8 +87,8 @@
           }
         '';
       };
-      "github_webhooks.tgstation13.org" = {
-        useACMEHost = "github_webhooks.tgstation13.org";
+      "github-webhooks.tgstation13.org" = {
+        useACMEHost = "github-webhooks.tgstation13.org";
         extraConfig = ''
           encode gzip zstd
           reverse_proxy localhost:5004 {
