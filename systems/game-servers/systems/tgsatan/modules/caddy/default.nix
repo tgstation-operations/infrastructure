@@ -62,6 +62,7 @@
         environmentFile = ./aws.env;
       };
       "attic.tgstation13.org" = {};
+      "github_webhooks.tgstation13.org" = {};
     };
   };
   services.caddy = {
