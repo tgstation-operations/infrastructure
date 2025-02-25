@@ -81,7 +81,10 @@
         useACMEHost = "tgs.blockmoths.eu.tgstation13.org";
         extraConfig = ''
           encode gzip zstd
-          reverse_proxy localhost:5000
+          reverse_proxy localhost:5000 {
+            health_uri /health
+            health_port 5000
+          }
         '';
       };
       "s3.tgstation13.org" = {
