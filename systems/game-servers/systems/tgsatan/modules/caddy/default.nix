@@ -62,7 +62,6 @@
         environmentFile = ./aws.env;
       };
       "attic.tgstation13.org" = {};
-      "github-webhooks.tgstation13.org" = {};
     };
   };
   services.caddy = {
@@ -84,16 +83,6 @@
           reverse_proxy localhost:5000 {
             health_uri /health
             health_port 5000
-          }
-        '';
-      };
-      "github-webhooks.tgstation13.org" = {
-        useACMEHost = "github-webhooks.tgstation13.org";
-        extraConfig = ''
-          encode gzip zstd
-          reverse_proxy localhost:5004 {
-            health_uri /health
-            health_port 5004
           }
         '';
       };

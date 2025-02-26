@@ -66,6 +66,7 @@
     certs = {
       "tgstation13.org" = {};
       "forums.tgstation13.org" = {};
+      "github-webhooks.tgstation13.org" = {};
     };
   };
 
@@ -174,6 +175,16 @@
             env DB_NAME {env.DB_NAME}
             env DB_USER {env.DB_USER}
             env DB_PASSWORD {env.DB_PASSWORD}
+          }
+        '';
+      };
+      "github-webhooks.tgstation13.org" = {
+        useACMEHost = "github-webhooks.tgstation13.org";
+        extraConfig = ''
+          encode gzip zstd
+          reverse_proxy localhost:5004 {
+            health_uri /health
+            health_port 5004
           }
         '';
       };

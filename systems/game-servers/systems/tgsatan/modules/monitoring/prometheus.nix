@@ -82,7 +82,7 @@ in {
         static_configs = [
           {
             targets = [
-              "tgsatan.tg.lan:${prAnnouncerPort}"
+              "lime.tg.lan:${prAnnouncerPort}"
             ];
           }
         ];

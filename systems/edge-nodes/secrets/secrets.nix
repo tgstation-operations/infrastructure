@@ -16,6 +16,10 @@ let
   frontend_systems = [lime];
 in {
   "cloudflare_api.age".publicKeys = users ++ frontend_systems;
+  # TGS PR Announcer
+  # The same value is used in game-servers/secrets/tg13-comms.age
+  # TODO: Move to a shared secret (somehow)
+  "tgstation-pr-announcer.age".publicKeys = users ++ frontend_systems;
   "tailscaleAuthKey.age".publicKeys = users ++ systems;
   "phpbb_db.age".publicKeys = users ++ frontend_systems;
 }
