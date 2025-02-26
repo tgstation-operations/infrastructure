@@ -5,7 +5,7 @@
 }: let
   systemdPromPort = toString config.services.prometheus.exporters.systemd.port;
   nodeExporterPort = toString config.services.prometheus.exporters.node.port;
-  # Needs moved into a common config
+  # Needs to be moved into a common config
   tgsPromPort = "5001";
   prAnnouncerPort = "5004";
   # The following is already a string, so no need to convert it
@@ -16,17 +16,11 @@ in {
     globalConfig.scrape_interval = "10s";
     scrapeConfigs = [
       {
-        job_name = "tgsatan_node";
-        static_configs = [
-          {targets = ["tgsatan.tg.lan:${toString config.services.prometheus.exporters.node.port}"];}
-        ];
-      }
-      {
         job_name = "tgsatan_gpu_1";
         static_configs = [{targets = ["tgsatan.tg.lan:9400"];}];
       }
       {
-        job_name = "tgsatan_caddy";
+        job_name = "caddy";
         static_configs = [{targets = ["tgsatan.tg.lan:2019"];}];
       }
       # {
@@ -93,18 +87,18 @@ in {
           }
         ];
       }
-      {
-        job_name = "systemd relay node";
-        static_configs = [
-          {
-            targets =
-              [
-                "warsaw.tg.lan:${systemdPromPort}"
-              ]
-              ++ (import ./relay-nodes.nix) systemdPromPort;
-          }
-        ];
-      }
+      # {
+      #   job_name = "systemd relay node";
+      #   static_configs = [
+      #     {
+      #       targets =
+      #         [
+      #           "warsaw.tg.lan:${systemdPromPort}"
+      #         ]
+      #         ++ (import ./relay-nodes.nix) systemdPromPort;
+      #     }
+      #   ];
+      # }
       {
         job_name = "stats relay node";
         static_configs = [

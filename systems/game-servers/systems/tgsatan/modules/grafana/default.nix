@@ -13,12 +13,11 @@
     owner = "${config.systemd.services.grafana.serviceConfig.User}";
   };
 
-  networking.firewall.allowedTCPPorts = [
-    3000
-  ];
-  networking.firewall.allowedUDPPorts = [
-    3000
-  ];
+  age.secrets.grafana_admin = {
+    file = ../../secrets/grafana_admin.age;
+    owner = "${config.systemd.services.grafana.serviceConfig.User}";
+  };
+
   services.grafana = {
     enable = true;
     dataDir  = "/persist/grafana";
@@ -26,11 +25,21 @@
     settings = {
       analytics.reporting_enabled = false;
 
+      security = {
+        admin_email = "admin@tgstation13.org";
+        admin_username = "admin";
+        admin_password = "$__file{${config.age.secrets.grafana_admin.path}}";
+        strict_transport_security = true;
+      };
+
       server = {
         http_addr = "100.64.0.1"; # tailscale IP
         http_port = 3000;
+        protocol = "https";
         enforce_domain = false;
         enable_gzip = true;
+        domain = "tgsatan.tg.lan";
+        cookie_secure = true;
       };
 
       database = {
