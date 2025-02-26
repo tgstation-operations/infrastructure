@@ -9,7 +9,7 @@ let
   frankfurt3 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBktuwWGIps3ivY+h3H05G91rXGOTp9WzZP6A2HJjnGa";
   lime = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILDcqEOMKjP4rtTC0qyl/oZx9C6Zfal+AbTY6nk87OPy";
   bratwurst = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKMx0wL0vtoi+cVBGPLgfIabUbDYkNvcrLjmUBeJAtXD";
-  dachshund = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMeUKszlVmCSaqsvhj5OQzNWaFuU4hoYrq5wEzmHUfV7";
+  dachshund = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPgQrCA2zPFEqa1L6+owVERY2spikooX0pUqUDRb+aAD";
   knipp = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKpM1arHuexcm4OB8dASh2yHNbZKyDXwXwCxosGUhe5A";
   systems = [dallas chicago atlanta frankfurt2 frankfurt3 lime bratwurst dachshund knipp];
 
