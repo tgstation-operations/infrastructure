@@ -7,7 +7,7 @@
     isNormalUser = true;
 
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOxlNiboPEkPbIo0UhWZt0TiMtV+ZgiQxGD8gtjZjORV derg@derg-local"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPvRq0FC5TOB9c+XRJdx20JUSga76R3Ohni3FH7trzgE derg@derg-nix"
     ];
 
     extraGroups = [

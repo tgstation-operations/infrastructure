@@ -67,6 +67,7 @@ in {
       "/var/lib/tailscale"
       "/etc/NetworkManager/system-connections"
       "/var/lib/acme"
+      "/var/lib/postgresql"
     ];
   };
 
