@@ -6,7 +6,7 @@
 }: {
   services.postgresql = {
     enable = true;
-    port = 5432;
+    settings.port = 5432;
     package = pkgs.postgresql_17; # I like to live dangerously
     enableJIT = true;
     checkConfig = true;
