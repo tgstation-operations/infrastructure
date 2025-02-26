@@ -17,10 +17,6 @@ in {
   "cloudflared-pem.age".publicKeys = users ++ systems;
   # Tgstation website api key
   "tgstation-web-apikey.age".publicKeys = users ++ systems;
-  # TGS PR Announcer
-  # The same value is used in game-servers/secrets/tg13-comms.age
-  # TODO: Move to a shared secret (somehow)
-  "tgstation-pr-announcer.age".publicKeys = users ++ systems;
   # AWS Route 53 DNS-01
   "aws_credentials.age".publicKeys = users ++ systems;
   # Atticd
