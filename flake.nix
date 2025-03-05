@@ -68,7 +68,7 @@
         allowUnfree = true;
         allowUnfreePredicate = _: true;
       };
-      overlays = [];
+      overlays = [fenix.overlays.default];
     };
 
     tgsatan = {
