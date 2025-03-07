@@ -67,6 +67,9 @@
     ],
     "tag:staging": [
       "group:op"
+    ],
+    "tag:mothbus": [
+      "group:op"
     ]
   },
   "acls": [
@@ -184,6 +187,15 @@
       ],
       "dst": [
         "tag:staging:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:mothbus"
+      ],
+      "dst": [
+        "tag:dbcluster:3306"
       ]
     }
   ]
