@@ -61,6 +61,7 @@
       with pkgs; [
         fenix.packages.i686-linux.stable.completeToolchain
         nixpkgs.legacyPackages.i686-linux.llvmPackages.clangUseLLVM
+        pkg-config
         git
         nodejs_22
         dotnetCorePackages.sdk_8_0
