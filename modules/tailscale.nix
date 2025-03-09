@@ -1,6 +1,5 @@
 {
   pkgs,
-  networkmanager,
   ...
 }: {
   services.tailscale = {
@@ -24,7 +23,7 @@
     before = ["network-online.target"];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${networkmanager}/bin/nm-online -q";
+      ExecStart = "${pkgs.networkmanager}/bin/nm-online -q";
       RemainAfterExit = "yes";
       Environment = "NM_ONLINE_TIMEOUT=60";
     };
