@@ -113,7 +113,7 @@
     };
   };
   # Server Info Fetcher
-  systemd.services."tgstation-serverdatasync" = {
+  systemd.services."tgstation-gameserverdatasync" = {
     serviceConfig = {
       User = "caddy";
       Group = "caddy";

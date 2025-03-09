@@ -191,7 +191,7 @@
     };
   };
   # Server Info Fetcher
-  systemd.services."tgstation-serverdatasync" = {
+  systemd.services."tgstation-gameserverdatasync" = {
     wantedBy = ["multi-user.target"];
     serviceConfig = {
       Restart = "always";
