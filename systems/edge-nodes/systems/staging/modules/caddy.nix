@@ -128,7 +128,7 @@
             hash = "sha256-I5tVl9Wh4sovO9bVJRPpIQOn4S9dfa5mYad/AB8WPNs=";
           };
           cargoHash = "sha256-vRVVGVXAvKbQ8lpgDknTKnIL+HYgkPy1R//TbUG4F6o=";
-        }}/bin/server-info-fetcher --servers 100.64.0.11:3336,100.64.0.1:1337,100.64.0.1:1447,100.64.0.1:5337 /run/tgstation-website-v2/serverinfo.json
+        }}/bin/server-info-fetcher --servers blockmoths.tg.lan:3336,tgsatan.tg.lan:1337,tgsatan.tg.lan:1447,tgsatan.tg.lan:5337 /run/tgstation-website-v2/serverinfo.json
       '';
     };
   };
