@@ -8,6 +8,7 @@ This place is not a place of honor... no highly esteemed deed is commemorated he
 oranges - out of band access to lime/ domain owner
 mothblocks - out of band access to blockmoths and eu relays
 scriptis - cloudflare dns
+
 # Repository structure
 ```
 <blorbo_name> = placeholder for the name of a blorbo
