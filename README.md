@@ -10,7 +10,7 @@ oranges - out of band access to lime/ domain owner
 
 mothblocks - out of band access to blockmoths and eu relays
 
-scriptis - cloudflare dns
+scriptis/lorwp - cloudflare dns
 
 # Repository structure
 ```
