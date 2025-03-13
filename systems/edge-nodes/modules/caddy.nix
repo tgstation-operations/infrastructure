@@ -120,7 +120,8 @@
     enable = true;
     package = pkgs-unstable.caddy.withPlugins {
       plugins = [
-        "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb" # Module to retrieve trusted proxy IPs from cloudflare
+        "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb", # Module to retrieve trusted proxy IPs from cloudflare
+        "github.com/greenpau/caddy-security"
       ];
       hash = "sha256-o/A1YSVSfUvwaepb7IusiwCt2dAGmzZrtM3cb8i8Too=";
     };
@@ -185,6 +186,52 @@
           reverse_proxy localhost:5004 {
             health_uri /health
             health_port 5004
+          }
+        '';
+      };
+      "raw-logs.tgstation13.org" = {
+        useACMEHost = "raw-logs.tgstation13.org";
+        extraConfig = ''
+          encode gzip zstd
+          order authenticate before respond
+          order authorize before basicauth
+          security {
+              oauth identity provider generic {
+                realm generic
+                driver generic
+                client_id {env.GENERIC_CLIENT_ID}
+                client_secret {env.GENERIC_CLIENT_SECRET}
+                scopes user user.groups
+                base_auth_url https://forums.tgstation13.org/app.php/tgapi/oauth/auth
+              }
+
+          authentication portal tgstation {
+                crypto default token lifetime 3600
+                crypto key sign-verify {env.JWT_SHARED_KEY}
+                enable identity provider generic
+                cookie domain raw-logs.tgstation13.org
+                ui {
+                  links {
+                    "My Identity" "/whoami" icon "las la-user"
+                  }
+                }
+
+                transform user {
+                  match realm generic
+                  action add role authp/user
+                }
+
+                transform user {
+                  match realm generic
+                }
+              }
+          authorization policy mypolicy {
+                set auth url https://forums.tgstation13.org/app.php/tgapi/oauth/auth
+                crypto key verify {env.JWT_SHARED_KEY}
+                allow roles authp/admin authp/user
+                validate bearer header
+                inject headers with claims
+              }
           }
         '';
       };
