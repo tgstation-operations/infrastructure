@@ -120,8 +120,8 @@
     enable = true;
     package = pkgs-unstable.caddy.withPlugins {
       plugins = [
-        "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb", # Module to retrieve trusted proxy IPs from cloudflare
-        "github.com/greenpau/caddy-security"
+        "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb" # Module to retrieve trusted proxy IPs from cloudflare
+        "github.com/greenpau/caddy-security" # Security module that provides OAuth
       ];
       hash = "sha256-o/A1YSVSfUvwaepb7IusiwCt2dAGmzZrtM3cb8i8Too=";
     };
