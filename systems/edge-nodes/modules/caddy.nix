@@ -147,6 +147,43 @@
         useACMEHost = "tgstation13.org";
         extraConfig = ''
           encode gzip zstd
+          order authenticate before respond
+          order authorize before basicauth
+          security {
+              oauth identity provider tgstation {
+                realm tg
+                driver generic
+                client_id {env.TG_OAUTH_RAWLOGS_CLIENT_ID}
+                client_secret {env.TG_OAUTH_RAWLOGS_CLIENT_SECRET}
+                scopes user user.groups
+                base_auth_url https://forums.tgstation13.org/app.php/tgapi/oauth/auth
+              }
+
+          authentication portal tgstation {
+                enable identity provider tgstation
+                cookie domain raw-logs.tgstation13.org
+                ui {
+                  links {
+                    "My Identity" "/whoami" icon "las la-user"
+                  }
+                }
+
+                transform user {
+                  match realm tg
+                  action add role authp/user
+                }
+
+                transform user {
+                  match realm tg
+                }
+              }
+              authorization policy raw-logs {
+                set auth url https://forums.tgstation13.org/app.php/tgapi/oauth/auth
+                allow roles authp/admin authp/user
+                validate bearer header
+                inject headers with claims
+              }
+          }
           root ${
             toString inputs.tgstation-website.packages.x86_64-linux.default
           }
@@ -157,6 +194,11 @@
             env _GET 127.0.0.1
           }
           handle_path /serverinfo.json {
+            root /run/tgstation-website-v2/serverinfo.json
+            file_server
+          }
+          handle_path /raw-logs {
+            authorize with raw-logs
             root /run/tgstation-website-v2/serverinfo.json
             file_server
           }
@@ -186,52 +228,6 @@
           reverse_proxy localhost:5004 {
             health_uri /health
             health_port 5004
-          }
-        '';
-      };
-      "raw-logs.tgstation13.org" = {
-        useACMEHost = "raw-logs.tgstation13.org";
-        extraConfig = ''
-          encode gzip zstd
-          order authenticate before respond
-          order authorize before basicauth
-          security {
-              oauth identity provider generic {
-                realm generic
-                driver generic
-                client_id {env.GENERIC_CLIENT_ID}
-                client_secret {env.GENERIC_CLIENT_SECRET}
-                scopes user user.groups
-                base_auth_url https://forums.tgstation13.org/app.php/tgapi/oauth/auth
-              }
-
-          authentication portal tgstation {
-                crypto default token lifetime 3600
-                crypto key sign-verify {env.JWT_SHARED_KEY}
-                enable identity provider generic
-                cookie domain raw-logs.tgstation13.org
-                ui {
-                  links {
-                    "My Identity" "/whoami" icon "las la-user"
-                  }
-                }
-
-                transform user {
-                  match realm generic
-                  action add role authp/user
-                }
-
-                transform user {
-                  match realm generic
-                }
-              }
-          authorization policy mypolicy {
-                set auth url https://forums.tgstation13.org/app.php/tgapi/oauth/auth
-                crypto key verify {env.JWT_SHARED_KEY}
-                allow roles authp/admin authp/user
-                validate bearer header
-                inject headers with claims
-              }
           }
         '';
       };
