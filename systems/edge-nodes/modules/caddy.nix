@@ -93,27 +93,27 @@
       variables_order = EGPCS
     '';
     pools = {
-    php-caddy = {
-      user = "php-caddy";
-      group = "caddy";
-      phpPackage = pkgs.php83;
-      settings = {
-        "pm" = "dynamic";
-        "pm.max_children" = 75;
-        "pm.start_servers" = 10;
-        "pm.min_spare_servers" = 5;
-        "pm.max_spare_servers" = 20;
-        "pm.max_requests" = 500;
-        "listen.owner" = config.services.caddy.user;
-        "listen.group" = config.services.caddy.group;
+      php-caddy = {
+        user = "php-caddy";
+        group = "caddy";
+        phpPackage = pkgs.php83;
+        settings = {
+          "pm" = "dynamic";
+          "pm.max_children" = 75;
+          "pm.start_servers" = 10;
+          "pm.min_spare_servers" = 5;
+          "pm.max_spare_servers" = 20;
+          "pm.max_requests" = 500;
+          "listen.owner" = config.services.caddy.user;
+          "listen.group" = config.services.caddy.group;
+        };
       };
     };
   };
-  };
-  age.secrets.phpbb_db.file = ../secrets/phpbb_db.age;
+  age.secrets.caddy-edge.file = ../secrets/caddy.age;
   systemd.services.caddy = {
     serviceConfig = {
-      EnvironmentFile = config.age.secrets.phpbb_db.path;
+      EnvironmentFile = config.age.secrets.caddy-edge.path;
     };
   };
   services.caddy = {
@@ -121,6 +121,7 @@
     package = pkgs-unstable.caddy.withPlugins {
       plugins = [
         "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb" # Module to retrieve trusted proxy IPs from cloudflare
+        "github.com/greenpau/caddy-security" # Security module that provides OAuth
       ];
       hash = "sha256-o/A1YSVSfUvwaepb7IusiwCt2dAGmzZrtM3cb8i8Too=";
     };
@@ -146,6 +147,43 @@
         useACMEHost = "tgstation13.org";
         extraConfig = ''
           encode gzip zstd
+          order authenticate before respond
+          order authorize before basicauth
+          security {
+              oauth identity provider tgstation {
+                realm tg
+                driver generic
+                client_id {env.TG_OAUTH_RAWLOGS_CLIENT_ID}
+                client_secret {env.TG_OAUTH_RAWLOGS_CLIENT_SECRET}
+                scopes user user.groups
+                base_auth_url https://forums.tgstation13.org/app.php/tgapi/oauth/auth
+              }
+
+          authentication portal tgstation {
+                enable identity provider tgstation
+                cookie domain raw-logs.tgstation13.org
+                ui {
+                  links {
+                    "My Identity" "/whoami" icon "las la-user"
+                  }
+                }
+
+                transform user {
+                  match realm tg
+                  action add role authp/user
+                }
+
+                transform user {
+                  match realm tg
+                }
+              }
+              authorization policy raw-logs {
+                set auth url https://forums.tgstation13.org/app.php/tgapi/oauth/auth
+                allow roles authp/admin authp/user
+                validate bearer header
+                inject headers with claims
+              }
+          }
           root ${
             toString inputs.tgstation-website.packages.x86_64-linux.default
           }
@@ -156,6 +194,11 @@
             env _GET 127.0.0.1
           }
           handle_path /serverinfo.json {
+            root /run/tgstation-website-v2/serverinfo.json
+            file_server
+          }
+          handle_path /raw-logs {
+            authorize with raw-logs
             root /run/tgstation-website-v2/serverinfo.json
             file_server
           }
