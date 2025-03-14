@@ -93,27 +93,27 @@
       variables_order = EGPCS
     '';
     pools = {
-    php-caddy = {
-      user = "php-caddy";
-      group = "caddy";
-      phpPackage = pkgs.php83;
-      settings = {
-        "pm" = "dynamic";
-        "pm.max_children" = 75;
-        "pm.start_servers" = 10;
-        "pm.min_spare_servers" = 5;
-        "pm.max_spare_servers" = 20;
-        "pm.max_requests" = 500;
-        "listen.owner" = config.services.caddy.user;
-        "listen.group" = config.services.caddy.group;
+      php-caddy = {
+        user = "php-caddy";
+        group = "caddy";
+        phpPackage = pkgs.php83;
+        settings = {
+          "pm" = "dynamic";
+          "pm.max_children" = 75;
+          "pm.start_servers" = 10;
+          "pm.min_spare_servers" = 5;
+          "pm.max_spare_servers" = 20;
+          "pm.max_requests" = 500;
+          "listen.owner" = config.services.caddy.user;
+          "listen.group" = config.services.caddy.group;
+        };
       };
     };
   };
-  };
-  age.secrets.phpbb_db.file = ../secrets/phpbb_db.age;
+  age.secrets.caddy-edge.file = ../secrets/caddy.age;
   systemd.services.caddy = {
     serviceConfig = {
-      EnvironmentFile = config.age.secrets.phpbb_db.path;
+      EnvironmentFile = config.age.secrets.caddy-edge.path;
     };
   };
   services.caddy = {
