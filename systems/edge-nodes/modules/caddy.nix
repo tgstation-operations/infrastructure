@@ -163,8 +163,7 @@
             root /persist/wiki
             file_server
             php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
-              env WIKI_DB_HOST {env.WIKI_DB_HOST}
-              env WIKI_DB_PORT {env.WIKI_DB_PORT}
+              env WIKI_DB_URI {env.WIKI_DB_URI}
               env WIKI_DB_NAME {env.WIKI_DB_NAME}
               env WIKI_DB_USER {env.WIKI_DB_USER}
               env WIKI_DB_PASSWORD {env.WIKI_DB_PASSWORD}
