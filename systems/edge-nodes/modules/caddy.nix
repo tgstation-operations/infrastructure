@@ -159,6 +159,16 @@
             root /run/tgstation-website-v2/serverinfo.json
             file_server
           }
+          handle_path /wiki {
+            root /persist/wiki
+            file_server
+            php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
+              env WIKI_DB_HOST {env.WIKI_DB_HOST}
+              env WIKI_DB_PORT {env.WIKI_DB_PORT}
+              env WIKI_DB_NAME {env.WIKI_DB_NAME}
+              env WIKI_DB_USER {env.WIKI_DB_USER}
+              env WIKI_DB_PASSWORD {env.WIKI_DB_PASSWORD}
+          }
           redir /phpBB/ https://forums.tgstation13.org/
           redir /phpBB/*.php* https://forums.tgstation13.org/{http.request.orig_uri.path.file}?{http.request.orig_uri.query}{http.request.orig_uri.path.*/}
         '';
