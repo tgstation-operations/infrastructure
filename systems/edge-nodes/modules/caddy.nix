@@ -168,6 +168,10 @@
               env WIKI_DB_NAME {env.WIKI_DB_NAME}
               env WIKI_DB_USER {env.WIKI_DB_USER}
               env WIKI_DB_PASSWORD {env.WIKI_DB_PASSWORD}
+                    env WIKI_OAUTH2_CLIENT_ID {env.WIKI_OAUTH2_CLIENT_ID}
+                    env WIKI_OAUTH2_CLIENT_SECRET {env.WIKI_OAUTH2_CLIENT_SECRET}
+                    env WIKI_SECRET_KEY {env.WIKI_SECRET_KEY}
+                    env WIKI_UPGRADE_KEY {env.WIKI_UPGRADE_KEY}
           }
           redir /phpBB/ https://forums.tgstation13.org/
           redir /phpBB/*.php* https://forums.tgstation13.org/{http.request.orig_uri.path.file}?{http.request.orig_uri.query}{http.request.orig_uri.path.*/}
