@@ -60,6 +60,9 @@
     "tag:dbcluster": [
       "group:op"
     ],
+    "tag:garage": [
+      "group:op"
+    ],
     "tag:relay": [
       "group:op"
     ],
@@ -196,6 +199,8 @@
         "tag:mothbus"
       ],
       "dst": [
+        "tag:garage:80",
+        "tag:garage:443",
         "tag:dbcluster:3306"
       ]
     }
