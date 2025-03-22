@@ -162,7 +162,9 @@
           }
           redir /phpBB/ https://forums.tgstation13.org/
           redir /phpBB/*.php* https://forums.tgstation13.org/{http.request.orig_uri.path.file}?{http.request.orig_uri.query}{http.request.orig_uri.path.*/}
-          redir /wiki/ https://wiki.tgstation13.org{uri} permanent
+          handle_path /wiki/* {
+            redir * https://wiki.tgstation13.org{uri} permanent
+          }
         '';
       };
       "forums.tgstation13.org" = {
