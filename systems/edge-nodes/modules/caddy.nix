@@ -204,7 +204,7 @@
           rewrite @not_a_file /index.php
 
           ## Don't send deleted images
-          handle /images/deleted {
+          handle /images/deleted/* {
             respond 404
           }
 
