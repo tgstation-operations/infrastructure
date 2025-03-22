@@ -223,8 +223,8 @@
             header Cache-Control "public"
             file_server
           }
-        ''
-      }
+        '';
+      };
       "github-webhooks.tgstation13.org" = {
         useACMEHost = "github-webhooks.tgstation13.org";
         extraConfig = ''
