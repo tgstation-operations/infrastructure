@@ -77,7 +77,7 @@
           name = "loki";
           type = "loki";
           proxy = "proxy";
-          url = "http://tgsatan.tg.lan:3100";
+          url = "http://tgsatan.tg.lan:3100"; # Change when Loki is moved
         }
       ];
 
