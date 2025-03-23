@@ -84,6 +84,7 @@
       ],
       "dst": [
         "tag:backend:22",
+        "tag:staging:22",
         "tag:backend:80",
         "tag:backend:443"
       ]
