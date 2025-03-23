@@ -25,7 +25,7 @@ in {
 
       loki.write "endpoint" {
         endpoint {
-          url = "tgsatan.tg.lan:${loki_http_port}/api/v1/push"
+          url = "tgsatan.tg.lan:${toString loki_http_port}/api/v1/push"
         }
       }
     '';
