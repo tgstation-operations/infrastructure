@@ -1,4 +1,5 @@
-{ pkgs }: let
+{ pkgs, ... }:
+let
   loki_http_port = 3100;
 in {
   services.loki.configuration.server = {
