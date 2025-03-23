@@ -8,7 +8,7 @@
         grpc_listen_port = 9096;
       };
       common = {
-        instance_addr = 127.0.0.1;
+        instance_addr = "127.0.0.1";
         path_prefix = "/tmp/loki";
         storage.filesystem = {
           chunks_directory = "/tmp/loki/chunks";
