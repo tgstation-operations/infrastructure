@@ -3,7 +3,9 @@
     enable = true;
     configuration = {
       auth_enabled = false;
-      # ports defined in ./modules/alloy.nix
+      server = {
+        http_listen_port = 3100;
+      };
       common = {
         instance_addr = "127.0.0.1";
         path_prefix = "/tmp/loki";

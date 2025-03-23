@@ -1,10 +1,4 @@
-{ pkgs, ... }:
-let
-  loki_http_port = 3100;
-in {
-  services.loki.configuration.server = {
-    http_listen_port = loki_http_port;
-  };
+{ pkgs, ... }: {
   services.alloy = {
     enable = true;
     configPath = pkgs.writeText "config.alloy" ''
@@ -25,7 +19,7 @@ in {
 
       loki.write "endpoint" {
         endpoint {
-          url = "tgsatan.tg.lan:${toString loki_http_port}/api/v1/push"
+          url = "tgsatan.tg.lan:3100/api/v1/push"
         }
       }
     '';
