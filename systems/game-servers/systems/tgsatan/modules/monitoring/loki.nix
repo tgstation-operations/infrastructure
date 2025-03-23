@@ -3,10 +3,7 @@
     enable = true;
     configuration = {
       auth_enabled = false;
-      server = {
-        http_listen_port = 3100;
-        grpc_listen_port = 9096;
-      };
+      # ports defined in ./modules/alloy.nix
       common = {
         instance_addr = "127.0.0.1";
         path_prefix = "/tmp/loki";
@@ -42,5 +39,5 @@
       frontend.encoding = "protobuf";
       querier.engine.enable_multi_variant_queries = true;
     }
-  }
+  };
 }
