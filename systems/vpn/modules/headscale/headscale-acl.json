@@ -30,6 +30,7 @@
       "cheshify",
       "san7890",
       "shadowhand",
+      "ivory",
       "vekter"
     ],
     "group:keyholder-tgmc": [
@@ -41,8 +42,7 @@
       "minimeatwad",
       "naaanii",
       "stormwell",
-      "tiviplus",
-      "kiseki"
+      "tiviplus"
     ]
   },
   "tagOwners": {
@@ -85,7 +85,6 @@
       ],
       "dst": [
         "tag:backend:22",
-        "tag:staging:22",
         "tag:backend:80",
         "tag:backend:443"
       ]
