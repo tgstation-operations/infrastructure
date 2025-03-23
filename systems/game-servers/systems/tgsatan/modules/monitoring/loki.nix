@@ -38,6 +38,6 @@
       ruler.alertmanager_url = "http://localhost:9093";
       frontend.encoding = "protobuf";
       querier.engine.enable_multi_variant_queries = true;
-    }
+    };
   };
 }
