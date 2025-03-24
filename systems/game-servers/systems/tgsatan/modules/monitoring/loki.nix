@@ -16,7 +16,7 @@
         replication_factor = 1;
         ring.kvstore.store = "inmemory";
       };
-      query_range.results.cache.embedded_cache = {
+      query_range.results_cache.cache.embedded_cache = {
         enabled = true;
         max_size_mb = 100;
       };
