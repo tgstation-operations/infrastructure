@@ -1,6 +1,7 @@
 { ... }: {
   services.loki = {
     enable = true;
+    dataDir = "/persist/loki";
     configuration = {
       auth_enabled = false;
       server = {
