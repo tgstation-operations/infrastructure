@@ -20,7 +20,6 @@
         enabled = true;
         max_size_mb = 100;
       };
-      limits_config.metric_aggregation_enabled = true;
       schema_config.configs = [
         {
           from = "2020-10-24";
@@ -33,13 +32,9 @@
           };
         }
       ];
-      pattern_ingester = {
-        enabled = true;
-        metric_aggregation.local_address = "localhost:3100";
-      };
-      ruler.alertmanager_url = "http://localhost:9093";
+      # Enable this if we ever use services.prometheus.alertManager.enable = true;
+      # ruler.alertmanager_url = "http://localhost:9093";
       frontend.encoding = "protobuf";
-      querier.engine.enable_multi_variant_queries = true;
     };
   };
 }
