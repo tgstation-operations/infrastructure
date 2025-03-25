@@ -24,7 +24,6 @@
     ./modules/haproxy
     ./modules/motd
     ./modules/caddy.nix
-    ./modules/kanidm.nix
   ];
 in {
   networking.hostName = "wiggle";
@@ -81,12 +80,6 @@ in {
 
   swapDevices = [];
 
-  services.kanidm = {
-    serverSettings = {
-      domain = "idm.staging.tgstation13.org"; # If changed, you MUST run `kanidmd domain rename` immediately after. changes will break shit
-      origin = "https://idm.staging.tgstation13.org";
-    };
-  };
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
