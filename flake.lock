@@ -478,11 +478,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1742908528,
-        "narHash": "sha256-Cw1DdQjXJiu+N209J6McEr7mFdoutfQWbYrTrvjyBOM=",
+        "lastModified": 1739726167,
+        "narHash": "sha256-kNezGxqHfVAE+ZPynum0OomjRKIKMTHOzIURYeJuJqE=",
         "owner": "tgstation-operations",
         "repo": "website-v2",
-        "rev": "c5e888da630b08cada6baa62ade0492b8bdb9318",
+        "rev": "56b339e4e9140c5eada777007790abd8f295f327",
         "type": "github"
       },
       "original": {
