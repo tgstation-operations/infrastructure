@@ -123,7 +123,7 @@
       plugins = [
         "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb" # Module to retrieve trusted proxy IPs from cloudflare
       ];
-      hash = "sha256-giy2YToFmJuDxX26OF8psAmkVh4R4uFFNHXWZ2dVLVA=";
+      hash = "sha256-o/A1YSVSfUvwaepb7IusiwCt2dAGmzZrtM3cb8i8Too=";
     };
     enableReload =
       true; # Reload caddy instead of restarting it on config changes
