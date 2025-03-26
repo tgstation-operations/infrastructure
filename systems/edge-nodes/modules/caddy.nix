@@ -216,7 +216,15 @@
 
           # Run any .php file
           handle @php_files {
-            php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket}
+            php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
+              env WIKI_DB_URI {env.WIKI_DB_URI}
+              env WIKI_DB_NAME {env.WIKI_DB_NAME}
+              env WIKI_DB_USER {env.WIKI_DB_USER}
+              env WIKI_DB_PASSWORD {env.WIKI_DB_PASSWORD}
+              env WIKI_SECRET_KEY {env.WIKI_SECRET_KEY}
+              env WIKI_OAUTH2_CLIENT_ID {env.WIKI_OAUTH2_CLIENT_ID}
+              env WIKI_OAUTH2_CLIENT_SECRET {env.WIKI_OAUTH2_CLIENT_SECRET}
+            }
           }
 
           # Serve static files
