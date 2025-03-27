@@ -24,7 +24,6 @@
     programs.zsh.syntaxHighlighting.enable = true;
 
     programs.starship.enable = true;
-    programs.zoxide.enable = true;
 
     programs.zsh.initExtra = ''
       eval $(${pkgs.nix-your-shell}/bin/nix-your-shell zsh)
