@@ -140,6 +140,8 @@
         # <https://caddyserver.com/docs/caddyfile/options#trusted-proxies-strict>
         trusted_proxies_strict
       }
+    '';
+    extraConfig = ''
       (cors) {
         @cors_preflight method OPTIONS
         @cors header Origin {args[0]}
