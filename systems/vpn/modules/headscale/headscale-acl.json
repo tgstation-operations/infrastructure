@@ -7,6 +7,7 @@
       "zephyrtfa",
       "lowrp",
       "iain0",
+      "ivory",
       "alexkar598"
     ],
     "group:keyholder-tg": [
@@ -30,6 +31,7 @@
       "cheshify",
       "san7890",
       "shadowhand",
+      "tattle",
       "vekter"
     ],
     "group:keyholder-tgmc": [
@@ -41,7 +43,8 @@
       "minimeatwad",
       "naaanii",
       "stormwell",
-      "tiviplus"
+      "tiviplus",
+      "kiseki"
     ]
   },
   "tagOwners": {
@@ -84,6 +87,7 @@
       ],
       "dst": [
         "tag:backend:22",
+        "tag:staging:22",
         "tag:backend:80",
         "tag:backend:443"
       ]
