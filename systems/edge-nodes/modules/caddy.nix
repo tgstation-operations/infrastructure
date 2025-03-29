@@ -162,7 +162,6 @@
       "tgstation13.org" = {
         useACMEHost = "tgstation13.org";
         extraConfig = ''
-          import cors *
           encode gzip zstd
           root ${
             toString inputs.tgstation-website.packages.x86_64-linux.default
@@ -174,6 +173,7 @@
             env _GET 127.0.0.1
           }
           handle_path /serverinfo.json {
+            import cors *
             root /run/tgstation-website-v2/serverinfo.json
             file_server
           }
