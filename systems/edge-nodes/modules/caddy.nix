@@ -157,6 +157,7 @@
             env _GET 127.0.0.1
           }
           handle_path /serverinfo.json {
+            header Access-Control-Allow-Origin *
             root /run/tgstation-website-v2/serverinfo.json
             file_server
           }
