@@ -140,6 +140,23 @@
         # <https://caddyserver.com/docs/caddyfile/options#trusted-proxies-strict>
         trusted_proxies_strict
       }
+      (cors) {
+        @cors_preflight method OPTIONS
+        @cors header Origin {args[0]}
+
+        handle @cors_preflight {
+          header Access-Control-Allow-Origin "{args[0]}"
+          header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE"
+          header Access-Control-Allow-Headers "Content-Type"
+          header Access-Control-Max-Age "3600"
+          respond "" 204
+        }
+
+        handle @cors {
+          header Access-Control-Allow-Origin "{args[0]}"
+          header Access-Control-Expose-Headers "Link"
+        }
+      }
     '';
     virtualHosts = {
       # <https://caddyserver.com/docs/caddyfile/concepts#addresses>
@@ -157,6 +174,7 @@
             env _GET 127.0.0.1
           }
           handle_path /serverinfo.json {
+            import cors *
             root /run/tgstation-website-v2/serverinfo.json
             file_server
           }
