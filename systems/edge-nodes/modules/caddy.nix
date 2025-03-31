@@ -5,7 +5,18 @@
   inputs,
   headscaleIPv4,
   ...
-}: {
+}: let
+  phpWithProfiling = pkgs.php83.buildEnv {
+    extensions = ({ enabled, all }: enabled ++ (with all; [
+      xdebug
+    ]));
+    extraConfig = ''
+      xdebug.mode=profile
+      xdebug.start_with_request=trigger
+      xdebug.output_dir = /tmp/wiki_cachegrind
+    '';
+  };
+in {
   # For Unix sockets, unused for now
   systemd.tmpfiles.rules = [
     "d /run/caddy 644 ${config.services.caddy.user} ${config.services.caddy.group}"
@@ -74,7 +85,7 @@
   # For manual usage of composer or php
   environment.systemPackages = [
     pkgs.php83Packages.composer
-    pkgs.php83
+    phpWithProfiling
   ];
   users.users.php-caddy = {
     isSystemUser = true;
@@ -97,7 +108,7 @@
     php-caddy = {
       user = "php-caddy";
       group = "caddy";
-      phpPackage = pkgs.php83;
+      phpPackage = phpWithProfiling;
       settings = {
         "pm" = "dynamic";
         "pm.max_children" = 75;
@@ -244,6 +255,7 @@
               env WIKI_SECRET_KEY {env.WIKI_SECRET_KEY}
               env WIKI_OAUTH2_CLIENT_ID {env.WIKI_OAUTH2_CLIENT_ID}
               env WIKI_OAUTH2_CLIENT_SECRET {env.WIKI_OAUTH2_CLIENT_SECRET}
+              env XDEBUG_TRIGGER "1"
             }
           }
 
