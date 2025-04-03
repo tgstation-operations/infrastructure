@@ -275,7 +275,7 @@ in {
     enableUnixSocket = true;
     maxMemory = 512;
     user = "php-caddy";
-  }
+  };
   # Server Info Fetcher
   systemd.services."tgstation-gameserverdatasync" = {
     wantedBy = ["multi-user.target"];
