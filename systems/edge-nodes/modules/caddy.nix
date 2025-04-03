@@ -7,14 +7,7 @@
   ...
 }: let
   phpWithProfiling = pkgs.php83.buildEnv {
-    extensions = ({ enabled, all }: enabled ++ (with all; [
-      xdebug
-    ]));
-    extraConfig = ''
-      xdebug.mode=profile
-      xdebug.start_with_request=trigger
-      xdebug.output_dir = /tmp/wiki_cachegrind
-    '';
+    extensions = ({ enabled, all }: enabled ++ (with all; [ memcached ]));
   };
 in {
   # For Unix sockets, unused for now
@@ -278,6 +271,12 @@ in {
       };
     };
   };
+  services.memcached = {
+    enable = true;
+    enableUnixSocket = true;
+    maxMemory = 512;
+    user = "php-caddy";
+  }
   # Server Info Fetcher
   systemd.services."tgstation-gameserverdatasync" = {
     wantedBy = ["multi-user.target"];
