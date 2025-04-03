@@ -248,7 +248,6 @@ in {
               env WIKI_SECRET_KEY {env.WIKI_SECRET_KEY}
               env WIKI_OAUTH2_CLIENT_ID {env.WIKI_OAUTH2_CLIENT_ID}
               env WIKI_OAUTH2_CLIENT_SECRET {env.WIKI_OAUTH2_CLIENT_SECRET}
-              env XDEBUG_TRIGGER "1"
             }
           }
 
