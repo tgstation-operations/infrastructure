@@ -28,6 +28,7 @@
     ./modules/atticd.nix
     ./modules/nvidia.nix
     ./modules/redbot.nix
+    ./modules/authentik.nix
     ./modules/motd
   ];
 in {
