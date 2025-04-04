@@ -3,6 +3,7 @@
     ../base.nix
     ../disko-ovh.nix
     ../modules/caddy.nix
+    ../modules/tgstation-pr-announcer/default.nix
   ];
   ## LIME - Vint Hill, VA. Owned by orangesnz
   networking.hostName = "lime";

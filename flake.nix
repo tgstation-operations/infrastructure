@@ -10,7 +10,7 @@
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "alejandra.cachix.org-1:NjZ8kI0mf4HCq8yPnBfiTurb96zp1TBWl8EC54Pzjm0="
-      "tgstation-infrastructure:aaSrfZGLWk7a+RtcX0NaFYkOs6E4QlJ+5MZ8padOt3o="
+      "tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA="
     ];
   };
   inputs = {
@@ -35,6 +35,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
     dragon-bot.url = "github:tgstation/dragon-bot";
     tgstation-server.url = "github:tgstation/tgstation-server/e7d2a23450a7cb00e0b2bb87dc0815fec04d1855?dir=build/package/nix";
+    tgstation-pr-announcer.url = "github:tgstation/tgstation/3451496743959735c911343c658c466a6af2fa49?dir=tools/Tgstation.PRAnnouncer";
     tgstation-website.url = "github:tgstation-operations/website-v2";
     impermanence.url = "github:scriptis/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -67,7 +68,7 @@
         allowUnfree = true;
         allowUnfreePredicate = _: true;
       };
-      overlays = [];
+      overlays = [fenix.overlays.default];
     };
 
     tgsatan = {
@@ -104,7 +105,7 @@
         targetHost = "dallas.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-amd64"
         ];
       };
       imports =
@@ -217,7 +218,7 @@
         targetHost = "bratwurst.tg.lan";
         targetUser = "deploy";
         tags = [
-          "relay"
+          "relay-arm"
         ];
       };
       nixpkgs.system = "aarch64-linux";

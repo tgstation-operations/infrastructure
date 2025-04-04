@@ -7,6 +7,7 @@
       "zephyrtfa",
       "lowrp",
       "iain0",
+      "ivory",
       "alexkar598"
     ],
     "group:keyholder-tg": [
@@ -27,18 +28,24 @@
       "burgerman",
       "thefinalpotatoe",
       "thebiblemelts",
+      "cheshify",
       "san7890",
+      "shadowhand",
+      "tattle",
+      "spiders",
       "vekter"
     ],
     "group:keyholder-tgmc": [
       "aiia",
+      "barnet",
       "darkbyond",
       "ivanmixo",
       "lumipharon",
-      "tiviplus",
-      "barnet",
+      "minimeatwad",
+      "naaanii",
       "stormwell",
-      "minimeatwad"
+      "tiviplus",
+      "kiseki"
     ]
   },
   "tagOwners": {
@@ -57,6 +64,9 @@
     "tag:dbcluster": [
       "group:op"
     ],
+    "tag:garage": [
+      "group:op"
+    ],
     "tag:relay": [
       "group:op"
     ],
@@ -64,6 +74,9 @@
       "group:op"
     ],
     "tag:staging": [
+      "group:op"
+    ],
+    "tag:mothbus": [
       "group:op"
     ]
   },
@@ -75,6 +88,7 @@
       ],
       "dst": [
         "tag:backend:22",
+        "tag:staging:22",
         "tag:backend:80",
         "tag:backend:443"
       ]
@@ -182,6 +196,17 @@
       ],
       "dst": [
         "tag:staging:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:mothbus"
+      ],
+      "dst": [
+        "tag:garage:80",
+        "tag:garage:443",
+        "tag:dbcluster:3306"
       ]
     }
   ]

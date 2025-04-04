@@ -70,7 +70,7 @@
       plugins = [
         "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb" # Module to retrieve trusted proxy IPs from cloudflare
       ];
-      hash = "sha256-o/A1YSVSfUvwaepb7IusiwCt2dAGmzZrtM3cb8i8Too=";
+      hash = "sha256-giy2YToFmJuDxX26OF8psAmkVh4R4uFFNHXWZ2dVLVA=";
     };
     enableReload = true; # Reload caddy instead of restarting it on config changes
     globalConfig = ''
@@ -113,7 +113,7 @@
     };
   };
   # Server Info Fetcher
-  systemd.services."tgstation-serverdatasync" = {
+  systemd.services."tgstation-gameserverdatasync" = {
     serviceConfig = {
       User = "caddy";
       Group = "caddy";
@@ -128,7 +128,7 @@
             hash = "sha256-I5tVl9Wh4sovO9bVJRPpIQOn4S9dfa5mYad/AB8WPNs=";
           };
           cargoHash = "sha256-vRVVGVXAvKbQ8lpgDknTKnIL+HYgkPy1R//TbUG4F6o=";
-        }}/bin/server-info-fetcher --servers 100.64.0.11:3336,100.64.0.1:1337,100.64.0.1:1447,100.64.0.1:5337 /run/tgstation-website-v2/serverinfo.json
+        }}/bin/server-info-fetcher --servers blockmoths.tg.lan:3336,tgsatan.tg.lan:1337,tgsatan.tg.lan:1447,tgsatan.tg.lan:5337 /run/tgstation-website-v2/serverinfo.json
       '';
     };
   };

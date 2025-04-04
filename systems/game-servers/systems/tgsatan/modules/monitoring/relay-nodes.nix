@@ -9,7 +9,8 @@
             if
               (builtins.hasAttr "deployment" values)
               && (builtins.hasAttr "tags" values.deployment)
-              && (builtins.elem "relay" values.deployment.tags)
+              && (builtins.elem "relay-amd64" values.deployment.tags
+                || builtins.elem "relay-arm" values.deployment.tags)
             then values.deployment.targetHost + ":" + (toString portNum)
             else ""
         )

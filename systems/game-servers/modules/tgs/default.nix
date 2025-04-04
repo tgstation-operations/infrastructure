@@ -5,10 +5,7 @@
   fenix,
   nixpkgs,
   ...
-}: let
-  fenix-i686 = fenix.packages.i686-linux;
-  pkgs-i686 = nixpkgs.legacyPackages.i686-linux;
-in {
+}: {
   environment.systemPackages = with pkgs; [
     rclone
   ];
@@ -62,19 +59,12 @@ in {
     # environmentFile =  # Required, add to host config to specify the database URI
     extra-path = lib.makeBinPath (
       with pkgs; [
+        fenix.packages.i686-linux.stable.completeToolchain
+        nixpkgs.legacyPackages.i686-linux.llvmPackages.clangUseLLVM
+        pkg-config
         git
         nodejs_22
         dotnetCorePackages.sdk_8_0
-        pkgs-i686.gcc
-        pkgs-i686.clang
-        pkgs-i686.libclang
-        (
-          with fenix-i686;
-            combine [
-              latest.cargo
-              stable.rustc
-            ]
-        )
         curl
         gnutar
         gzip
@@ -92,6 +82,6 @@ in {
     group = "${config.services.tgstation-server.groupname}";
   };
   systemd.services.tgstation-server = {
-    after = [ "tailscaled.service" ]; # Make sure this only starts once tailscaled is up, for our db connection
+    after = ["tailscaled.service"]; # Make sure this only starts once tailscaled is up, for our db connection
   };
 }

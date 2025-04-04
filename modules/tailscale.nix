@@ -1,4 +1,7 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  ...
+}: {
   services.tailscale = {
     enable = true;
     openFirewall = true;
@@ -9,12 +12,29 @@
     useRoutingFeatures = "client";
   };
 
+  # Bunch of workarounds here due to https://github.com/NixOS/nixpkgs/issues/180175
+  systemd.services.NetworkManager-wait-online.enable = false;
+
+  systemd.services.tgstation-wait-online = {
+    enable = true;
+    description = "tgstation-NetworkManager-wait-online-replacement";
+    requires = [ "NetworkManager.service" ];
+    after = ["NetworkManager.service"];
+    before = ["network-online.target"];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.networkmanager}/bin/nm-online -q";
+      RemainAfterExit = "yes";
+      Environment = "NM_ONLINE_TIMEOUT=60";
+    };
+    wantedBy = [ "network-online.target" ];
+  };
+
   systemd.services.tailscaled = {
     environment = {
       "TS_DEBUG_FIREWALL_MODE" = "nftables";
     };
-    # Required due to https://github.com/NixOS/nixpkgs/issues/180175
-    after = ["systemd-networkd-wait-online.service" "NetworkManager-wait-online.service"];
+    after = ["systemd-networkd-wait-online.service" "tgstation-wait-online.service"];
   };
 
   networking.firewall.trustedInterfaces = ["tailscale0"];
