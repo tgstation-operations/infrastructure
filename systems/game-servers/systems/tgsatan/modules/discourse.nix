@@ -37,15 +37,15 @@
     };
     mail = {
       contactEmailAddress = "forum@tgstation13.org";
-      notificationEmailAddress = "forum_notification@tgstation13.org";
+      notificationEmailAddress = "noreply@tgstation13.org";
       outgoing = {
         authentication = "login";
         domain = "tgstation13.org";
         enableStartTLSAuto = true;
         forceTLS = true;
-        serverAddress = "email-smtp.us-east-1.amazonaws.com";
+        serverAddress = "smtp-relay.brevo.com";
         port = 587;
-        username = "AKIAQXPZC5MPJRHMR3VE";
+        username = "87ed48001@smtp-brevo.com";
         # Requires a string
         passwordFile = toString config.age.secrets.discourse_smtp.file;
       };
