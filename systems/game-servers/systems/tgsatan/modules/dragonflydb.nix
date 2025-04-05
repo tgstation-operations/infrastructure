@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  nixpkgs,
   ...
 }: {
   nixpkgs.dragonflydb = nixpkgs.stdenv.mkDerivation {
