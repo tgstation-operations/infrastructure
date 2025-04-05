@@ -1,36 +1,35 @@
 {
   config,
   pkgs,
-  nixpkgs,
   ...
 }: {
-  nixpkgs.dragonflydb = nixpkgs.stdenv.mkDerivation {
+  pkgs.dragonflydb = pkgs.stdenv.mkDerivation {
     pname = "dragonflydb";
     version = "1.27.1";
-    src = nixpkgs.fetchFromGitHub {
+    src = pkgs.fetchFromGitHub {
       owner = "dragonflydb";
       repo = "dragonfly";
       tag = "v1.27.1";
     };
-    nativeBuildInputs = with nixpkgs; [
+    nativeBuildInputs = with pkgs; [
       autoconf
       autoconf-archive
       automake
       cmake
       ninja
     ];
-    buildInputs = with nixpkgs; [
+    buildInputs = with pkgs; [
       boost
       libunwind
       libtool
       openssl
     ];
-    cmakeFlags = with nixpkgs; [
+    cmakeFlags = with pkgs; [
       "-DCMAKE_AR=${gcc-unwrapped}/bin/gcc-ar"
       "-DCMAKE_RANLIB=${gcc-unwrapped}/bin/gcc-ranlib"
     ];
     ninjaFlags = ["dragonfly"];
-    postPatch = with nixpkgs; ''
+    postPatch = with pkgs; ''
       mkdir -p ./build/{third_party,_deps}
       ln -s ${double-conversion.src} ./build/third_party/dconv
       ln -s ${mimalloc.src} ./build/third_party/mimalloc
