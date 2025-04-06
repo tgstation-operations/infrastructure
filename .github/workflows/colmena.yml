@@ -131,3 +131,14 @@ jobs:
 
       - name: Deploy closure to Nodes
         run: nix run github:zhaofengli/colmena -- apply --impure -v --on ${{ matrix.node }}
+
+  close-bad-website-pr:
+    name: Close Bad Website PR
+    if: failure() && github.event_name != 'push' && github.event.pull_request.user.id == 41898282 && github.event.pull_request.title == 'Automatic Website Update'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Close PR
+        run: gh pr close ${{ github.event.pull_request.number }}
