@@ -23,7 +23,7 @@ jobs:
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA=
 
       - name: Checkout Repository
-        run: git clone -b main --depth 1 --single-branch "https://git@github.com/tgstation-operations/infrastructure"
+        run: git clone -b main --depth 1 --single-branch "https://git@github.com/tgstation-operations/infrastructure" .
 
       - name: Generate App Token
         id: app-token-generation
