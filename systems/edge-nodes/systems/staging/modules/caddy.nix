@@ -114,21 +114,27 @@
   };
   # Server Info Fetcher
   systemd.services."tgstation-gameserverdatasync" = {
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
+      Restart = "always";
+      RestartSec = "5s";
+      RestartMaxDelaySec = "5s";
       User = "caddy";
       Group = "caddy";
       ExecStart = pkgs.writeShellScript "server-info-fetcher.sh" ''
-        ${pkgs.rustPlatform.buildRustPackage rec {
-          pname = "server-info-fetcher";
-          version = "0.1.0";
-          src = pkgs.fetchFromGitHub {
-            owner = "tgstation-operations";
-            repo = pname;
-            rev = "e6964f414101be212d12e4510767b54e45160e53";
-            hash = "sha256-I5tVl9Wh4sovO9bVJRPpIQOn4S9dfa5mYad/AB8WPNs=";
-          };
-          cargoHash = "sha256-vRVVGVXAvKbQ8lpgDknTKnIL+HYgkPy1R//TbUG4F6o=";
-        }}/bin/server-info-fetcher --servers blockmoths.tg.lan:3336,tgsatan.tg.lan:1337,tgsatan.tg.lan:1447,tgsatan.tg.lan:5337 /run/tgstation-website-v2/serverinfo.json
+        ${
+          pkgs.rustPlatform.buildRustPackage rec {
+            pname = "server-info-fetcher";
+            version = "0.1.0";
+            src = pkgs.fetchFromGitHub {
+              owner = "tgstation-operations";
+              repo = pname;
+              rev = "481c04b83946e6314afeb0a443ef08f069a1ae8c";
+              hash = "sha256:0rwas0c9kxpf7dqbyd516xkam5hxdij7fillk7nxhx62z8gzcgcj";
+            };
+            cargoHash = "sha256-vRVVGVXAvKbQ8lpgDknTKnIL+HYgkPy1R//TbUG4F6o=";
+          }
+        }/bin/server-info-fetcher --failure-tolerance all --servers blockmoths.tg.lan:3336,tgsatan.tg.lan:1337,tgsatan.tg.lan:1447,tgsatan.tg.lan:5337 /run/tgstation-website-v2/serverinfo.json
       '';
     };
   };
