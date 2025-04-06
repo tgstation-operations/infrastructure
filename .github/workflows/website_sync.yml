@@ -1,0 +1,46 @@
+name: Sync Website
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: "infra-update"
+  cancel-in-progress: false
+
+jobs:
+  create_website_update_pr:
+    name: Create Website Update PR
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Install Nix
+        uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72 # Install nix itself. We don't need to specify a channel since we're using flakes
+        with:
+          extra_nix_config: |
+            accept-flake-config = true
+            extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
+            extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA=
+
+      - name: Checkout Repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # Checkout the repository
+
+      - name: Update Website Flake Only
+        run: |
+          nix flake lock --update-input tgstation-website
+
+      - name: Commit
+        run: |
+          git checkout -b AutomaticWebsiteUpdate
+          git config user.name "tgstation-operations-ci[bot]"
+          git config user.email "206383919+tgstation-operations-ci[bot]@users.noreply.github.com"
+          git add flake.lock
+          git commit -m "Automatic flake.lock update for website-v2 push"
+          git push -f --set-upstream origin AutomaticWebsiteUpdate
+
+      - name: Open PR
+        run: gh pr create -B main -H AutomaticWebsiteUpdate --title 'Automatic Website Update' --body 'Created by Github actions'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
