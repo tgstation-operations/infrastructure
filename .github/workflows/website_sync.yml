@@ -43,7 +43,11 @@ jobs:
           git config user.email "206383919+tgstation-operations-ci[bot]@users.noreply.github.com"
           git add flake.lock
           git commit -m "Automatic flake.lock update for website-v2 push"
-          git push -f "https://tgstation-operations-ci:${{ steps.app-token-generation.outputs.token }}@github.com/tgstation-operations/infrastructure" -u origin AutomaticWebsiteUpdate
+
+      - name: Push
+        run: |
+          git branch --set-upstream-to=origin/AutomaticWebsiteUpdate
+          git push -f "https://tgstation-operations-ci:${{ steps.app-token-generation.outputs.token }}@github.com/tgstation-operations/infrastructure"
 
       - name: Open PR
         run: gh pr create -B main -H AutomaticWebsiteUpdate --title 'Automatic Website Update' --body 'Created by Github actions'
