@@ -46,7 +46,6 @@ jobs:
 
       - name: Push
         run: |
-          git branch --set-upstream-to=origin/AutomaticWebsiteUpdate
           git push -f "https://tgstation-operations-ci:${{ steps.app-token-generation.outputs.token }}@github.com/tgstation-operations/infrastructure"
 
       - name: Open PR
