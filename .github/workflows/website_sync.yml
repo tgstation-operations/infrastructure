@@ -11,8 +11,6 @@ jobs:
   create_website_update_pr:
     name: Create Website Update PR
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
     steps:
       - name: Install Nix
         uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72 # Install nix itself. We don't need to specify a channel since we're using flakes
@@ -51,4 +49,4 @@ jobs:
       - name: Open PR
         run: gh pr create -B main -H AutomaticWebsiteUpdate --title 'Automatic Website Update' --body 'Created by Github actions'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token-generation.outputs.token }}
