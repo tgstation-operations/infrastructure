@@ -134,7 +134,7 @@ jobs:
 
   close-bad-website-pr:
     name: Close Bad Website PR
-    if: failure() && github.event_name != 'push' && github.event.pull_request.user.id == 41898282 && github.event.pull_request.title == 'Automatic Website Update'
+    if: failure() && github.event_name != 'push' && github.event.pull_request.user.id == 206383919 && github.event.pull_request.title == 'Automatic Website Update'
     needs: build
     runs-on: ubuntu-latest
     permissions:
