@@ -36,7 +36,7 @@
     };
     serviceConfig = {
       # See https://github.com/tailscale/tailscale/issues/11504#issuecomment-2692132659
-      ExecStartPost = "${pkgs.coreutils}/bin/timeout 60s bash -c \\\'until ${pkgs.tailscale}/bin/tailscale status --peers=false; do sleep 1; done\\\'";
+      ExecStartPost = "${pkgs.coreutils}/bin/timeout 60s bash -c \\\'until ${pkgs.tailscale}/bin/tailscale status --peers=false; do ${pkgs.coreutils}/bin/sleep 1; done\\\'";
     };
     after = ["systemd-networkd-wait-online.service" "tgstation-wait-online.service"];
   };
