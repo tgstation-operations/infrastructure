@@ -268,6 +268,7 @@
       deployment = {
         targetHost = "cyberstation.tg.lan";
         targetUser = "deploy";
+        allowLocalDeployment = true;
       };
       imports =
         flakeModules
