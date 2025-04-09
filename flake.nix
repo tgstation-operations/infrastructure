@@ -264,6 +264,19 @@
           (import ./systems/edge-nodes/systems/eu-knipp.nix)
         ];
     };
+    cyberstation = {
+      deployment = {
+        targetHost = "cyberstation.tg.lan";
+        targetUser = "deploy";
+      };
+      imports =
+        flakeModules
+        ++ [
+          (import ./modules/base.nix)
+          (import ./modules/users)
+          (import ./systems/game-servers/systems/staging)
+        ];
+    };
   in {
     colmena = {
       inherit
@@ -279,6 +292,7 @@
         bratwurst
         dachshund
         knipp
+        cyberstation
         ;
 
       meta = {
@@ -323,6 +337,9 @@
               config.allowUnfree = true;
             };
           };
+          cyberstation = {
+            headscaleIPv4 = "100.64.0.141"
+          }
         };
       };
     };
@@ -460,6 +477,18 @@
             system = "aarch64-linux";
             config.allowUnfree = true;
           };
+        };
+      };
+      cyberstation = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = flakeModules ++ cyberstation.imports;
+        specialArgs = {
+          inherit self inputs nixpkgs fenix;
+          pkgs-unstable = import nixpkgs-unstable {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+          headscaleIPv4 = "100.64.0.141";
         };
       };
     };
