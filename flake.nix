@@ -339,7 +339,7 @@
             };
           };
           cyberstation = {
-            headscaleIPv4 = "100.64.0.141"
+            headscaleIPv4 = "100.64.0.141";
           };
         };
       };
