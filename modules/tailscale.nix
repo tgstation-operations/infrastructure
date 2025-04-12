@@ -32,10 +32,6 @@
     environment = {
       "TS_DEBUG_FIREWALL_MODE" = "nftables";
     };
-    serviceConfig = {
-      # See https://github.com/tailscale/tailscale/issues/11504#issuecomment-2692132659
-      ExecStartPost = "${pkgs.coreutils}/bin/timeout 60s ${pkgs.bash}/bin/bash -c \\'until ${pkgs.tailscale}/bin/tailscale status --peers=false; do ${pkgs.coreutils}/bin/sleep 1; done\\'";
-    };
     after = ["systemd-networkd-wait-online.service" "tgstation-wait-online.service"];
     requires = [ "tgstation-wait-online.service" ];
   };
