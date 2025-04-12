@@ -57,5 +57,8 @@
       Group = "garage";
       DynamicUser = false;
     };
+    environment = {
+      "IM_LITERALLY_JUST_SETTING_THIS_TO_RESTART_GARAGE_REMOVE_IT" = "chumbis";
+    };
   };
 }

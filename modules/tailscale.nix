@@ -31,6 +31,7 @@
   systemd.services.tailscaled = {
     environment = {
       "TS_DEBUG_FIREWALL_MODE" = "nftables";
+      "IM_LITERALLY_JUST_SETTING_THIS_TO_RESTART_TAILSCALED_REMOVE_IT" = "chumbis";
     };
     after = ["systemd-networkd-wait-online.service" "tgstation-wait-online.service"];
     requires = [ "tgstation-wait-online.service" ];
@@ -43,6 +44,7 @@
       ExecStart = "${pkgs.coreutils}/bin/timeout 60s ${pkgs.bash}/bin/bash -c \'until ${pkgs.tailscale}/bin/tailscale status --peers=false; do ${pkgs.coreutils}/bin/sleep 1; done\'";
     };
     wantedBy = [ "network-online.target" ];
+    before = [ "network-online.target" ];
     after = [ "tailscaled.service" ];
     requires = [ "tailscaled.service" ];
   };
