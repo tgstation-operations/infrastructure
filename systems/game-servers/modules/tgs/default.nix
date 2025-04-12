@@ -82,6 +82,6 @@
     group = "${config.services.tgstation-server.groupname}";
   };
   systemd.services.tgstation-server = {
-    after = ["tailscaled.service"]; # Make sure this only starts once tailscaled is up, for our db connection
+    after = ["network-online.target"]; # TODO: Fix this in TGS
   };
 }

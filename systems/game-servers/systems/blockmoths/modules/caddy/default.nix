@@ -3,7 +3,6 @@
   pkgs,
   pkgs-unstable,
   inputs,
-  headscaleIPv4,
   ...
 }: {
   # For Unix sockets, unused for now

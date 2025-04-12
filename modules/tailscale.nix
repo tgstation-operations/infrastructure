@@ -19,12 +19,10 @@
     enable = true;
     description = "tgstation-NetworkManager-wait-online-replacement";
     requires = [ "NetworkManager.service" ];
-    after = ["NetworkManager.service"];
-    before = ["network-online.target"];
+    after = [ "NetworkManager.service" ];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.networkmanager}/bin/nm-online -q";
-      RemainAfterExit = "yes";
       Environment = "NM_ONLINE_TIMEOUT=60";
     };
     wantedBy = [ "network-online.target" ];
@@ -35,6 +33,18 @@
       "TS_DEBUG_FIREWALL_MODE" = "nftables";
     };
     after = ["systemd-networkd-wait-online.service" "tgstation-wait-online.service"];
+    requires = [ "tgstation-wait-online.service" ];
+  };
+
+  systemd.services.tg-tailscale-wait-dhcp = {
+    serviceConfig = {
+      Type = "oneshot";
+      # See https://github.com/tailscale/tailscale/issues/11504#issuecomment-2692132659
+      ExecStart = "${pkgs.coreutils}/bin/timeout 60s ${pkgs.bash}/bin/bash -c \'until ${pkgs.tailscale}/bin/tailscale status --peers=false; do ${pkgs.coreutils}/bin/sleep 1; done\'";
+    };
+    wantedBy = [ "network-online.target" ];
+    after = [ "tailscaled.service" ];
+    requires = [ "tailscaled.service" ];
   };
 
   networking.firewall.trustedInterfaces = ["tailscale0"];

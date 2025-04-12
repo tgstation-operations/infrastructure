@@ -3,7 +3,6 @@
   pkgs,
   pkgs-unstable,
   inputs,
-  headscaleIPv4,
   ...
 }: let
   phpWithProfiling = pkgs.php83.buildEnv {

@@ -57,8 +57,5 @@
       Group = "garage";
       DynamicUser = false;
     };
-    after = [
-      "tailscaled.service" # Required, as it's how our nodes get accessed and swarm
-    ];
   };
 }
