@@ -81,7 +81,4 @@
     owner = "${config.services.tgstation-server.username}";
     group = "${config.services.tgstation-server.groupname}";
   };
-  systemd.services.tgstation-server = {
-    after = ["network-online.target"]; # TODO: Fix this in TGS
-  };
 }

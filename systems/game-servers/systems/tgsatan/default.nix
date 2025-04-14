@@ -111,9 +111,6 @@ in {
   services.tgstation-server = {
     environmentFile = config.age.secrets.tgs.path;
   };
-  systemd.services.tgstation-server = {
-    wants = ["mysql.service"];
-  };
 
   services.grafana = {
     enable = true;
