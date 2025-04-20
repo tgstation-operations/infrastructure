@@ -11,7 +11,7 @@
   ];
 
   # `<instance>/Configuration/EventScripts` is symlinked to these directories
-  environment.etc."tgs-EventScripts.d/tg" = {
+  environment.etc = {
     #TG
     "tgs-EventScripts.d/tg/DreamDaemonPreLaunch.sh" = {
       text = (builtins.readFile ./EventScripts/tg/DreamDaemonPreLaunch.sh);
