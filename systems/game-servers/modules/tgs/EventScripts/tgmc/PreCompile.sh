@@ -3,12 +3,12 @@
 set -e
 set -x
 
-original_dir=$PWD
+original_dir="${TGS_INSTANCE_ROOT}/Configuration/EventScriptsScratch"
 cd "$1"
 . dependencies.sh
 
-mkdir -p "$original_dir/../EventScriptsScratch"
-cd "$original_dir/../EventScriptsScratch"
+mkdir -p "$original_dir"
+cd "$original_dir"
 
 if [ ! -d "rust-g" ]; then
         echo "Cloning rust-g..."
