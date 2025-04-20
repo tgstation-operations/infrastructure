@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-./parse-server.sh
+. parse-server.sh
 
 rsc_zip="tgstation.$SERVER.rsc.zip"
 if [ -f "./$rsc_zip" ]; then

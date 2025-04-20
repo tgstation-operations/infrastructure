@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-./parse-server.sh
+. parse-server.sh
 
 CONFIG_URI="https://github.com/tgstation-operations/server-config.git"
 TARGET_DIR="../GameStaticFiles/config"
