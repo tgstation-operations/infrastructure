@@ -28,22 +28,27 @@ git checkout "$RUST_G_VERSION"
 cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu --features all
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 
-cd "$original_dir/../EventScriptScratch"
+#cd "$original_dir/../EventScriptScratch"
+
 # update dreamluau
-if [ ! -d "dreamluau" ]; then
-        echo "Cloning dreamluau..."
-        git clone https://github.com/tgstation/dreamluau
-        cd dreamluau
-else
-        echo "Fetching dreamlaua..."
-        cd dreamluau
-        git fetch
-fi
+#if [ ! -d "dreamluau" ]; then
+        #echo "Cloning dreamluau..."
+        #git clone https://github.com/tgstation/dreamluau
+        #cd dreamluau
+#else
+        #echo "Fetching dreamlaua..."
+        #cd dreamluau
+        #git fetch
+#fi
 
 echo "Deploying Dreamlaua..."
-git checkout "$DREAMLUAU_VERSION"
+#git checkout "$DREAMLUAU_VERSION"
 
-cp ../libdreamluau.so "$1/libdreamluau.so"
+# cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
+# mv target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
+
+# Temporary workaround. Expecting prebuild libdreamluau.so in Configuration directory
+cp ../../libdreamluau.so "$1/libdreamluau.so"
 
 # compile tgui
 echo "Compiling tgui..."
