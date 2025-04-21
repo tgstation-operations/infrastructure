@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+cd "${TGS_INSTANCE_ROOT}/Configuration/GameStaticFiles"
+
 . parse-server.sh
 
 CONFIG_URI="https://github.com/tgstation-operations/server-config.git"
