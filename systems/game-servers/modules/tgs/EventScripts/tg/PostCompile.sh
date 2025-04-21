@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-cd "${TGS_INSTANCE_ROOT}/Configuration/EventScripts"
+work_directory="${TGS_INSTANCE_ROOT}/Configuration/EventScriptsScratch"
+
+mkdir -p $work_directory
+cd $work_directory
 
 . parse-server.sh
 
