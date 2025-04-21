@@ -1,0 +1,27 @@
+name: CI Gated PR Comments
+
+on:
+  pull_request_target:
+    types:
+      - opened
+    branches:
+      - main
+
+jobs:
+  comment-on-new-pr:
+    name: Comment New PR
+    if: github.event.pull_request.head.repo.id != github.event.pull_request.base.repo.id
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate App Token
+        id: app-token-generation
+        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5
+        with:
+          app-id: ${{ secrets.CI_APP_ID }}
+          private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
+
+      - name: Comment on new Fork PR
+        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b
+        with:
+          message: Thank you for contributing to ${{ github.event.pull_request.base.repo.name }}! The Colmena workflow requires repository secrets and will not run without approval. Maintainers can add the `CI Cleared` label to allow it to run. Note that any changes to ci_security.yml, colmena.yml, and colmena_deploy.yml will not be reflected.
+          github-token: ${{ steps.app-token-generation.outputs.token }}

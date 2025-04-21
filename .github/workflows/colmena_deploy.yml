@@ -12,6 +12,8 @@ on:
       runner:
         required: true
         type: string
+      pull_request_number:
+        type: string
 
 jobs:
   deploy:
@@ -33,8 +35,15 @@ jobs:
           authkey: ${{ secrets.TS_AUTHKEY }}
           args: --login-server=https://vpn.tgstation13.org
 
-      - name: Checkout Repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # Checkout the repository
+      - name: Checkout (Branch)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        if: github.event_name != 'pull_request_target'
+
+      - name: Checkout (PR Merge)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        if: github.event_name == 'pull_request_target'
+        with:
+          ref: "refs/pull/${{ inputs.pull_request_number }}/merge"
 
       - name: Install Nix
         uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72 # Install nix itself. We don't need to specify a channel since we're using flakes
