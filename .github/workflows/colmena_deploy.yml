@@ -62,4 +62,6 @@ jobs:
         run: nix config show
 
       - name: Deploy closure to Nodes
+        # Prevent this step from being cancelled mid-run because it could leave the node in a bad state
+        if: always() && success() && !cancelled()
         run: nix run github:zhaofengli/colmena -- apply --impure -v --on ${{ inputs.node }}
