@@ -9,7 +9,7 @@ original_dir="${TGS_INSTANCE_ROOT}/Configuration/EventScriptsScratch"
 cd "$1"
 . dependencies.sh
 mkdir -p "$original_dir"
-cd "$original_dirh"
+cd "$original_dir"
 
 # update rust-g
 if [ ! -d "rust-g" ]; then
