@@ -22,7 +22,7 @@ jobs:
   build:
     name: Build
     # Only run if secrets are enabled
-    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id }}
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id || !contains(github.event.pull_request.labels.*.name, 'CI Cleared') }}
     strategy:
       matrix:
         runner: [ubuntu-24.04]
@@ -37,16 +37,17 @@ jobs:
             runner: ubuntu-24.04-arm
     runs-on: ${{ matrix.runner }}
     env:
+      USE_ATTIC: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id }}
       UPLOAD_TO_ATTIC: "no" # This is here to shut up the GitHub Actions intellisense in VSC
     steps:
       - name: Set UPLOAD_TO_ATTIC envvar
-        if: ${{ (github.repository == 'tgstation-operations/infrastructure' && (github.ref == 'refs/heads/main' || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main'))) && matrix.node == '@staging' }}
+        if: ${{ env.USE_ATTIC == 'yes' && (github.repository == 'tgstation-operations/infrastructure' && (github.ref == 'refs/heads/main' || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main'))) && matrix.node == '@staging' }}
         run: echo "UPLOAD_TO_ATTIC=yes" >> $GITHUB_ENV
 
       # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
       - name: Login to headscale
         uses: tailscale/github-action@8688eb839e58e6b25c1ae96cd99d1c173299b842 # Connect to headscale
-        if: ${{ env.UPLOAD_TO_ATTIC == 'yes' }}
+        if: ${{ env.USE_ATTIC == 'yes' }}
         with:
           authkey: ${{ secrets.TS_BUILD_AUTHKEY }}
           args: --login-server=https://vpn.tgstation13.org
@@ -62,7 +63,7 @@ jobs:
           ref: "refs/pull/${{ inputs.pull_request_number }}/merge"
 
       - name: Install Nix (Without Attic)
-        if: ${{ env.UPLOAD_TO_ATTIC != 'yes' }}
+        if: ${{ env.USE_ATTIC != 'yes' }}
         uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72 # Install nix itself. We don't need to specify a channel since we're using flakes
         with:
           extra_nix_config: |
@@ -71,7 +72,7 @@ jobs:
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
 
       - name: Install Nix (With Attic)
-        if: ${{ env.UPLOAD_TO_ATTIC == 'yes' }}
+        if: ${{ env.USE_ATTIC == 'yes' }}
         uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72
         with:
           extra_nix_config: |
@@ -80,7 +81,7 @@ jobs:
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA=
 
       - name: Setup attic Binary Cache
-        if: ${{ env.UPLOAD_TO_ATTIC == 'yes' }}
+        if: ${{ env.USE_ATTIC == 'yes' }}
         # Format for pointing to caches is server:cache in these commands
         run: |
           nix profile install nixpkgs#attic-client
@@ -99,7 +100,7 @@ jobs:
   deploy-staging:
     name: Deploy Staging
     needs: build
-    if: ${{ github.repository == 'tgstation-operations/infrastructure' && (github.ref == 'refs/heads/main' || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main')) }}
+    if: ${{ github.repository == 'tgstation-operations/infrastructure' && (github.ref == 'refs/heads/main' || (((github.event_name == 'pull_request' && github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id) || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main')) }}
     uses: ./.github/workflows/colmena_deploy.yml
     secrets: inherit
     with:
