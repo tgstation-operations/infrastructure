@@ -25,7 +25,8 @@ jobs:
     if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id || !contains(github.event.pull_request.labels.*.name, 'CI Cleared') }}
     strategy:
       matrix:
-        runner: [ubuntu-24.04]
+        runner:
+          - ubuntu-24.04
         node:
           - "tgsatan"
           - "blockmoths"
