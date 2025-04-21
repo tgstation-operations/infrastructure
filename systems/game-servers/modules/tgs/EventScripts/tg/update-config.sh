@@ -3,7 +3,7 @@
 . parse-server.sh
 
 CONFIG_URI="https://github.com/tgstation-operations/server-config.git"
-TARGET_DIR="../GameStaticFiles/config"
+TARGET_DIR="${TGS_INSTANCE_ROOT}/Configuration/GameStaticFiles/config"
 
 if [ ! -d $TARGET_DIR ]; then
   git clone $CONFIG_URI $TARGET_DIR

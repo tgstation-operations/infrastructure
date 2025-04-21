@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+cd "${TGS_INSTANCE_ROOT}/Configuration/EventScripts"
+
 . parse-server.sh
 
 rsc_zip="tgstation.$SERVER.rsc.zip"

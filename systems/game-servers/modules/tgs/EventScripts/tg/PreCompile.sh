@@ -5,11 +5,11 @@ set -x
 
 #load dep exports
 #need to switch to game dir for Dockerfile weirdness
-original_dir=$PWD
+original_dir="${TGS_INSTANCE_ROOT}/Configuration/EventScriptsScratch"
 cd "$1"
 . dependencies.sh
-mkdir -p "$original_dir/../EventScriptScratch"
-cd "$original_dir/../EventScriptScratch"
+mkdir -p "$original_dir"
+cd "$original_dirh"
 
 # update rust-g
 if [ ! -d "rust-g" ]; then
@@ -28,7 +28,7 @@ git checkout "$RUST_G_VERSION"
 cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu --features all
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 
-#cd "$original_dir/../EventScriptScratch"
+#cd "$original_dir"
 
 # update dreamluau
 #if [ ! -d "dreamluau" ]; then
