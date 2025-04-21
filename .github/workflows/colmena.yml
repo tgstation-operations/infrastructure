@@ -84,7 +84,8 @@ jobs:
       node: ${{ matrix.node }}
     strategy:
       matrix:
-        runner: [ubuntu-24.04]
+        runner:
+          - ubuntu-24.04
         node:
           - "@staging"
         environment:
