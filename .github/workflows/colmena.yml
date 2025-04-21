@@ -36,8 +36,6 @@ jobs:
           - node: "@relay-arm"
             runner: ubuntu-24.04-arm
     runs-on: ${{ matrix.runner }}
-    env:
-      UPLOAD_TO_ATTIC: "no" # This is here to shut up the GitHub Actions intellisense in VSC
     steps:
       - name: Set UPLOAD_TO_ATTIC envvar
         if: ${{ (github.repository == 'tgstation-operations/infrastructure' && (github.ref == 'refs/heads/main' || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main'))) && matrix.node == '@staging' }}
