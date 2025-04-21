@@ -47,11 +47,7 @@ echo "dreamluau: checkout"
 git checkout "$DREAMLUAU_VERSION" >/dev/null
 echo "dreamluau: building"
 env LIBCLANG_PATH="$(find /nix/store -name *-clang-*-lib)/lib" cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
-cp target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
-
-# EMERGENCY FIX, SOMETHING IS WRONG WITH THE ABOVE
-cp "${TGS_INSTANCE_ROOT}/Configuration/EventScripts.old/libdreamluau.so" "$1/libdreamluau.so"
-
+mv target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
 cd "$work_directory"
 echo "dreamluau: deployment finish"
 
