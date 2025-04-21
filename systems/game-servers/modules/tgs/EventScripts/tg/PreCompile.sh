@@ -48,7 +48,7 @@ echo "Deploying Dreamlaua..."
 # mv target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
 
 # Temporary workaround. Expecting prebuild libdreamluau.so in Configuration directory
-cp ../../libdreamluau.so "$1/libdreamluau.so"
+cp "${TGS_INSTANCE_ROOT}/Configuration/libdreamluau.so" "$1/libdreamluau.so"
 
 # compile tgui
 echo "Compiling tgui..."
