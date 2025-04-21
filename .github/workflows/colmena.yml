@@ -47,7 +47,7 @@ jobs:
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
 
       - name: Install Nix (With Attic)
-        if: github.repository == 'tgstation-operations/infrastructure' && (github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main'))
+        if: github.repository == 'tgstation-operations/infrastructure' && (github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main' && matrix.node == 'staging'))
         uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72
         with:
           extra_nix_config: |
@@ -56,7 +56,7 @@ jobs:
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA=
 
       - name: Setup attic Binary Cache
-        if: github.repository == 'tgstation-operations/infrastructure' && (github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main'))
+        if: github.repository == 'tgstation-operations/infrastructure' && (github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main' && matrix.node == 'staging'))
         # Format for pointing to caches is server:cache in these commands
         run: |
           nix profile install nixpkgs#attic-client
@@ -69,7 +69,7 @@ jobs:
         run: nix run github:zhaofengli/colmena -- build --impure -v --eval-node-limit 2 --keep-result --on ${{ matrix.node }}
 
       - name: Push closure to attic
-        if: github.repository == 'tgstation-operations/infrastructure' && (github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main'))
+        if: github.repository == 'tgstation-operations/infrastructure' && (github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main' && matrix.node == 'staging'))
         run: attic push tgstation:tgstation-infrastructure .gcroots/*
 
   deploy-staging:
