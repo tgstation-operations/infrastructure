@@ -23,5 +23,5 @@ jobs:
       - name: Comment on new Fork PR
         uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b
         with:
-          message: Thank you for contributing to ${{ github.event.pull_request.base.repo.name }}! The Colmena workflow requires repository secrets and will not run without approval. Maintainers can add the `CI Cleared` label to allow it to run. Note that any changes to ci_security.yml, colmena.yml, and colmena_deploy.yml will not be reflected.
+          message: As this pull request is from a fork, the Colmena workflow requires repository secrets to deploy to staging. Maintainers can add the `CI Cleared` label to allow it to run. Note that any changes to ci_security.yml, colmena.yml, and colmena_deploy.yml will not be reflected.
           github-token: ${{ steps.app-token-generation.outputs.token }}
