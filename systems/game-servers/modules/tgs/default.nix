@@ -13,6 +13,11 @@
   # `<instance>/Configuration/EventScripts` is symlinked to these directories
   environment.etc = {
     #TG
+    "tgs-EventScripts.d/tg/DreamDaemonLaunch.sh" = {
+      text = (builtins.readFile ./EventScripts/tg/DreamDaemonLaunch.sh);
+      group = "tgstation-server";
+      mode = "0755";
+    };
     "tgs-EventScripts.d/tg/DreamDaemonPreLaunch.sh" = {
       text = (builtins.readFile ./EventScripts/tg/DreamDaemonPreLaunch.sh);
       group = "tgstation-server";
