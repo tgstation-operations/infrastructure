@@ -2,7 +2,7 @@
 
 cd "${TGS_INSTANCE_ROOT}/Configuration/GameStaticFiles"
 
-. parse-server.sh
+. "${TGS_INSTANCE_ROOT}/Configuration/EventScripts/parse-server.sh"
 
 CONFIG_URI="https://github.com/tgstation-operations/server-config.git"
 TARGET_DIR="${TGS_INSTANCE_ROOT}/Configuration/GameStaticFiles/config"
