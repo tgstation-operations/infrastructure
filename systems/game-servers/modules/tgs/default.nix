@@ -141,6 +141,7 @@
         rclone
         yt-dlp # For Internet Sounds
         lua # Lua Support
+        strace
       ]
     );
   };
