@@ -5,7 +5,7 @@ work_directory="${TGS_INSTANCE_ROOT}/Configuration/EventScriptsScratch"
 mkdir -p $work_directory
 cd $work_directory
 
-. parse-server.sh
+. "${TGS_INSTANCE_ROOT}/Configuration/EventScripts/parse-server.sh"
 
 rsc_zip="tgstation.$SERVER.rsc.zip"
 if [ -f "./$rsc_zip" ]; then
