@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-mkdir -p "${TGS_INSTANCE_ROOT}/Configuration/EventScriptsScratch"
-cd "${TGS_INSTANCE_ROOT}/Configuration/EventScriptsScratch"
+work_directory="${TGS_INSTANCE_ROOT}/Configuration/EventScriptsScratch"
+
+mkdir -p $work_directory
+cd $work_directory
 
 rsc_zip="tgmc.rsc.zip"
 if [ -f "./$rsc_zip" ]; then
