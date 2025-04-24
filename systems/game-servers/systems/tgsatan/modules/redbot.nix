@@ -38,5 +38,6 @@ in {
 
     systemd.services.redbot-fridge = redbot-instance "fridge";
     systemd.services.redbot-tg = redbot-instance "tg";
+    systemd.services.redbot-tgmc = redbot-instance "tgmc";
   };
 }
