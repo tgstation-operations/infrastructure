@@ -17,7 +17,7 @@
     shell = pkgs.zsh;
   };
 
-  home-manager.users.ivory = {
+  home-manager.users.dax = {
     programs.zsh.enable = true;
     programs.zsh.autosuggestion.enable = true;
     programs.zsh.autosuggestion.highlight = "fg=#999";
