@@ -142,6 +142,7 @@ in {
         }
         # <https://caddyserver.com/docs/caddyfile/options#trusted-proxies-strict>
         trusted_proxies_strict
+        client_ip_headers CF-Connecting-IP X-Forwarded-For
       }
     '';
     extraConfig = ''

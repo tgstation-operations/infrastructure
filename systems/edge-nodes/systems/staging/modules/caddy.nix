@@ -82,6 +82,7 @@
           interval 12h
           timeout 15s
         }
+        client_ip_headers CF-Connecting-IP X-Forwarded-For
         #trusted_proxies_strict # <https://caddyserver.com/docs/caddyfile/options#trusted-proxies-strict>
       }
     '';
