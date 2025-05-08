@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ../../../../modules/maria.nix
     ../base.nix
     ../disko-ovh.nix
     ../modules/caddy.nix
@@ -18,4 +19,7 @@
     "vmw_pvscsi"
   ];
   boot.initrd.kernelModules = ["nvme"];
+  services.mysql = {
+    dataDir = "/persist/mariadb";
+  };
 }
