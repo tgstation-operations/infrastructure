@@ -55,6 +55,25 @@ cp "${TGS_INSTANCE_ROOT}/Configuration/EventScripts.old/libdreamluau.so" "$1/lib
 cd "$work_directory"
 echo "dreamluau: deployment finish"
 
+echo "auxcpu: deployment begin"
+if [ ! -d "auxcpu" ]; then
+  echo "auxcpu: cloning"
+  git clone https://github.com/Absolucy/auxcpu >/dev/null
+  cd auxcpu
+else
+  echo "auxcpu: fetching"
+  cd auxcpu
+  git fetch >/dev/null
+fi
+echo "auxcpu: checkout"
+git checkout main >/dev/null
+echo "auxcpu: building"
+env LIBCLANG_PATH="$(find /nix/store -name *-clang-*-lib)/lib" cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
+cp target/i686-unknown-linux-gnu/release/libauxcpu_byondapi.so "$1/libauxcpu_byondapi.so"
+
+cd "$work_directory"
+echo "auxcpu: deployment finish"
+
 # compile tgui
 echo "tgui: deployment begin"
 cd "$1"
