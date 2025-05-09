@@ -78,6 +78,7 @@ in {
   environment.systemPackages = [
     pkgs.php83Packages.composer
     phpWithProfiling
+    imagemagick
   ];
   users.users.php-caddy = {
     isSystemUser = true;
