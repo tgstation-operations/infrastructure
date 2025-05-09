@@ -265,6 +265,7 @@
         ];
     };
   in {
+    colmenaHive = colmena.lib.makeHive self.outputs.colmena;
     colmena = {
       inherit
         tgsatan
