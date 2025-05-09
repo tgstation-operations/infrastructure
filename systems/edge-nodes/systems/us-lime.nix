@@ -6,6 +6,9 @@
     ../modules/caddy.nix
     ../modules/tgstation-pr-announcer/default.nix
   ];
+  environment.systemPackages = with pkgs; [
+    "imagemagick"
+  ];
   ## LIME - Vint Hill, VA. Owned by orangesnz
   networking.hostName = "lime";
   system.stateVersion = "24.11";
