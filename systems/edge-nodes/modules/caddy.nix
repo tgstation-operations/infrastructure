@@ -6,7 +6,11 @@
   ...
 }: let
   phpWithProfiling = pkgs.php83.buildEnv {
-    extensions = ({ enabled, all }: enabled ++ (with all; [ memcached ]));
+    extensions = {
+      enabled,
+      all,
+    }:
+      enabled ++ (with all; [memcached]);
   };
 in {
   # For Unix sockets, unused for now
@@ -98,22 +102,22 @@ in {
       variables_order = EGPCS
     '';
     pools = {
-    php-caddy = {
-      user = "php-caddy";
-      group = "caddy";
-      phpPackage = phpWithProfiling;
-      settings = {
-        "pm" = "dynamic";
-        "pm.max_children" = 75;
-        "pm.start_servers" = 10;
-        "pm.min_spare_servers" = 5;
-        "pm.max_spare_servers" = 20;
-        "pm.max_requests" = 500;
-        "listen.owner" = config.services.caddy.user;
-        "listen.group" = config.services.caddy.group;
+      php-caddy = {
+        user = "php-caddy";
+        group = "caddy";
+        phpPackage = phpWithProfiling;
+        settings = {
+          "pm" = "dynamic";
+          "pm.max_children" = 75;
+          "pm.start_servers" = 10;
+          "pm.min_spare_servers" = 5;
+          "pm.max_spare_servers" = 20;
+          "pm.max_requests" = 500;
+          "listen.owner" = config.services.caddy.user;
+          "listen.group" = config.services.caddy.group;
+        };
       };
     };
-  };
   };
   age.secrets.phpbb_db.file = ../secrets/phpbb_db.age;
   systemd.services.caddy = {
@@ -127,7 +131,7 @@ in {
       plugins = [
         "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb" # Module to retrieve trusted proxy IPs from cloudflare
       ];
-      hash = "sha256-giy2YToFmJuDxX26OF8psAmkVh4R4uFFNHXWZ2dVLVA=";
+      hash = "sha256-ntYZso4gaTMdQ3AkX0dk/EpfR924tdaaMdgbXvwX3Yo=";
     };
     enableReload =
       true; # Reload caddy instead of restarting it on config changes
