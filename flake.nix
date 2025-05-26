@@ -39,7 +39,7 @@
     tgstation-website.url = "github:tgstation-operations/website-v2";
     impermanence.url = "github:scriptis/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    colmena.url = "github:zhaofengli/colmena";
+    colmena.url = "github:zhaofengli/colmena/5fdd743a11e7291bd8ac1e169d62ba6156c99be4";
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
