@@ -62,7 +62,7 @@ jobs:
         run: nix config show
 
       - name: Read current Colmena revision
-        run:
+        run: |
           COLMENA_REVISION=$(jq '.nodes.colmena.locked.rev' flake.lock)
           echo 'Current Colmena revision is: $COLMENA_REVISION'
 
