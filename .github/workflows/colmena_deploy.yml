@@ -61,12 +61,10 @@ jobs:
       - name: Print nix config before Build
         run: nix config show
 
-      - name: Read current Colmena revision
-        run: |
-          COLMENA_REVISION=$(jq '.nodes.colmena.locked.rev' flake.lock)
-          echo 'Current Colmena revision is: $COLMENA_REVISION'
-
       - name: Deploy closure to Nodes
         # Prevent this step from being cancelled mid-run because it could leave the node in a bad state
         if: always() && success() && !cancelled()
-        run: nix run github:zhaofengli/colmena/$COLMENA_REVISION -- apply --impure -v --on ${{ inputs.node }}
+        run: |
+          COLMENA_REVISION=$(jq -r '.nodes.colmena.locked.rev' flake.lock)
+          echo "Current Colmena revision is: $COLMENA_REVISION"
+          nix run github:zhaofengli/colmena/$COLMENA_REVISION -- --help
