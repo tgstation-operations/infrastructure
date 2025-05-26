@@ -91,13 +91,11 @@ jobs:
       - name: Print nix config before Build
         run: nix config show
 
-      - name: Read current Colmena revision
-        run: |
-          COLMENA_REVISION=$(jq '.nodes.colmena.locked.rev' flake.lock)
-          echo 'Current Colmena revision is: $COLMENA_REVISION'
-
       - name: Build closure
-        run: nix run github:zhaofengli/colmena/$COLMENA_REVISION -- build --impure -v --eval-node-limit 2 --keep-result --on ${{ matrix.node }}
+        run: |
+          COLMENA_REVISION=$(jq -r '.nodes.colmena.locked.rev' flake.lock)
+          echo "Current Colmena revision is: $COLMENA_REVISION"
+          nix run github:zhaofengli/colmena/$COLMENA_REVISION -- build --impure -v --eval-node-limit 2 --keep-result --on ${{ matrix.node }}
 
       - name: Push closure to attic
         if: ${{ env.UPLOAD_TO_ATTIC == 'yes' }}
