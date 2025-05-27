@@ -67,4 +67,4 @@ jobs:
         run: |
           COLMENA_REVISION=$(jq -r '.nodes.colmena.locked.rev' flake.lock)
           echo "Current Colmena revision is: $COLMENA_REVISION"
-          nix run github:zhaofengli/colmena/$COLMENA_REVISION -- --help
+          nix run github:zhaofengli/colmena/$COLMENA_REVISION -- apply --impure -v --on ${{ inputs.node }}
