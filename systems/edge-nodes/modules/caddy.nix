@@ -183,7 +183,6 @@ in {
             toString config.services.phpfpm.pools.php-caddy.socket
           } {
             env _GET 127.0.0.1
-            env REMOTE_ADDR "{client_ip} || {remote_host}"
           }
           handle_path /serverinfo.json {
             import cors *
@@ -209,7 +208,6 @@ in {
             env DB_NAME {env.DB_NAME}
             env DB_USER {env.DB_USER}
             env DB_PASSWORD {env.DB_PASSWORD}
-            env REMOTE_ADDR "{client_ip} || {remote_host}"
           }
         '';
       };
@@ -255,7 +253,6 @@ in {
               env WIKI_SECRET_KEY {env.WIKI_SECRET_KEY}
               env WIKI_OAUTH2_CLIENT_ID {env.WIKI_OAUTH2_CLIENT_ID}
               env WIKI_OAUTH2_CLIENT_SECRET {env.WIKI_OAUTH2_CLIENT_SECRET}
-              env REMOTE_ADDR "{client_ip} || {remote_host}"
             }
           }
 
