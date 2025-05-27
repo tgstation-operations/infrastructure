@@ -96,6 +96,7 @@
           file_server
           php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
             env _GET 127.0.0.1
+            env REMOTE_ADDR {client_ip} || {remote_host}
           }
           handle_path /serverinfo.json {
             root /run/tgstation-website-v2/serverinfo.json
