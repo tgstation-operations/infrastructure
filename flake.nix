@@ -41,6 +41,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     colmena.url = "github:zhaofengli/colmena/5fdd743a11e7291bd8ac1e169d62ba6156c99be4";
     fenix = {
+      # fenix is pinned to that specific hash because we need 1.86 for TGS otherwise openssl can't build
       url = "github:nix-community/fenix?rev=76ffc1b7b3ec8078fe01794628b6abff35cbda8f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
