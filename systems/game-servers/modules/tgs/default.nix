@@ -14,59 +14,59 @@
   environment.etc = {
     #TG
     "tgs-EventScripts.d/tg/DreamDaemonPreLaunch.sh" = {
-      text = (builtins.readFile ./EventScripts/tg/DreamDaemonPreLaunch.sh);
+      text = builtins.readFile ./EventScripts/tg/DreamDaemonPreLaunch.sh;
       group = "tgstation-server";
       mode = "0755";
     };
     "tgs-EventScripts.d/tg/parse-server.sh" = {
-      text = (builtins.readFile ./EventScripts/tg/parse-server.sh);
+      text = builtins.readFile ./EventScripts/tg/parse-server.sh;
       group = "tgstation-server";
       mode = "0755";
     };
     "tgs-EventScripts.d/tg/PostCompile.sh" = {
-      text = (builtins.readFile ./EventScripts/tg/PostCompile.sh);
+      text = builtins.readFile ./EventScripts/tg/PostCompile.sh;
       group = "tgstation-server";
       mode = "0755";
     };
     "tgs-EventScripts.d/tg/PreCompile.sh" = {
-      text = (builtins.readFile ./EventScripts/tg/PreCompile.sh);
+      text = builtins.readFile ./EventScripts/tg/PreCompile.sh;
       group = "tgstation-server";
       mode = "0755";
     };
     "tgs-EventScripts.d/tg/tg-Roundend.sh" = {
-      text = (builtins.readFile ./EventScripts/tg/tg-Roundend.sh);
+      text = builtins.readFile ./EventScripts/tg/tg-Roundend.sh;
       group = "tgstation-server";
       mode = "0755";
     };
     "tgs-EventScripts.d/tg/update-config.sh" = {
-      text = (builtins.readFile ./EventScripts/tg/update-config.sh);
+      text = builtins.readFile ./EventScripts/tg/update-config.sh;
       group = "tgstation-server";
       mode = "0755";
     };
 
     #TGMC
     "tgs-EventScripts.d/tgmc/DreamDaemonPreLaunch.sh" = {
-      text = (builtins.readFile ./EventScripts/tgmc/DreamDaemonPreLaunch.sh);
+      text = builtins.readFile ./EventScripts/tgmc/DreamDaemonPreLaunch.sh;
       group = "tgstation-server";
       mode = "0755";
     };
     "tgs-EventScripts.d/tgmc/PostCompile.sh" = {
-      text = (builtins.readFile ./EventScripts/tgmc/PostCompile.sh);
+      text = builtins.readFile ./EventScripts/tgmc/PostCompile.sh;
       group = "tgstation-server";
       mode = "0755";
     };
     "tgs-EventScripts.d/tgmc/PreCompile.sh" = {
-      text = (builtins.readFile ./EventScripts/tgmc/PreCompile.sh);
+      text = builtins.readFile ./EventScripts/tgmc/PreCompile.sh;
       group = "tgstation-server";
       mode = "0755";
     };
     "tgs-EventScripts.d/tgmc/tg-Roundend.sh" = {
-      text = (builtins.readFile ./EventScripts/tgmc/tg-Roundend.sh);
+      text = builtins.readFile ./EventScripts/tgmc/tg-Roundend.sh;
       group = "tgstation-server";
       mode = "0755";
     };
     "tgs-EventScripts.d/tgmc/update-config.sh" = {
-      text = (builtins.readFile ./EventScripts/tgmc/update-config.sh);
+      text = builtins.readFile ./EventScripts/tgmc/update-config.sh;
       group = "tgstation-server";
       mode = "0755";
     };
@@ -122,8 +122,7 @@
     # environmentFile =  # Required, add to host config to specify the database URI
     extra-path = lib.makeBinPath (
       with pkgs; [
-        fenix.packages.i686-linux.stable.completeToolchain
-        nixpkgs.legacyPackages.i686-linux.llvmPackages.clangUseLLVM
+        rustup
         pkg-config
         git
         nodejs_22
