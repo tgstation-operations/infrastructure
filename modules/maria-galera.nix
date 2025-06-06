@@ -14,7 +14,7 @@
   ];
   services.mysql = {
     enable = true;
-    path = with pkgs; [
+    extraPath = with pkgs; [
       bash
       gawk
       gnutar
