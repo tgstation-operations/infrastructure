@@ -45,6 +45,7 @@
         innodb_autoinc_lock_mode = 2;
         innodb_doublewrite = 1;
         wsrep_slave_threads = 4;
+        bind-address = "0.0.0.0";
       };
     };
   };
