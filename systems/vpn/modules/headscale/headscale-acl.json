@@ -51,9 +51,6 @@
     ]
   },
   "tagOwners": {
-    "tag:galera": [
-      "group:galera-node"
-    ],
     "tag:backend": [
       "group:op"
     ],
