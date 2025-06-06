@@ -14,21 +14,6 @@
   ];
   services.mysql = {
     enable = true;
-    extraPath = with pkgs; [
-      bash
-      gawk
-      gnutar
-      gzip
-      inetutils
-      iproute2
-      netcat
-      procps
-      pv
-      rsync
-      socat
-      stunnel
-      which
-    ];
     package = pkgs.mariadb;
     settings = {
       mariadb = {
