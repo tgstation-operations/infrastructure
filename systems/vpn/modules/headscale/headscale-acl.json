@@ -210,6 +210,18 @@
         "tag:garage:443",
         "tag:dbcluster:3306"
       ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:dbcluster"
+      ],
+      "dst": [
+        "tag:dbcluster:3306",
+        "tag:dbcluster:4567",
+        "tag:dbcluster:4568",
+        "tag:dbcluster:4444"
+      ]
     }
   ]
 }
