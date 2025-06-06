@@ -15,7 +15,7 @@
         max_connections = 302;
       };
       galera = {
-        wsrep_provider = "/usr/lib/libgalera_smm.so";
+        wsrep_provider = "${pkgs.mariadb-galera}/lib/galera/libgalera_smm.so";
         wsrep_on = "ON";
         wsrep_cluster_name = "\"/tg/ Cluster\"";
         wsrep_cluster_address = "gcomm://tgsatan.tg.lan,tg-db-cluster-node-neptune.tg.lan,tg-db-cluster-node-solar.tg.lan,blockmoths.tg.lan";
