@@ -48,11 +48,6 @@
       "stormwell",
       "tiviplus",
       "kiseki"
-    ],
-    "group:galera-node": [
-      "shiptest-solar",
-      "shiptest-neptune",
-      "tgstation-tgsatan"
     ]
   },
   "tagOwners": {
@@ -91,15 +86,6 @@
     ]
   },
   "acls": [
-    {
-      "action": "accept",
-      "src": [
-        "tag:galera",
-      ],
-      "dst": [
-        "tag:galera:*"
-      ]
-    },
     {
       "action": "accept",
       "src": [
@@ -226,6 +212,18 @@
         "tag:garage:80",
         "tag:garage:443",
         "tag:dbcluster:3306"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:dbcluster"
+      ],
+      "dst": [
+        "tag:dbcluster:3306",
+        "tag:dbcluster:4567",
+        "tag:dbcluster:4568",
+        "tag:dbcluster:4444"
       ]
     }
   ]
