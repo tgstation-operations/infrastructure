@@ -77,5 +77,5 @@ echo "auxcpu: deployment finish"
 # compile tgui
 echo "tgui: deployment begin"
 cd "$1"
-env TG_BOOTSTRAP_CACHE="$work_directory" TG_BOOTSTRAP_NODE_LINUX=1 CBT_BUILD_MODE="TGS" tools/bootstrap/node tools/build/build.js
+env TG_BOOTSTRAP_CACHE="$work_directory" CBT_BUILD_MODE="TGS" tools/bootstrap/bun.sh tools/build/build.js
 echo "tgui: deployment finish"
