@@ -15,6 +15,9 @@ mkdir -p $work_directory
 
 cd $work_directory
 
+rustup default stable
+rustup target add i686-unknown-linux-gnu
+
 echo "rust-g: deployment begin"
 if [ ! -d "rust-g" ]; then
   echo "rust-g: cloning"
@@ -28,7 +31,7 @@ fi
 echo "rust-g: checkout"
 git checkout "$RUST_G_VERSION" >/dev/null
 echo "rust-g: building"
-cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu --features all
+cargo +stable build --ignore-rust-version --release --target=i686-unknown-linux-gnu --features all
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd "$work_directory"
 echo "rust-g: deployment finish"
@@ -46,7 +49,7 @@ fi
 echo "dreamluau: checkout"
 git checkout "$DREAMLUAU_VERSION" >/dev/null
 echo "dreamluau: building"
-env LIBCLANG_PATH="$(find /nix/store -name *-clang-*-lib)/lib" cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
+env LIBCLANG_PATH="$(find /nix/store -name *-clang-*-lib)/lib" cargo +stable build --ignore-rust-version --release --target=i686-unknown-linux-gnu
 cp target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
 
 # EMERGENCY FIX, SOMETHING IS WRONG WITH THE ABOVE
