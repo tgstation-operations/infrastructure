@@ -7,6 +7,9 @@ original_dir="${TGS_INSTANCE_ROOT}/Configuration/EventScriptsScratch"
 cd "$1"
 . dependencies.sh
 
+export TARGET_CC=$(which clang)
+export TARGET_CXX=$(which clang++)
+
 mkdir -p "$original_dir"
 cd "$original_dir"
 
