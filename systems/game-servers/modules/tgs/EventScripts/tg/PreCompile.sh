@@ -51,8 +51,8 @@ echo "dreamluau: building"
 
 export LIBCLANG_PATH="$(find /nix/store -name *-clang-*-lib | head -n1)/lib"
 
-cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
-cp target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
+#cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
+#cp target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
 
 # EMERGENCY FIX, SOMETHING IS WRONG WITH THE ABOVE
 cp "${TGS_INSTANCE_ROOT}/Configuration/EventScripts.old/libdreamluau.so" "$1/libdreamluau.so"
@@ -73,8 +73,11 @@ fi
 echo "auxcpu: checkout"
 git checkout main >/dev/null
 echo "auxcpu: building"
-cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
-cp target/i686-unknown-linux-gnu/release/libauxcpu_byondapi.so "$1/libauxcpu_byondapi.so"
+#cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
+#cp target/i686-unknown-linux-gnu/release/libauxcpu_byondapi.so "$1/libauxcpu_byondapi.so"
+
+# EMERGENCY FIX, SOMETHING IS WRONG WITH THE ABOVE
+cp "${TGS_INSTANCE_ROOT}/Configuration/EventScripts.old/libauxcpu_byondapi.so" "$1/libauxcpu_byondapi.so"
 
 cd "$work_directory"
 echo "auxcpu: deployment finish"
