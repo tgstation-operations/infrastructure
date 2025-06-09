@@ -74,8 +74,11 @@ cp target/i686-unknown-linux-gnu/release/libauxcpu_byondapi.so "$1/libauxcpu_byo
 cd "$work_directory"
 echo "auxcpu: deployment finish"
 
+# Get unzip
+apt-get install -y unzip
+
 # compile tgui
 echo "tgui: deployment begin"
 cd "$1"
-env TG_BOOTSTRAP_CACHE="$work_directory" CBT_BUILD_MODE="TGS" tools/bootstrap/bun.sh tools/build/build.js
+env TG_BOOTSTRAP_CACHE="$work_directory" CBT_BUILD_MODE="TGS" tools/bootstrap/javascript.sh tools/build/build.js
 echo "tgui: deployment finish"
