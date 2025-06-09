@@ -74,9 +74,6 @@ cp target/i686-unknown-linux-gnu/release/libauxcpu_byondapi.so "$1/libauxcpu_byo
 cd "$work_directory"
 echo "auxcpu: deployment finish"
 
-# Get unzip
-apt-get install -y unzip
-
 # compile tgui
 echo "tgui: deployment begin"
 cd "$1"
