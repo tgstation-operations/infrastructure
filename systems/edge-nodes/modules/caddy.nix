@@ -119,10 +119,10 @@ in {
       };
     };
   };
-  age.secrets.phpbb_db.file = ../secrets/phpbb_db.age;
+  age.secrets.caddy-edge.file = ../secrets/caddy.age;
   systemd.services.caddy = {
     serviceConfig = {
-      EnvironmentFile = config.age.secrets.phpbb_db.path;
+      EnvironmentFile = config.age.secrets.caddy-edge.path;
     };
   };
   services.caddy = {
@@ -130,6 +130,7 @@ in {
     package = pkgs-unstable.caddy.withPlugins {
       plugins = [
         "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb" # Module to retrieve trusted proxy IPs from cloudflare
+        "github.com/greenpau/caddy-security" # Security module that provides OAuth
       ];
       hash = "sha256-ntYZso4gaTMdQ3AkX0dk/EpfR924tdaaMdgbXvwX3Yo=";
     };
@@ -175,6 +176,43 @@ in {
         useACMEHost = "tgstation13.org";
         extraConfig = ''
           encode gzip zstd
+          order authenticate before respond
+          order authorize before basicauth
+          security {
+              oauth identity provider tgstation {
+                realm tg
+                driver generic
+                client_id {env.TG_OAUTH_RAWLOGS_CLIENT_ID}
+                client_secret {env.TG_OAUTH_RAWLOGS_CLIENT_SECRET}
+                scopes user user.groups
+                base_auth_url https://forums.tgstation13.org/app.php/tgapi/oauth/auth
+              }
+
+          authentication portal tgstation {
+                enable identity provider tgstation
+                cookie domain raw-logs.tgstation13.org
+                ui {
+                  links {
+                    "My Identity" "/whoami" icon "las la-user"
+                  }
+                }
+
+                transform user {
+                  match realm tg
+                  action add role authp/user
+                }
+
+                transform user {
+                  match realm tg
+                }
+              }
+              authorization policy raw-logs {
+                set auth url https://forums.tgstation13.org/app.php/tgapi/oauth/auth
+                allow roles authp/admin authp/user
+                validate bearer header
+                inject headers with claims
+              }
+          }
           root ${
             toString inputs.tgstation-website.packages.x86_64-linux.default
           }
@@ -186,6 +224,11 @@ in {
           }
           handle_path /serverinfo.json {
             import cors *
+            root /run/tgstation-website-v2/serverinfo.json
+            file_server
+          }
+          handle_path /raw-logs {
+            authorize with raw-logs
             root /run/tgstation-website-v2/serverinfo.json
             file_server
           }

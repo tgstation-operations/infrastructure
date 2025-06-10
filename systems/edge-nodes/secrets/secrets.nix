@@ -21,5 +21,5 @@ in {
   # TODO: Move to a shared secret (somehow)
   "tgstation-pr-announcer.age".publicKeys = users ++ frontend_systems;
   "tailscaleAuthKey.age".publicKeys = users ++ systems;
-  "phpbb_db.age".publicKeys = users ++ frontend_systems;
+  "caddy.age".publicKeys = users ++ frontend_systems;
 }
