@@ -3,7 +3,6 @@
   pkgs,
   pkgs-unstable,
   inputs,
-  headscaleIPv4,
   ...
 }: {
   # For Unix sockets, unused for now
@@ -70,7 +69,7 @@
       plugins = [
         "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb" # Module to retrieve trusted proxy IPs from cloudflare
       ];
-      hash = "sha256-o/A1YSVSfUvwaepb7IusiwCt2dAGmzZrtM3cb8i8Too=";
+      hash = "sha256-ntYZso4gaTMdQ3AkX0dk/EpfR924tdaaMdgbXvwX3Yo=";
     };
     enableReload = true; # Reload caddy instead of restarting it on config changes
     globalConfig = ''
@@ -83,6 +82,7 @@
           interval 12h
           timeout 15s
         }
+        client_ip_headers CF-Connecting-IP X-Forwarded-For
         #trusted_proxies_strict # <https://caddyserver.com/docs/caddyfile/options#trusted-proxies-strict>
       }
     '';
@@ -114,21 +114,27 @@
   };
   # Server Info Fetcher
   systemd.services."tgstation-gameserverdatasync" = {
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
+      Restart = "always";
+      RestartSec = "5s";
+      RestartMaxDelaySec = "5s";
       User = "caddy";
       Group = "caddy";
       ExecStart = pkgs.writeShellScript "server-info-fetcher.sh" ''
-        ${pkgs.rustPlatform.buildRustPackage rec {
-          pname = "server-info-fetcher";
-          version = "0.1.0";
-          src = pkgs.fetchFromGitHub {
-            owner = "tgstation-operations";
-            repo = pname;
-            rev = "e6964f414101be212d12e4510767b54e45160e53";
-            hash = "sha256-I5tVl9Wh4sovO9bVJRPpIQOn4S9dfa5mYad/AB8WPNs=";
-          };
-          cargoHash = "sha256-vRVVGVXAvKbQ8lpgDknTKnIL+HYgkPy1R//TbUG4F6o=";
-        }}/bin/server-info-fetcher --servers blockmoths.tg.lan:3336,tgsatan.tg.lan:1337,tgsatan.tg.lan:1447,tgsatan.tg.lan:5337 /run/tgstation-website-v2/serverinfo.json
+        ${
+          pkgs.rustPlatform.buildRustPackage rec {
+            pname = "server-info-fetcher";
+            version = "0.1.0";
+            src = pkgs.fetchFromGitHub {
+              owner = "tgstation-operations";
+              repo = pname;
+              rev = "481c04b83946e6314afeb0a443ef08f069a1ae8c";
+              hash = "sha256:0rwas0c9kxpf7dqbyd516xkam5hxdij7fillk7nxhx62z8gzcgcj";
+            };
+            cargoHash = "sha256-vRVVGVXAvKbQ8lpgDknTKnIL+HYgkPy1R//TbUG4F6o=";
+          }
+        }/bin/server-info-fetcher --failure-tolerance all --servers blockmoths.tg.lan:3336,tgsatan.tg.lan:1337,tgsatan.tg.lan:1447,tgsatan.tg.lan:5337 /run/tgstation-website-v2/serverinfo.json
       '';
     };
   };

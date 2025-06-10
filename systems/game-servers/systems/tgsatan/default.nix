@@ -16,8 +16,8 @@
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
+    ../../../../modules/maria.nix
     ../../modules/garage.nix
-    ../../modules/maria.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/podman.nix
@@ -110,9 +110,6 @@ in {
   };
   services.tgstation-server = {
     environmentFile = config.age.secrets.tgs.path;
-  };
-  systemd.services.tgstation-server = {
-    wants = ["mysql.service"];
   };
 
   services.grafana = {
