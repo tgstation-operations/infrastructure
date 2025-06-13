@@ -128,7 +128,7 @@
         which
         pkg-config
         git
-        nodejs_22
+        bun
         dotnetCorePackages.sdk_8_0
         curl
         gnutar
