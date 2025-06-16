@@ -420,18 +420,18 @@
     "tgstation-pr-announcer": {
       "locked": {
         "dir": "tools/Tgstation.PRAnnouncer",
-        "lastModified": 1741402772,
-        "narHash": "sha256-rTmEuoLWpZsZumAvK30qgOTTKmv6fj6fFkbqHcZWM9s=",
+        "lastModified": 1749265769,
+        "narHash": "sha256-9SEHbeM/N4GopoQQMNTNUexj4WBgqoNvfM3+1uLFtpg=",
         "owner": "tgstation",
         "repo": "tgstation",
-        "rev": "3451496743959735c911343c658c466a6af2fa49",
+        "rev": "be9ae13cd50cc2f2f6680883424b86feb3c22725",
         "type": "github"
       },
       "original": {
         "dir": "tools/Tgstation.PRAnnouncer",
         "owner": "tgstation",
         "repo": "tgstation",
-        "rev": "3451496743959735c911343c658c466a6af2fa49",
+        "rev": "be9ae13cd50cc2f2f6680883424b86feb3c22725",
         "type": "github"
       }
     },
