@@ -1,5 +1,5 @@
 let
-  users = import ../../../../../modules/ssh_keys.nix;
+  users = import ../../../../../modules/ssh_keys_by_group.nix;
   tgsatan = (import ../../../../../modules/ssh_keys_system.nix).tgsatan;
   final = users ++ [tgsatan];
 in {

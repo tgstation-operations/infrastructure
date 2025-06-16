@@ -1,5 +1,5 @@
 let
-  users = import ../../../../../modules/ssh_keys.nix;
+  users = import ../../../../../modules/ssh_keys_by_group.nix;
   wiggle = (import ../../../../../modules/ssh_keys_system.nix).wiggle;
   final = users ++ [wiggle];
 in {
