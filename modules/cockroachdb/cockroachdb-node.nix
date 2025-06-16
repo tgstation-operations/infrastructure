@@ -41,7 +41,7 @@
     group = "db-operator";
     certsDir = "/var/lib/cockroachdb/cert-store";
   };
-  systemd.services.cockroachdb.serviceConfig.ExecPre = pkgs.writeShellScript "setup-certs-dir" ''
+  systemd.services.cockroachdb.serviceConfig.ExecStartPre = pkgs.writeShellScript "setup-certs-dir" ''
     mkdir -p /var/lib/cockroachdb/cert-store
     pushd /var/lib/cockroachdb/cert-store
     rm -f ca.crt node.crt node.key
