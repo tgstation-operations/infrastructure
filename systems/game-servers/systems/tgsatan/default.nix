@@ -49,6 +49,7 @@ in {
       ./disko.nix
       ./modules/haproxy
       ./modules/caddy
+      cockroachdb
     ];
 
   hardware.nvidia-container-toolkit.enable = true;
