@@ -30,6 +30,13 @@
     ./modules/redbot.nix
     ./modules/motd
   ];
+  cockroachdb = import ../../../../modules/cockroachdb/cockroachdb-node.nix {
+    cluster-nodes = ["tgsatan.tg.lan"];
+    ca-crt = ./secrets/cockroachdb-ca.crt;
+    node-crt = ./secrets/cockroachdb-node.crt;
+    node-key = ./secrets/cockroachdb-node.key;
+    node-name = "tgsatan";
+  };
 in {
   networking.hostName = "tgsatan";
   networking.hostId = "8f33c04a";
