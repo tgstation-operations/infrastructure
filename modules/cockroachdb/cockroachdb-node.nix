@@ -1,4 +1,9 @@
 {
+  # needed imports
+  config,
+  pkgs,
+  age,
+  # Cluster configuration
   cluster-nodes,
   ca-crt,
   node-crt,
@@ -16,34 +21,36 @@
 
   age.secrets."cockroachdb-${node-name}-ca-crt" = {
     file = ca-crt;
+    mode = "0440";
     owner = config.users.users.${db-user}.name;
     group = config.users.groups.${db-group}.name;
   };
   age.secrets."cockroachdb-${node-name}-node-crt" = {
     file = node-crt;
+    mode = "0440";
     owner = config.users.users.${db-user}.name;
     group = config.users.groups.${db-group}.name;
   };
   age.secrets."cockroachdb-${node-name}-node-key" = {
     file = node-key;
+    mode = "0440";
     owner = config.users.users.${db-user}.name;
     group = config.users.groups.${db-group}.name;
   };
 
   users.users.${db-user} = {
     isSystemUser = true;
-    shell = "${pkgs.nologin}/bin/nologin";
-    group = "${db-user}";
+    shell = "${pkgs.shadow}/bin/nologin";
+    extraGroups = [db-group];
   };
-  users.groups.${db-group}.name = db-group;
 
   services.cockroachdb = {
     enable = true;
     listen.port = port-sql;
     http.port = port-admin;
-    join = cluster-nodes;
+    join = builtins.concatStringsSep "," cluster-nodes;
     user = db-user;
-    group = db-group;
+    group = db-user;
     certsDir = "/var/lib/cockroachdb/cert-store";
   };
   systemd.services.cockroachdb.serviceConfig.ExecStartPre = pkgs.writeShellScript "setup-certs-dir" ''
