@@ -1,5 +1,5 @@
 let
-  users = import ../../../modules/ssh_keys_by_group.nix;
+  users = import ../../../modules/ssh_keys_by_group.nix {};
   systems = import ../../../modules/ssh_keys_system.nix;
 in {
   "cloudflare_api.age".publicKeys = users ++ systems.all-edge-nodes;
