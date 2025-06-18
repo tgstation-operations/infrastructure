@@ -3,51 +3,56 @@
   ca-crt,
   node-crt,
   node-key,
+  node-name,
+  port-sql ? 26257,
+  port-admin ? 26258,
+  db-user ? "cockroachdb",
+  db-group ? "db-operator",
 }: {
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
-    26257 # SQL
-    26258 # Admin Interface
+    port-sql
+    port-admin
   ];
 
-  age.secrets.cockroachdb-tgstation-ca-crt = {
+  age.secrets."cockroachdb-${node-name}-ca-crt" = {
     file = ca-crt;
-    owner = config.users.users.cockroachdb.name;
-    group = config.users.groups.db-operator.name;
+    owner = config.users.users.${db-user}.name;
+    group = config.users.groups.${db-group}.name;
   };
-  age.secrets.cockroachdb-tgstation-node-crt = {
+  age.secrets."cockroachdb-${node-name}-node-crt" = {
     file = node-crt;
-    owner = config.users.users.cockroachdb.name;
-    group = config.users.groups.db-operator.name;
+    owner = config.users.users.${db-user}.name;
+    group = config.users.groups.${db-group}.name;
   };
-  age.secrets.cockcockroachdb-tgstation-node-key = {
+  age.secrets."cockroachdb-${node-name}-node-key" = {
     file = node-key;
-    owner = config.users.users.cockroachdb.name;
-    group = config.users.groups.db-operator.name;
+    owner = config.users.users.${db-user}.name;
+    group = config.users.groups.${db-group}.name;
   };
 
-  users.users.cockroachdb = {
+  users.users.${db-user} = {
     isSystemUser = true;
     shell = "${pkgs.nologin}/bin/nologin";
-    group = "db-operator";
+    group = "${db-user}";
   };
-  users.groups.db-operator.name = "db-operator";
+  users.groups.${db-group}.name = db-group;
 
   services.cockroachdb = {
     enable = true;
-    http.port = 26258; # not using 8080 on purpose.
-    listen.port = 26257; # this is the default, but you never know.
+    listen.port = port-sql;
+    http.port = port-admin;
     join = cluster-nodes;
-    user = "cockroachdb";
-    group = "db-operator";
+    user = db-user;
+    group = db-group;
     certsDir = "/var/lib/cockroachdb/cert-store";
   };
   systemd.services.cockroachdb.serviceConfig.ExecStartPre = pkgs.writeShellScript "setup-certs-dir" ''
     mkdir -p /var/lib/cockroachdb/cert-store
     pushd /var/lib/cockroachdb/cert-store
     rm -f ca.crt node.crt node.key
-    ln -s ${age.secrets.cockroachdb-tgstation-ca-crt.path} ca.crt
-    ln -s ${age.secrets.cockroachdb-tgstation-node-crt.path} node.crt
-    ln -s ${age.secrets.cockroachdb-tgstation-node-key.path} node.key
+    ln -s ${age.secrets."cockroachdb-${node-name}-ca-crt".path} ca.crt
+    ln -s ${age.secrets."cockroachdb-${node-name}-node-crt".path} node.crt
+    ln -s ${age.secrets."cockroachdb-${node-name}-node-key".path} node.key
     popd
   '';
 }
