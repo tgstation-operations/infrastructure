@@ -32,7 +32,6 @@
   ];
   cockroachdb = import ../../../../modules/cockroachdb/cockroachdb-node.nix {
     inherit config pkgs;
-    inherit (self.inputs.age) age;
     cluster-nodes = ["tgsatan.tg.lan"];
     ca-crt = ./secrets/cockroachdb/tgsatan.ca.crt;
     node-crt = ./secrets/cockroachdb/tgsatan.node.crt;

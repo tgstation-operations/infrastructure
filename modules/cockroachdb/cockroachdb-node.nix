@@ -2,7 +2,6 @@
   # needed imports
   config,
   pkgs,
-  age,
   # Cluster configuration
   cluster-nodes,
   ca-crt,
@@ -13,7 +12,9 @@
   port-admin ? 26258,
   db-user ? "cockroachdb",
   db-group ? "db-operator",
-}: {
+}: let
+  age = config.age;
+in {
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
     port-sql
     port-admin
