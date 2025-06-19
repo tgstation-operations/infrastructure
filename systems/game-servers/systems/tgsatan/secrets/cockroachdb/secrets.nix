@@ -6,4 +6,6 @@ in {
   "tgsatan.ca.crt".publicKeys = final;
   "tgsatan.node.crt".publicKeys = final;
   "tgsatan.node.key".publicKeys = final;
+  "client.root.crt".publicKeys = final;
+  "client.root.key".publicKeys = final;
 }
