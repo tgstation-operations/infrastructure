@@ -21,12 +21,12 @@ in {
     port-admin
   ];
 
-  age.secrets."cockroachdb-${db-user}-crt" = {
+  age.secrets."cockroachdb-${node-name}-${db-user}-crt" = {
     file = db-user-crt;
     mode = "0400";
     owner = config.users.users.${db-user}.name;
   };
-  age.secrets."cockroachdb-${db-user}-key" = {
+  age.secrets."cockroachdb-${node-name}-${db-user}-key" = {
     file = db-user-key;
     mode = "0400";
     owner = config.users.users.${db-user}.name;
@@ -68,8 +68,8 @@ in {
     ln -s ${age.secrets."cockroachdb-${node-name}-ca-crt".path} ca.crt
     ln -s ${age.secrets."cockroachdb-${node-name}-node-crt".path} node.crt
     ln -s ${age.secrets."cockroachdb-${node-name}-node-key".path} node.key
-    ln -s ${age.secrets."cockroachdb-${node-name}-client-crt".path} client.${config.users.users.${db-user}.name}.crt
-    ln -s ${age.secrets."cockroachdb-${node-name}-client-key".path} client.${config.users.users.${db-user}.name}.key
+    ln -s ${age.secrets."cockroachdb-${node-name}-${db-user}-client-crt".path} client.${config.users.users.${db-user}.name}.crt
+    ln -s ${age.secrets."cockroachdb-${node-name}-${db-user}-client-key".path} client.${config.users.users.${db-user}.name}.key
     popd
   '';
 }
