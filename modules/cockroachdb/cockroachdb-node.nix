@@ -11,7 +11,6 @@
   port-sql ? 26257,
   port-admin ? 26258,
   db-user ? "cockroachdb",
-  db-group ? "db-operator",
 }: let
   age = config.age;
 in {
@@ -22,27 +21,23 @@ in {
 
   age.secrets."cockroachdb-${node-name}-ca-crt" = {
     file = ca-crt;
-    mode = "0440";
+    mode = "0400";
     owner = config.users.users.${db-user}.name;
-    group = config.users.groups.${db-group}.name;
   };
   age.secrets."cockroachdb-${node-name}-node-crt" = {
     file = node-crt;
-    mode = "0440";
+    mode = "0400";
     owner = config.users.users.${db-user}.name;
-    group = config.users.groups.${db-group}.name;
   };
   age.secrets."cockroachdb-${node-name}-node-key" = {
     file = node-key;
-    mode = "0440";
+    mode = "0400";
     owner = config.users.users.${db-user}.name;
-    group = config.users.groups.${db-group}.name;
   };
 
   users.users.${db-user} = {
     isSystemUser = true;
     shell = "${pkgs.shadow}/bin/nologin";
-    extraGroups = [db-group];
   };
 
   services.cockroachdb = {
