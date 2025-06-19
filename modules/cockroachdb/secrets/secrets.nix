@@ -3,6 +3,6 @@ let
 in {
   "ca.key".publicKeys = users;
   "ca.crt".publicKeys = users;
-  "client.root.crt".publicKeys = users;
-  "client.root.key".publicKeys = users;
+  "client.cockroachdb.crt".publicKeys = users;
+  "client.cockroachdb.key".publicKeys = users;
 }
