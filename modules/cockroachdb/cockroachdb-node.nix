@@ -68,8 +68,8 @@ in {
     ln -s ${age.secrets."cockroachdb-${node-name}-ca-crt".path} ca.crt
     ln -s ${age.secrets."cockroachdb-${node-name}-node-crt".path} node.crt
     ln -s ${age.secrets."cockroachdb-${node-name}-node-key".path} node.key
-    ln -s ${age.secrets."cockroachdb-${node-name}-${db-user}-client-crt".path} client.${config.users.users.${db-user}.name}.crt
-    ln -s ${age.secrets."cockroachdb-${node-name}-${db-user}-client-key".path} client.${config.users.users.${db-user}.name}.key
+    ln -s ${age.secrets."cockroachdb-${node-name}-${db-user}-crt".path} client.${config.users.users.${db-user}.name}.crt
+    ln -s ${age.secrets."cockroachdb-${node-name}-${db-user}-key".path} client.${config.users.users.${db-user}.name}.key
     popd
   '';
 }
