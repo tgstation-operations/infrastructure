@@ -4,15 +4,18 @@
   pkgs,
   # Cluster configuration
   cluster-nodes,
-  ca-crt,
-  node-crt,
-  node-key,
   node-name,
-  db-user,
-  db-user-crt,
-  db-user-key,
   port-sql ? 26257,
   port-admin ? 26258,
+  # Node certificate and private key
+  node-crt,
+  node-key,
+  db-user,
+  # DB user certificate and private key
+  db-user-crt,
+  db-user-key,
+  # public CA certificate. should be identical for all nodes in the same cluster.
+  ca-crt ? ./ca.crt,
 }: let
   age = config.age;
 in {
@@ -21,23 +24,8 @@ in {
     port-admin
   ];
 
-  age.secrets."cockroachdb-${node-name}-${db-user}-crt" = {
-    file = db-user-crt;
-    mode = "0400";
-    owner = config.users.users.${db-user}.name;
-  };
   age.secrets."cockroachdb-${node-name}-${db-user}-key" = {
     file = db-user-key;
-    mode = "0400";
-    owner = config.users.users.${db-user}.name;
-  };
-  age.secrets."cockroachdb-${node-name}-ca-crt" = {
-    file = ca-crt;
-    mode = "0400";
-    owner = config.users.users.${db-user}.name;
-  };
-  age.secrets."cockroachdb-${node-name}-node-crt" = {
-    file = node-crt;
     mode = "0400";
     owner = config.users.users.${db-user}.name;
   };
@@ -65,11 +53,11 @@ in {
     mkdir -p /var/lib/cockroachdb/cert-store
     pushd /var/lib/cockroachdb/cert-store
     rm -f *
-    ln -s ${age.secrets."cockroachdb-${node-name}-ca-crt".path} ca.crt
-    ln -s ${age.secrets."cockroachdb-${node-name}-node-crt".path} node.crt
-    ln -s ${age.secrets."cockroachdb-${node-name}-node-key".path} node.key
-    ln -s ${age.secrets."cockroachdb-${node-name}-${db-user}-crt".path} client.${config.users.users.${db-user}.name}.crt
+    ln -s ${ca-crt} ca.crt
+    ln -s ${node-crt} node.crt
+    ln -s ${db-user-crt} client.${config.users.users.${db-user}.name}.crt
     ln -s ${age.secrets."cockroachdb-${node-name}-${db-user}-key".path} client.${config.users.users.${db-user}.name}.key
+    ln -s ${age.secrets."cockroachdb-${node-name}-node-key".path} node.key
     popd
   '';
 }
