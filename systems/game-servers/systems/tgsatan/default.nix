@@ -30,17 +30,6 @@
     ./modules/redbot.nix
     ./modules/motd
   ];
-  cockroachdb = import ../../../../modules/cockroachdb/cockroachdb-node.nix {
-    inherit config pkgs;
-    cluster-nodes = ["tgsatan.tg.lan"];
-    ca-crt = ./secrets/cockroachdb/tgsatan.ca.crt;
-    node-crt = ./secrets/cockroachdb/tgsatan.node.crt;
-    node-key = ./secrets/cockroachdb/tgsatan.node.key;
-    db-user = "cockroachdb";
-    db-user-crt = ./secrets/cockroachdb/client.cockroachdb.crt;
-    db-user-key = ./secrets/cockroachdb/client.cockroachdb.key;
-    node-name = "tgsatan";
-  };
 in {
   networking.hostName = "tgsatan";
   networking.hostId = "8f33c04a";
