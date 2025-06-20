@@ -14,21 +14,22 @@
   ];
   localModules = [
     ../../../../modules/fail2ban.nix
+    ../../../../modules/maria.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
-    ../../../../modules/maria.nix
     ../../modules/garage.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/podman.nix
     ../../modules/tgs
-    ./modules/monitoring
+    ./modules/atticd.nix
+    ./modules/cockroachdb
     ./modules/grafana
     ./modules/postgres.nix
-    ./modules/atticd.nix
+    ./modules/monitoring
+    ./modules/motd
     ./modules/nvidia.nix
     ./modules/redbot.nix
-    ./modules/motd
   ];
 in {
   networking.hostName = "tgsatan";
@@ -42,7 +43,6 @@ in {
       ./disko.nix
       ./modules/haproxy
       ./modules/caddy
-      cockroachdb
     ];
 
   hardware.nvidia-container-toolkit.enable = true;
