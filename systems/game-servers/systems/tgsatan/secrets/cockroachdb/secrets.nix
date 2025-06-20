@@ -1,11 +1,10 @@
 let
-  users = import ../../../../../../modules/ssh_keys_by_group.nix {group = "db-operator";};
-  system = (import ../../../../../../modules/ssh_keys_systems.nix).tgsatan;
-  final = users ++ [system];
-in {
-  "tgsatan.ca.crt".publicKeys = final;
-  "tgsatan.node.crt".publicKeys = final;
-  "tgsatan.node.key".publicKeys = final;
-  "client.root.crt".publicKeys = final;
-  "client.root.key".publicKeys = final;
-}
+  system = import ../../../../../../modules/ssh_keys_systems.nix;
+in
+  with system; {
+    "tgsatan.ca.crt".publicKeys = [tgsatan];
+    "tgsatan.node.crt".publicKeys = [tgsatan];
+    "tgsatan.node.key".publicKeys = [tgsatan];
+    "client.cockroachdb.crt".publicKeys = [tgsatan];
+    "client.cockroachdb.key".publicKeys = [tgsatan];
+  }

@@ -36,6 +36,9 @@
     ca-crt = ./secrets/cockroachdb/tgsatan.ca.crt;
     node-crt = ./secrets/cockroachdb/tgsatan.node.crt;
     node-key = ./secrets/cockroachdb/tgsatan.node.key;
+    db-user = "cockroachdb";
+    db-user-crt = ./secrets/cockroachdb/client.cockroachdb.crt;
+    db-user-key = ./secrets/cockroachdb/client.cockroachdb.key;
     node-name = "tgsatan";
   };
 in {

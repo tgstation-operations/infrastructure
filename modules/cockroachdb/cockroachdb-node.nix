@@ -8,9 +8,9 @@
   node-crt,
   node-key,
   node-name,
-  db-user ? "cockroachdb",
-  db-user-crt ? ./secrets/client.cockroachdb.crt,
-  db-user-key ? ./secrets/client.cockroachdb.key,
+  db-user,
+  db-user-crt,
+  db-user-key,
   port-sql ? 26257,
   port-admin ? 26258,
 }: let
