@@ -14,30 +14,23 @@
   ];
   localModules = [
     ../../../../modules/fail2ban.nix
+    ../../../../modules/maria.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
-    ../../../../modules/maria.nix
     ../../modules/garage.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/podman.nix
     ../../modules/tgs
-    ./modules/monitoring
+    ./modules/atticd.nix
+    ./modules/cockroachdb
     ./modules/grafana
     ./modules/postgres.nix
-    ./modules/atticd.nix
+    ./modules/monitoring
+    ./modules/motd
     ./modules/nvidia.nix
     ./modules/redbot.nix
-    ./modules/motd
   ];
-  cockroachdb = import ../../../../modules/cockroachdb/cockroachdb-node.nix {
-    inherit config pkgs;
-    cluster-nodes = ["tgsatan.tg.lan"];
-    ca-crt = ./secrets/cockroachdb/tgsatan.ca.crt;
-    node-crt = ./secrets/cockroachdb/tgsatan.node.crt;
-    node-key = ./secrets/cockroachdb/tgsatan.node.key;
-    node-name = "tgsatan";
-  };
 in {
   networking.hostName = "tgsatan";
   networking.hostId = "8f33c04a";
@@ -50,7 +43,6 @@ in {
       ./disko.nix
       ./modules/haproxy
       ./modules/caddy
-      cockroachdb
     ];
 
   hardware.nvidia-container-toolkit.enable = true;
