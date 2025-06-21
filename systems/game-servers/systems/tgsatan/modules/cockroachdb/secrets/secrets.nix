@@ -5,4 +5,5 @@ in
   with system; {
     "node.key".publicKeys = [tgsatan] ++ users;
     "client.cockroachdb.key".publicKeys = [tgsatan] ++ users;
+    "client.root.key".publicKeys = [tgsatan] ++ users;
   }

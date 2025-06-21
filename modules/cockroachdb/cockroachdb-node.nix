@@ -16,6 +16,10 @@
   db-user-key,
   # public CA certificate. should be identical for all nodes in the same cluster.
   ca-crt ? ./ca.crt,
+  # root certificate used for initializing a new node.
+  root-crt ? ./client.root.crt,
+  # root private key, must be encrypted per system.
+  root-key,
 }: let
   age = config.age;
 in {
@@ -26,6 +30,11 @@ in {
 
   age.secrets."cockroachdb-${node-name}-${db-user}-key" = {
     file = db-user-key;
+    mode = "0400";
+    owner = config.users.users.${db-user}.name;
+  };
+  age.secrets."cockroachdb-${node-name}-root-key" = {
+    file = root-key;
     mode = "0400";
     owner = config.users.users.${db-user}.name;
   };
@@ -55,8 +64,10 @@ in {
     rm -f *
     ln -s ${ca-crt} ca.crt
     ln -s ${node-crt} node.crt
+    ln -s ${root-crt} client.root.crt
     ln -s ${db-user-crt} client.${config.users.users.${db-user}.name}.crt
     ln -s ${age.secrets."cockroachdb-${node-name}-${db-user}-key".path} client.${config.users.users.${db-user}.name}.key
+    ln -s ${age.secrets."cockroachdb-${node-name}-root-key".path} client.root.key
     ln -s ${age.secrets."cockroachdb-${node-name}-node-key".path} node.key
     popd
   '';
