@@ -33,6 +33,11 @@ in {
     mode = "0400";
     owner = config.users.users.${db-user}.name;
   };
+  age.secrets."cockroachdb-${node-name}-root-key" = {
+    file = root-key;
+    mode = "0400";
+    owner = config.users.users.${db-user}.name;
+  };
   age.secrets."cockroachdb-${node-name}-node-key" = {
     file = node-key;
     mode = "0400";
