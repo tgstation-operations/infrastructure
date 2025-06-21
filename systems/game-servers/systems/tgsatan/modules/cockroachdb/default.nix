@@ -12,4 +12,5 @@ import ../../../../../../modules/cockroachdb/cockroachdb-node.nix {
   db-user = "cockroachdb";
   db-user-crt = ./client.cockroachdb.crt;
   db-user-key = ./secrets/client.cockroachdb.key;
+  root-key = ./secrets/client.root.key;
 }

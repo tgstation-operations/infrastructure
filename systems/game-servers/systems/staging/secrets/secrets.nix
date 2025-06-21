@@ -1,6 +1,6 @@
 let
   users = import ../../../../../modules/ssh_keys_by_group.nix {};
-  wiggle = (import ../../../../../modules/ssh_keys_system.nix).wiggle;
+  wiggle = (import ../../../../../modules/ssh_keys_systems.nix).wiggle;
   final = users ++ [wiggle];
 in {
   # TGS

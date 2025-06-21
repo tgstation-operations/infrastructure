@@ -1,6 +1,6 @@
 let
   users = import ../../../../../modules/ssh_keys_by_group.nix {};
-  tgsatan = (import ../../../../../modules/ssh_keys_system.nix).tgsatan;
+  tgsatan = (import ../../../../../modules/ssh_keys_systems.nix).tgsatan;
   final = users ++ [tgsatan];
 in {
   ## Restic
