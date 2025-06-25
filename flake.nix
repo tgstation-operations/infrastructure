@@ -82,6 +82,7 @@
         flakeModules
         ++ [
           inputs.impermanence.nixosModules.impermanence
+          inputs.authentik-nix.nixosModules.default
           (import ./modules/base.nix)
           (import ./modules/users)
           (import ./systems/game-servers/systems/tgsatan)
