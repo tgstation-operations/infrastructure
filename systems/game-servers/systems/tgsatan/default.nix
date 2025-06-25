@@ -32,7 +32,6 @@
     ./modules/redbot.nix
     ./modules/discourse.nix
     ./modules/redis.nix
-    ./modules/motd
   ];
 in {
   networking.hostName = "tgsatan";
