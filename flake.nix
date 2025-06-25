@@ -45,7 +45,7 @@
       url = "github:nix-community/fenix?rev=76ffc1b7b3ec8078fe01794628b6abff35cbda8f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    inputs.authentik-nix.url = "github:nix-community/authentik-nix";
+    authentik-nix.url = "github:nix-community/authentik-nix";
   };
 
   outputs = inputs @ {
