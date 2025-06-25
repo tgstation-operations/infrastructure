@@ -2,7 +2,7 @@
   config,
   ...
 }: {
-  age.secrets.grafana_smtp = {
+  age.secrets.authentik = {
     file = ../../secrets/authentik.age;
     owner = "${config.systemd.services.authentik.serviceConfig.User}";
   };
