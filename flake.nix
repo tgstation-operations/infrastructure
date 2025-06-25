@@ -78,6 +78,7 @@
         targetHost = "tgsatan.tg.lan";
         targetUser = "deploy";
       };
+      meta.specialArgs.inputs = { inherit (inputs) authentik-nix; };
       imports =
         flakeModules
         ++ [
