@@ -20,7 +20,7 @@
         from = "noreply@tgstation13.org";
       };
       disable_startup_analytics = true;
-      avatars = "initials";
+      avatars = "gravatar";
     };
   };
 }
