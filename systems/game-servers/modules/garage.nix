@@ -57,8 +57,8 @@
       Group = "garage";
       DynamicUser = false;
     };
-    after = [
-      "tailscaled.service" # Required, as it's how our nodes get accessed and swarm
-    ];
+    environment = {
+      "IM_LITERALLY_JUST_SETTING_THIS_TO_RESTART_GARAGE_REMOVE_IT" = "chumbis";
+    };
   };
 }

@@ -1,18 +1,15 @@
 let
-  users = import ../../../../../modules/ssh_keys.nix;
-
-  # Systems
-  blockmoths = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHhSMBihD1sohp9h6tKYUd/BuyAsl0zOh/Uv86Gk/E/z";
-  systems = [blockmoths];
+  users = import ../../../../../modules/ssh_keys_by_group.nix {};
+  blockmoths = (import ../../../../../modules/ssh_keys_systems.nix).blockmoths;
+  final = users ++ [blockmoths];
 in {
   # TGS
-  "tgs.age".publicKeys = users ++ systems;
-
+  "tgs.age".publicKeys = final;
   # Restic
-  "restic-env.age".publicKeys = users ++ systems;
-  "restic-key.age".publicKeys = users ++ systems;
+  "restic-env.age".publicKeys = final;
+  "restic-key.age".publicKeys = final;
   # Cloudflare DNS-01
-  "cloudflare_api.age".publicKeys = users ++ systems;
+  "cloudflare_api.age".publicKeys = final;
   # AWS Route 53 DNS-01
-  "aws_credentials.age".publicKeys = users ++ systems;
+  "aws_credentials.age".publicKeys = final;
 }

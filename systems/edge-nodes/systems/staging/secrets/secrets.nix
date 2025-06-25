@@ -1,10 +1,8 @@
 let
-  users = import ../../../../../modules/ssh_keys.nix;
-
-  # Systems
-  warsaw = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAendJQ8VvBhnLl5Us7Q/2X9o6LSy8Ec7nXhs1JvLF3k";
-  systems = [warsaw];
+  users = import ../../../../../modules/ssh_keys_by_group.nix {};
+  warsaw = (import ../../../../../modules/ssh_keys_systems.nix).warsaw;
+  final = users ++ [warsaw];
 in {
-  "cloudflare_api.age".publicKeys = users ++ systems;
-  "tailscaleAuthKey.age".publicKeys = users ++ systems;
+  "cloudflare_api.age".publicKeys = final;
+  "tailscaleAuthKey.age".publicKeys = final;
 }

@@ -34,14 +34,15 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
     dragon-bot.url = "github:tgstation/dragon-bot";
-    tgstation-server.url = "github:tgstation/tgstation-server/e7d2a23450a7cb00e0b2bb87dc0815fec04d1855?dir=build/package/nix";
-    tgstation-pr-announcer.url = "github:tgstation/tgstation/3451496743959735c911343c658c466a6af2fa49?dir=tools/Tgstation.PRAnnouncer";
+    tgstation-server.url = "github:tgstation/tgstation-server/da0af26bedde229c21fb23d1bde4dee5b648c016?dir=build/package/nix";
+    tgstation-pr-announcer.url = "github:tgstation/tgstation/be9ae13cd50cc2f2f6680883424b86feb3c22725?dir=tools/Tgstation.PRAnnouncer";
     tgstation-website.url = "github:tgstation-operations/website-v2";
     impermanence.url = "github:scriptis/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    colmena.url = "github:zhaofengli/colmena";
+    colmena.url = "github:zhaofengli/colmena/5fdd743a11e7291bd8ac1e169d62ba6156c99be4";
     fenix = {
-      url = "github:nix-community/fenix";
+      # fenix is pinned to that specific hash because we need 1.86 for TGS otherwise openssl can't build
+      url = "github:nix-community/fenix?rev=76ffc1b7b3ec8078fe01794628b6abff35cbda8f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     inputs.authentik-nix.url = "github:nix-community/authentik-nix";
@@ -266,6 +267,7 @@
         ];
     };
   in {
+    colmenaHive = colmena.lib.makeHive self.outputs.colmena;
     colmena = {
       inherit
         tgsatan

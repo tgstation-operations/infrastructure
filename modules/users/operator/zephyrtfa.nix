@@ -12,6 +12,7 @@
 
     extraGroups = [
       "wheel"
+      "db-operator"
     ];
   };
 

@@ -12,6 +12,14 @@ mothblocks - out of band access to blockmoths and eu relays
 
 scriptis/lorwp - cloudflare dns
 
+# Server owners
+lime - oranges (ovh us vm)
+tgsatan - scriptis (dedicated)
+warsaw - scriptis (nobody knows??)
+wiggle - riggle (magic??)
+blockmoths - mothblocks (hetzner dedi)
+knipp,daschund,bratwurst - mothblocks (hetzner vms)
+
 # Repository structure
 ```
 <blorbo_name> = placeholder for the name of a blorbo

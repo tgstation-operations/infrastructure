@@ -17,7 +17,7 @@
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
-    ../../modules/maria.nix
+    ../../../../modules/maria.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/tgs
