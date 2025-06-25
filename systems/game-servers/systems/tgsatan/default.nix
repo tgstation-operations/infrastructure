@@ -14,18 +14,20 @@
   ];
   localModules = [
     ../../../../modules/fail2ban.nix
+    ../../../../modules/maria.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../modules/garage.nix
-    ../../modules/maria.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/podman.nix
     ../../modules/tgs
-    ./modules/monitoring
+    ./modules/atticd.nix
+    ./modules/cockroachdb
     ./modules/grafana
     ./modules/postgres.nix
-    ./modules/atticd.nix
+    ./modules/monitoring
+    ./modules/motd
     ./modules/nvidia.nix
     ./modules/redbot.nix
     ./modules/discourse.nix
@@ -112,9 +114,6 @@ in {
   };
   services.tgstation-server = {
     environmentFile = config.age.secrets.tgs.path;
-  };
-  systemd.services.tgstation-server = {
-    wants = ["mysql.service"];
   };
 
   services.grafana = {

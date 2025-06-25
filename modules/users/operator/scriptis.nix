@@ -15,6 +15,7 @@
     extraGroups = [
       "wheel"
       "podman"
+      "db-operator"
     ];
 
     shell = pkgs.fish;

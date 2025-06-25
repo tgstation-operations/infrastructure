@@ -2,12 +2,14 @@
   "groups": {
     "group:op": [
       "scriptis",
+      "sothanforax",
       "dominion",
       "riggle",
       "zephyrtfa",
       "lowrp",
       "iain0",
       "ivory",
+      "dax",
       "alexkar598"
     ],
     "group:keyholder-tg": [
@@ -29,6 +31,7 @@
       "thefinalpotatoe",
       "thebiblemelts",
       "cheshify",
+      "rex9001",
       "san7890",
       "shadowhand",
       "tattle",
@@ -207,6 +210,18 @@
         "tag:garage:80",
         "tag:garage:443",
         "tag:dbcluster:3306"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:dbcluster"
+      ],
+      "dst": [
+        "tag:dbcluster:3306",
+        "tag:dbcluster:4567",
+        "tag:dbcluster:4568",
+        "tag:dbcluster:4444"
       ]
     }
   ]

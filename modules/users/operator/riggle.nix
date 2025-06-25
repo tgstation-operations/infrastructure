@@ -13,6 +13,7 @@
 
     extraGroups = [
       "wheel"
+      "db-operator"
     ];
 
     shell = pkgs.zsh;
