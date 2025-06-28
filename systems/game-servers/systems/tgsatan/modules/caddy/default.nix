@@ -37,6 +37,7 @@
         };
         environmentFile = ./aws.env;
       };
+      "forums.tgstation13.org" = {};
       "s3.tgstation13.org" = {};
       "s3-web.tgstation13.org" = {};
       "admin.s3.tgsatan.us.tgstation13.org" = {
@@ -83,6 +84,13 @@
             health_uri /health
             health_port 5000
           }
+        '';
+      };
+      "forums.tgstation13.org" = {
+        useACMEHost = "forums.tgstation13.org";
+        extraConfig = ''
+          encode gzip zstd
+          reverse_proxy unix:/run/discourse/sockets/unicorn.sock
         '';
       };
       "s3.tgstation13.org" = {
