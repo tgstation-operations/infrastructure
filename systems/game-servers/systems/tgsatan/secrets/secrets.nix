@@ -23,4 +23,6 @@ in {
   "grafana_db.age".publicKeys = final;
   "grafana_smtp.age".publicKeys = final;
   "grafana_admin.age".publicKeys = final;
+  # Authentik
+  "authentik.age".publicKeys = final;
 }

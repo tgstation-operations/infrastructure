@@ -45,6 +45,7 @@
       url = "github:nix-community/fenix?rev=76ffc1b7b3ec8078fe01794628b6abff35cbda8f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    authentik-nix.url = "github:nix-community/authentik-nix";
   };
 
   outputs = inputs @ {
@@ -77,10 +78,12 @@
         targetHost = "tgsatan.tg.lan";
         targetUser = "deploy";
       };
+      meta.specialArgs.inputs = { inherit (inputs) authentik-nix; };
       imports =
         flakeModules
         ++ [
           inputs.impermanence.nixosModules.impermanence
+          inputs.authentik-nix.nixosModules.default
           (import ./modules/base.nix)
           (import ./modules/users)
           (import ./systems/game-servers/systems/tgsatan)
