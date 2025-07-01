@@ -85,5 +85,5 @@ echo "auxcpu: deployment finish"
 # compile tgui
 echo "tgui: deployment begin"
 cd "$1"
-env TG_BOOTSTRAP_CACHE="$work_directory" CBT_BUILD_MODE="TGS" tools/bootstrap/javascript.sh tools/build/build.js
+env TG_BOOTSTRAP_CACHE="$work_directory" CBT_BUILD_MODE="TGS" tools/bootstrap/javascript.sh tools/build/build.ts
 echo "tgui: deployment finish"
