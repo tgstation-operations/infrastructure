@@ -13,6 +13,7 @@
   localModules = [
     ./disko.nix
     ./modules/caddy
+    ./modules/cockroachdb
     ./modules/haproxy
     ./modules/motd
     ../../../../modules/fail2ban.nix
