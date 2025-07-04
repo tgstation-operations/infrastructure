@@ -218,9 +218,8 @@
       ],
       "dst": [
         "tag:dbcluster:3306",
-        "tag:dbcluster:4567",
-        "tag:dbcluster:4568",
-        "tag:dbcluster:4444"
+        "tag:dbcluster:26257",
+        "tag:dbcluster:26258"
       ]
     }
   ]

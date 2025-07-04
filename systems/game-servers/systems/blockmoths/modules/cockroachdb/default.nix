@@ -10,8 +10,8 @@ import ../../../../../../modules/cockroachdb/cockroachdb-node.nix {
     "tgsatan.tg.lan"
     "tg-db-cluster-node-solar.tg.lan"
   ];
-  node-name = "tgsatan";
-  node-address = "tgsatan.tg.lan";
+  node-name = "blockmoths";
+  node-address = "blockmoths.tg.lan";
   node-crt = ./node.crt;
   node-key = ./secrets/node.key;
   db-user = "cockroachdb";

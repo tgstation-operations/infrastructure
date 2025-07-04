@@ -5,8 +5,7 @@
   # Cluster configuration
   cluster-nodes,
   node-name,
-  port-sql ? 26257,
-  port-admin ? 26258,
+  node-address,
   # Node certificate and private key
   node-crt,
   node-key,
@@ -24,8 +23,8 @@
   age = config.age;
 in {
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
-    port-sql
-    port-admin
+    26257
+    8080
   ];
 
   age.secrets."cockroachdb-${node-name}-${db-user}-key" = {
@@ -51,8 +50,14 @@ in {
 
   services.cockroachdb = {
     enable = true;
-    listen.port = port-sql;
-    http.port = port-admin;
+    listen.address = "0.0.0.0";
+    http.address = "0.0.0.0";
+    extraArgs = [
+      "--advertise-addr"
+      "${node-address}"
+      "--sql-addr"
+      "0.0.0.0:26258"
+    ];
     join = builtins.concatStringsSep "," cluster-nodes;
     user = db-user;
     group = db-user;
