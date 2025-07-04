@@ -8,7 +8,7 @@ import ../../../../../../modules/cockroachdb/cockroachdb-node.nix {
   cluster-nodes = [
     "blockmoths.tg.lan"
     "tgsatan.tg.lan"
-    "tg-db-cluster-node-neptune"
+    "tg-db-cluster-node-neptune.tg.lan"
     "tg-db-cluster-node-solar"
   ];
   node-name = "tgsatan";
