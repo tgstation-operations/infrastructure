@@ -9,7 +9,7 @@ import ../../../../../../modules/cockroachdb/cockroachdb-node.nix {
     "blockmoths.tg.lan"
     "tgsatan.tg.lan"
     "tg-db-cluster-node-neptune.tg.lan"
-    "tg-db-cluster-node-solar"
+    "tg-db-cluster-node-solar.tg.lan"
   ];
   node-name = "tgsatan";
   node-crt = ./node.crt;
