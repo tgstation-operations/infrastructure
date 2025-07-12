@@ -22,7 +22,7 @@
     ../../modules/garage.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
-    ../../modules/podman.nix
+    ../../modules/docker.nix
     ../../modules/tgs
   ];
 in {

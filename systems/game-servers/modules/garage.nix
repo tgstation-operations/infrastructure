@@ -12,7 +12,7 @@
 
   services.garage = {
     enable = true;
-    package = pkgs.garage_1_x; # Has to be set explicitly, to account for major version updates
+    package = pkgs.garage_1; # Has to be set explicitly, to account for major version updates
     environmentFile = config.age.secrets.garage.path;
     settings = {
       # <https://garagehq.deuxfleurs.fr/documentation/reference-manual/configuration/>

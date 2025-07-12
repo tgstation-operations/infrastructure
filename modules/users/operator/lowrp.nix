@@ -40,7 +40,7 @@
       enable = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
-      initExtra = ''
+      initContent = ''
         eval $(${pkgs.starship}/bin/starship init zsh)
         eval $(${pkgs.nix-your-shell}/bin/nix-your-shell zsh)
       '';
