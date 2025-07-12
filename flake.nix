@@ -94,7 +94,7 @@
 
     vpn = {
       deployment = {
-        targetHost = "vpn.tg.lan";
+        targetHost = "vpn.tgstation13.org";
         targetUser = "deploy";
       };
       imports =
