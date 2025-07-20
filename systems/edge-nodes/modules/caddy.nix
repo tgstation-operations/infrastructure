@@ -141,6 +141,10 @@ in {
       admin localhost:2019
       metrics
       servers {
+        timeouts {
+          read_body 10s
+          idle 1m
+        }
         trusted_proxies cloudflare {
           interval 12h
           timeout 15s
