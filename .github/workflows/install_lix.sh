@@ -4,6 +4,6 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.lix.systems/lix | sh -s 
 
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
-echo "trusted-users = root @wheel $(whoami)" | sudo tee /etc/nix/nix.conf
+echo "trusted-users = root @wheel $(whoami)" | sudo tee -a /etc/nix/nix.conf
 
 nix config show
