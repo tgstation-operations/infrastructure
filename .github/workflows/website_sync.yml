@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Nix
-        uses: tgstation/install-nix-action # Install nix itself. We don't need to specify a channel since we're using flakes
+        uses: tgstation/install-nix-action@9354c2c559cde8f2151111f0b64fc08ae79cf82a # Install nix itself. We don't need to specify a channel since we're using flakes
         with:
           install_url: https://install.lix.systems/lix
           install_options: install --no-confirm
