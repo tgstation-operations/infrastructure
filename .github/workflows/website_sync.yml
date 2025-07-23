@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Nix
-        run: .github/install_lix.sh
+        run: sh .github/install_lix.sh
         env:
           EXTRA_NIX_CONFIG: |
             accept-flake-config = true
