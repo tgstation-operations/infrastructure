@@ -13,12 +13,13 @@ mothblocks - out of band access to blockmoths and eu relays
 scriptis/lorwp - cloudflare dns
 
 # Server owners
-lime - oranges (ovh us vm)
-tgsatan - scriptis (dedicated)
-warsaw - scriptis (nobody knows??)
-wiggle - riggle (magic??)
-blockmoths - mothblocks (hetzner dedi)
-knipp,daschund,bratwurst - mothblocks (hetzner vms)
+* lime - oranges (ovh us vm, forum/wiki host and relay)
+* tgsatan - scriptis (dedicated)
+* chicago, dallas, atlanta (scriptis, vultr relays)
+* warsaw - scriptis (nobody knows??)
+* wiggle - riggle (magic??)
+* blockmoths - mothblocks (hetzner dedi)
+* knipp,daschund,bratwurst - mothblocks (hetzner vm relays)
 
 # Repository structure
 ```
