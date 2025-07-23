@@ -3,7 +3,6 @@
   pkgs,
   lib,
   self,
-  fenix,
   ...
 }: let
   hw = self.inputs.nixos-hardware.nixosModules;
