@@ -4,4 +4,4 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.lix.systems/lix | sh -s 
 
 mkdir -p /etc/nix
 
-sudo echo "$EXTRA_NIX_CONFIG" >> /etc/nix/nix.conf
+echo "$EXTRA_NIX_CONFIG" | sudo tee -a /etc/nix/nix.conf
