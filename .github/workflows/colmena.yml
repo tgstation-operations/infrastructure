@@ -67,6 +67,7 @@ jobs:
         if: ${{ env.USE_ATTIC != 'yes' }}
         uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72 # Install nix itself. We don't need to specify a channel since we're using flakes
         with:
+          install_url: https://install.lix.systems/lix
           extra_nix_config: |
             accept-flake-config = true
             extra-substituters = https://nix-community.cachix.org
@@ -76,6 +77,7 @@ jobs:
         if: ${{ env.USE_ATTIC == 'yes' }}
         uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72
         with:
+          install_url: https://install.lix.systems/lix
           extra_nix_config: |
             accept-flake-config = true
             extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
