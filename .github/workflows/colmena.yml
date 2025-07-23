@@ -65,7 +65,7 @@ jobs:
 
       - name: Install Nix (Without Attic)
         if: ${{ env.USE_ATTIC != 'yes' }}
-        run: sh ./.github/install_lix.sh
+        run: sh .github/workflows/install_lix.sh
         env:
           EXTRA_NIX_CONFIG: |
             accept-flake-config = true
@@ -74,7 +74,7 @@ jobs:
 
       - name: Install Nix (With Attic)
         if: ${{ env.USE_ATTIC == 'yes' }}
-        run: sh ./.github/install_lix.sh
+        run: sh .github/workflows/install_lix.sh
         env:
           EXTRA_NIX_CONFIG: |
             accept-flake-config = true

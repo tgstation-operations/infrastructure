@@ -16,7 +16,7 @@ jobs:
         run: git clone -b main --depth 1 --single-branch "https://git@github.com/tgstation-operations/infrastructure" .
 
       - name: Install Nix
-        run: sh .github/install_lix.sh
+        run: sh .github/workflows/install_lix.sh
         env:
           EXTRA_NIX_CONFIG: |
             accept-flake-config = true
