@@ -7,6 +7,7 @@
     11337 # Sybil
     11447 # Manuel
     15337 # TGMC
+    17777 # Event Hall US
   ];
 
   services.haproxy.config =
