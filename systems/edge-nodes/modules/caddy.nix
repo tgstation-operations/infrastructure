@@ -307,7 +307,7 @@ in {
             };
             cargoHash = "sha256-x1Ui63dVxEKULKBsynmMv0cIK/ZzkfhRTOQArmUOuP4=";
           }
-        }/bin/server-info-fetcher --failure-tolerance all --servers blockmoths.tg.lan:3336,tgsatan.tg.lan:1337,tgsatan.tg.lan:1447,tgsatan.tg.lan:5337 /run/tgstation-website-v2/serverinfo.json
+        }/bin/server-info-fetcher --failure-tolerance all --servers blockmoths.tg.lan:3336,tgsatan.tg.lan:1337,tgsatan.tg.lan:1447,tgsatan.tg.lan:5337,tgsatan.tg.lan:7777 /run/tgstation-website-v2/serverinfo.json
       '';
     };
   };
