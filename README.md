@@ -68,7 +68,7 @@ architecture-beta
     junction connecttop in frontend
     junction connectbottom in backend
 
-    %% ALlows for routing of us servers
+    %% Allows for routing of us servers
     junction usserverjunction1 in usdc
     junction usserverjunction2 in usdc
     junction usserverjunction3 in usdc
