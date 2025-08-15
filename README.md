@@ -51,7 +51,7 @@ root/
 architecture-beta
     %% The groups
     group frontend [FRONTEND]
-    group backend [BACKEND]
+    group backend [BOTTOMENDS]
     group usrelay(cloud)[US Relays] in frontend
     group eurelay(cloud)[EU Relays] in frontend
     group usdc(cloud)[US Server] in backend
