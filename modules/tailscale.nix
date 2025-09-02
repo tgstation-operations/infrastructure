@@ -33,7 +33,7 @@
       "TS_DEBUG_FIREWALL_MODE" = "nftables";
 
       # Fixup for HTTP/3 + QUIC with MTUs approaching 1280. See https://github.com/tailscale/tailscale/issues/2633.
-      "TS_DEBUG_MTU" = 1350;
+      "TS_DEBUG_MTU" = "1350";
     };
     after = ["systemd-networkd-wait-online.service" "tgstation-wait-online.service"];
     requires = [ "tgstation-wait-online.service" ];
