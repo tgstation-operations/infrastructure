@@ -60,6 +60,11 @@
     iifname "tailscale0*" accept # Allow packets originating from tailscale to ignore reverse path filtering
   '';
 
+  # Fixup for HTTP/3 + QUIC with MTUs approaching 1280. See https://github.com/tailscale/tailscale/issues/2633.
+  services.udev.extraRules = [
+    "ACTION==\"add\", SUBSYSTEM==\"net\", KERNEL==\"tailscale0\", RUN+=\"/sbin/ip link set dev tailscale0 mtu 1500\""
+  ];
+
   systemd.services.optimize-tailscale = {
     enable = true;
     description = "fixup UDP GRO rules for tailscale";
