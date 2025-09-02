@@ -7,6 +7,15 @@
         content = {
           type = "gpt";
           partitions = {
+            ESP = {
+              size = "512M";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+              };
+            };
             zfs = {
               size = "100%";
               content = {
@@ -33,31 +42,31 @@
           };
         };
       };
-      charlie = {
-        type = "disk";
-        device = "/dev/disk/by-id/nvme-SAMSUNG_MZVL2512HCJQ-00B07_S63CNLFWC11348";
-        content = {
-          type = "gpt";
-          partitions = {
-            ESP = {
-              size = "512M";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-              };
-            };
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "zroot";
-              };
-            };
-          };
-        };
-      };
+      # charlie = {
+      #   type = "disk";
+      #   device = "/dev/disk/by-id/nvme-SAMSUNG_MZVL2512HCJQ-00B07_S63CNLFWC11348";
+      #   content = {
+      #     type = "gpt";
+      #     partitions = {
+      #       ESP = {
+      #         size = "512M";
+      #         type = "EF00";
+      #         content = {
+      #           type = "filesystem";
+      #           format = "vfat";
+      #           mountpoint = "/boot";
+      #         };
+      #       };
+      #       zfs = {
+      #         size = "100%";
+      #         content = {
+      #           type = "zfs";
+      #           pool = "zroot";
+      #         };
+      #       };
+      #     };
+      #   };
+      # };
     };
     zpool = {
       zroot = {

@@ -50,10 +50,12 @@ root/
 ```mermaid
 architecture-beta
     %% The groups
-    group usrelay(cloud)[US Relays]
-    group eurelay(cloud)[EU Relays]
-    group usdc(cloud)[US Server]
-    group eudc(cloud)[EU Server]
+    group frontend [FRONTEND]
+    group backend [BOTTOMENDS]
+    group usrelay(cloud)[US Relays] in frontend
+    group eurelay(cloud)[EU Relays] in frontend
+    group usdc(cloud)[US Server] in backend
+    group eudc(cloud)[EU Server] in backend
     %% Allows for routing of lines
     junction usjunction1 in usrelay
     junction usjunction2 in usrelay
@@ -63,10 +65,10 @@ architecture-beta
     junction eujunction3 in eurelay
     
     %% Connects backends and frontends
-    junction connecttop
-    junction connectbottom
+    junction connecttop in frontend
+    junction connectbottom in backend
 
-    %% ALlows for routing of us servers
+    %% Allows for routing of us servers
     junction usserverjunction1 in usdc
     junction usserverjunction2 in usdc
     junction usserverjunction3 in usdc
