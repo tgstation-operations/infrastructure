@@ -21,6 +21,5 @@ in {
   "effigy-dbconfig.age".publicKeys = users ++ systems.game-nodes-all;
   "effigy-comms.age".publicKeys = users ++ systems.game-nodes-all;
   #"effigy-tts_secrets.age".publicKeys = users ++ systems.game-nodes-all;
-  "effigy-webhooks.age".publicKeys = users ++ systems.game-nodes-all;
   "effigy-extra_config-rclone.age".publicKeys = users ++ systems.game-nodes-all;
 }
