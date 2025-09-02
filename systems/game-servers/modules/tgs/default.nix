@@ -72,6 +72,33 @@
     };
   };
 
+    #EFFIGY
+    "tgs-EventScripts.d/tg/DreamDaemonPreLaunch.sh" = {
+      text = builtins.readFile ./EventScripts/effigy/DreamDaemonPreLaunch.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/tg/PostCompile.sh" = {
+      text = builtins.readFile ./EventScripts/effigy/PostCompile.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/tg/PreCompile.sh" = {
+      text = builtins.readFile ./EventScripts/effigy/PreCompile.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/tg/tg-Roundend.sh" = {
+      text = builtins.readFile ./EventScripts/effigy/tg-Roundend.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/tg/update-config.sh" = {
+      text = builtins.readFile ./EventScripts/effigy/update-config.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+
   # Secrets used by the game servers
   age.secrets = {
     tg13-comms = {
@@ -111,6 +138,26 @@
     };
     tgmc-extra_config-rclone = {
       file = ../../secrets/tgmc-extra_config-rclone.age;
+      owner = "${config.services.tgstation-server.username}";
+      group = "${config.services.tgstation-server.groupname}";
+    };
+    effigy-comms = {
+      file = ../../secrets/effigy-comms.age;
+      owner = "${config.services.tgstation-server.username}";
+      group = "${config.services.tgstation-server.groupname}";
+    };
+    effigy-dbconfig = {
+      file = ../../secrets/effigy-dbconfig.age;
+      owner = "${config.services.tgstation-server.username}";
+      group = "${config.services.tgstation-server.groupname}";
+    };
+    #effigy-tts_secrets = { for a rainy day...
+      #file = ../../secrets/effigy-tts_secrets.age;
+      #owner = "${config.services.tgstation-server.username}";
+      #group = "${config.services.tgstation-server.groupname}";
+    #};
+    effigy-extra_config-rclone = {
+      file = ../../secrets/effigy-extra_config-rclone.age;
       owner = "${config.services.tgstation-server.username}";
       group = "${config.services.tgstation-server.groupname}";
     };

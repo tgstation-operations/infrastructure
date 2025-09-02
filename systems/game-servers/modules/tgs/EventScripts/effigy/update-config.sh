@@ -15,7 +15,7 @@ git checkout origin/main
 git reset --hard origin/main
 ln -sf /run/agenix/effigy-comms comms.txt
 ln -sf /run/agenix/effigy-dbconfig dbconfig.txt
-ln -sf /run/agenix/effigy-tts_secrets tts_secrets.txt
+#ln -sf /run/agenix/effigy-tts_secrets tts_secrets.txt BE careful with this, only enable when that stuff may or may not be worked out.
 #Check garage is alive before rcloning from it
 curl -sf http://localhost:3903/health
 if [ $? -ne 0 ]; then
