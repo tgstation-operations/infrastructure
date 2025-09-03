@@ -73,27 +73,27 @@
   };
 
     #EFFIGY
-    "tgs-EventScripts.d/tg/DreamDaemonPreLaunch.sh" = {
+    "tgs-EventScripts.d/effigy/DreamDaemonPreLaunch.sh" = {
       text = builtins.readFile ./EventScripts/effigy/DreamDaemonPreLaunch.sh;
       group = "tgstation-server";
       mode = "0755";
     };
-    "tgs-EventScripts.d/tg/PostCompile.sh" = {
+    "tgs-EventScripts.d/effigy/PostCompile.sh" = {
       text = builtins.readFile ./EventScripts/effigy/PostCompile.sh;
       group = "tgstation-server";
       mode = "0755";
     };
-    "tgs-EventScripts.d/tg/PreCompile.sh" = {
+    "tgs-EventScripts.d/effigy/PreCompile.sh" = {
       text = builtins.readFile ./EventScripts/effigy/PreCompile.sh;
       group = "tgstation-server";
       mode = "0755";
     };
-    "tgs-EventScripts.d/tg/tg-Roundend.sh" = {
+    "tgs-EventScripts.d/effigy/tg-Roundend.sh" = {
       text = builtins.readFile ./EventScripts/effigy/tg-Roundend.sh;
       group = "tgstation-server";
       mode = "0755";
     };
-    "tgs-EventScripts.d/tg/update-config.sh" = {
+    "tgs-EventScripts.d/effigy/update-config.sh" = {
       text = builtins.readFile ./EventScripts/effigy/update-config.sh;
       group = "tgstation-server";
       mode = "0755";
