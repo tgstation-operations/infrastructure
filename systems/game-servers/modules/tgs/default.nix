@@ -70,7 +70,6 @@
       group = "tgstation-server";
       mode = "0755";
     };
-  };
 
     #EFFIGY
     "tgs-EventScripts.d/effigy/DreamDaemonPreLaunch.sh" = {
@@ -98,6 +97,7 @@
       group = "tgstation-server";
       mode = "0755";
     };
+  };
 
   # Secrets used by the game servers
   age.secrets = {
