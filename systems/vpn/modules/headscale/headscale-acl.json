@@ -21,7 +21,6 @@
 			"mothblocks@",
 			"smartkar@",
 			"aa07@",
-			"LT3@",
 			"mrmelbert@",
 			"kieth4@",
 			"timberpoes@",
@@ -39,6 +38,13 @@
 			"spiders@",
 			"vekter@"
 		],
+
+    "group:keyholder-effigy": [
+      "LT3@",
+      "gallows@",
+      "bluwu016@"
+    ],
+
 		"group:keyholder-tgmc": [
 			"aiia@",
 			"barnet@",
@@ -96,6 +102,11 @@
 			"src": ["group:keyholder-tg"],
 			"dst": ["tag:backend:*"]
 		},
+    {
+      "action": "accept",
+      "src": ["group:keyholder-effigy"],
+      "dst": ["tag:backend:*"]
+    },
 		{
 			"action": "accept",
 			"src": ["group:keyholder-tgmc"],
