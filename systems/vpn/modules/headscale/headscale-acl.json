@@ -102,11 +102,11 @@
 			"src": ["group:keyholder-tg"],
 			"dst": ["tag:backend:*"]
 		},
-    {
-      "action": "accept",
-      "src": ["group:keyholder-effigy"],
-      "dst": ["tag:backend:*"]
-    },
+		{
+			"action": "accept",
+			"src": ["group:keyholder-effigy"],
+			"dst": ["tag:backend:*"]
+		},
 		{
 			"action": "accept",
 			"src": ["group:keyholder-tgmc"],
