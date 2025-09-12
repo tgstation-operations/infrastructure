@@ -19,6 +19,7 @@
     version = "1.0.0";
     src = logs-server-src;
     cargoLock.lockFile = "${logs-server-src}/Cargo.lock";
+    buildInputs = [pkgs.pkg-config];
   };
 in {
   systemd.services."game-logs-public-${server-name}" = {
