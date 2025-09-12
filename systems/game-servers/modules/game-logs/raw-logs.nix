@@ -12,7 +12,7 @@
     owner = "Mothblocks";
     repo = "tg-public-log-parser";
     rev = "48d179df20768a353c18c558d39ad66bdc98ba5a";
-    sha256 = lib.fakeSha256;
+    sha256 = "sha256-vyBjCtVFAE75OpXDQ+E8IbC93FHLxmxAiHK6LDqOdA4=";
   };
   logs-server = pkgs.rustPlatform.buildRustPackage rec {
     pname = "tg-public-log-parser";
