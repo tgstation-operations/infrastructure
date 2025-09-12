@@ -18,7 +18,7 @@
     pname = "tg-public-log-parser";
     version = "1.0.0";
     src = logs-server-src;
-    cargoLock = "${logs-server-src}/Cargo.lock";
+    cargoLock.lockFile = "${logs-server-src}/Cargo.lock";
   };
 in {
   systemd.services."game-logs-public-${server-name}" = {
