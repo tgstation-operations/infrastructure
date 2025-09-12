@@ -19,7 +19,7 @@
     version = "1.0.0";
     src = logs-server-src;
     cargoLock.lockFile = "${logs-server-src}/Cargo.lock";
-    nativeBuildInputs = [pkgs.pkg-config];
+    nativeBuildInputs = with pkgs; [pkg-config openssl];
   };
 in {
   systemd.services."game-logs-public-${server-name}" = {
