@@ -1,27 +1,27 @@
 {
-  pkgs,
-  rustPlatform,
-  lib,
-  fetchFromGitHub,
   logs-location,
+  server-name,
   serve-address,
+  pkgs,
+  lib,
   user ? "game-logs",
   group ? "game-logs",
+  ...
 }: let
-  logs-server-src = fetchFromGitHub {
+  logs-server-src = pkgs.fetchFromGitHub {
     owner = "Mothblocks";
     repo = "tg-public-log-parser";
     rev = "48d179df20768a353c18c558d39ad66bdc98ba5a";
     sha256 = lib.fakeSha256;
   };
-  logs-server = rustPlatform.buildRustPackage rec {
+  logs-server = pkgs.rustPlatform.buildRustPackage rec {
     pname = "tg-public-log-parser";
     version = "1.0.0";
     src = logs-server-src;
     cargoLock = "${logs-server-src}/Cargo.lock";
   };
 in {
-  systemd.services."game-logs-public-${server}" = {
+  systemd.services."game-logs-public-${server-name}" = {
     description = "Game Logs Public Service";
     after = ["network.target"];
     wantedBy = ["multi-user.target"];
@@ -32,14 +32,14 @@ in {
       ExecStart = pkgs.writeShellScript "start-logs-server" ''
         fail() { echo "$1"; exit 1; }
         ls ${logs-location} >/dev/null 2>&1 || fail "Cannot read log directory ${logs-location}!"
-        mkdir -p ${logs-server}/data/${server}
-        pushd ${logs-server}/data/${server}
+        mkdir -p ${logs-server}/data/${server-name}
+        pushd ${logs-server}/data/${server-name}
         echo "raw_logs_path = \"${logs-location}\"" >config.toml
         echo "address = \"${serve-address}\"" >>config.toml
         popd
         exec ${logs-server}/bin/tg-public-log-parser
       '';
-      WorkingDirectory = "${logs-server}/data/${server}";
+      WorkingDirectory = "${logs-server}/data/${server-name}";
       Environment = "RUST_LOG=info";
       KillMode = "control-group";
       KillSignal = "KILL";

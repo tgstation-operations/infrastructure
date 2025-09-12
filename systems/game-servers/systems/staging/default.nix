@@ -13,12 +13,17 @@
   ];
   localModules = [
     (modulesPath + "/profiles/qemu-guest.nix")
+    (import ../../modules/game-logs/raw-logs.nix {
+      inherit pkgs lib;
+      server-name = "wiggle";
+      logs-location = "/persist/tgs-data/instances/wiggle/Configuration/GameStaticFiles/data/logs";
+      serve-address = "0.0.0.0:8080";
+    })
     ../../../../modules/colmena_ci_staging.nix
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../../../modules/maria.nix
-    ../../modules/game-logs/raw-logs.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/tgs
