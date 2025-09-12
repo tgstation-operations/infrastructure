@@ -4,8 +4,8 @@
   serve-address,
   pkgs,
   lib,
-  user ? "game-logs",
-  group ? "game-logs",
+  user ? "caddy",
+  group ? "caddy",
   ...
 }: let
   logs-server-src = pkgs.fetchFromGitHub {
