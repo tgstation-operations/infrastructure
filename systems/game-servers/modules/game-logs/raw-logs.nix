@@ -20,6 +20,9 @@
     src = logs-server-src;
     cargoLock.lockFile = "${logs-server-src}/Cargo.lock";
     nativeBuildInputs = with pkgs; [pkg-config openssl];
+    PKG_CONFIG_PATH = [
+      "${pkgs.openssl.dev}/lib/pkgconfig"
+    ];
   };
 in {
   systemd.services."game-logs-public-${server-name}" = {
