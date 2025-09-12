@@ -33,18 +33,16 @@ in {
       Type = "simple";
       User = user;
       Group = group;
-      ExecStart = pkgs.writeShellScript "start-logs-server" ''
+      ExecStart = pkgs.writeShellScript "start-logs-server.sh" ''
         fail() { echo "$1"; exit 1; }
         ls ${logs-location} >/dev/null 2>&1 || fail "Cannot read log directory ${logs-location}!"
         mkdir -p /tmp/tg-public-log-parser/${server-name}
-        pushd /tmp/tg-public-log-parser/${server-name}
+        cd /tmp/tg-public-log-parser/${server-name}
         echo "raw_logs_path = \"${logs-location}\"" >config.toml
         echo "address = \"${serve-address}\"" >>config.toml
         chmod 700 config.toml
-        popd
         exec ${logs-server}/bin/tg-public-log-parser
       '';
-      WorkingDirectory = "/tmp/tg-public-log-parser/${server-name}";
       Environment = "RUST_LOG=info";
       KillMode = "control-group";
       KillSignal = "KILL";
