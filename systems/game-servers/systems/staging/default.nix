@@ -18,6 +18,7 @@
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../../../modules/maria.nix
+    ../../modules/game-logs/raw-logs.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/tgs
@@ -36,7 +37,6 @@ in {
   imports = baseModules ++ localModules;
 
   programs.nix-ld.enable = true;
-
 
   networking.nameservers = [
     "9.9.9.9"
