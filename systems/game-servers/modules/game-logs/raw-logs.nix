@@ -5,7 +5,7 @@
   pkgs,
   lib,
   user ? "caddy",
-  group ? "tgstation-server",
+  group ? "caddy",
   ...
 }: let
   logs-server-src = pkgs.fetchFromGitHub {
