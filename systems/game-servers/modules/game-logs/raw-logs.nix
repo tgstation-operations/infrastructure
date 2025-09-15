@@ -5,7 +5,7 @@
   pkgs,
   lib,
   user ? "caddy",
-  group ? "caddy",
+  group ? "tgstation-server",
   ...
 }: let
   logs-server-src = pkgs.fetchFromGitHub {
@@ -35,11 +35,16 @@ in {
       Group = group;
       ExecStart = pkgs.writeShellScript "start-logs-server.sh" ''
         fail() { echo "$1"; exit 1; }
+        ${pkgs.coreutils-full}/bin/id
         ls ${logs-location} >/dev/null 2>&1 || fail "Cannot read log directory ${logs-location}!"
         mkdir -p /tmp/tg-public-log-parser/${server-name}
         cd /tmp/tg-public-log-parser/${server-name}
         echo "raw_logs_path = \"${logs-location}\"" >config.toml
         echo "address = \"${serve-address}\"" >>config.toml
+        echo "[ongoing_round_protection]" >>config.toml
+        echo "serverinfo = \"https://tgstation13.org/serverinfo.json\"" >>config.toml
+        echo "[ongoing_round_protection.paths_to_identifiers]" >>config.toml
+        echo "sybil-2023-11 = \"sybil\"" >>config.toml
         chmod 700 config.toml
         exec ${logs-server}/bin/tg-public-log-parser
       '';
