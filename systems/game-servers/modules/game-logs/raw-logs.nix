@@ -3,7 +3,6 @@
   server-name,
   serve-address,
   pkgs,
-  lib,
   user ? "caddy",
   group ? "tgstation-server",
   ...

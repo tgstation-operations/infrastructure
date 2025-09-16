@@ -35,26 +35,31 @@ in {
   '';
   imports = [
     (raw-logs-module {
+      inherit pkgs;
       logs-location = location-sybil;
       server-name = "sybil";
       serve-address = bind-sybil;
     })
     (raw-logs-module {
+      inherit pkgs;
       logs-location = location-manuel;
       server-name = "manuel";
       serve-address = bind-manuel;
     })
     (raw-logs-module {
+      inherit pkgs;
       logs-location = location-tgmc;
       server-name = "tgmc";
       serve-address = bind-tgmc;
     })
     (raw-logs-module {
+      inherit pkgs;
       logs-location = location-eventus;
       server-name = "eventus";
       serve-address = bind-eventus;
     })
     (raw-logs-module {
+      inherit pkgs;
       logs-location = location-effigy;
       server-name = "effigy";
       serve-address = bind-effigy;
