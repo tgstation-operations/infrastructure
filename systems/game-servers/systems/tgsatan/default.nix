@@ -40,7 +40,6 @@ in {
     ++ localModules
     ++ [
       ./disko.nix
-      ./raw-logs.nix
       ./modules/haproxy
       ./modules/caddy
     ];
