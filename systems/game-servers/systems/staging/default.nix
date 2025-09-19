@@ -13,6 +13,12 @@
   ];
   localModules = [
     (modulesPath + "/profiles/qemu-guest.nix")
+    (import ../../modules/game-logs/raw-logs.nix {
+      inherit pkgs lib;
+      server-name = "wiggle";
+      logs-location = "/persist/tgs-data/instances/funnyname/Configuration/GameStaticFiles/data/logs";
+      serve-address = "0.0.0.0:8080";
+    })
     ../../../../modules/colmena_ci_staging.nix
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
@@ -26,6 +32,11 @@
     ./modules/caddy.nix
   ];
 in {
+  # needed for raw-logs-public
+  system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
+    chmod g+rx /persist/tgs-data
+  '';
+
   networking.hostName = "wiggle";
   system.stateVersion = "24.11";
 
@@ -36,7 +47,6 @@ in {
   imports = baseModules ++ localModules;
 
   programs.nix-ld.enable = true;
-
 
   networking.nameservers = [
     "9.9.9.9"
