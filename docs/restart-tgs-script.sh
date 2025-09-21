@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+a=systemctl status tgstation-server 2>/dev/null
+if [[ "$?" != "0" ]]; then
+  echo "TGS service not found."
+  exit 1
+fi
+
 systemd_output=$(systemctl status tgstation-server | grep Server.Host.Console.dll | tr -d ' ' | cut -d'/' -f1)
 pgrep_output=$(pgrep -f Server.Host.Console.dll)
 if [[ "$systemd_output" != "$pgrep_output" ]]; then
@@ -9,11 +15,11 @@ fi
 
 kill -9 $pgrep_output
 echo "Waiting for process to die..."
-read -P $pgrep_output
+wait $pgrep_output
 
 echo "Process has exited."
 echo "Restart TGS via WebPanel. (Administration > Restart Server)"
-read -P"Press ENTER when done. (Ctrl-C to keep TGS dead)"
+read -p"Press ENTER when done. (Ctrl-C to keep TGS dead)"
 if [[ "$?" == 1 ]]; then
   echo "TGS will not be restarted."
   exit 0
