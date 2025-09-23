@@ -17,7 +17,6 @@
     cloudflared = {
       file = age-file;
       mode = "400";
-      owner = config.services.cloudflared.user;
     };
   };
 }
