@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  raw-logs-module = import ../../modules/game-logs/raw-logs.nix;
+  raw-logs-module = import ../../../modules/game-logs/raw-logs.nix;
 
   location-funnyname = "/persist/tgs-data/instances/funnyname/Configuration/GameStaticFiles/data/logs";
   bind-funnyname = "0.0.0.0:3337";
