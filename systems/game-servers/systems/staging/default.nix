@@ -27,6 +27,7 @@
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/tgs
+    ./modules/raw-logs.nix
     ./modules/haproxy
     ./modules/motd
     ./modules/caddy.nix
