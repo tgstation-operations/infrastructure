@@ -7,4 +7,6 @@ in {
   "tgs.age".publicKeys = final;
   # Cloudflare DNS-01
   "cloudflare_api.age".publicKeys = final;
+  # Cloudflared
+  "cloudflared.age".publicKeys = final;
 }

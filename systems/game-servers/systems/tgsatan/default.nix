@@ -23,7 +23,7 @@
     ../../modules/tgs
     (import ../../modules/cloudflared.nix {
       inherit pkgs config;
-      age-file = ./secrets/cloudflared.age
+      age-file = ./secrets/cloudflared.age;
     })
     ./modules/atticd.nix
     ./modules/cockroachdb

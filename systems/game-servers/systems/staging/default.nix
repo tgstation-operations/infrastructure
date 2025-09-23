@@ -26,7 +26,7 @@
     ../../../../modules/maria.nix
     (import ../../modules/cloudflared.nix {
       inherit pkgs config;
-      age-file = ./secrets/cloudflared.age
+      age-file = ./secrets/cloudflared.age;
     })
     ../../modules/motd.nix
     ../../modules/muffin-button.nix

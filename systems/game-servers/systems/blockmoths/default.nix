@@ -22,7 +22,7 @@
     ../../../../modules/tailscale.nix
     (import ../../modules/cloudflared.nix {
       inherit pkgs config;
-      age-file = ./secrets/cloudflared.age
+      age-file = ./secrets/cloudflared.age;
     })
     ../../modules/garage.nix
     ../../modules/motd.nix
