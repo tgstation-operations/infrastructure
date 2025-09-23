@@ -1,4 +1,5 @@
 {
+  age-file,
   config,
   pkgs,
   ...
@@ -14,7 +15,7 @@
   };
   age.secrets = {
     cloudflared = {
-      file = ./secrets/cloudflared.age;
+      file = age-file;
       mode = "440";
       owner = "root";
       group = config.services.cloudflared.group;
