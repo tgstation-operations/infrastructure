@@ -16,9 +16,8 @@
   age.secrets = {
     cloudflared = {
       file = age-file;
-      mode = "440";
-      owner = "root";
-      group = config.services.cloudflared.group;
+      mode = "400";
+      owner = config.services.cloudflared.user;
     };
   };
 }
