@@ -12,6 +12,7 @@
   ];
   localModules = [
     ./disko.nix
+    ./raw-logs.nix
     ./modules/caddy
     ./modules/cockroachdb
     ./modules/haproxy
