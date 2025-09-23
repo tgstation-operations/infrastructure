@@ -21,6 +21,7 @@
     ../../modules/muffin-button.nix
     ../../modules/docker.nix
     ../../modules/tgs
+    ../../modules/cloudflared.nix
     ./modules/atticd.nix
     ./modules/cockroachdb
     ./modules/grafana
