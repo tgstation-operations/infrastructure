@@ -23,6 +23,7 @@
     ../../modules/tgs
     (import ../../modules/cloudflared.nix {
       inherit pkgs config;
+      tunnel-id = "aeb3081d-b780-42bc-b062-d358eae5ec56";
       age-file = ./secrets/cloudflared.age;
     })
     ./modules/atticd.nix
