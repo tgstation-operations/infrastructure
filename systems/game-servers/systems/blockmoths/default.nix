@@ -22,7 +22,6 @@
     ../../../../modules/tailscale.nix
     (import ../../modules/cloudflared.nix {
       inherit pkgs config;
-      tunnel-id = "4d8dc646-2f1e-4df4-9057-c4fd069fe789";
       age-file = ./secrets/cloudflared.age;
     })
     ../../modules/garage.nix

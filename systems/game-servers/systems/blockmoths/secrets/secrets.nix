@@ -10,7 +10,8 @@ in {
   "restic-key.age".publicKeys = final;
   # Cloudflare DNS-01
   "cloudflare_api.age".publicKeys = final;
-  # Cloudflared
+  # Cloudflared tunnel credentials file
+  # Run "cloudflared tunnel create --cred-file cred.json blockmoths" after logging in to generate in cred.json
   "cloudflared.age".publicKeys = final;
   # AWS Route 53 DNS-01
   "aws_credentials.age".publicKeys = final;

@@ -1,9 +1,14 @@
-{pkgs, ...}: let
+{pkgs,  ...}: let
   raw-logs-module = import ../../../modules/game-logs/raw-logs.nix;
 
   location-funnyname = "/persist/tgs-data/instances/funnyname/Configuration/GameStaticFiles/data/logs";
-  bind-funnyname = "0.0.0.0:3337";
+  bind-port-funnyname = "3337";
 in {
+  services.cloudflared.tunnels.primary-tunnel.ingress = {
+    "funnyname-logs.tgstation13.org" = {
+      service = "http://localhost:${bind-port-funnyname}";
+    };
+  };
   system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
     chmod g+rx /persist/tgs-data
     chmod g+rx /persist/tgs-data/instances
@@ -22,7 +27,7 @@ in {
       inherit pkgs;
       logs-location = location-funnyname;
       server-name = "funnyname";
-      serve-address = bind-funnyname;
+      serve-address = "0.0.0.0:${bind-port-funnyname}";
     })
   ];
 }

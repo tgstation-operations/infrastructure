@@ -1,5 +1,4 @@
 {
-  tunnel-id,
   age-file,
   config,
   pkgs,
@@ -7,12 +6,16 @@
 }: {
   services.cloudflared = {
     enable = true;
+    certificateFile = config.age.secrets.cloudflared-cert.path;
     tunnels = {
-      "${tunnel-id}" = {
-        credentialsFile = config.age.secrets.cloudflared.path;
-        default = "http_status:503";
+      primary-tunnel = {
+        credentialsFile = config.age.secrets.cloudflared-tunnel.path;
+        default = "http_status:404";
       };
     };
   };
-  age.secrets.cloudflared.file = age-file;
+  age.secrets = {
+    cloudflared-cert.file = ../secrets/cloudflared-cert.age;
+    cloudflared-tunnel.file = age-file;
+  };
 }

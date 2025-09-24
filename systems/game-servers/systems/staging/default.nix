@@ -20,7 +20,6 @@
     ../../../../modules/maria.nix
     (import ../../modules/cloudflared.nix {
       inherit pkgs config;
-      tunnel-id = "e94c06d7-3b51-480c-b273-5a0081dee797";
       age-file = ./secrets/cloudflared.age;
     })
     ../../modules/motd.nix
