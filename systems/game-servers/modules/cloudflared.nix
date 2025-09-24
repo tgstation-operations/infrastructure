@@ -14,10 +14,5 @@
       };
     };
   };
-  age.secrets = {
-    cloudflared = {
-      file = age-file;
-      mode = "400";
-    };
-  };
+  age.secrets.cloudflared.file = age-file;
 }
