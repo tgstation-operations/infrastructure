@@ -6,7 +6,7 @@
 in {
   services.cloudflared.tunnels.primary-tunnel.ingress = {
     "terry-logs.tgstation13.org" = {
-      service = "http://localhost:${bind-terry-funnyname}";
+      service = "http://localhost:${bind-port-terry}";
     };
   };
   system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
