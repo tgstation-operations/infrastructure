@@ -101,7 +101,7 @@ jobs:
 
       - name: Push closure to attic
         if: ${{ env.UPLOAD_TO_ATTIC == 'yes' }}
-        run: attic push tgstation:tgstation-infrastructure .gcroots/*
+        run: attic push tgstation:tgstation-infrastructure $(ls -d /nix/store/*/)
 
   deploy-staging:
     name: Deploy Staging
