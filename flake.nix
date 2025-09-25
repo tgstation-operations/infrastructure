@@ -272,7 +272,6 @@
     };
     tg-cockroachdb-node-alpha = {
       deployment = {
-        allowLocalDeployment = true;
         targetHost = "tg-cockroachdb-node-alpha.tg.lan";
         targetUser = "deploy";
         tags = [
@@ -292,9 +291,8 @@
     };
     tg-cockroachdb-node-beta = {
       deployment = {
-        allowLocalDeployment = true;
         targetHost = "tg-cockroachdb-node-beta.tg.lan";
-        targetUser = "zephyrtfa";
+        targetUser = "deploy";
         tags = [
           "pmx-node"
         ];
