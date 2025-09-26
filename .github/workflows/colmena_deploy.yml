@@ -45,6 +45,14 @@ jobs:
         with:
           ref: "refs/pull/${{ inputs.pull_request_number }}/merge"
 
+      - name: Mount compressed fs at /nix
+        shell: bash
+        run: |
+          dd if=/dev/zero of=./nix-store.img bs=1 count=0 seek=15G
+          mkfs.btrfs -M ./nix-store.img
+          sudo mkdir /nix
+          sudo mount -o defaults,noatime,compress=zstd ./nix-store.img /nix
+
       - name: Install Nix
         run: sh .github/workflows/install_lix.sh
         env:
