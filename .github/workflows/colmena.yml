@@ -63,35 +63,23 @@ jobs:
         with:
           ref: "refs/pull/${{ inputs.pull_request_number }}/merge"
 
-      - name: Install Nix (Without Attic)
-        if: ${{ env.USE_ATTIC != 'yes' }}
-        run: sh .github/workflows/install_lix.sh
-        env:
-          EXTRA_NIX_CONFIG: |
-            experimental-features = nix-command flakes
-            accept-flake-config = true
-            extra-substituters = https://nix-community.cachix.org
-            extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
-
-      - name: Install Nix (With Attic)
-        if: ${{ env.USE_ATTIC == 'yes' }}
-        run: sh .github/workflows/install_lix.sh
-        env:
-          EXTRA_NIX_CONFIG: |
-            experimental-features = nix-command flakes
-            accept-flake-config = true
-            extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
-            extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA=
-
-      - name: Setup attic Binary Cache
-        if: ${{ env.USE_ATTIC == 'yes' }}
-        # Format for pointing to caches is server:cache in these commands
+      - name: Mount compressed fs at /nix
+        shell: bash
         run: |
-          nix profile install nixpkgs#attic-client
-          attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
+          dd if=/dev/zero of=./nix-store.img bs=1 count=0 seek=15G
+          mkfs.btrfs -M ./nix-store.img
+          sudo mkdir /nix
+          sudo mount -o defaults,noatime,compress=zstd ./nix-store.img /nix
 
-      - name: Print nix config before Build
-        run: nix config show
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-args: --prefer-upstream-nix
+
+      - name: Set up Nix magic cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+        with:
+          diagnostic-endpoint: ""
 
       - name: Build closure
         run: |
