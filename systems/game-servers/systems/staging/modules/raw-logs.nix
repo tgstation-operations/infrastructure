@@ -5,7 +5,7 @@
   bind-port-funnyname = "3337";
 in {
   services.cloudflared.tunnels.primary-tunnel.ingress = {
-    "funnyname-logs.tgstation13.org" = {
+    "funnyname2-logs.tgstation13.org" = {
       service = "http://localhost:${bind-port-funnyname}";
     };
   };
@@ -26,7 +26,7 @@ in {
     (raw-logs-module {
       inherit pkgs;
       logs-location = location-funnyname;
-      server-name = "funnyname2"; # Not funnyname because we SOMEHOW BROKE CLOUDFLARE WITH THAT LMFAO
+      server-name = "funnyname"; # Not funnyname because we SOMEHOW BROKE CLOUDFLARE WITH THAT LMFAO
       serve-address = "0.0.0.0:${bind-port-funnyname}";
     })
   ];
