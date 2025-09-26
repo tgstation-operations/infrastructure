@@ -26,7 +26,7 @@ in {
     (raw-logs-module {
       inherit pkgs;
       logs-location = location-funnyname;
-      server-name = "funnyname";
+      server-name = "funnyname2"; # Not funnyname because we SOMEHOW BROKE CLOUDFLARE WITH THAT LMFAO
       serve-address = "0.0.0.0:${bind-port-funnyname}";
     })
   ];
