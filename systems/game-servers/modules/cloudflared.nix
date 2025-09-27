@@ -2,6 +2,7 @@
   age-file,
   config,
   pkgs,
+  lib,
   ...
 }:
 let
