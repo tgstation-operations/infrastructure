@@ -22,7 +22,7 @@
     ../../modules/docker.nix
     ../../modules/tgs
     (import ../../modules/cloudflared.nix {
-      inherit pkgs config;
+      inherit pkgs config lib;
       age-file = ./secrets/cloudflared.age;
     })
     ./modules/atticd.nix

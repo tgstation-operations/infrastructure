@@ -19,7 +19,7 @@
     ../../../../modules/tailscale.nix
     ../../../../modules/maria.nix
     (import ../../modules/cloudflared.nix {
-      inherit pkgs config;
+      inherit pkgs config lib;
       age-file = ./secrets/cloudflared.age;
     })
     ../../modules/motd.nix

@@ -21,7 +21,7 @@
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     (import ../../modules/cloudflared.nix {
-      inherit pkgs config;
+      inherit pkgs config lib;
       age-file = ./secrets/cloudflared.age;
     })
     ../../modules/garage.nix
