@@ -4,11 +4,7 @@
   pkgs,
   lib,
   ...
-}:
-let
-  published-route-script-name-map = builtins.listToAttrs (map (published-route: { name = "cloudflared-publish-route-${published-route}"; value = published-route; }) (lib.attrNames services.cloudflared.tunnels.primary-tunnel.ingress));
-in
-{
+}: {
   services.cloudflared = {
     enable = true;
     certificateFile = config.age.secrets.cloudflared-cert.path;
@@ -33,5 +29,5 @@ in
       ${services.cloudflared.package}/bin/cloudflared tunnel route dns ${networking.hostName} ${published-route}
       rm -rf /root/.cloudflared
     '';
-  }) published-route-script-name-map;
+  }) builtins.listToAttrs (map (published-route: { name = "cloudflared-publish-route-${published-route}"; value = published-route; }) (lib.attrNames services.cloudflared.tunnels.primary-tunnel.ingress));
 }
