@@ -76,6 +76,6 @@ jobs:
           echo "Current Colmena revision is: $COLMENA_REVISION"
           nix profile install github:zhaofengli/colmena/$COLMENA_REVISION
 
-      - name: Build closure
+      - name: Deploy closure to Nodes
         run: |
           colmena apply --impure -v --on ${{ inputs.node }}
