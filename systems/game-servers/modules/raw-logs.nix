@@ -15,7 +15,7 @@
   };
   logs-server = pkgs.rustPlatform.buildRustPackage rec {
     pname = "tg-public-log-parser";
-    version = "1.0.0";
+    version = "1.1.0";
     src = logs-server-src;
     cargoLock.lockFile = "${logs-server-src}/Cargo.lock";
     nativeBuildInputs = with pkgs; [pkg-config openssl];
