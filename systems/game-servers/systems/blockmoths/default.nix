@@ -12,11 +12,11 @@
   ];
   localModules = [
     ./disko.nix
-    ./raw-logs.nix
     ./modules/caddy
     ./modules/cockroachdb
     ./modules/haproxy
     ./modules/motd
+    ./modules/raw-logs.nix
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix

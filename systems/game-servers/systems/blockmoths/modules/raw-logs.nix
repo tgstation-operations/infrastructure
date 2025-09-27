@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  raw-logs-module = import ../../modules/game-logs/raw-logs.nix;
+  raw-logs-module = import ../../../modules/raw-logs.nix;
 
   location-terry = "/persist/tgs-data/instances/terry/Configuration/GameStaticFiles/data/logs";
   bind-port-terry = "3337";
@@ -12,9 +12,10 @@ in {
   system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
     chmod g+rx /persist/tgs-data
     chmod g+rx /persist/tgs-data/instances
-    for d in [
-      terry
-    ]; do
+    declare -a arr=(
+      "terry"
+      )
+    for d in "''${arr[@]}"; do
       chmod g+rx /persist/tgs-data/instances/$d
       chmod g+rx /persist/tgs-data/instances/$d/Configuration
       chmod g+rx /persist/tgs-data/instances/$d/Configuration/GameStaticFiles

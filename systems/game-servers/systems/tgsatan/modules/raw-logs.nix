@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  raw-logs-module = import ../../modules/game-logs/raw-logs.nix;
+  raw-logs-module = import ../../../modules/raw-logs.nix;
 
   location-sybil = "/persist/tgs-data/instances/sybil/Configuration/GameStaticFiles/data/logs";
   bind-port-sybil = "1338";
@@ -36,13 +36,14 @@ in {
   system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
     chmod g+rx /persist/tgs-data
     chmod g+rx /persist/tgs-data/instances
-    for d in [
-      sybil
-      manuel
-      tgmc
-      eventhallus
-      effigy
-    ]; do
+    declare -a arr=(
+      "sybil"
+      "manuel"
+      "tgmc"
+      "eventhallus"
+      "effigy"
+      )
+    for d in "''${arr[@]}"; do
       chmod g+rx /persist/tgs-data/instances/$d
       chmod g+rx /persist/tgs-data/instances/$d/Configuration
       chmod g+rx /persist/tgs-data/instances/$d/Configuration/GameStaticFiles

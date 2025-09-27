@@ -3,7 +3,11 @@
   config,
   pkgs,
   ...
-}: {
+}:
+let
+  published-route-script-name-map = builtins.listToAttrs (map (published-route: { name = "cloudflared-publish-route-${published-route}"; value = published-route; }) (lib.attrNames services.cloudflared.tunnels.primary-tunnel.ingress));
+in
+{
   services.cloudflared = {
     enable = true;
     certificateFile = config.age.secrets.cloudflared-cert.path;
@@ -18,4 +22,15 @@
     cloudflared-cert.file = ../secrets/cloudflared-cert.age;
     cloudflared-tunnel.file = age-file;
   };
+
+  system.activationScripts = builtins.mapAttrs (script-name: published-route: {
+    # Register the tunnel with DNS
+    # Need the cert in-place temporarily for this
+    text = pkgs.lib.stringAfter ["users"] ''
+      mkdir /root/.cloudflared
+      cp ${config.age.secrets.cloudflared-cert.path} /root/.cloudflared/cert.pem
+      ${services.cloudflared.package}/bin/cloudflared tunnel route dns ${networking.hostName} ${published-route}
+      rm -rf /root/.cloudflared
+    '';
+  }) published-route-script-name-map;
 }

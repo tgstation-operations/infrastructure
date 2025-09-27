@@ -32,6 +32,7 @@
     ./modules/monitoring
     ./modules/motd
     ./modules/nvidia.nix
+    ./modules/raw-logs.nix
     ./modules/redbot.nix
   ];
 in {
@@ -44,7 +45,6 @@ in {
     ++ localModules
     ++ [
       ./disko.nix
-      ./raw-logs.nix
       ./modules/haproxy
       ./modules/caddy
     ];

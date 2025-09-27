@@ -1,20 +1,21 @@
 {pkgs,  ...}: let
-  raw-logs-module = import ../../../modules/game-logs/raw-logs.nix;
+  raw-logs-module = import ../../../modules/raw-logs.nix;
 
   location-funnyname = "/persist/tgs-data/instances/funnyname/Configuration/GameStaticFiles/data/logs";
   bind-port-funnyname = "3337";
 in {
   services.cloudflared.tunnels.primary-tunnel.ingress = {
-    "funnyname2-logs.tgstation13.org" = {
+    "funnyname-logs.tgstation13.org" = {
       service = "http://localhost:${bind-port-funnyname}";
     };
   };
   system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
     chmod g+rx /persist/tgs-data
     chmod g+rx /persist/tgs-data/instances
-    for d in [
-      funnyname
-    ]; do
+    declare -a arr=(
+      "funnyname"
+      )
+    for d in "''${arr[@]}"; do
       chmod g+rx /persist/tgs-data/instances/$d
       chmod g+rx /persist/tgs-data/instances/$d/Configuration
       chmod g+rx /persist/tgs-data/instances/$d/Configuration/GameStaticFiles

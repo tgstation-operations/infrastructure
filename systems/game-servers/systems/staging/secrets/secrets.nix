@@ -9,5 +9,6 @@ in {
   "cloudflare_api.age".publicKeys = final;
   # Cloudflared tunnel credentials file
   # Run "cloudflared tunnel create --cred-file cred.json wiggle" after logging in to generate in cred.json
+  # NAME MUST MATCH HOSTNAME
   "cloudflared.age".publicKeys = final;
 }

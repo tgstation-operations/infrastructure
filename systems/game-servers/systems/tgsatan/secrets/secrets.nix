@@ -12,6 +12,7 @@ in {
   "cloudflare_api.age".publicKeys = final;
   # Cloudflared tunnel credentials file
   # Run "cloudflared tunnel create --cred-file cred.json tgsatan" after logging in to generate in cred.json
+  # NAME MUST MATCH HOSTNAME
   "cloudflared-tunnel.age".publicKeys = final;
   # Tgstation website api key
   "tgstation-web-apikey.age".publicKeys = final;
