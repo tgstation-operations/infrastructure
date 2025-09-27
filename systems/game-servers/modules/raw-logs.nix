@@ -10,7 +10,7 @@
   logs-server-src = pkgs.fetchFromGitHub {
     owner = "Mothblocks";
     repo = "tg-public-log-parser";
-    rev = "48d179df20768a353c18c558d39ad66bdc98ba5a";
+    rev = "a9dec8463e4688ade427043e6929887670e350ae";
     sha256 = "sha256-vyBjCtVFAE75OpXDQ+E8IbC93FHLxmxAiHK6LDqOdA4=";
   };
   logs-server = pkgs.rustPlatform.buildRustPackage rec {
@@ -42,8 +42,6 @@ in {
         echo "address = \"${serve-address}\"" >>config.toml
         echo "[ongoing_round_protection]" >>config.toml
         echo "serverinfo = \"https://tgstation13.org/serverinfo.json\"" >>config.toml
-        echo "[ongoing_round_protection.paths_to_identifiers]" >>config.toml
-        echo "sybil-2023-11 = \"sybil\"" >>config.toml
         chmod 700 config.toml
         exec ${logs-server}/bin/tg-public-log-parser
       '';
