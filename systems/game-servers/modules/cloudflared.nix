@@ -26,8 +26,8 @@
     text = pkgs.lib.stringAfter ["users"] ''
       mkdir /root/.cloudflared
       cp ${config.age.secrets.cloudflared-cert.path} /root/.cloudflared/cert.pem
-      ${services.cloudflared.package}/bin/cloudflared tunnel route dns ${networking.hostName} ${published-route}
+      ${config.services.cloudflared.package}/bin/cloudflared tunnel route dns ${networking.hostName} ${published-route}
       rm -rf /root/.cloudflared
     '';
-  }) builtins.listToAttrs (map (published-route: { name = "cloudflared-publish-route-${published-route}"; value = published-route; }) (lib.attrNames services.cloudflared.tunnels.primary-tunnel.ingress));
+  }) builtins.listToAttrs (map (published-route: { name = "cloudflared-publish-route-${published-route}"; value = published-route; }) (lib.attrNames config.services.cloudflared.tunnels.primary-tunnel.ingress));
 }
