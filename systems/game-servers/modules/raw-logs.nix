@@ -10,8 +10,8 @@
   logs-server-src = pkgs.fetchFromGitHub {
     owner = "Mothblocks";
     repo = "tg-public-log-parser";
-    rev = "a9dec8463e4688ade427043e6929887670e350ae";
-    sha256 = "sha256-vyBjCtVFAE75OpXDQ+E8IbC93FHLxmxAiHK6LDqOdA4=";
+    rev = "3debd2d6773df44231438971ea5b94c15e0f6096";
+    sha256 = "sha256-GJgiqEYahhH9EMVdKr12tmQqeLGObWytDg8YwaBTQ5A=";
   };
   logs-server = pkgs.rustPlatform.buildRustPackage rec {
     pname = "tg-public-log-parser";
