@@ -8,6 +8,7 @@
   hw = inputs.nixos-hardware.nixosModules;
   baseModules = [
     (import hw.common-cpu-amd)
+    inputs.tg-public-log-parser.nixosModules.default
     inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
@@ -16,7 +17,7 @@
     ./modules/cockroachdb
     ./modules/haproxy
     ./modules/motd
-    ./modules/raw-logs.nix
+    ./modules/public-logs.nix
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix

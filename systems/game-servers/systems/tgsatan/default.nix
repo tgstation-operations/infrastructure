@@ -9,6 +9,7 @@
   baseModules = [
     (import hw.common-gpu-nvidia)
     (import hw.common-cpu-amd)
+    self.inputs.tg-public-log-parser.nixosModules.default
     self.inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
@@ -32,7 +33,7 @@
     ./modules/monitoring
     ./modules/motd
     ./modules/nvidia.nix
-    ./modules/raw-logs.nix
+    ./modules/public-logs.nix
     ./modules/redbot.nix
   ];
 in {
