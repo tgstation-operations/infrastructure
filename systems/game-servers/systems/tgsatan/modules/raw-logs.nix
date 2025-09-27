@@ -29,9 +29,10 @@ in {
     "effigy-logs.tgstation13.org" = {
       service = "http://localhost:${bind-port-effigy}";
     };
-    "tgmc-logs.tgstation13.org" = {
-      service = "http://localhost:${bind-port-tgmc}";
-    };
+    # TODO: Enable, needs testing. Use tailnet
+    #"tgmc-logs.tgstation13.org" = {
+    #  service = "http://localhost:${bind-port-tgmc}";
+    #};
   };
   system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
     chmod g+rx /persist/tgs-data
