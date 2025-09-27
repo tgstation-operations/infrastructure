@@ -448,11 +448,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1758993695,
-        "narHash": "sha256-eh4mG2e2NkkW8h3oOk2FoIuXYqC2mTkXDr87UVXFKLQ=",
+        "lastModified": 1759007186,
+        "narHash": "sha256-NgAaaBOqcMQEl+XIQKBYFWB/YMHx28hFrs9cHCCYx/g=",
         "owner": "Mothblocks",
         "repo": "tg-public-log-parser",
-        "rev": "0c7cf3b484d174cd325e7bf55ab6a0842a47fcec",
+        "rev": "c9a804e053dd518413d88db487578d55b13b266c",
         "type": "github"
       },
       "original": {
