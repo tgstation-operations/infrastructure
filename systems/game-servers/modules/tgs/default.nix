@@ -169,7 +169,7 @@
     # environmentFile =  # Required, add to host config to specify the database URI
     extra-path = lib.makeBinPath (
       with pkgs; [
-        (with fenix.packages.x86_64-linux; combine [stable.toolchain targets.i686-unknown-linux-gnu.stable.rust-std])
+        (with fenix.packages.x86_64-linux; combine [minimal.toolchain targets.i686-unknown-linux-gnu.minimal.rust-std])
         clangMultiStdenv.cc
         llvmPackages.libclang
         which

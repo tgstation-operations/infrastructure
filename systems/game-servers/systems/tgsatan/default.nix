@@ -32,7 +32,7 @@
     ./modules/monitoring
     ./modules/motd
     ./modules/nvidia.nix
-    ./modules/raw-logs.nix
+    ./modules/public-logs.nix
     ./modules/redbot.nix
   ];
 in {

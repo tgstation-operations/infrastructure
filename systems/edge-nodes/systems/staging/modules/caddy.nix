@@ -19,9 +19,6 @@
     80
     443
   ];
-  networking.hosts = {
-    "100.64.0.25" = ["idm.staging.tgstation13.org"];
-  };
   age.secrets.cloudflare_api.file = ../secrets/cloudflare_api.age;
   security.acme = {
     acceptTerms = true;
@@ -36,7 +33,6 @@
     };
     certs = {
       "web.staging.tgstation13.org" = {};
-      "idm.staging.tgstation13.org" = {};
     };
   };
   users.users.php-caddy = {
@@ -101,13 +97,6 @@
             root /run/tgstation-website-v2/serverinfo.json
             file_server
           }
-        '';
-      };
-      "idm.staging.tgstation13.org" = {
-        useACMEHost = "idm.staging.tgstation13.org";
-        extraConfig = ''
-          encode gzip zstd
-          reverse_proxy https://idm.staging.tgstation13.org:8443
         '';
       };
     };

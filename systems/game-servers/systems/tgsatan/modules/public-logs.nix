@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  raw-logs-module = import ../../../modules/raw-logs.nix;
+  public-logs-module = import ../../../modules/public-logs.nix;
 
   location-sybil = "/persist/tgs-data/instances/sybil/Configuration/GameStaticFiles/data/logs";
   bind-port-sybil = "1338";
@@ -53,31 +53,31 @@ in {
     done
   '';
   imports = [
-    (raw-logs-module {
+    (public-logs-module {
       inherit pkgs;
       logs-location = location-sybil;
       server-name = "sybil";
       serve-address = "0.0.0.0:${bind-port-sybil}";
     })
-    (raw-logs-module {
+    (public-logs-module {
       inherit pkgs;
       logs-location = location-manuel;
       server-name = "manuel";
       serve-address = "0.0.0.0:${bind-port-manuel}";
     })
-    (raw-logs-module {
+    (public-logs-module {
       inherit pkgs;
       logs-location = location-tgmc;
       server-name = "tgmc";
       serve-address = "0.0.0.0:${bind-port-tgmc}";
     })
-    (raw-logs-module {
+    (public-logs-module {
       inherit pkgs;
       logs-location = location-eventus;
       server-name = "eventus";
       serve-address = "0.0.0.0:${bind-port-eventus}";
     })
-    (raw-logs-module {
+    (public-logs-module {
       inherit pkgs;
       logs-location = location-effigy;
       server-name = "effigy";

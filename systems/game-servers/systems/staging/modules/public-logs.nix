@@ -1,19 +1,19 @@
-{pkgs, ...}: let
-  raw-logs-module = import ../../../modules/raw-logs.nix;
+{pkgs,  ...}: let
+  public-logs-module = import ../../../modules/public-logs.nix;
 
-  location-terry = "/persist/tgs-data/instances/terry/Configuration/GameStaticFiles/data/logs";
-  bind-port-terry = "3337";
+  location-funnyname = "/persist/tgs-data/instances/funnyname/Configuration/GameStaticFiles/data/logs";
+  bind-port-funnyname = "3337";
 in {
   services.cloudflared.tunnels.primary-tunnel.ingress = {
-    "terry-logs.tgstation13.org" = {
-      service = "http://localhost:${bind-port-terry}";
+    "funnyname-logs.tgstation13.org" = {
+      service = "http://localhost:${bind-port-funnyname}";
     };
   };
   system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
     chmod g+rx /persist/tgs-data
     chmod g+rx /persist/tgs-data/instances
     declare -a arr=(
-      "terry"
+      "funnyname"
       )
     for d in "''${arr[@]}"; do
       chmod g+rx /persist/tgs-data/instances/$d
@@ -24,11 +24,11 @@ in {
     done
   '';
   imports = [
-    (raw-logs-module {
+    (public-logs-module {
       inherit pkgs;
-      logs-location = location-terry;
-      server-name = "terry";
-      serve-address = "0.0.0.0:${bind-port-terry}";
+      logs-location = location-funnyname;
+      server-name = "funnyname"; # Not funnyname because we SOMEHOW BROKE CLOUDFLARE WITH THAT LMFAO
+      serve-address = "0.0.0.0:${bind-port-funnyname}";
     })
   ];
 }

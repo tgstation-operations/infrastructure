@@ -16,7 +16,7 @@
     ./modules/cockroachdb
     ./modules/haproxy
     ./modules/motd
-    ./modules/raw-logs.nix
+    ./modules/public-logs.nix
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix

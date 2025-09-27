@@ -25,17 +25,12 @@
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/tgs
-    ./modules/raw-logs.nix
     ./modules/haproxy
     ./modules/motd
+    ./modules/public-logs.nix
     ./modules/caddy.nix
   ];
 in {
-  # needed for raw-logs-public
-  system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
-    chmod g+rx /persist/tgs-data
-  '';
-
   networking.hostName = "wiggle";
   system.stateVersion = "24.11";
 
