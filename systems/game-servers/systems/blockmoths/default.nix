@@ -8,6 +8,7 @@
   hw = inputs.nixos-hardware.nixosModules;
   baseModules = [
     (import hw.common-cpu-amd)
+    inputs.tg-public-log-parser.nixosModules.default
     inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
