@@ -2,6 +2,9 @@ let
   users = import ../../../modules/ssh_keys_by_group.nix {};
   systems = import ../../../modules/ssh_keys_systems.nix;
 in {
+  # Obtained by running "cloudflared login" then copying from ~/.cloudflared/cert.pem
+  "cloudflared-cert.age".publicKeys = users ++ systems.game-nodes-all;
+
   "garage.age".publicKeys = users ++ systems.game-nodes-all;
 
   "rsc-cdn.age".publicKeys = users ++ systems.game-nodes-all;

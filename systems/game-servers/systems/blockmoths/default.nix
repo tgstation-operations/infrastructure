@@ -12,14 +12,18 @@
   ];
   localModules = [
     ./disko.nix
-    ./raw-logs.nix
     ./modules/caddy
     ./modules/cockroachdb
     ./modules/haproxy
     ./modules/motd
+    ./modules/raw-logs.nix
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
+    (import ../../modules/cloudflared.nix {
+      inherit pkgs config lib;
+      age-file = ./secrets/cloudflared.age;
+    })
     ../../modules/garage.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix

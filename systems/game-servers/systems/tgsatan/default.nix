@@ -21,6 +21,10 @@
     ../../modules/muffin-button.nix
     ../../modules/docker.nix
     ../../modules/tgs
+    (import ../../modules/cloudflared.nix {
+      inherit pkgs config lib;
+      age-file = ./secrets/cloudflared.age;
+    })
     ./modules/atticd.nix
     ./modules/cockroachdb
     ./modules/grafana
@@ -28,6 +32,7 @@
     ./modules/monitoring
     ./modules/motd
     ./modules/nvidia.nix
+    ./modules/raw-logs.nix
     ./modules/redbot.nix
   ];
 in {
@@ -40,7 +45,6 @@ in {
     ++ localModules
     ++ [
       ./disko.nix
-      ./raw-logs.nix
       ./modules/haproxy
       ./modules/caddy
     ];
