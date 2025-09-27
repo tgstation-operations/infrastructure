@@ -5,9 +5,7 @@
   bind-port-terry = "3337";
 in {
   services.cloudflared.tunnels.primary-tunnel.ingress = {
-    "terry-logs.tgstation13.org" = {
-      service = "http://localhost:${bind-port-terry}";
-    };
+    "terry-logs.tgstation13.org" = "http://localhost:${bind-port-terry}";
   };
   system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
     chmod g+rx /persist/tgs-data

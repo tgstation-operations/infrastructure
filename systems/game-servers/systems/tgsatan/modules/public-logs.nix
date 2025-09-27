@@ -17,22 +17,13 @@
   bind-port-effigy = "7338";
 in {
   services.cloudflared.tunnels.primary-tunnel.ingress = {
-    "sybil-logs.tgstation13.org" = {
-      service = "http://localhost:${bind-port-sybil}";
-    };
-    "manuel-logs.tgstation13.org" = {
-      service = "http://localhost:${bind-port-manuel}";
-    };
-    "eventus-logs.tgstation13.org" = {
-      service = "http://localhost:${bind-port-eventus}";
-    };
-    "effigy-logs.tgstation13.org" = {
-      service = "http://localhost:${bind-port-effigy}";
-    };
-    # TODO: Enable, needs testing. Use tailnet
-    #"tgmc-logs.tgstation13.org" = {
-    #  service = "http://localhost:${bind-port-tgmc}";
-    #};
+    "sybil-logs.tgstation13.org" = "http://localhost:${bind-port-sybil}";
+    "manuel-logs.tgstation13.org" = "http://localhost:${bind-port-manuel}";
+    "eventus-logs.tgstation13.org" = "http://localhost:${bind-port-eventus}";
+    "effigy-logs.tgstation13.org" = "http://localhost:${bind-port-effigy}";
+
+    # TODO: Enable, needs testing. Use tailnet for now
+    #"tgmc-logs.tgstation13.org" = "http://localhost:${bind-port-tgmc}";
   };
   system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
     chmod g+rx /persist/tgs-data
