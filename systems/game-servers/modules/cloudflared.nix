@@ -26,7 +26,7 @@ in {
     # Register the tunnel with DNS
     # Need the cert in-place temporarily for this
     pkgs.lib.stringAfter ["users"] ''
-      mkdir /root/.cloudflared
+      mkdir -p /root/.cloudflared
       cp ${config.age.secrets.cloudflared-cert.path} /root/.cloudflared/cert.pem
       ${config.services.cloudflared.package}/bin/cloudflared tunnel route dns ${config.networking.hostName} ${published-route}
       rm -rf /root/.cloudflared
