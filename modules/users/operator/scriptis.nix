@@ -14,7 +14,7 @@
 
     extraGroups = [
       "wheel"
-      "podman"
+      "docker"
       "db-operator"
     ];
 

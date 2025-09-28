@@ -5,8 +5,13 @@
 }:
 import ../../../../../../modules/cockroachdb/cockroachdb-node.nix {
   inherit config pkgs;
-  cluster-nodes = ["tgsatan.tg.lan"];
+  cluster-nodes = [
+    "blockmoths.tg.lan"
+    "tgsatan.tg.lan"
+    "tg-db-cluster-node-solar.tg.lan"
+  ];
   node-name = "tgsatan";
+  node-address = "tgsatan.tg.lan";
   node-crt = ./node.crt;
   node-key = ./secrets/node.key;
   db-user = "cockroachdb";

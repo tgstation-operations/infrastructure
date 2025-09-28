@@ -70,6 +70,33 @@
       group = "tgstation-server";
       mode = "0755";
     };
+
+    #EFFIGY
+    "tgs-EventScripts.d/effigy/DreamDaemonPreLaunch.sh" = {
+      text = builtins.readFile ./EventScripts/effigy/DreamDaemonPreLaunch.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/effigy/PostCompile.sh" = {
+      text = builtins.readFile ./EventScripts/effigy/PostCompile.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/effigy/PreCompile.sh" = {
+      text = builtins.readFile ./EventScripts/effigy/PreCompile.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/effigy/tg-Roundend.sh" = {
+      text = builtins.readFile ./EventScripts/effigy/tg-Roundend.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/effigy/update-config.sh" = {
+      text = builtins.readFile ./EventScripts/effigy/update-config.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
   };
 
   # Secrets used by the game servers
@@ -114,6 +141,26 @@
       owner = "${config.services.tgstation-server.username}";
       group = "${config.services.tgstation-server.groupname}";
     };
+    effigy-comms = {
+      file = ../../secrets/effigy-comms.age;
+      owner = "${config.services.tgstation-server.username}";
+      group = "${config.services.tgstation-server.groupname}";
+    };
+    effigy-dbconfig = {
+      file = ../../secrets/effigy-dbconfig.age;
+      owner = "${config.services.tgstation-server.username}";
+      group = "${config.services.tgstation-server.groupname}";
+    };
+    #effigy-tts_secrets = { for a rainy day...
+      #file = ../../secrets/effigy-tts_secrets.age;
+      #owner = "${config.services.tgstation-server.username}";
+      #group = "${config.services.tgstation-server.groupname}";
+    #};
+    effigy-extra_config-rclone = {
+      file = ../../secrets/effigy-extra_config-rclone.age;
+      owner = "${config.services.tgstation-server.username}";
+      group = "${config.services.tgstation-server.groupname}";
+    };
   };
   services.tgstation-server = {
     enable = true;
@@ -122,7 +169,7 @@
     # environmentFile =  # Required, add to host config to specify the database URI
     extra-path = lib.makeBinPath (
       with pkgs; [
-        (with fenix.packages.x86_64-linux; combine [stable.toolchain targets.i686-unknown-linux-gnu.stable.rust-std])
+        (with fenix.packages.x86_64-linux; combine [minimal.toolchain targets.i686-unknown-linux-gnu.minimal.rust-std])
         clangMultiStdenv.cc
         llvmPackages.libclang
         which

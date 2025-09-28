@@ -3,13 +3,13 @@
   pkgs,
   lib,
   self,
-  fenix,
   ...
 }: let
   hw = self.inputs.nixos-hardware.nixosModules;
   baseModules = [
     (import hw.common-gpu-nvidia)
     (import hw.common-cpu-amd)
+    self.inputs.tg-public-log-parser.nixosModules.default
     self.inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
@@ -20,8 +20,12 @@
     ../../modules/garage.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
-    ../../modules/podman.nix
+    ../../modules/docker.nix
     ../../modules/tgs
+    (import ../../modules/cloudflared.nix {
+      inherit pkgs config lib;
+      age-file = ./secrets/cloudflared.age;
+    })
     ./modules/atticd.nix
     ./modules/cockroachdb
     ./modules/grafana
@@ -29,6 +33,7 @@
     ./modules/monitoring
     ./modules/motd
     ./modules/nvidia.nix
+    ./modules/public-logs.nix
     ./modules/redbot.nix
     ./modules/authentik.nix
   ];
@@ -146,7 +151,7 @@ in {
   };
 
   virtualisation.oci-containers = {
-    backend = "podman";
+    backend = "docker";
     containers = {
       nvidia-stats = {
         hostname = "nvidia-stats";

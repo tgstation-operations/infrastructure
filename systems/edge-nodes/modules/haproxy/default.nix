@@ -10,6 +10,8 @@
     5337 # TGMC
     # 4447 # event-us
     # 4337 # event-eu
+    7337 # Effigy
+    7777 # event-us (idk ask scriptis)
   ];
 
   services.haproxy.config =

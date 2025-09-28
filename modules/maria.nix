@@ -13,6 +13,7 @@
       mariadb = {
         thread_handling = "pool-of-threads"; # TP size is num of cpus, 32 on satan
         max_connections = 302;
+        innodb_flush_method = "fsync";
       };
     };
   };

@@ -15,7 +15,7 @@
   };
   inputs = {
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     agenix = {
@@ -31,10 +31,11 @@
       url = "github:kamadorueda/alejandra/3.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
     dragon-bot.url = "github:tgstation/dragon-bot";
-    tgstation-server.url = "github:tgstation/tgstation-server/da0af26bedde229c21fb23d1bde4dee5b648c016?dir=build/package/nix";
+    tg-public-log-parser.url = "github:Mothblocks/tg-public-log-parser";
+    tgstation-server.url = "github:tgstation/tgstation-server/c2d3af8d7bd5c5f3c7ffeb98cfe5ca6db34dd341?dir=build/package/nix";
     tgstation-pr-announcer.url = "github:tgstation/tgstation/be9ae13cd50cc2f2f6680883424b86feb3c22725?dir=tools/Tgstation.PRAnnouncer";
     tgstation-website.url = "github:tgstation-operations/website-v2";
     impermanence.url = "github:scriptis/impermanence";
@@ -46,6 +47,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     authentik-nix.url = "github:nix-community/authentik-nix";
+    # lix-module = {
+    #   url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.2-1.tar.gz";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs = inputs @ {
@@ -61,6 +66,7 @@
       inputs.home-manager.nixosModules.home-manager
       inputs.agenix.nixosModules.default
       inputs.disko.nixosModules.default
+      # inputs.lix-module.nixosModules.default
       (import ./modules/colmena_ci.nix)
     ];
 
@@ -92,7 +98,7 @@
 
     vpn = {
       deployment = {
-        targetHost = "vpn.tg.lan";
+        targetHost = "vpn.tgstation13.org";
         targetUser = "deploy";
       };
       imports =
@@ -268,6 +274,44 @@
           (import ./systems/edge-nodes/systems/eu-knipp.nix)
         ];
     };
+    tg-cockroachdb-node-alpha = {
+      deployment = {
+        targetHost = "tg-cockroachdb-node-alpha.tg.lan";
+        targetUser = "deploy";
+        tags = [
+          "pmx-node"
+        ];
+      };
+      nixpkgs.system = "x86_64-linux";
+      imports =
+        flakeModules
+        ++ [
+          (import "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix")
+          (import ./modules/base.nix)
+          (import ./modules/users)
+          (import ./modules/tailscale.nix)
+          (import ./modules/openssh.nix)
+        ];
+    };
+    tg-cockroachdb-node-beta = {
+      deployment = {
+        targetHost = "tg-cockroachdb-node-beta.tg.lan";
+        targetUser = "deploy";
+        tags = [
+          "pmx-node"
+        ];
+      };
+      nixpkgs.system = "x86_64-linux";
+      imports =
+        flakeModules
+        ++ [
+          (import "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix")
+          (import ./modules/base.nix)
+          (import ./modules/users)
+          (import ./modules/tailscale.nix)
+          (import ./modules/openssh.nix)
+        ];
+    };
   in {
     colmenaHive = colmena.lib.makeHive self.outputs.colmena;
     colmena = {
@@ -284,6 +328,8 @@
         bratwurst
         dachshund
         knipp
+        tg-cockroachdb-node-alpha
+        tg-cockroachdb-node-beta
         ;
 
       meta = {
