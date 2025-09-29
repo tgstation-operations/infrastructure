@@ -25,14 +25,15 @@ rec {
   chicago = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINLoHyAzZYLqehsiIFc06bVbSMWPu9WNy3/pM4UpkaCQ";
   dallas = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBxPsWAhIwv7iaVd2uJCjC/BqZDgXkMEQ5ZfWHESVAyT";
   lime = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILDcqEOMKjP4rtTC0qyl/oZx9C6Zfal+AbTY6nk87OPy";
-  edge-nodes-us = [knipp atlanta chicago dallas lime];
+  lemon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEhC4fn5nBZOw3nnQlvrKjEl/x7ObtSwoB0bCGy5gVkp";
+  edge-nodes-na = [knipp atlanta chicago dallas lime lemon];
 
   #  staging
   warsaw = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAendJQ8VvBhnLl5Us7Q/2X9o6LSy8Ec7nXhs1JvLF3k";
 
   edge-nodes-staging = [warsaw];
 
-  edge-nodes-live = edge-nodes-eu ++ edge-nodes-us;
+  edge-nodes-live = edge-nodes-eu ++ edge-nodes-na;
 
   edge-nodes-all = edge-nodes-live ++ edge-nodes-staging;
 
