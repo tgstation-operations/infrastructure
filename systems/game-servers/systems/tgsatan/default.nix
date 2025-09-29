@@ -27,7 +27,6 @@
       age-file = ./secrets/cloudflared.age;
     })
     ./modules/atticd.nix
-    ./modules/cockroachdb
     ./modules/grafana
     ./modules/postgres.nix
     ./modules/monitoring
