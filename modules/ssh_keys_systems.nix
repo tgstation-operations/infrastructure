@@ -31,4 +31,6 @@ rec {
   warsaw = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAendJQ8VvBhnLl5Us7Q/2X9o6LSy8Ec7nXhs1JvLF3k";
 
   all-edge-nodes = edge-nodes-eu ++ edge-nodes-us;
+
+  all = game-nodes-all ++ all-edge-nodes;
 }

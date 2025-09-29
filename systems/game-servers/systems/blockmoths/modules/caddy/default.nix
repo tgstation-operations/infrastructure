@@ -17,7 +17,7 @@
     80
   ];
   age.secrets = {
-    cloudflare_api.file = ../../secrets/cloudflare_api.age;
+    cloudflare-api.file = ../../../../../../secrets/cloudflare-api.age;
     aws_credentials.file = ../../secrets/aws_credentials.age;
   };
   security.acme = {
@@ -27,7 +27,7 @@
       email = "acme@tgstation13.org";
       dnsPropagationCheck = true;
       credentialFiles = {
-        "CF_DNS_API_TOKEN_FILE" = config.age.secrets.cloudflare_api.path;
+        "CF_DNS_API_TOKEN_FILE" = config.age.secrets.cloudflare-api.path;
       };
       server = "https://acme-v02.api.letsencrypt.org/directory"; # Production
     };

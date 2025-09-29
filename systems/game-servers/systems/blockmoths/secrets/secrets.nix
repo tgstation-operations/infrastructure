@@ -8,8 +8,6 @@ in {
   # Restic
   "restic-env.age".publicKeys = final;
   "restic-key.age".publicKeys = final;
-  # Cloudflare DNS-01
-  "cloudflare_api.age".publicKeys = final;
   # Cloudflared tunnel credentials file
   # Run "cloudflared tunnel create --cred-file cred.json blockmoths" after logging in to generate in cred.json
   # NAME MUST MATCH HOSTNAME
