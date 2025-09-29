@@ -222,8 +222,8 @@
     };
     lemon = {
       deployment = {
-        targetHost = "51.79.52.10";
-        targetUser = "root";
+        targetHost = "lemon.tg.lan";
+        targetUser = "deploy";
         tags = [
           "relay-amd64"
         ];
