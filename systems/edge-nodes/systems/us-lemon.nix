@@ -2,8 +2,8 @@
   imports = [
     ../../../modules/maria.nix
     ../base.nix
-    ../modules/caddy.nix
-    ../modules/tgstation-pr-announcer/default.nix
+    # ../modules/caddy.nix
+    # ../modules/tgstation-pr-announcer/default.nix
   ];
   networking.hostName = "lemon";
   services.mysql = {
