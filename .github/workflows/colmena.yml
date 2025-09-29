@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
   workflow_call:
     inputs:
       pull_request_number:
@@ -185,3 +182,15 @@ jobs:
         run: gh pr close https://github.com/tgstation-operations/infrastructure/pull/${{ github.event.pull_request.number }}
         env:
           GH_TOKEN: ${{ github.token }}
+
+  ci-completion-gate:
+    if: always() && !cancelled()
+    name: CI Completion Gate
+    timeout-minutes: 1
+    needs: [close-bad-website-pr, deploy-staging, deploy-production]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Decide whether the needed jobs succeeded or failed
+        uses: re-actors/alls-green@223e4bb7a751b91f43eda76992bcfbf23b8b0302
+        with:
+          jobs: ${{ toJSON(needs) }}
