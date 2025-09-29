@@ -155,6 +155,7 @@ jobs:
           - "tgsatan"
           - "blockmoths"
           - "vpn"
+          - "idm"
           - "@relay-amd64"
         environment:
           - production
