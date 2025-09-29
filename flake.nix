@@ -220,6 +220,22 @@
           (import ./systems/edge-nodes/systems/us-lime.nix)
         ];
     };
+    lemon = {
+      deployment = {
+        targetHost = "51.79.52.10";
+        targetUser = "root";
+        tags = [
+          "relay-amd64"
+        ];
+      };
+      imports =
+        flakeModules
+        ++ [
+          (import ./modules/base.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/us-lemon.nix)
+        ];
+    };
     bratwurst = {
       deployment = {
         targetHost = "bratwurst.tg.lan";
@@ -337,6 +353,7 @@
         wiggle
         warsaw
         lime
+        lemon
         bratwurst
         dachshund
         knipp
