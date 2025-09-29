@@ -3,7 +3,6 @@ let
   systems = import ../modules/ssh_keys_systems.nix;
   final = users ++ systems.all;
 in {
-  # Go to https://dash.cloudflare.com/profile/api-tokens, Create Token at the top, Edit zone DNS template
-  # Currently using a personal token from Dominion's account, should eventually changed to a tgstation13.org account token
+  # Go to the /tg/ cf account api tokens page https://dash.cloudflare.com/9e75f02500238531febdd3388a9d9544/api-tokens, Create Token at the top, Edit zone DNS template
   "cloudflare-api.age".publicKeys = final;
 }
