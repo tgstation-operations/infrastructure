@@ -30,7 +30,11 @@ rec {
   #  staging
   warsaw = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAendJQ8VvBhnLl5Us7Q/2X9o6LSy8Ec7nXhs1JvLF3k";
 
-  all-edge-nodes = edge-nodes-eu ++ edge-nodes-us;
+  edge-nodes-staging = [warsaw];
 
-  all = game-nodes-all ++ all-edge-nodes;
+  edge-nodes-live = edge-nodes-eu ++ edge-nodes-us;
+
+  edge-nodes-all = edge-nodes-live ++ edge-nodes-staging;
+
+  all = game-nodes-all ++ edge-nodes-all;
 }
