@@ -14,7 +14,6 @@
   localModules = [
     ./disko.nix
     ./modules/caddy
-    ./modules/cockroachdb
     ./modules/haproxy
     ./modules/motd
     ./modules/public-logs.nix

@@ -1,6 +1,9 @@
 name: CI Security
 
 on:
+  pull_request:
+    branches:
+      - main
   pull_request_target:
     branches:
       - main
@@ -17,7 +20,7 @@ concurrency:
 jobs:
   security-checkpoint:
     name: Check CI Clearance
-    if: github.event.pull_request.head.repo.id != github.event.pull_request.base.repo.id && github.event.pull_request.state == 'open'
+    if: github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.id != github.event.pull_request.base.repo.id && github.event.pull_request.state == 'open'
     runs-on: ubuntu-latest
     steps:
       - name: Generate App Token
@@ -52,9 +55,10 @@ jobs:
         if: (github.event.action == 'synchronize' || github.event.action == 'reopened') || ((github.event.action == 'opened' || github.event.action == 'labeled') && !contains(github.event.pull_request.labels.*.name, 'CI Cleared'))
         run: exit 1
 
-  ci-pipline-workflow-call:
-    name: Authorized CI Pipeline
+  colmena-workflow-call:
+    name: Colmena
     needs: security-checkpoint
+    if: (!(cancelled() || failure()) && (needs.security-checkpoint.result == 'success' || (github.event_name != 'pull_request_target' && github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id)))
     uses: ./.github/workflows/colmena.yml
     secrets: inherit
     with:

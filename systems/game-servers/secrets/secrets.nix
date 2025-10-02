@@ -3,6 +3,7 @@ let
   systems = import ../../../modules/ssh_keys_systems.nix;
 in {
   # Obtained by running "cloudflared login" then copying from ~/.cloudflared/cert.pem
+  # Currently tied to Dominion's account
   "cloudflared-cert.age".publicKeys = users ++ systems.game-nodes-all;
 
   "garage.age".publicKeys = users ++ systems.game-nodes-all;
