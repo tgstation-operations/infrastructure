@@ -9,9 +9,9 @@
   services.mysql = {
     settings = {
       mariadb = {
-        log_bin = "forum_lemon_bin";
+        log_bin = "lemon_db_bin";
         server_id = 3;
-        log-basename = "forum_lemon_log";
+        log-basename = "lemon_db_log";
         binlog-format = "mixed";
       };
     };
