@@ -22,10 +22,12 @@
   services.mysql = {
     dataDir = "/persist/mariadb";
     settings = {
-      log-bin = true;
-      server_id = 1;
-      log-basename = "forum_master";
-      binlog-format = "mixed";
+      mariadb = {
+        log_bin = "forum_master_bin";
+        server_id = 1;
+        log-basename = "forum_master_log";
+        binlog-format = "mixed";
+      };
     }
   };
 }
