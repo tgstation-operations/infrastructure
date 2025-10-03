@@ -6,6 +6,16 @@
     # ../modules/tgstation-pr-announcer/default.nix
   ];
   networking.hostName = "lemon";
+  services.mysql = {
+    settings = {
+      mariadb = {
+        log_bin = "lemon_db_bin";
+        server_id = 3;
+        log-basename = "lemon_db_log";
+        binlog-format = "mixed";
+      };
+    };
+  };
 
   system.stateVersion = "24.11";
   nixpkgs.hostPlatform = "x86_64-linux";
