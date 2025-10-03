@@ -83,6 +83,17 @@ in {
     ];
   };
 
+  services.mysql = {
+    settings = {
+      mariadb = {
+        log_bin = "staging_wiggle_bin";
+        server_id = 2;
+        log-basename = "staging_wiggle_log";
+        binlog-format = "mixed";
+      };
+    };
+  };
+
   swapDevices = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

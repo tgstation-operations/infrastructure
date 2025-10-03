@@ -233,7 +233,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/edge-nodes/systems/us-lemon.nix)
+          (import ./systems/edge-nodes/systems/ca-lemon.nix)
         ];
     };
     bratwurst = {
