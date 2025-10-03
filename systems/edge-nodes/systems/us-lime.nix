@@ -28,6 +28,6 @@
         log-basename = "forum_master_log";
         binlog-format = "mixed";
       };
-    }
+    };
   };
 }
