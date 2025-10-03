@@ -21,5 +21,11 @@
   boot.initrd.kernelModules = ["nvme"];
   services.mysql = {
     dataDir = "/persist/mariadb";
+    settings = {
+      log-bin = true;
+      server_id = 1;
+      log-basename = "forum_master";
+      binlog-format = "mixed";
+    }
   };
 }
