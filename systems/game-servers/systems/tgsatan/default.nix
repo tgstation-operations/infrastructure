@@ -103,11 +103,6 @@ in {
     trim.enable = true;
     autoSnapshot.enable = false;
   };
-
-  services.mysql = {
-    dataDir = "/persist/mariadb";
-  };
-
   age.secrets.tgs = {
     file = ./secrets/tgs.age;
     owner = "${config.services.tgstation-server.username}";
