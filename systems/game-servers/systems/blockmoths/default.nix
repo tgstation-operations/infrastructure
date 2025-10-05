@@ -73,22 +73,6 @@ in {
     ];
   };
 
-  age.secrets.restic-env.file = ./secrets/restic-env.age;
-  age.secrets.restic-key.file = ./secrets/restic-key.age;
-
-  services.restic = {
-    backups.persist = {
-      environmentFile = config.age.secrets.restic-env.path;
-      passwordFile = config.age.secrets.restic-key.path;
-      repository = "s3:s3.us-east-005.backblazeb2.com/tgstation-backups";
-      extraBackupArgs = ["-v"];
-      paths = ["/persist"];
-      exclude = [
-        "/persist/garage"
-      ];
-    };
-  };
-
   networking.hosts = {
     "127.0.0.1" = ["terry.tgstation13.org" "blockmoths.eu.tgstation13.org" "tgs.blockmoths.eu.tgstation13.org" "s3.blockmoths.eu.tgstation13.org" "s3.tgstation13.org"];
   };

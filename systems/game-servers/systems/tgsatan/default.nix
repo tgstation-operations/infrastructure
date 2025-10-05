@@ -121,28 +121,6 @@ in {
     };
   };
 
-  # TODO: Move this to it's own module, either in modules/ or a host based one
-  age.secrets.restic-env.file = ./secrets/restic-env.age;
-  age.secrets.restic-key.file = ./secrets/restic-key.age;
-  services.restic = {
-    backups.persist = {
-      environmentFile = config.age.secrets.restic-env.path;
-      passwordFile = config.age.secrets.restic-key.path;
-      repository = "s3:s3.us-east-005.backblazeb2.com/tgstation-backups";
-      extraBackupArgs = ["-v"];
-      paths = ["/persist" "/root/tgsatan_maria.sql"];
-      exclude = [
-        "/persist/garage/data"
-      ];
-      backupPrepareCommand = ''
-        ${pkgs.mariadb}/bin/mysqldump --all-databases > /root/tgsatan_maria.sql
-      '';
-      backupCleanupCommand = ''
-        rm /root/tgsatan_maria.sql
-      '';
-    };
-  };
-
   virtualisation.oci-containers = {
     backend = "docker";
     containers = {
