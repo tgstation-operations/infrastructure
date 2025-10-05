@@ -38,4 +38,6 @@ rec {
   edge-nodes-all = edge-nodes-live ++ edge-nodes-staging;
 
   all = game-nodes-all ++ edge-nodes-all;
+
+  vpn = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICw8296nzfeSNP3hKBLbybQcbhUsc5+vR/x2D0aLAAe/";
 }

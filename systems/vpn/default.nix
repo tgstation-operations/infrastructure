@@ -4,6 +4,7 @@
     ../../modules/openssh.nix
     ../../modules/tailscale.nix
     ../../modules/fail2ban.nix
+    ../../modules/restic.nix
     ./modules/headscale
   ];
 
@@ -37,4 +38,10 @@
     device = "/dev/vda2";
     fsType = "ext4";
   };
+
+  services.restic.backups.persist.paths = [
+    "/var/lib/tailscale"
+    "/var/lib/headscale"
+    "/etc"
+  ];
 }

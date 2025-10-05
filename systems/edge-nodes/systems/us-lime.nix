@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ../../../modules/maria.nix
+    ../../../modules/restic.nix
     ../base.nix
     ../disko-ovh.nix
     ../modules/caddy.nix
