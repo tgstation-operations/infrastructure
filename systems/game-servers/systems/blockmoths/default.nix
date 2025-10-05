@@ -20,6 +20,7 @@
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
+    ../../../../modules/restic.nix
     (import ../../modules/cloudflared.nix {
       inherit pkgs config lib;
       age-file = ./secrets/cloudflared.age;

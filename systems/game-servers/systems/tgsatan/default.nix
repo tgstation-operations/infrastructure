@@ -17,6 +17,7 @@
     ../../../../modules/maria.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
+    ../../../../modules/restic.nix
     ../../modules/garage.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
