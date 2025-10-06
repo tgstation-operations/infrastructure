@@ -1,22 +1,15 @@
 {
   config,
   pkgs,
-  stdenv,
   ...
 }: let
-  ips-v4 = stdenv.mkDerivation {
-    name = "cloudflare-ipv4-addresses";
-    src = builtins.fetchurl {
-      url = "https://www.cloudflare.com/ips-v4";
-      hash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
-    };
+  ips-v4 = builtins.fetchurl {
+    url = "https://www.cloudflare.com/ips-v4";
+    hash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
   };
-  ips-v6 = stdenv.mkDerivation {
-    name = "cloudflare-ipv4-addresses";
-    src = builtins.fetchurl {
-      url = "https://www.cloudflare.com/ips-v6";
-      hash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
-    };
+  ips-v6 = builtins.fetchurl {
+    url = "https://www.cloudflare.com/ips-v6";
+    hash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
   };
 in {
   networking.firewall.allowedTCPPorts = [
