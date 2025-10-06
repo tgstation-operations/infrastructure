@@ -11,21 +11,22 @@
     inputs.tgstation-phpbb.nixosModules.default
   ];
   networking.hostName = "lemon";
-  services.mysql = {
-    settings = {
-      mariadb = {
-        log_bin = "lemon_db_bin";
-        server_id = 3;
-        log-basename = "lemon_db_log";
-        binlog-format = "mixed";
+  services = {
+    mysql = {
+      settings = {
+        mariadb = {
+          log_bin = "lemon_db_bin";
+          server_id = 3;
+          log-basename = "lemon_db_log";
+          binlog-format = "mixed";
+        };
       };
     };
-  };
-
-  services.tgstation-phpbb = {
-    groupname = "caddy";
-    cache-path = "/persist/tgstation-phpbb/cache";
-    avatars-path = "/persist/tgstation-phpbb/avatars";
+    tgstation-phpbb = {
+      groupname = "caddy";
+      cache-path = "/persist/tgstation-phpbb/cache";
+      avatars-path = "/persist/tgstation-phpbb/avatars";
+    };
   };
 
   system.stateVersion = "24.11";
