@@ -23,6 +23,7 @@
       };
     };
     tgstation-phpbb = {
+      enable = true;
       groupname = "caddy";
       cache-path = "/persist/tgstation-phpbb/cache";
       avatars-path = "/persist/tgstation-phpbb/avatars";
