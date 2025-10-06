@@ -1,6 +1,6 @@
 {
   lib,
-  inputs,
+  self,
   ...
 }: {
   imports = [
@@ -8,7 +8,7 @@
     ../../../../modules/maria.nix
     ../../../../modules/restic.nix
     # ../modules/tgstation-pr-announcer/default.nix
-    inputs.tgstation-phpbb.nixosModules.default
+    self.inputs.tgstation-phpbb.nixosModules.default
   ];
   networking.hostName = "lemon";
   services = {
