@@ -6,14 +6,14 @@
 }: let
   ips-v4 = stdenv.mkDerivation {
     name = "cloudflare-ipv4-addresses";
-    src = fetchurl {
+    src = builtins.fetchurl {
       url = "https://www.cloudflare.com/ips-v4";
       hash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
     };
   };
   ips-v6 = stdenv.mkDerivation {
     name = "cloudflare-ipv4-addresses";
-    src = fetchurl {
+    src = builtins.fetchurl {
       url = "https://www.cloudflare.com/ips-v6";
       hash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
     };
