@@ -33,11 +33,13 @@ rec {
   #  staging
   warsaw = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAendJQ8VvBhnLl5Us7Q/2X9o6LSy8Ec7nXhs1JvLF3k";
 
+  vpn = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICw8296nzfeSNP3hKBLbybQcbhUsc5+vR/x2D0aLAAe/";
+
   edge-nodes-staging = [warsaw];
 
   edge-nodes-live = edge-nodes-eu ++ edge-nodes-na;
 
   edge-nodes-all = edge-nodes-live ++ edge-nodes-staging;
 
-  all = game-nodes-all ++ edge-nodes-all ++ [vpn];
+  all = game-nodes-all ++ edge-nodes-all ++ [ vpn ];
 }
