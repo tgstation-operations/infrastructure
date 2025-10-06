@@ -4,9 +4,8 @@
   ...
 }: {
   imports = [
+    ./modules/caddy.nix
     ../../../../modules/maria.nix
-    ../base.nix
-    ../modules/caddy.nix
     ../../../../modules/restic.nix
     # ../modules/tgstation-pr-announcer/default.nix
     self.inputs.tgstation-phpbb.nixosModules.default
