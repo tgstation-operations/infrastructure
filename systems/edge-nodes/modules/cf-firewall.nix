@@ -9,7 +9,7 @@
   };
   ips-v6 = builtins.fetchurl {
     url = "https://www.cloudflare.com/ips-v6";
-    sha256 = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
+    sha256 = "sha256:1ad09hijignj6zlqvdjxv7rjj8567z357zfavv201b9vx3ikk7cy";
   };
 in {
   networking.firewall.allowedTCPPorts = [
