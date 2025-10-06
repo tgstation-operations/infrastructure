@@ -38,6 +38,7 @@
     tgstation-server.url = "github:tgstation/tgstation-server/c2d3af8d7bd5c5f3c7ffeb98cfe5ca6db34dd341?dir=build/package/nix";
     tgstation-pr-announcer.url = "github:tgstation/tgstation/be9ae13cd50cc2f2f6680883424b86feb3c22725?dir=tools/Tgstation.PRAnnouncer";
     tgstation-website.url = "github:tgstation-operations/website-v2";
+    tgstation-phpbb.url = "github:tgstation-operations/tgstation-phpbb/Nixification";
     impermanence.url = "github:scriptis/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     colmena.url = "github:zhaofengli/colmena/5fdd743a11e7291bd8ac1e169d62ba6156c99be4";
@@ -233,7 +234,7 @@
         ++ [
           (import ./modules/base.nix)
           (import ./modules/users)
-          (import ./systems/edge-nodes/systems/ca-lemon.nix)
+          (import ./systems/edge-nodes/systems/lemon)
         ];
     };
     bratwurst = {
