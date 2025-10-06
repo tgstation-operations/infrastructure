@@ -1,4 +1,4 @@
-name: "Auto-Approve Website Update PRs"
+name: "Auto-Approve Certain Dependency Update PRs"
 
 on:
   pull_request_target:
@@ -9,8 +9,8 @@ on:
 
 jobs:
   approve-pr-if-website-update:
-    name: Approve PR if Website Update from GitHub Actions
-    if: github.event.pull_request.user.id == 206383919 && github.event.pull_request.title == 'Automatic Website Update'
+    name: Approve PR if Dependency Update from GitHub Actions
+    if: github.event.pull_request.user.id == 206383919 && (github.event.pull_request.title == 'Automatic Website Update' || github.event.pull_request.title == 'Automatic Forums Update')
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
