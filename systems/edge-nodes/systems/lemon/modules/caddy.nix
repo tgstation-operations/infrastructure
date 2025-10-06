@@ -134,7 +134,7 @@ in {
     globalConfig = ''
       auto_https disable_certs  # We use security.acme.certs for this where applicable, so we don't want it to try and get certs
       grace_period 30s # Make sure we're not infinitely waiting for clients on reload
-      admin localhost:${admin_port}
+      admin localhost:${toString admin_port}
       metrics
       servers {
         timeouts {
