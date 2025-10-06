@@ -13,6 +13,10 @@
   };
   admin_port = 2019;
 in {
+  imports = [
+    ../../../modules/cf-firewall.nix
+  ];
+
   # For Unix sockets, unused for now
   systemd.tmpfiles.rules = [
     "d /run/caddy 644 ${config.services.caddy.user} ${config.services.caddy.group}"
@@ -22,40 +26,6 @@ in {
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
     admin_port # Caddy admin API and metrics
   ];
-  networking.firewall.allowedTCPPorts = [
-    # These two are commented out on purpose, a custom firewall is used to only allow access to cloudflare IPs
-    #80
-    #443
-  ];
-  networking.firewall.extraInputRules = ''
-    # Allow connections from cloudflare
-    tcp dport { http, https } ip saddr { # https://www.cloudflare.com/ips-v4/
-      173.245.48.0/20,
-      103.21.244.0/22,
-      103.22.200.0/22,
-      103.31.4.0/22,
-      141.101.64.0/18,
-      108.162.192.0/18,
-      190.93.240.0/20,
-      188.114.96.0/20,
-      197.234.240.0/22,
-      198.41.128.0/17,
-      162.158.0.0/15,
-      104.16.0.0/13,
-      104.24.0.0/14,
-      172.64.0.0/13,
-      131.0.72.0/22,
-    } accept
-    tcp dport { http, https } ip6 saddr { # https://www.cloudflare.com/ips-v6/
-      2400:cb00::/32,
-      2606:4700::/32,
-      2803:f800::/32,
-      2405:b500::/32,
-      2405:8100::/32,
-      2a06:98c0::/29,
-      2c0f:f248::/32,
-    } accept
-  '';
 
   age.secrets.cloudflare-api.file = ../../../../../secrets/cloudflare-api.age;
   security.acme = {
