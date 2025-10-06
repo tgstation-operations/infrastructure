@@ -5,11 +5,11 @@
 }: let
   ips-v4 = builtins.fetchurl {
     url = "https://www.cloudflare.com/ips-v4";
-    hash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
+    sha256 = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
   };
   ips-v6 = builtins.fetchurl {
     url = "https://www.cloudflare.com/ips-v6";
-    hash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
+    sha256 = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
   };
 in {
   networking.firewall.allowedTCPPorts = [
