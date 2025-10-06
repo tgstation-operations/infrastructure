@@ -28,6 +28,8 @@ rec {
   lemon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEhC4fn5nBZOw3nnQlvrKjEl/x7ObtSwoB0bCGy5gVkp";
   edge-nodes-na = [knipp atlanta chicago dallas lime lemon];
 
+  vpn = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICw8296nzfeSNP3hKBLbybQcbhUsc5+vR/x2D0aLAAe/";
+
   #  staging
   warsaw = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAendJQ8VvBhnLl5Us7Q/2X9o6LSy8Ec7nXhs1JvLF3k";
 

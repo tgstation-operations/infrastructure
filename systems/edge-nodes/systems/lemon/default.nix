@@ -1,19 +1,33 @@
-{lib, ...}: {
+{
+  lib,
+  self,
+  ...
+}: {
   imports = [
-    ../../../modules/maria.nix
-    ../base.nix
-    # ../modules/caddy.nix
+    ../../base.nix
+    ../../../../modules/maria.nix
+    ../../../../modules/restic.nix
+    ./modules/caddy.nix
     # ../modules/tgstation-pr-announcer/default.nix
+    self.inputs.tgstation-phpbb.nixosModules.default
   ];
   networking.hostName = "lemon";
-  services.mysql = {
-    settings = {
-      mariadb = {
-        log_bin = "lemon_db_bin";
-        server_id = 3;
-        log-basename = "lemon_db_log";
-        binlog-format = "mixed";
+  services = {
+    mysql = {
+      settings = {
+        mariadb = {
+          log_bin = "lemon_db_bin";
+          server_id = 3;
+          log-basename = "lemon_db_log";
+          binlog-format = "mixed";
+        };
       };
+    };
+    tgstation-phpbb = {
+      enable = true;
+      groupname = "caddy";
+      cache-path = "/persist/tgstation-phpbb/cache";
+      avatars-path = "/persist/tgstation-phpbb/avatars";
     };
   };
 
