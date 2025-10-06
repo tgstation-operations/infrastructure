@@ -5,7 +5,7 @@
 }: let
   ips-v4 = builtins.fetchurl {
     url = "https://www.cloudflare.com/ips-v4";
-    sha256 = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
+    sha256 = "sha256:0ywy9sg7spafi3gm9q5wb59lbiq0swvf0q3iazl0maq1pj1nsb7h";
   };
   ips-v6 = builtins.fetchurl {
     url = "https://www.cloudflare.com/ips-v6";
