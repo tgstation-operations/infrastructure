@@ -38,7 +38,7 @@
     tgstation-server.url = "github:tgstation/tgstation-server/c2d3af8d7bd5c5f3c7ffeb98cfe5ca6db34dd341?dir=build/package/nix";
     tgstation-pr-announcer.url = "github:tgstation/tgstation/be9ae13cd50cc2f2f6680883424b86feb3c22725?dir=tools/Tgstation.PRAnnouncer";
     tgstation-website.url = "github:tgstation-operations/website-v2";
-    tgstation-phpbb.url = "github:tgstation-operations/tgstation-phpbb/34507578615224b2ddca56e17bb082f005623f92";
+    tgstation-phpbb.url = "github:tgstation-operations/tgstation-phpbb/1b10d357a277c1820cdf1f9f29f280c62f9983da";
     impermanence.url = "github:scriptis/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     colmena.url = "github:zhaofengli/colmena/5fdd743a11e7291bd8ac1e169d62ba6156c99be4";
