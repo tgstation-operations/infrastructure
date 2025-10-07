@@ -39,12 +39,12 @@ jobs:
       - name: Update Website Flake Only
         if: github.event.inputs.dependency == 'Website'
         run: |
-          nix flake lock --update-input tgstation-website
+          nix flake --update-input tgstation-website
 
       - name: Update Forums Flake Only
         if: github.event.inputs.dependency == 'Forums'
         run: |
-          nix flake lock --update-input tgstation-phpbb
+          nix flake --update-input tgstation-phpbb
 
       - name: Commit
         run: |
