@@ -129,6 +129,7 @@ jobs:
     uses: ./.github/workflows/colmena_deploy.yml
     secrets: inherit
     with:
+      environment: ${{ matrix.environment }}
       runner: ${{ matrix.runner }}
       node: ${{ matrix.node }}
       pull_request_number: ${{ inputs.pull_request_number }}
@@ -138,6 +139,8 @@ jobs:
           - ubuntu-24.04
         node:
           - "@staging"
+        environment:
+          - Staging
 
   deploy-production:
     name: Deploy Production
@@ -146,6 +149,7 @@ jobs:
     uses: ./.github/workflows/colmena_deploy.yml
     secrets: inherit
     with:
+      environment: ${{ matrix.environment }}
       runner: ${{ matrix.runner }}
       node: ${{ matrix.node }}
       pull_request_number: ${{ inputs.pull_request_number }}
@@ -159,9 +163,12 @@ jobs:
           - "vpn"
           - "idm"
           - "@relay-amd64"
+        environment:
+          - Production
         include:
           - runner: ubuntu-24.04-arm
             node: "@relay-arm"
+            environment: Production
 
   close-bad-website-pr:
     name: Close Bad Website PR

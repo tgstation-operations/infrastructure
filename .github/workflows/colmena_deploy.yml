@@ -3,6 +3,9 @@ name: Environment Deploy
 on:
   workflow_call:
     inputs:
+      environment:
+        required: true
+        type: string
       node:
         required: true
         type: string
@@ -15,7 +18,7 @@ on:
 jobs:
   deploy:
     name: Environment Deploy
-    environment: ${{ inputs.node }}
+    environment: ${{ inputs.environment }}
     continue-on-error: true
     runs-on: ${{ inputs.runner }}
     steps:

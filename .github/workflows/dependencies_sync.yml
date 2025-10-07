@@ -39,12 +39,12 @@ jobs:
       - name: Update Website Flake Only
         if: github.event.inputs.dependency == 'Website'
         run: |
-          nix flake lock --update-input tgstation-website
+          nix flake update tgstation-website
 
       - name: Update Forums Flake Only
         if: github.event.inputs.dependency == 'Forums'
         run: |
-          nix flake lock --update-input tgstation-phpbb
+          nix flake update tgstation-phpbb
 
       - name: Commit
         run: |
@@ -52,7 +52,7 @@ jobs:
           git config user.name "tgstation-operations-ci[bot]"
           git config user.email "206383919+tgstation-operations-ci[bot]@users.noreply.github.com"
           git add flake.lock
-          git commit -m "Automatic flake.lock update for website-v2 push"
+          git commit -m "Automatic flake.lock update for ${{ github.event.inputs.dependency }} push"
 
       - name: Push
         run: |
