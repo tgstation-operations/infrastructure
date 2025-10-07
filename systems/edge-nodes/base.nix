@@ -29,8 +29,4 @@
   };
 
   environment.enableAllTerminfo = true; # Enables (stable) terminfo for a bunch of extra terminals that aren't in ncurses yet (ghostty, alacritty, kitty, etc)
-
-  # Raise UDP send/recv buffer size since we rely _very_ heavily on QUIC/WireGuard
-  boot.kernel.sysctl."net.core.wmem_max" = 7500000;
-  boot.kernel.sysctl."net.core.rmem_max" = 7500000;
 }

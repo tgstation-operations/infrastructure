@@ -45,10 +45,27 @@ jobs:
         with:
           ref: "refs/pull/${{ inputs.pull_request_number }}/merge"
 
-      - name: Install Nix
-        uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72 # Install nix itself. We don't need to specify a channel since we're using flakes
+      - name: Mount compressed fs at /nix
+        shell: bash
+        run: |
+          dd if=/dev/zero of=./nix-store.img bs=1 count=0 seek=15G
+          mkfs.btrfs -M ./nix-store.img
+          sudo mkdir /nix
+          sudo mount -o defaults,noatime,compress=zstd ./nix-store.img /nix
+
+      - name: Generate App Token
+        id: app-token-generation
+        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5
         with:
-          extra_nix_config: |
+          app-id: ${{ secrets.CI_APP_ID }}
+          private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
+
+      - name: Install Nix
+        run: sh .github/workflows/install_lix.sh
+        env:
+          EXTRA_NIX_CONFIG: |
+            access-tokens = github.com=${{ steps.app-token-generation.outputs.token }}
+            experimental-features = nix-command flakes
             accept-flake-config = true
             extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA=
@@ -61,10 +78,12 @@ jobs:
       - name: Print nix config before Build
         run: nix config show
 
-      - name: Deploy closure to Nodes
-        # Prevent this step from being cancelled mid-run because it could leave the node in a bad state
-        if: always() && success() && !cancelled()
+      - name: Install Colmena
         run: |
           COLMENA_REVISION=$(jq -r '.nodes.colmena.locked.rev' flake.lock)
           echo "Current Colmena revision is: $COLMENA_REVISION"
-          nix run github:zhaofengli/colmena/$COLMENA_REVISION -- apply --impure -v --on ${{ inputs.node }}
+          nix profile install github:zhaofengli/colmena/$COLMENA_REVISION
+
+      - name: Deploy closure to Nodes
+        run: |
+          colmena apply --impure -v --on ${{ inputs.node }}

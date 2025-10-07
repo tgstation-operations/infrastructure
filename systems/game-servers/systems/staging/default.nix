@@ -9,6 +9,7 @@
   hw = inputs.nixos-hardware.nixosModules;
   baseModules = [
     (import hw.common-cpu-intel)
+    inputs.tg-public-log-parser.nixosModules.default
     inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
@@ -18,11 +19,16 @@
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../../../modules/maria.nix
+    (import ../../modules/cloudflared.nix {
+      inherit pkgs config lib;
+      age-file = ./secrets/cloudflared.age;
+    })
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/tgs
     ./modules/haproxy
     ./modules/motd
+    ./modules/public-logs.nix
     ./modules/caddy.nix
   ];
 in {
@@ -36,7 +42,6 @@ in {
   imports = baseModules ++ localModules;
 
   programs.nix-ld.enable = true;
-
 
   networking.nameservers = [
     "9.9.9.9"
@@ -76,6 +81,17 @@ in {
       "fmask=0022"
       "dmask=0022"
     ];
+  };
+
+  services.mysql = {
+    settings = {
+      mariadb = {
+        log_bin = "staging_wiggle_bin";
+        server_id = 2;
+        log-basename = "staging_wiggle_log";
+        binlog-format = "mixed";
+      };
+    };
   };
 
   swapDevices = [];

@@ -13,6 +13,10 @@
       enabled ++ (with all; [memcached]);
   };
 in {
+  imports = [
+    ./cf-firewall.nix
+  ];
+
   # For Unix sockets, unused for now
   systemd.tmpfiles.rules = [
     "d /run/caddy 644 ${config.services.caddy.user} ${config.services.caddy.group}"
@@ -23,42 +27,8 @@ in {
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
     2019 # Caddy admin API and metrics
   ];
-  networking.firewall.allowedTCPPorts = [
-    # These two are commented out on purpose, a custom firewall is used to only allow access to cloudflare IPs
-    #80
-    #443
-  ];
-  networking.firewall.extraInputRules = ''
-    # Allow connections from cloudflare
-    tcp dport { http, https } ip saddr { # https://www.cloudflare.com/ips-v4/
-      173.245.48.0/20,
-      103.21.244.0/22,
-      103.22.200.0/22,
-      103.31.4.0/22,
-      141.101.64.0/18,
-      108.162.192.0/18,
-      190.93.240.0/20,
-      188.114.96.0/20,
-      197.234.240.0/22,
-      198.41.128.0/17,
-      162.158.0.0/15,
-      104.16.0.0/13,
-      104.24.0.0/14,
-      172.64.0.0/13,
-      131.0.72.0/22,
-    } accept
-    tcp dport { http, https } ip6 saddr { # https://www.cloudflare.com/ips-v6/
-      2400:cb00::/32,
-      2606:4700::/32,
-      2803:f800::/32,
-      2405:b500::/32,
-      2405:8100::/32,
-      2a06:98c0::/29,
-      2c0f:f248::/32,
-    } accept
-  '';
 
-  age.secrets.cloudflare_api.file = ../secrets/cloudflare_api.age;
+  age.secrets.cloudflare-api.file = ../../../secrets/cloudflare-api.age;
   security.acme = {
     acceptTerms = true;
     defaults = {
@@ -66,7 +36,7 @@ in {
       email = "acme@tgstation13.org";
       dnsPropagationCheck = true;
       credentialFiles = {
-        "CF_DNS_API_TOKEN_FILE" = config.age.secrets.cloudflare_api.path;
+        "CF_DNS_API_TOKEN_FILE" = config.age.secrets.cloudflare-api.path;
       };
       server = "https://acme-v02.api.letsencrypt.org/directory"; # Production
     };
@@ -131,7 +101,7 @@ in {
       plugins = [
         "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb" # Module to retrieve trusted proxy IPs from cloudflare
       ];
-      hash = "sha256-ntYZso4gaTMdQ3AkX0dk/EpfR924tdaaMdgbXvwX3Yo=";
+      hash = "sha256-w0pJEcwbawr9WKvnyWO++gGHYRUUUxGmGYkXqRvCQ8A=";
     };
     enableReload =
       true; # Reload caddy instead of restarting it on config changes
@@ -141,6 +111,10 @@ in {
       admin localhost:2019
       metrics
       servers {
+        timeouts {
+          read_body 10s
+          idle 1m
+        }
         trusted_proxies cloudflare {
           interval 12h
           timeout 15s
@@ -301,9 +275,9 @@ in {
               rev = "481c04b83946e6314afeb0a443ef08f069a1ae8c";
               hash = "sha256:0rwas0c9kxpf7dqbyd516xkam5hxdij7fillk7nxhx62z8gzcgcj";
             };
-            cargoHash = "sha256-vRVVGVXAvKbQ8lpgDknTKnIL+HYgkPy1R//TbUG4F6o=";
+            cargoHash = "sha256-x1Ui63dVxEKULKBsynmMv0cIK/ZzkfhRTOQArmUOuP4=";
           }
-        }/bin/server-info-fetcher --failure-tolerance all --servers blockmoths.tg.lan:3336,tgsatan.tg.lan:1337,tgsatan.tg.lan:1447,tgsatan.tg.lan:5337 /run/tgstation-website-v2/serverinfo.json
+        }/bin/server-info-fetcher --failure-tolerance all --servers blockmoths.tg.lan:3336,tgsatan.tg.lan:1337,tgsatan.tg.lan:1447,tgsatan.tg.lan:5337,tgsatan.tg.lan:7777 /run/tgstation-website-v2/serverinfo.json
       '';
     };
   };
