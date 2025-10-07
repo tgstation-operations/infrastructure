@@ -38,7 +38,7 @@
   programs.command-not-found.enable = false;
   nixpkgs.config.allowUnfree = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_6_15;
+  boot.kernelPackages = pkgs.linuxPackages_6_16;
   environment.systemPackages = with pkgs; [
     alejandra
     btop
