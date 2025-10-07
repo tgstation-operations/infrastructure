@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
   workflow_call:
     inputs:
       pull_request_number:
@@ -31,6 +28,7 @@ jobs:
           - "tgsatan"
           - "blockmoths"
           - "vpn"
+          - "idm"
           - "@relay-amd64"
           - "@staging"
         include:
@@ -71,11 +69,19 @@ jobs:
           sudo mkdir /nix
           sudo mount -o defaults,noatime,compress=zstd ./nix-store.img /nix
 
+      - name: Generate App Token
+        id: app-token-generation
+        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5
+        with:
+          app-id: ${{ secrets.CI_APP_ID }}
+          private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
+
       - name: Install Nix (Without Attic)
         if: ${{ env.USE_ATTIC != 'yes' }}
         run: sh .github/workflows/install_lix.sh
         env:
           EXTRA_NIX_CONFIG: |
+            access-tokens = github.com=${{ steps.app-token-generation.outputs.token }}
             experimental-features = nix-command flakes
             accept-flake-config = true
             extra-substituters = https://nix-community.cachix.org
@@ -86,6 +92,7 @@ jobs:
         run: sh .github/workflows/install_lix.sh
         env:
           EXTRA_NIX_CONFIG: |
+            access-tokens = github.com=${{ steps.app-token-generation.outputs.token }}
             experimental-features = nix-command flakes
             accept-flake-config = true
             extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
@@ -133,7 +140,7 @@ jobs:
         node:
           - "@staging"
         environment:
-          - staging
+          - Staging
 
   deploy-production:
     name: Deploy Production
@@ -154,13 +161,14 @@ jobs:
           - "tgsatan"
           - "blockmoths"
           - "vpn"
+          - "idm"
           - "@relay-amd64"
         environment:
-          - production
+          - Production
         include:
           - runner: ubuntu-24.04-arm
             node: "@relay-arm"
-            environment: production
+            environment: Production
 
   close-bad-website-pr:
     name: Close Bad Website PR
@@ -174,3 +182,16 @@ jobs:
         run: gh pr close https://github.com/tgstation-operations/infrastructure/pull/${{ github.event.pull_request.number }}
         env:
           GH_TOKEN: ${{ github.token }}
+
+  ci-completion-gate:
+    if: always() && !cancelled()
+    name: CI Completion Gate
+    timeout-minutes: 1
+    needs: [close-bad-website-pr, deploy-staging, deploy-production]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Decide whether the needed jobs succeeded or failed
+        uses: re-actors/alls-green@223e4bb7a751b91f43eda76992bcfbf23b8b0302
+        with:
+          allowed-skips: close-bad-website-pr,deploy-production
+          jobs: ${{ toJSON(needs) }}

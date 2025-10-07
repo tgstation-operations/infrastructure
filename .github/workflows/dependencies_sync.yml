@@ -1,16 +1,21 @@
-name: Sync Website
+name: Sync Dependencies
 
 on:
   workflow_dispatch:
+    inputs:
+      dependency:
+        description: "Dependency"
+        required: true
 
 concurrency:
-  group: "infra-update"
+  group: "infra-update-${{ github.event.inputs.dependency }}"
   cancel-in-progress: false
 
 jobs:
   create_website_update_pr:
     name: Create Website Update PR
     runs-on: ubuntu-latest
+    if: github.event.inputs.dependency == 'Website' || github.event.inputs.dependency == 'Forums'
     steps:
       - name: Checkout Repository
         run: git clone -b main --depth 1 --single-branch "https://git@github.com/tgstation-operations/infrastructure" .
@@ -32,8 +37,14 @@ jobs:
           private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
 
       - name: Update Website Flake Only
+        if: github.event.inputs.dependency == 'Website'
         run: |
-          nix flake lock --update-input tgstation-website
+          nix flake update tgstation-website
+
+      - name: Update Forums Flake Only
+        if: github.event.inputs.dependency == 'Forums'
+        run: |
+          nix flake update tgstation-phpbb
 
       - name: Commit
         run: |
@@ -41,13 +52,13 @@ jobs:
           git config user.name "tgstation-operations-ci[bot]"
           git config user.email "206383919+tgstation-operations-ci[bot]@users.noreply.github.com"
           git add flake.lock
-          git commit -m "Automatic flake.lock update for website-v2 push"
+          git commit -m "Automatic flake.lock update for ${{ github.event.inputs.dependency }} push"
 
       - name: Push
         run: |
           git push -f "https://tgstation-operations-ci:${{ steps.app-token-generation.outputs.token }}@github.com/tgstation-operations/infrastructure"
 
       - name: Open PR
-        run: gh pr create -B main -H AutomaticWebsiteUpdate --title 'Automatic Website Update' --body 'Created by Github actions'
+        run: gh pr create -B main -H AutomaticWebsiteUpdate --title 'Automatic ${{ github.event.inputs.dependency }} Update' --body 'Created by Github actions'
         env:
           GITHUB_TOKEN: ${{ steps.app-token-generation.outputs.token }}

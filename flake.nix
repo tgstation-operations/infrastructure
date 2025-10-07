@@ -38,6 +38,7 @@
     tgstation-server.url = "github:tgstation/tgstation-server/c2d3af8d7bd5c5f3c7ffeb98cfe5ca6db34dd341?dir=build/package/nix";
     tgstation-pr-announcer.url = "github:tgstation/tgstation/be9ae13cd50cc2f2f6680883424b86feb3c22725?dir=tools/Tgstation.PRAnnouncer";
     tgstation-website.url = "github:tgstation-operations/website-v2";
+    tgstation-phpbb.url = "github:tgstation-operations/tgstation-phpbb";
     impermanence.url = "github:scriptis/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     colmena.url = "github:zhaofengli/colmena/5fdd743a11e7291bd8ac1e169d62ba6156c99be4";
@@ -223,6 +224,22 @@
           (import ./systems/edge-nodes/systems/us-lime.nix)
         ];
     };
+    lemon = {
+      deployment = {
+        targetHost = "lemon.tg.lan";
+        targetUser = "deploy";
+        tags = [
+          "relay-amd64"
+        ];
+      };
+      imports =
+        flakeModules
+        ++ [
+          (import ./modules/base.nix)
+          (import ./modules/users)
+          (import ./systems/edge-nodes/systems/lemon)
+        ];
+    };
     bratwurst = {
       deployment = {
         targetHost = "bratwurst.tg.lan";
@@ -312,6 +329,21 @@
           (import ./modules/openssh.nix)
         ];
     };
+    idm = {
+      deployment = {
+        targetHost = "idm.tg.lan";
+        targetUser = "deploy";
+      };
+      imports =
+        flakeModules
+        ++ [
+          (import "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix")
+          (import ./modules/base.nix)
+          (import ./modules/users)
+          (import ./modules/tailscale.nix)
+          (import ./modules/openssh.nix)
+        ];
+    };
   in {
     colmenaHive = colmena.lib.makeHive self.outputs.colmena;
     colmena = {
@@ -325,11 +357,13 @@
         wiggle
         warsaw
         lime
+        lemon
         bratwurst
         dachshund
         knipp
         tg-cockroachdb-node-alpha
         tg-cockroachdb-node-beta
+        idm
         ;
 
       meta = {

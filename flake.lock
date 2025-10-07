@@ -333,6 +333,20 @@
     },
     "nixpkgs_4": {
       "locked": {
+        "lastModified": 1759632233,
+        "narHash": "sha256-krgZxGAIIIKFJS+UB0l8do3sYUDWJc75M72tepmVMzE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d7f52a7a640bc54c7bb414cca603835bf8dd4b10",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_5": {
+      "locked": {
         "lastModified": 0,
         "narHash": "sha256-aB7ft6njy9EJfuW+rdToNChfRrHNRw/yTg5cSEnG+HI=",
         "path": "/nix/store/qrq2lwy1qbsbf7csl62c1jrz9zxhlhdh-source",
@@ -343,7 +357,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_6": {
       "locked": {
         "lastModified": 1751274312,
         "narHash": "sha256-/bVBlRpECLVzjV19t5KMdMFWSwKLtb5RyXdjz3LJT+g=",
@@ -373,6 +387,7 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "tg-public-log-parser": "tg-public-log-parser",
+        "tgstation-phpbb": "tgstation-phpbb",
         "tgstation-pr-announcer": "tgstation-pr-announcer",
         "tgstation-server": "tgstation-server",
         "tgstation-website": "tgstation-website"
@@ -461,6 +476,24 @@
         "type": "github"
       }
     },
+    "tgstation-phpbb": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1759799493,
+        "narHash": "sha256-xd8zhWjn+x8wYpAGwFM5AOWEagL5qTbdS/BuSvhGB+E=",
+        "owner": "tgstation-operations",
+        "repo": "tgstation-phpbb",
+        "rev": "c2b59acfc8b282cc4457c0c4cde9e41bca1e6f16",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tgstation-operations",
+        "repo": "tgstation-phpbb",
+        "type": "github"
+      }
+    },
     "tgstation-pr-announcer": {
       "locked": {
         "dir": "tools/Tgstation.PRAnnouncer",
@@ -481,7 +514,7 @@
     },
     "tgstation-server": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "dir": "build/package/nix",
@@ -502,7 +535,7 @@
     },
     "tgstation-website": {
       "inputs": {
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1754860492,

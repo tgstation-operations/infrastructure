@@ -53,10 +53,18 @@ jobs:
           sudo mkdir /nix
           sudo mount -o defaults,noatime,compress=zstd ./nix-store.img /nix
 
+      - name: Generate App Token
+        id: app-token-generation
+        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5
+        with:
+          app-id: ${{ secrets.CI_APP_ID }}
+          private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
+
       - name: Install Nix
         run: sh .github/workflows/install_lix.sh
         env:
           EXTRA_NIX_CONFIG: |
+            access-tokens = github.com=${{ steps.app-token-generation.outputs.token }}
             experimental-features = nix-command flakes
             accept-flake-config = true
             extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
