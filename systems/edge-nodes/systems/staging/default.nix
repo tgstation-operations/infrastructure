@@ -1,4 +1,7 @@
-{...}: {
+{
+  self,
+  ...
+}: {
   imports = [
     ./base.nix
     self.inputs.tgstation-phpbb.nixosModules.default
