@@ -481,11 +481,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1759799493,
-        "narHash": "sha256-xd8zhWjn+x8wYpAGwFM5AOWEagL5qTbdS/BuSvhGB+E=",
+        "lastModified": 1759878168,
+        "narHash": "sha256-8hC++82ajevvlmitVhpyG7INjfLMRrajG8bE2RA3V5Q=",
         "owner": "tgstation-operations",
         "repo": "tgstation-phpbb",
-        "rev": "c2b59acfc8b282cc4457c0c4cde9e41bca1e6f16",
+        "rev": "0fdfa4b83bfcf56fd31c442c0573b2fef41d0b5f",
         "type": "github"
       },
       "original": {
