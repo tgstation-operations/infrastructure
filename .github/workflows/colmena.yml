@@ -140,7 +140,7 @@ jobs:
         node:
           - "@staging"
         environment:
-          - staging
+          - Staging
 
   deploy-production:
     name: Deploy Production
@@ -164,11 +164,11 @@ jobs:
           - "idm"
           - "@relay-amd64"
         environment:
-          - production
+          - Production
         include:
           - runner: ubuntu-24.04-arm
             node: "@relay-arm"
-            environment: production
+            environment: Production
 
   close-bad-website-pr:
     name: Close Bad Website PR
