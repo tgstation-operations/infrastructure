@@ -27,6 +27,7 @@
     ../../modules/muffin-button.nix
     ../../modules/postgres.nix
     ../../modules/tgs
+    ../../modules/authentik.nix
     ./modules/haproxy
     ./modules/motd
     ./modules/public-logs.nix
@@ -54,6 +55,12 @@ in {
     owner = "${config.services.tgstation-server.username}";
     group = "${config.services.tgstation-server.groupname}";
   };
+
+  age.secrets.authentik = {
+    file = ./secrets/authentik.age;
+    owner = "${config.systemd.services.authentik.serviceConfig.User}";
+  };
+
   services.tgstation-server = {
     environmentFile = config.age.secrets.tgs.path;
   };
