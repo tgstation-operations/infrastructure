@@ -95,6 +95,23 @@ in {
     };
   };
 
+  services.postgresql = {
+    enable = true;
+    ensureUsers = [
+      {
+        name = "root";
+      }
+      {
+        name = "authentik";
+        ensureDBOwnership = true;
+      }
+    ];
+
+    ensureDatabases = [
+      "authentik"
+    ];
+  };
+
   swapDevices = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
