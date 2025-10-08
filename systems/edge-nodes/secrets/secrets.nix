@@ -6,6 +6,6 @@ in {
   # TGS PR Announcer
   # The same value is used in game-servers/secrets/tg13-comms.age
   # TODO: Move to a shared secret (somehow)
-  "tgstation-pr-announcer.age".publicKeys = users ++ [systems.lime];
-  "phpbb_db.age".publicKeys = users ++ [systems.lime];
+  "tgstation-pr-announcer.age".publicKeys = users ++ [systems.lime systems.lemon];
+  "phpbb_db.age".publicKeys = users ++ [systems.lime systems.lemon];
 }
