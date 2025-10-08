@@ -14,4 +14,6 @@ in {
   "cloudflared.age".publicKeys = final;
   # AWS Route 53 DNS-01
   "aws_credentials.age".publicKeys = final;
+  # Authentik
+  "authentik.age".publicKeys = final;
 }
