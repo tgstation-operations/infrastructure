@@ -25,6 +25,7 @@
     })
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
+    ../../modules/postgres.nix
     ../../modules/tgs
     ./modules/haproxy
     ./modules/motd

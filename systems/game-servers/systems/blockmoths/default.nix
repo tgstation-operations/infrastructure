@@ -29,6 +29,7 @@
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/docker.nix
+    ../../modules/postgres.nix
     ../../modules/tgs
   ];
 in {
