@@ -1,15 +1,6 @@
-{
-  config,
-  ...
-}: {
-  age.secrets.authentik = {
-    file = ../../secrets/authentik.age;
-    owner = "${config.systemd.services.authentik.serviceConfig.User}";
-  };
-
+{config, ...}: {
   services.authentik = {
     enable = true;
-    environmentFile = config.age.secrets.authentik.path;
     settings = {
       email = {
         host = "smtp-relay.brevo.com";

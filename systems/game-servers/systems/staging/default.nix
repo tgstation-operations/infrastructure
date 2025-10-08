@@ -61,6 +61,10 @@ in {
     owner = "${config.systemd.services.authentik.serviceConfig.User}";
   };
 
+  services.authentik = {
+    environmentFile = config.age.secrets.authentik.path;
+  };
+
   services.tgstation-server = {
     environmentFile = config.age.secrets.tgs.path;
   };
