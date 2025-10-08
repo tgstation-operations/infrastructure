@@ -85,12 +85,10 @@
         targetHost = "tgsatan.tg.lan";
         targetUser = "deploy";
       };
-      meta.specialArgs.inputs = { inherit (inputs) authentik-nix; };
       imports =
         flakeModules
         ++ [
           inputs.impermanence.nixosModules.impermanence
-          inputs.authentik-nix.nixosModules.default
           (import ./modules/base.nix)
           (import ./modules/users)
           (import ./systems/game-servers/systems/tgsatan)
@@ -184,9 +182,11 @@
           "staging"
         ];
       };
+      # meta.specialArgs.inputs = {inherit (inputs) authentik-nix;};
       imports =
         flakeModules
         ++ [
+          inputs.authentik-nix.nixosModules.default
           (import ./modules/base.nix)
           (import ./modules/users)
           (import ./systems/game-servers/systems/staging)
