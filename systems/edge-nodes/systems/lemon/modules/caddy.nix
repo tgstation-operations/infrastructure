@@ -145,7 +145,7 @@ in {
         useACMEHost = "forums-staging.tgstation13.org";
         extraConfig = ''
           encode gzip zstd
-          root /tmp/tgstation-phpbb/source
+          root /run/tgstation-phpbb/source
           file_server
           php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
             env DB_HOST {env.DB_HOST}
