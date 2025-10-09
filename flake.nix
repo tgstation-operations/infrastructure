@@ -35,10 +35,7 @@
       url = "github:kamadorueda/alejandra/3.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    dragon-bot = {
-      url = "github:tgstation/dragon-bot";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    dragon-bot.url = "github:tgstation/dragon-bot";
     tg-public-log-parser = {
       url = "github:Mothblocks/tg-public-log-parser";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,10 +44,7 @@
       url = "github:tgstation/tgstation-server/c2d3af8d7bd5c5f3c7ffeb98cfe5ca6db34dd341?dir=build/package/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    tgstation-pr-announcer = {
-      url = "github:tgstation/tgstation/be9ae13cd50cc2f2f6680883424b86feb3c22725?dir=tools/Tgstation.PRAnnouncer";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    tgstation-pr-announcer.url = "github:tgstation/tgstation/be9ae13cd50cc2f2f6680883424b86feb3c22725?dir=tools/Tgstation.PRAnnouncer";
     tgstation-website = {
       url = "github:tgstation-operations/website-v2";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -59,14 +53,8 @@
       url = "github:tgstation-operations/tgstation-phpbb";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    impermanence = {
-      url = "github:scriptis/impermanence";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    impermanence.url = "github:scriptis/impermanence";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     colmena = {
       url = "github:zhaofengli/colmena/5fdd743a11e7291bd8ac1e169d62ba6156c99be4";
       inputs.nixpkgs.follows = "nixpkgs";
