@@ -31,6 +31,7 @@
     };
     certs = {
       "tgs.wiggle.staging.tgstation13.org" = {};
+      "auth.wiggle.staging.tgstation13.org" = {};
     };
   };
   services.caddy = {
@@ -43,6 +44,11 @@
       admin localhost:2019
       metrics
     '';
+    logFormat = ''
+      output stdout
+      format json
+      include http.log.access admin.api
+    '';
     virtualHosts = {
       # <https://caddyserver.com/docs/caddyfile/concepts#addresses>
       "tgs.wiggle.staging.tgstation13.org" = {
@@ -53,6 +59,13 @@
             health_uri /health
             health_port 5000
           }
+        '';
+      };
+      "auth.wiggle.staging.tgstation13.org" = {
+        useACMEHost = "auth.wiggle.staging.tgstation13.org";
+        extraConfig = ''
+          encode gzip zstd
+          reverse_proxy localhost:9000
         '';
       };
     };
