@@ -14,14 +14,18 @@
     ];
   };
   inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     agenix = {
       url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
     };
     disko = {
       url = "github:nix-community/disko";
@@ -31,17 +35,30 @@
       url = "github:kamadorueda/alejandra/3.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
     dragon-bot.url = "github:tgstation/dragon-bot";
-    tg-public-log-parser.url = "github:Mothblocks/tg-public-log-parser";
-    tgstation-server.url = "github:tgstation/tgstation-server/c2d3af8d7bd5c5f3c7ffeb98cfe5ca6db34dd341?dir=build/package/nix";
+    tg-public-log-parser = {
+      url = "github:Mothblocks/tg-public-log-parser";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    tgstation-server = {
+      url = "github:tgstation/tgstation-server/c2d3af8d7bd5c5f3c7ffeb98cfe5ca6db34dd341?dir=build/package/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     tgstation-pr-announcer.url = "github:tgstation/tgstation/be9ae13cd50cc2f2f6680883424b86feb3c22725?dir=tools/Tgstation.PRAnnouncer";
-    tgstation-website.url = "github:tgstation-operations/website-v2";
-    tgstation-phpbb.url = "github:tgstation-operations/tgstation-phpbb";
+    tgstation-website = {
+      url = "github:tgstation-operations/website-v2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    tgstation-phpbb = {
+      url = "github:tgstation-operations/tgstation-phpbb";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     impermanence.url = "github:scriptis/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    colmena.url = "github:zhaofengli/colmena/5fdd743a11e7291bd8ac1e169d62ba6156c99be4";
+    colmena = {
+      url = "github:zhaofengli/colmena/5fdd743a11e7291bd8ac1e169d62ba6156c99be4";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     fenix = {
       # fenix is pinned to that specific hash because we need 1.86 for TGS otherwise openssl can't build
       url = "github:nix-community/fenix?rev=76ffc1b7b3ec8078fe01794628b6abff35cbda8f";
