@@ -40,7 +40,7 @@ in {
       server = "https://acme-v02.api.letsencrypt.org/directory"; # Production
     };
     certs = {
-      "forums-staging.tgstation13.org" = {};
+      "forums.tgstation13.org" = {};
     };
   };
 
@@ -141,8 +141,8 @@ in {
     '';
     virtualHosts = {
       # <https://caddyserver.com/docs/caddyfile/concepts#addresses>
-      "forums-staging.tgstation13.org" = {
-        useACMEHost = "forums-staging.tgstation13.org";
+      "forums.tgstation13.org" = {
+        useACMEHost = "forums.tgstation13.org";
         extraConfig = ''
           encode gzip zstd
           root /run/tgstation-phpbb/source

@@ -42,7 +42,6 @@ in {
     };
     certs = {
       "tgstation13.org" = {};
-      "forums.tgstation13.org" = {};
       "wiki.tgstation13.org" = {};
       "github-webhooks.tgstation13.org" = {};
     };
@@ -87,12 +86,6 @@ in {
           "listen.group" = config.services.caddy.group;
         };
       };
-    };
-  };
-  age.secrets.phpbb_db.file = ../secrets/phpbb_db.age;
-  systemd.services.caddy = {
-    serviceConfig = {
-      EnvironmentFile = config.age.secrets.phpbb_db.path;
     };
   };
   services.caddy = {
@@ -167,21 +160,6 @@ in {
           redir /phpBB/*.php* https://forums.tgstation13.org/{http.request.orig_uri.path.file}?{http.request.orig_uri.query}{http.request.orig_uri.path.*/}
           handle_path /wiki/* {
             redir * https://wiki.tgstation13.org{uri} permanent
-          }
-        '';
-      };
-      "forums.tgstation13.org" = {
-        useACMEHost = "forums.tgstation13.org";
-        extraConfig = ''
-          encode gzip zstd
-          root /persist/phpbb
-          file_server
-          php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
-            env DB_HOST {env.DB_HOST}
-            env DB_PORT {env.DB_PORT}
-            env DB_NAME {env.DB_NAME}
-            env DB_USER {env.DB_USER}
-            env DB_PASSWORD {env.DB_PASSWORD}
           }
         '';
       };
