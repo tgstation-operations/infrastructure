@@ -68,6 +68,7 @@
     #   url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.2-1.tar.gz";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
+    authentik-nix.url = "github:nix-community/authentik-nix";
   };
 
   outputs = inputs @ {
@@ -101,10 +102,12 @@
         targetHost = "tgsatan.tg.lan";
         targetUser = "deploy";
       };
+      meta.specialArgs.inputs = { inherit (inputs) authentik-nix; };
       imports =
         flakeModules
         ++ [
           inputs.impermanence.nixosModules.impermanence
+          inputs.authentik-nix.nixosModules.default
           (import ./modules/base.nix)
           (import ./modules/users)
           (import ./systems/game-servers/systems/tgsatan)
