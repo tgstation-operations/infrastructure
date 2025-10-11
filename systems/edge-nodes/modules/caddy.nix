@@ -152,7 +152,7 @@ in {
           }
           handle_path /serverinfo.json {
             import cors *
-            root /run/tgstation-website-v2/serverinfo.json
+            root /run/tgstation-server-info-fetcher/serverinfo.json
             file_server
           }
           redir /phpBB/ https://forums.tgstation13.org/
@@ -221,31 +221,5 @@ in {
     enableUnixSocket = true;
     maxMemory = 512;
     user = "php-caddy";
-  };
-  # Server Info Fetcher
-  systemd.services."tgstation-gameserverdatasync" = {
-    wantedBy = ["multi-user.target"];
-    serviceConfig = {
-      Restart = "always";
-      RestartSec = "5s";
-      RestartMaxDelaySec = "5s";
-      User = "caddy";
-      Group = "caddy";
-      ExecStart = pkgs.writeShellScript "server-info-fetcher.sh" ''
-        ${
-          pkgs.rustPlatform.buildRustPackage rec {
-            pname = "server-info-fetcher";
-            version = "0.1.0";
-            src = pkgs.fetchFromGitHub {
-              owner = "tgstation-operations";
-              repo = pname;
-              rev = "481c04b83946e6314afeb0a443ef08f069a1ae8c";
-              hash = "sha256:0rwas0c9kxpf7dqbyd516xkam5hxdij7fillk7nxhx62z8gzcgcj";
-            };
-            cargoHash = "sha256-x1Ui63dVxEKULKBsynmMv0cIK/ZzkfhRTOQArmUOuP4=";
-          }
-        }/bin/server-info-fetcher --failure-tolerance all --servers blockmoths.tg.lan:3336,tgsatan.tg.lan:1337,tgsatan.tg.lan:1447,tgsatan.tg.lan:5337,tgsatan.tg.lan:7777 /run/tgstation-website-v2/serverinfo.json
-      '';
-    };
   };
 }
