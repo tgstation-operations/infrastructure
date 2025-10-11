@@ -86,13 +86,25 @@ in {
       };
       VisualEditor = null;
       WikiEditor = null;
-      WSOAuth = fetchgit {
-        url = "https://gerrit.wikimedia.org/r/mediawiki/extensions/WSOAuth.git";
-        rev = "bd760054b379bdac54cb430cfe3554e59b01d559";
-        hash = "sha256-01Yx3WjxtFkr3VzvZZYF4HuadXw1kHSlJZAg3IA2gPI=";
-        postFetch = ''
-          ls
-          cp ${./TgForumAuthProvider.php} $out/src/AuthenticationProvider
+      WSOAuth = symlinkJoin {
+        name = "WSOAuth-with-tgstation";
+        paths = [
+          (fetchgit {
+            url = "https://gerrit.wikimedia.org/r/mediawiki/extensions/WSOAuth.git";
+            rev = "bd760054b379bdac54cb430cfe3554e59b01d559";
+            hash = "sha256-01Yx3WjxtFkr3VzvZZYF4HuadXw1kHSlJZAg3IA2gPI=";
+          })
+          (stdenvNoCC.mkDerivation {
+            name = "tgstation-auth-provider";
+            src = ./TgForumAuthProvider.php;
+            buildPhase = ''
+              cp $src/* $out
+            '';
+          })
+        ];
+        postBuild = ''
+          ls -la $out
+          ls -la
         '';
       };
     };
