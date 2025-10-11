@@ -43,7 +43,6 @@ in {
     certs = {
       "tgstation13.org" = {};
       "wiki.tgstation13.org" = {};
-      "github-webhooks.tgstation13.org" = {};
     };
   };
 
@@ -212,16 +211,6 @@ in {
           handle @static_files {
             header Cache-Control "public"
             file_server
-          }
-        '';
-      };
-      "github-webhooks.tgstation13.org" = {
-        useACMEHost = "github-webhooks.tgstation13.org";
-        extraConfig = ''
-          encode gzip zstd
-          reverse_proxy localhost:5004 {
-            health_uri /health
-            health_port 5004
           }
         '';
       };
