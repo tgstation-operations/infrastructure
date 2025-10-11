@@ -44,11 +44,6 @@
       admin localhost:2019
       metrics
     '';
-    logFormat = ''
-      output stdout
-      format json
-      include http.log.access admin.api
-    '';
     virtualHosts = {
       # <https://caddyserver.com/docs/caddyfile/concepts#addresses>
       "tgs.wiggle.staging.tgstation13.org" = {
