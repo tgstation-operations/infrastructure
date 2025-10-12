@@ -43,6 +43,7 @@ in {
     certs = {
       "forums.tgstation13.org" = {};
       "github-webhooks.tgstation13.org" = {};
+      "wiki.tgstation13.org" = {};
     };
   };
 
@@ -172,7 +173,7 @@ in {
         useACMEHost = "wiki.tgstation13.org";
         extraConfig = ''
           encode gzip zstd
-          root ${services.mediawiki.finalPackage}/share/mediawiki
+          root ${config.services.mediawiki.finalPackage}/share/mediawiki
 
           @image_files path_regexp ^/images/
           @php_files path_regexp ^/(mw-config/)?(index|load|api|thumb|opensearch_desc|rest|img_auth)\.php
