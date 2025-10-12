@@ -234,4 +234,5 @@ in {
     passwordSender = "apache@🌻.invalid";
     passwordFile = "/dev/null";
   };
+  services.phpfpm.pools.mediawiki = {};
 }
