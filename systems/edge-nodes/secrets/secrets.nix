@@ -9,5 +9,4 @@ in {
   "tgstation-pr-announcer.age".publicKeys = users ++ [systems.lime systems.lemon];
   "phpbb_db.age".publicKeys = users ++ [systems.lime systems.lemon];
   "mediawiki-pw.age".publicKeys = users ++ [systems.lime systems.lemon];
-  "mediawiki-secrets.age".publicKeys = users ++ [systems.lime systems.lemon];
 }

@@ -103,18 +103,8 @@ in {
       WikiEditor = null;
     };
     extraConfig = ''
-      ## Secrets management
-
-      $secrets_contents = file('${config.age.secrets.mediawiki-secrets.path}', FILE_IGNORE_NEW_LINES);
-      foreach ( $secrets_contents as $secret ) {
-        if (preg_match("/([^#]+)\=(.*)/", $secret)) {
-          $data = explode("=", $secret);
-          $varName = $data[0];
-          $$varName = $data[1];
-        }
-      }
-
-      $wgSecretKey = $WIKI_SECRET_KEY;
+      ## Secret key
+      $wgSecretKey = $_ENV['WIKI_SECRET_KEY'];
 
       ## Short URL options
       $wgArticlePath = "/$1";
@@ -226,13 +216,13 @@ in {
         'plugin' => 'WSOAuth',
         'data' => [
           'type' => 'tgforum',
-          'clientId' => (int) $WIKI_OAUTH2_CLIENT_ID,
-          'clientSecret' => $WIKI_OAUTH2_CLIENT_SECRET,
+          'clientId' => (int) $_ENV['WIKI_OAUTH2_CLIENT_ID'],
+          'clientSecret' => $_ENV['WIKI_OAUTH2_CLIENT_SECRET'],
         ],
       ];
     '';
     passwordSender = "apache@🌻.invalid";
     passwordFile = "/dev/null";
   };
-  services.phpfpm.pools.mediawiki = {};
+  services.phpfpm.pools.mediawiki = {}; # delete unused phpfpm pool thats created by services.mediawiki
 }
