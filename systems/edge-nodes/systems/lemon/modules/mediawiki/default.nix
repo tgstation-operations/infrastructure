@@ -197,18 +197,18 @@ in {
       $wgGroupPermissions['user']['editmyuserjson'] = false;
       $wgGroupPermissions['user']['sendemail'] = false;
 
-      $wgGroupPermissions['WikiMaster'] = $wgGroupPermissions['suppress'];
-      $wgGroupPermissions['WikiMaster']['protect'] = true;
-      $wgGroupPermissions['WikiMaster']['editprotected'] = true;
-      $wgGroupPermissions['WikiMaster']['move'] = true;
-      $wgGroupPermissions['WikiMaster']['delete'] = true;
-      $wgGroupPermissions['WikiMaster']['undelete'] = true;
-      $wgGroupPermissions['WikiMaster']['deletedhistory'] = true;
-      $wgGroupPermissions['WikiMaster']['deletedtext'] = true;
-      $wgGroupPermissions['WikiMaster']['browsearchive'] = true;
-      $wgGroupPermissions['WikiMaster']['rollback'] = true;
+      $wgGroupPermissions['WikiJannie'] = $wgGroupPermissions['suppress'];
+      $wgGroupPermissions['WikiJannie']['protect'] = true;
+      $wgGroupPermissions['WikiJannie']['editprotected'] = true;
+      $wgGroupPermissions['WikiJannie']['move'] = true;
+      $wgGroupPermissions['WikiJannie']['delete'] = true;
+      $wgGroupPermissions['WikiJannie']['undelete'] = true;
+      $wgGroupPermissions['WikiJannie']['deletedhistory'] = true;
+      $wgGroupPermissions['WikiJannie']['deletedtext'] = true;
+      $wgGroupPermissions['WikiJannie']['browsearchive'] = true;
+      $wgGroupPermissions['WikiJannie']['rollback'] = true;
 
-      $wgGroupPermissions['HeadAdministrator'] = $wgGroupPermissions['WikiMaster'];
+      $wgGroupPermissions['HeadAdministrator'] = $wgGroupPermissions['WikiJannie'];
 
       $wgGroupPermissions['bureaucrat']['usermerge'] = true;
       $wgGroupPermissions['bureaucrat']['disableaccount'] = true;
