@@ -162,65 +162,7 @@ in {
           }
         '';
       };
-      "wiki.tgstation13.org" = {
-        useACMEHost = "wiki.tgstation13.org";
-        extraConfig = ''
-          encode gzip zstd
-          root /persist/wiki
-
-          @image_files path_regexp ^/images/
-          @php_files path_regexp ^/(mw-config/)?(index|load|api|thumb|opensearch_desc|rest|img_auth)\.php
-          @static_files path_regexp ^/(resources/(assets|lib|src)|COPYING|CREDITS|(skins|extensions)/.+\.(css|js|gif|jpg|jpeg|png|svg|wasm|ttf|woff|woff2)$)
-          @not_a_file {
-            # no this cannot be deduped, sorry :(
-            not path_regexp ^/images/
-            not path_regexp ^/(mw-config/)?(index|load|api|thumb|opensearch_desc|rest|img_auth)\.php
-            not path_regexp ^/(resources/(assets|lib|src)|COPYING|CREDITS|(skins|extensions)/.+\.(css|js|gif|jpg|jpeg|png|svg|wasm|ttf|woff|woff2)$)
-          }
-
-          ## Handle everything that would not be a file as a page name
-          # apparently just redirecting to index.php is ok, because
-          # mw infers the original path from the header. WTF?
-          rewrite @not_a_file /index.php
-
-          ## Don't send deleted images
-          handle /images/deleted/* {
-            respond 404
-          }
-
-          # Send static image files, do this before trying to run any php code
-          handle @image_files {
-            header X-Content-Type-Options nosniff
-            file_server
-          }
-
-          # Run any .php file
-          handle @php_files {
-            php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
-              env WIKI_DB_URI {env.WIKI_DB_URI}
-              env WIKI_DB_NAME {env.WIKI_DB_NAME}
-              env WIKI_DB_USER {env.WIKI_DB_USER}
-              env WIKI_DB_PASSWORD {env.WIKI_DB_PASSWORD}
-              env WIKI_SECRET_KEY {env.WIKI_SECRET_KEY}
-              env WIKI_OAUTH2_CLIENT_ID {env.WIKI_OAUTH2_CLIENT_ID}
-              env WIKI_OAUTH2_CLIENT_SECRET {env.WIKI_OAUTH2_CLIENT_SECRET}
-            }
-          }
-
-          # Serve static files
-          handle @static_files {
-            header Cache-Control "public"
-            file_server
-          }
-        '';
-      };
     };
-  };
-  services.memcached = {
-    enable = true;
-    enableUnixSocket = true;
-    maxMemory = 512;
-    user = "php-caddy";
   };
   # Server Info Fetcher
   systemd.services."tgstation-gameserverdatasync" = {
