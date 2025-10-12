@@ -55,7 +55,7 @@ in {
   ];
   users.users.php-caddy = {
     isSystemUser = true;
-    extraGroups = ["caddy"];
+    extraGroups = ["caddy" "mediawiki"];
     group = "php-caddy";
   };
   users.groups.php-caddy = {};
