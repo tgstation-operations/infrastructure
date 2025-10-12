@@ -42,7 +42,6 @@ in {
     };
     certs = {
       "tgstation13.org" = {};
-      "wiki.tgstation13.org" = {};
     };
   };
 
