@@ -15,8 +15,10 @@
     hash = "sha256-3kQDbFW1SfZcyfh9xXMhpru03JBS/d/091psPbTIRCw=";
   };
 in {
-  age.secrets.mediawiki-pw.file = ../../../../secrets/mediawiki-pw.age;
-  age.secrets.mediawiki-secrets.file = ../../../../secrets/mediawiki-secrets.age;
+  age.secrets.mediawiki-pw = {
+    file = ../../../../secrets/mediawiki-pw.age;
+    owner = "php-caddy";
+  };
 
   services.mediawiki = {
     enable = true;
