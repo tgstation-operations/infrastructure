@@ -14,30 +14,30 @@
     rev = "4c9427c372dc81702743e8bf86961767ba92c8de";
     hash = "sha256-3kQDbFW1SfZcyfh9xXMhpru03JBS/d/091psPbTIRCw=";
   };
-  tgstation-mediawiki-pkg = pkgs.mediawiki.overrideAttrs (old: rec {
-    name = "tgstation-mediawiki";
-    version = mediawikiVersion;
-    src = pkgs.fetchurl {
-      url = "https://releases.wikimedia.org/mediawiki/${lib.versions.majorMinor version}/mediawiki-${version}.tar.gz";
-      hash = "sha256-VuCn/i/3jlC5yHs9WJ8tjfW8qwAY5FSypKI5yFhr2O4=";
-    };
-    postInstall =
-      (
-        if old ? "postInstall"
-        then old.postInstall
-        else ""
-      )
-      + ''
-        mkdir -p $out/share/mediawiki/resources/assets/thumb
-        ln -s ${vector-assets}/* $out/share/mediawiki/resources/assets/thumb
-      '';
-  });
 in {
   age.secrets.mediawiki-pw.file = ../../../../secrets/mediawiki-pw.age;
   age.secrets.mediawiki-secrets.file = ../../../../secrets/mediawiki-secrets.age;
+
   services.mediawiki = {
     enable = true;
-    package = tgstation-mediawiki-pkg;
+    package = pkgs.mediawiki.overrideAttrs (old: rec {
+      name = "tgstation-mediawiki";
+      version = mediawikiVersion;
+      src = pkgs.fetchurl {
+        url = "https://releases.wikimedia.org/mediawiki/${lib.versions.majorMinor version}/mediawiki-${version}.tar.gz";
+        hash = "sha256-VuCn/i/3jlC5yHs9WJ8tjfW8qwAY5FSypKI5yFhr2O4=";
+      };
+      postInstall =
+        (
+          if old ? "postInstall"
+          then old.postInstall
+          else ""
+        )
+        + ''
+          mkdir -p $out/share/mediawiki/resources/assets/thumb
+          ln -s ${vector-assets}/* $out/share/mediawiki/resources/assets/thumb
+        '';
+    });
 
     name = "/tg/station 13 Wiki";
     url = "https://wiki.tgstation13.org";
@@ -57,13 +57,11 @@ in {
         rev = "155f4b3912f973cecaa95c68c377ec537b41d2c4";
         hash = "sha256-DTNtqYvl7eLR1WjVnhIuSzhrXc2TpryKUsK2m+P2uuI=";
       };
-      ParserFunctions = null;
       PluggableAuth = fetchgit {
         url = "https://gerrit.wikimedia.org/r/mediawiki/extensions/PluggableAuth.git";
         rev = "fd63faae60460707dc0ac04279a39e81543f4518";
         hash = "sha256-aykCJ6vbpWIvxhBfLqURZ4HU0ELiz+sSfNQxD7cGRVQ=";
       };
-      TitleBlacklist = null;
       Tabs = applyPatches {
         src = fetchgit {
           url = "https://gerrit.wikimedia.org/r/mediawiki/extensions/Tabs.git";
@@ -78,14 +76,11 @@ in {
             })
         ];
       };
-
       UserMerge = fetchgit {
         url = "https://gerrit.wikimedia.org/r/mediawiki/extensions/UserMerge.git";
         rev = "a89e96396fc9c3b3a0637552ef35fa092081ac65";
         hash = "sha256-XKmlNf70cNbInXdNlZ4JaAn9vwWIp2/kGRUNb5dXfYM=";
       };
-      VisualEditor = null;
-      WikiEditor = null;
       WSOAuth = stdenvNoCC.mkDerivation {
         name = "WSOAuth-with-tgstation";
         src = fetchgit {
@@ -102,6 +97,10 @@ in {
           cp -r ./* $out
         '';
       };
+      ParserFunctions = null;
+      TitleBlacklist = null;
+      VisualEditor = null;
+      WikiEditor = null;
     };
     extraConfig = ''
       ## Secrets management
@@ -125,7 +124,6 @@ in {
       foreach ( $actions as $action ) {
           $wgActionPaths[$action] = "/$action/$1";
       }
-
 
       ## Database extra options
       $wgDBssl = false;
