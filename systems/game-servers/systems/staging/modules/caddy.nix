@@ -9,7 +9,6 @@
   systemd.tmpfiles.rules = [
     "d /run/caddy 644 ${config.services.caddy.user} ${config.services.caddy.group}"
     "d /run/php/caddy 770 ${config.services.caddy.user} ${config.services.caddy.group}"
-    "d /run/tgstation-website-v2 770 ${config.services.caddy.user} ${config.services.caddy.group}"
   ];
 
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [

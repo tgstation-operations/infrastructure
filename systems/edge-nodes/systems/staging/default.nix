@@ -4,6 +4,7 @@
 }: {
   imports = [
     ./base.nix
+    ../../modules/server-info-fetcher.nix
     self.inputs.tgstation-phpbb.nixosModules.default
   ];
   ## WARSAW - Warsaw, Poland. Owned by Host. Staging.

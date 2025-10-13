@@ -21,7 +21,6 @@ in {
   systemd.tmpfiles.rules = [
     "d /run/caddy 644 ${config.services.caddy.user} ${config.services.caddy.group}"
     "d /run/php/caddy 770 ${config.services.caddy.user} ${config.services.caddy.group}"
-    "d /run/tgstation-website-v2 770 ${config.services.caddy.user} ${config.services.caddy.group}"
   ];
 
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
@@ -41,7 +40,6 @@ in {
       server = "https://acme-v02.api.letsencrypt.org/directory"; # Production
     };
     certs = {
-      "tgstation13.org" = {};
       "wiki.tgstation13.org" = {};
     };
   };
@@ -137,31 +135,6 @@ in {
     '';
     virtualHosts = {
       # <https://caddyserver.com/docs/caddyfile/concepts#addresses>
-      "tgstation13.org" = {
-        useACMEHost = "tgstation13.org";
-        extraConfig = ''
-          encode gzip zstd
-          root ${
-            toString inputs.tgstation-website.packages.x86_64-linux.default
-          }
-          file_server
-          php_fastcgi unix/${
-            toString config.services.phpfpm.pools.php-caddy.socket
-          } {
-            env _GET 127.0.0.1
-          }
-          handle_path /serverinfo.json {
-            import cors *
-            root /run/tgstation-website-v2/serverinfo.json
-            file_server
-          }
-          redir /phpBB/ https://forums.tgstation13.org/
-          redir /phpBB/*.php* https://forums.tgstation13.org/{http.request.orig_uri.path.file}?{http.request.orig_uri.query}{http.request.orig_uri.path.*/}
-          handle_path /wiki/* {
-            redir * https://wiki.tgstation13.org{uri} permanent
-          }
-        '';
-      };
       "wiki.tgstation13.org" = {
         useACMEHost = "wiki.tgstation13.org";
         extraConfig = ''
@@ -221,31 +194,5 @@ in {
     enableUnixSocket = true;
     maxMemory = 512;
     user = "php-caddy";
-  };
-  # Server Info Fetcher
-  systemd.services."tgstation-gameserverdatasync" = {
-    wantedBy = ["multi-user.target"];
-    serviceConfig = {
-      Restart = "always";
-      RestartSec = "5s";
-      RestartMaxDelaySec = "5s";
-      User = "caddy";
-      Group = "caddy";
-      ExecStart = pkgs.writeShellScript "server-info-fetcher.sh" ''
-        ${
-          pkgs.rustPlatform.buildRustPackage rec {
-            pname = "server-info-fetcher";
-            version = "0.1.0";
-            src = pkgs.fetchFromGitHub {
-              owner = "tgstation-operations";
-              repo = pname;
-              rev = "481c04b83946e6314afeb0a443ef08f069a1ae8c";
-              hash = "sha256:0rwas0c9kxpf7dqbyd516xkam5hxdij7fillk7nxhx62z8gzcgcj";
-            };
-            cargoHash = "sha256-x1Ui63dVxEKULKBsynmMv0cIK/ZzkfhRTOQArmUOuP4=";
-          }
-        }/bin/server-info-fetcher --failure-tolerance all --servers blockmoths.tg.lan:3336,tgsatan.tg.lan:1337,tgsatan.tg.lan:1447,tgsatan.tg.lan:5337,tgsatan.tg.lan:7777 /run/tgstation-website-v2/serverinfo.json
-      '';
-    };
   };
 }

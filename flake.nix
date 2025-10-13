@@ -53,6 +53,10 @@
       url = "github:tgstation-operations/tgstation-phpbb";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    server-info-fetcher = {
+      url = "github:tgstation-operations/server-info-fetcher";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     impermanence.url = "github:scriptis/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     colmena = {
