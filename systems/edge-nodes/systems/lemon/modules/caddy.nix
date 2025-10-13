@@ -16,7 +16,6 @@
 in {
   imports = [
     ../../../modules/cf-firewall.nix
-    ./mediawiki
     (import ../../../modules/authentik.nix {authDomain = "auth.tgstation13.org";})
   ];
 
