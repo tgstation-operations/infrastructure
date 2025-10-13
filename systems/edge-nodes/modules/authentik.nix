@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    self.inputs.authentik-nix.nixosModules.default
+    inputs.authentik-nix.nixosModules.default
   ];
   services.authentik = {
     enable = true;
