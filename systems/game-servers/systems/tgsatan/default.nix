@@ -15,6 +15,7 @@
   localModules = [
     ../../../../modules/fail2ban.nix
     ../../../../modules/maria.nix
+    ../../../../modules/postgres.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../../../modules/restic.nix
@@ -29,7 +30,6 @@
     })
     ./modules/atticd.nix
     ./modules/grafana
-    ./modules/postgres.nix
     ./modules/monitoring
     ./modules/motd
     ./modules/nvidia.nix
@@ -120,6 +120,40 @@ in {
         domain = "tgsatan.tg.lan";
       };
     };
+  };
+
+  services.postgresql = {
+    enable = true;
+    # If you change this, you will need to perform manual cleanup
+    # of removed users
+    ensureUsers = [
+      {
+        name = "root";
+      }
+      # {
+      #   name = "tgstation";
+      #   ensureDBOwnership = true;
+      # }
+      # {
+      #   name = "tgmc";
+      #   ensureDBOwnership = true;
+      # }
+      {
+        name = "grafana";
+        ensureDBOwnership = true;
+      }
+      {
+        name = "atticd";
+        ensureDBOwnership = true;
+      }
+    ];
+
+    ensureDatabases = [
+      # "tgstation";
+      # "tgmc";
+      "grafana"
+      "atticd"
+    ];
   };
 
   virtualisation.oci-containers = {

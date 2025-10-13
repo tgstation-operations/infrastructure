@@ -8,4 +8,5 @@ in {
   # TODO: Move to a shared secret (somehow)
   "tgstation-pr-announcer.age".publicKeys = users ++ [systems.lime systems.lemon];
   "phpbb_db.age".publicKeys = users ++ [systems.lime systems.lemon];
+  "authentik.age".publicKeys = users ++ [systems.lemon];
 }

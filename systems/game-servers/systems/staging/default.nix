@@ -53,6 +53,7 @@ in {
     owner = "${config.services.tgstation-server.username}";
     group = "${config.services.tgstation-server.groupname}";
   };
+
   services.tgstation-server = {
     environmentFile = config.age.secrets.tgs.path;
   };

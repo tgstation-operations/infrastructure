@@ -12,37 +12,6 @@
     checkConfig = true;
     dataDir = "/persist/postgres/data";
 
-    # If you change this, you will need to perform manual cleanup
-    # of removed users
-    ensureUsers = [
-      {
-        name = "root";
-      }
-      # {
-      #   name = "tgstation";
-      #   ensureDBOwnership = true;
-      # }
-      # {
-      #   name = "tgmc";
-      #   ensureDBOwnership = true;
-      # }
-      {
-        name = "grafana";
-        ensureDBOwnership = true;
-      }
-      {
-        name = "atticd";
-        ensureDBOwnership = true;
-      }
-    ];
-
-    ensureDatabases = [
-      # "tgstation";
-      # "tgmc";
-      "grafana"
-      "atticd"
-    ];
-
     # https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
     # type  database  user  [address]  [mask]  auth-method  [auth-options]
     # mkForce so we override defaults
