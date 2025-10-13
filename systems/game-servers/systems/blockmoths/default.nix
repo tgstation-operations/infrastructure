@@ -19,6 +19,7 @@
     ./modules/public-logs.nix
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
+    ../../../../modules/postgres.nix
     ../../../../modules/tailscale.nix
     ../../../../modules/restic.nix
     (import ../../modules/cloudflared.nix {
@@ -29,7 +30,6 @@
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/docker.nix
-    ../../modules/postgres.nix
     ../../modules/tgs
   ];
 in {

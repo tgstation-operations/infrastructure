@@ -30,7 +30,6 @@
     })
     ./modules/atticd.nix
     ./modules/grafana
-    ./modules/postgres.nix
     ./modules/monitoring
     ./modules/motd
     ./modules/nvidia.nix
