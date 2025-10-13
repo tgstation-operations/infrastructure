@@ -10,6 +10,7 @@
     ../../../../modules/restic.nix
     ../../modules/tgstation-pr-announcer
     ../../modules/server-info-fetcher.nix
+    ./modules/mediawiki
     ./modules/caddy.nix
     # ../modules/tgstation-pr-announcer/default.nix
     self.inputs.tgstation-phpbb.nixosModules.default
