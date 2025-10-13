@@ -68,6 +68,10 @@
       url = "github:nix-community/fenix?rev=76ffc1b7b3ec8078fe01794628b6abff35cbda8f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    authentik-nix = {
+      url = "github:nix-community/authentik-nix?rev=69fac057b2e553ee17c9a09b822d735823d65a6c";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # lix-module = {
     #   url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.2-1.tar.gz";
     #   inputs.nixpkgs.follows = "nixpkgs";
