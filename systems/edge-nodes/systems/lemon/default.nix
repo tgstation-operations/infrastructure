@@ -1,6 +1,7 @@
 {
   lib,
   self,
+  config,
   ...
 }: {
   imports = [
@@ -36,7 +37,7 @@
   };
 
   age.secrets.authentik = {
-    file = ./secrets/authentik.age;
+    file = ../../secrets/authentik.age;
     owner = "${config.systemd.services.authentik.serviceConfig.User}";
   };
 

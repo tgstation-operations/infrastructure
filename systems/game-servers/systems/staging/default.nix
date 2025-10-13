@@ -26,7 +26,6 @@
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/tgs
-    ../../modules/authentik.nix
     ./modules/haproxy
     ./modules/motd
     ./modules/public-logs.nix

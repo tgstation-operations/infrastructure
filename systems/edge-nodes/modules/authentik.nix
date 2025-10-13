@@ -1,4 +1,4 @@
-({authDomain}: {
+({authDomain, ...}: {
   config,
   inputs,
   ...
