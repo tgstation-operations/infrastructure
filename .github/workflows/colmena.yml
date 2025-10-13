@@ -40,7 +40,7 @@ jobs:
       UPLOAD_TO_ATTIC: "no" # This is here to shut up the GitHub Actions intellisense in VSC
     steps:
       - name: Set UPLOAD_TO_ATTIC envvar
-        if: ${{ env.USE_ATTIC == 'yes' && (github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main' && matrix.node == '@staging'))) }}
+        if: ${{ env.USE_ATTIC == 'yes' && (github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main' && (matrix.node == '@staging' || matrix.node = '@relay-amd64')))) }}
         run: echo "UPLOAD_TO_ATTIC=yes" >> $GITHUB_ENV
 
       # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
