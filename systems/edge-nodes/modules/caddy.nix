@@ -40,7 +40,6 @@ in {
       server = "https://acme-v02.api.letsencrypt.org/directory"; # Production
     };
     certs = {
-      "tgstation13.org" = {};
       "wiki.tgstation13.org" = {};
     };
   };
@@ -136,31 +135,6 @@ in {
     '';
     virtualHosts = {
       # <https://caddyserver.com/docs/caddyfile/concepts#addresses>
-      "tgstation13.org" = {
-        useACMEHost = "tgstation13.org";
-        extraConfig = ''
-          encode gzip zstd
-          root ${
-            toString inputs.tgstation-website.packages.x86_64-linux.default
-          }
-          file_server
-          php_fastcgi unix/${
-            toString config.services.phpfpm.pools.php-caddy.socket
-          } {
-            env _GET 127.0.0.1
-          }
-          handle_path /serverinfo.json {
-            import cors *
-            root /run/tgstation-server-info-fetcher/serverinfo.json
-            file_server
-          }
-          redir /phpBB/ https://forums.tgstation13.org/
-          redir /phpBB/*.php* https://forums.tgstation13.org/{http.request.orig_uri.path.file}?{http.request.orig_uri.query}{http.request.orig_uri.path.*/}
-          handle_path /wiki/* {
-            redir * https://wiki.tgstation13.org{uri} permanent
-          }
-        '';
-      };
       "wiki.tgstation13.org" = {
         useACMEHost = "wiki.tgstation13.org";
         extraConfig = ''
