@@ -5,6 +5,7 @@
     ../base.nix
     ../disko-ovh.nix
     ../modules/caddy.nix
+    ../modules/server-info-fetcher.nix
   ];
   ## LIME - Vint Hill, VA. Owned by orangesnz
   networking.hostName = "lime";
