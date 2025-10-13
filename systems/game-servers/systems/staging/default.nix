@@ -15,7 +15,6 @@
   localModules = [
     (modulesPath + "/profiles/qemu-guest.nix")
     ../../../../modules/colmena_ci_staging.nix
-    ../../../../modules/postgres.nix
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
