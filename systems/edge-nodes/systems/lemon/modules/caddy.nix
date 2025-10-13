@@ -159,7 +159,7 @@ in {
           }
           handle_path /serverinfo.json {
             import cors *
-            root /run/tgstation-website-v2/serverinfo.json
+            root /run/tgstation-server-info-fetcher/serverinfo.json
             file_server
           }
           redir /phpBB/ https://forums.tgstation13.org/
