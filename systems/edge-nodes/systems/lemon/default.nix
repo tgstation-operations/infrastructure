@@ -30,6 +30,14 @@
       cache-path = "/persist/tgstation-phpbb/cache";
       avatars-path = "/persist/tgstation-phpbb/avatars";
     };
+    authentik = {
+      environmentFile = config.age.secrets.authentik.path;
+    };
+  };
+
+  age.secrets.authentik = {
+    file = ./secrets/authentik.age;
+    owner = "${config.systemd.services.authentik.serviceConfig.User}";
   };
 
   system.stateVersion = "24.11";

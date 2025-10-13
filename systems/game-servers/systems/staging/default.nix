@@ -55,15 +55,6 @@ in {
     group = "${config.services.tgstation-server.groupname}";
   };
 
-  age.secrets.authentik = {
-    file = ./secrets/authentik.age;
-    owner = "${config.systemd.services.authentik.serviceConfig.User}";
-  };
-
-  services.authentik = {
-    environmentFile = config.age.secrets.authentik.path;
-  };
-
   services.tgstation-server = {
     environmentFile = config.age.secrets.tgs.path;
   };
@@ -103,23 +94,6 @@ in {
         binlog-format = "mixed";
       };
     };
-  };
-
-  services.postgresql = {
-    enable = true;
-    ensureUsers = [
-      {
-        name = "root";
-      }
-      {
-        name = "authentik";
-        ensureDBOwnership = true;
-      }
-    ];
-
-    ensureDatabases = [
-      "authentik"
-    ];
   };
 
   swapDevices = [];
