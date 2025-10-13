@@ -45,6 +45,7 @@ in {
       "tgstation13.org" = {};
       "forums.tgstation13.org" = {};
       "github-webhooks.tgstation13.org" = {};
+      "wiki.tgstation13.org" = {};
     };
   };
 
@@ -56,7 +57,7 @@ in {
   ];
   users.users.php-caddy = {
     isSystemUser = true;
-    extraGroups = ["caddy"];
+    extraGroups = ["caddy" "mediawiki"];
     group = "php-caddy";
   };
   users.groups.php-caddy = {};
@@ -192,6 +193,50 @@ in {
           reverse_proxy localhost:5004 {
             health_uri /health
             health_port 5004
+          }
+        '';
+      };
+      "wiki.tgstation13.org" = {
+        useACMEHost = "wiki.tgstation13.org";
+        extraConfig = ''
+          encode gzip zstd
+          root ${config.services.mediawiki.finalPackage}/share/mediawiki
+
+          @image_files path_regexp ^/images/
+          @php_files path_regexp ^/(mw-config/)?(index|load|api|thumb|opensearch_desc|rest|img_auth)\.php
+          @static_files path_regexp ^/(resources/(assets|lib|src)|COPYING|CREDITS|(skins|extensions)/.+\.(css|js|gif|jpg|jpeg|png|svg|wasm|ttf|woff|woff2)$)
+          @not_a_file {
+            # no this cannot be deduped, sorry :(
+            not path_regexp ^/images/
+            not path_regexp ^/(mw-config/)?(index|load|api|thumb|opensearch_desc|rest|img_auth)\.php
+            not path_regexp ^/(resources/(assets|lib|src)|COPYING|CREDITS|(skins|extensions)/.+\.(css|js|gif|jpg|jpeg|png|svg|wasm|ttf|woff|woff2)$)
+          }
+
+          ## Handle everything that would not be a file as a page name
+          # apparently just redirecting to index.php is ok, because
+          # mw infers the original path from the header. WTF?
+          rewrite @not_a_file /index.php
+
+          ## Don't send deleted images
+          handle /images/deleted/* {
+            respond 404
+          }
+
+          # Send static image files, do this before trying to run any php code
+          handle @image_files {
+            header X-Content-Type-Options nosniff
+            file_server
+          }
+
+          # Run any .php file
+          handle @php_files {
+            php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket}
+          }
+
+          # Serve static files
+          handle @static_files {
+            header Cache-Control "public"
+            file_server
           }
         '';
       };
