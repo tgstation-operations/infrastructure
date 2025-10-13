@@ -15,6 +15,7 @@
 in {
   imports = [
     ../../../modules/cf-firewall.nix
+    (import ../../../modules/authentik.nix {authDomain = "auth.tgstation13.org";})
   ];
 
   # For Unix sockets, unused for now

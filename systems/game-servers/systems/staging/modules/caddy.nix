@@ -31,7 +31,6 @@
     };
     certs = {
       "tgs.wiggle.staging.tgstation13.org" = {};
-      "auth.wiggle.staging.tgstation13.org" = {};
     };
   };
   services.caddy = {
@@ -54,13 +53,6 @@
             health_uri /health
             health_port 5000
           }
-        '';
-      };
-      "auth.wiggle.staging.tgstation13.org" = {
-        useACMEHost = "auth.wiggle.staging.tgstation13.org";
-        extraConfig = ''
-          encode gzip zstd
-          reverse_proxy localhost:9000
         '';
       };
     };

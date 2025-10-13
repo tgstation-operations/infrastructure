@@ -64,7 +64,9 @@
       url = "github:nix-community/fenix?rev=76ffc1b7b3ec8078fe01794628b6abff35cbda8f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    authentik-nix.url = "github:nix-community/authentik-nix";
+    authentik-nix = {
+      url = "github:nix-community/authentik-nix?rev=69fac057b2e553ee17c9a09b822d735823d65a6c";
+    };
     # lix-module = {
     #   url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.2-1.tar.gz";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -199,11 +201,9 @@
           "staging"
         ];
       };
-      # meta.specialArgs.inputs = {inherit (inputs) authentik-nix;};
       imports =
         flakeModules
         ++ [
-          inputs.authentik-nix.nixosModules.default
           (import ./modules/base.nix)
           (import ./modules/users)
           (import ./systems/game-servers/systems/staging)
