@@ -93,7 +93,7 @@ in {
   age.secrets.phpbb_db.file = ../../../secrets/phpbb_db.age;
   systemd.services.caddy = {
     environment = {
-      MEDIAWIKI_CONFIG = config.systemd.services.mediawiki-init.MEDIAWIKI_CONFIG;
+      MEDIAWIKI_CONFIG = config.systemd.services.mediawiki-init.environment.MEDIAWIKI_CONFIG;
     };
     serviceConfig = {
       EnvironmentFile = config.age.secrets.phpbb_db.path;
