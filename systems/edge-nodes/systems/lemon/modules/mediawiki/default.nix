@@ -226,5 +226,13 @@ in {
     passwordSender = "apache@🌻.invalid";
     passwordFile = "/dev/null";
   };
+
+  systemd.services.mediawiki-init = {
+    environment = {MEDIAWIKI_CONFIG = config.services.phpfpm.pools.mediawiki.phpEnv.MEDIAWIKI_CONFIG;};
+    serviceConfig = {
+      User = lib.mkForce "php-caddy";
+    };
+  };
+
   services.phpfpm.pools.mediawiki = {}; # delete unused phpfpm pool thats created by services.mediawiki
 }
