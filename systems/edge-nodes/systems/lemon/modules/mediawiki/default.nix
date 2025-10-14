@@ -15,10 +15,10 @@
     hash = "sha256-3kQDbFW1SfZcyfh9xXMhpru03JBS/d/091psPbTIRCw=";
   };
 in {
-  age.secrets.mediawiki-pw = {
-    file = ../../../../secrets/mediawiki-pw.age;
-    owner = "php-caddy";
-  };
+  disabledModules = ["services/web-apps/mediawiki.nix"];
+  imports = [
+    ./module.nix
+  ];
 
   services.mediawiki = {
     enable = true;
@@ -47,8 +47,8 @@ in {
 
     database = {
       type = "mysql";
+      name = "wiki";
       user = "wiki";
-      passwordFile = config.age.secrets.mediawiki-pw.path;
       socket = "/run/mysqld/mysqld.sock";
       createLocally = false;
     };
@@ -104,9 +104,12 @@ in {
       VisualEditor = null;
       WikiEditor = null;
     };
+    user = "php-caddy";
+    group = "php-caddy";
     extraConfig = ''
       ## Secret key
       $wgSecretKey = $_ENV['WIKI_SECRET_KEY'];
+      $wgDBpassword = $_ENV['WIKI_DB_PASSWORD'];
 
       ## Short URL options
       $wgArticlePath = "/$1";
@@ -138,8 +141,7 @@ in {
       $wgMetaNamespace = "TG13";
 
       ## Cache options
-      $wgCacheDirectory = "$IP/cache";
-      $wgFileCacheDirectory = "$IP/cache";
+      $wgFileCacheDirectory = $wgCacheDirectory;
       $wgEnableSidebarCache = true;
       $wgUseFileCache = true;
       $wgShowIPinHeader = false;
@@ -224,14 +226,10 @@ in {
       ];
     '';
     passwordSender = "apache@🌻.invalid";
-    passwordFile = "/dev/null";
   };
 
   systemd.services.mediawiki-init = {
     environment = {MEDIAWIKI_CONFIG = config.services.phpfpm.pools.mediawiki.phpEnv.MEDIAWIKI_CONFIG;};
-    serviceConfig = {
-      User = lib.mkForce "php-caddy";
-    };
   };
 
   services.phpfpm.pools.mediawiki = {}; # delete unused phpfpm pool thats created by services.mediawiki
