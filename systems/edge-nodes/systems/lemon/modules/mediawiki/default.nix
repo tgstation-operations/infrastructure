@@ -229,6 +229,7 @@ in {
   };
 
   systemd.services.mediawiki-init = {
+    enable = false;
     environment = {MEDIAWIKI_CONFIG = config.services.phpfpm.pools.mediawiki.phpEnv.MEDIAWIKI_CONFIG;};
   };
 
