@@ -5,9 +5,6 @@ This repository holds the IaC Config for the /tg/station Space Station 13 Server
 
 This place is not a place of honor... no highly esteemed deed is commemorated here... nothing valued is here.
 # Single points of failure
-
-oranges - out of band access to lime/ domain owner
-
 mothblocks - out of band access to blockmoths and eu relays
 
 scriptis/lorwp - cloudflare dns
