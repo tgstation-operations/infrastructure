@@ -228,6 +228,7 @@ in {
           # Send static image files, do this before trying to run any php code
           handle @image_files {
             header X-Content-Type-Options nosniff
+            root /persist/mediawiki/uploads
             file_server
           }
 
