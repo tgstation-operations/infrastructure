@@ -230,22 +230,6 @@
           (import ./systems/edge-nodes/systems/staging)
         ];
     };
-    lime = {
-      deployment = {
-        targetHost = "lime.tg.lan";
-        targetUser = "deploy";
-        tags = [
-          "relay-amd64"
-        ];
-      };
-      imports =
-        flakeModules
-        ++ [
-          (import ./modules/base.nix)
-          (import ./modules/users)
-          (import ./systems/edge-nodes/systems/us-lime.nix)
-        ];
-    };
     lemon = {
       deployment = {
         targetHost = "lemon.tg.lan";
@@ -351,21 +335,6 @@
           (import ./modules/openssh.nix)
         ];
     };
-    idm = {
-      deployment = {
-        targetHost = "idm.tg.lan";
-        targetUser = "deploy";
-      };
-      imports =
-        flakeModules
-        ++ [
-          (import "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix")
-          (import ./modules/base.nix)
-          (import ./modules/users)
-          (import ./modules/tailscale.nix)
-          (import ./modules/openssh.nix)
-        ];
-    };
   in {
     colmenaHive = colmena.lib.makeHive self.outputs.colmena;
     colmena = {
@@ -378,14 +347,12 @@
         blockmoths
         wiggle
         warsaw
-        lime
         lemon
         bratwurst
         dachshund
         knipp
         tg-cockroachdb-node-alpha
         tg-cockroachdb-node-beta
-        idm
         ;
 
       meta = {
@@ -517,17 +484,6 @@
       warsaw = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = flakeModules ++ warsaw.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-        };
-      };
-      lime = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = flakeModules ++ lime.imports;
         specialArgs = {
           inherit self inputs nixpkgs fenix;
           pkgs-unstable = import nixpkgs-unstable {
