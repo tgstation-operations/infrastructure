@@ -28,6 +28,7 @@ jobs:
           - "tgsatan"
           - "blockmoths"
           - "vpn"
+          - "lemon"
           - "@relay-amd64"
           - "@staging"
         include:
@@ -160,6 +161,7 @@ jobs:
           - "tgsatan"
           - "blockmoths"
           - "vpn"
+          - "lemon"
           - "@relay-amd64"
         environment:
           - Production
