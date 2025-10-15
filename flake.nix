@@ -234,6 +234,9 @@
       deployment = {
         targetHost = "lemon.tg.lan";
         targetUser = "deploy";
+        tags = [
+          "relay-amd64"
+        ];
       };
       imports =
         flakeModules
