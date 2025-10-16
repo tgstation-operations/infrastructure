@@ -164,7 +164,7 @@
   };
   services.tgstation-server = {
     enable = true;
-    production-appsettings = lib.generators.toYAML {
+    production-appsettings = lib.generators.toYAML {} {
       Database = {
         DatabaseType = "MariaDB";
         ResetAdminPassword = false;
