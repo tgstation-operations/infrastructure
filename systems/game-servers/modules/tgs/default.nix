@@ -164,7 +164,7 @@
   };
   services.tgstation-server = {
     enable = true;
-    production-appsettings = lib.generators.toYAML {} {
+    production-appsettings = pkgs.writeText "tgs_config.yml" (lib.generators.toYAML {} {
       Database = {
         DatabaseType = "MariaDB";
         ResetAdminPassword = false;
@@ -196,7 +196,7 @@
       Swarm = {
         UpdateRequiredNodeCount = 2;
       };
-    };
+    });
     home-directory = "/persist/tgs-data";
     # environmentFile =  # Required, add to host config to specify the database URI
     extra-path = lib.makeBinPath (
