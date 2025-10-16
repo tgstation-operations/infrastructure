@@ -10,7 +10,7 @@
   mediawikiVersion = "1.43.0";
 
   user = "php-caddy";
-  group = "php-caddy";
+  group = "caddy";
 
   vector-assets = pkgs.fetchFromGitHub {
     owner = "tgstation";
