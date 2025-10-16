@@ -170,7 +170,7 @@ in {
       $wgMaxShellMemory = 512000;
       $wgMaxImageArea = 250000000;
       $wgLocaltimezone = "UTC";
-      $wgDebugLogFile = "/persist/mediawiki/logs";
+      $wgDebugLogFile = "${logsDir}";
 
       ## Custom Namespaces
       define("NS_TGMC", 4200); // This MUST be even.
