@@ -220,7 +220,7 @@ in {
         'plugin' => 'WSOAuth',
         'data' => [
           'type' => 'tgforum',
-          'clientId' => (int) $_ENV['WIKI_OAUTH2_CLIENT_ID'],
+          'clientId' => $_ENV['WIKI_OAUTH2_CLIENT_ID'],
           'clientSecret' => $_ENV['WIKI_OAUTH2_CLIENT_SECRET'],
         ],
       ];
