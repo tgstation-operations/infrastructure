@@ -164,7 +164,39 @@
   };
   services.tgstation-server = {
     enable = true;
-    production-appsettings = ./tgs_config.yml;
+    production-appsettings = lib.generators.toYAML {
+      Database = {
+        DatabaseType = "MariaDB";
+        ResetAdminPassword = false;
+      };
+      General = {
+        ConfigVersion = "5.5.0";
+        # GitHubAccessToken = TODO;
+        HostApiDocumentation = true;
+        PrometheusPort = true;
+        ValidInstancePaths = [
+          "/persist/tgs-data/instances"
+        ];
+      };
+      FileLogging = {
+        Disable = false;
+        LogLevel = "Trace";
+      };
+      Kestrel = {
+        Endpoints = {
+          Http = {
+            Url = "http://localhost:5000"
+          };
+        };
+      };
+      ControlPanel = {
+        Enable = true;
+        AllowAnyOrigin = true;
+      };
+      Swarm = {
+        UpdateRequiredNodeCount = 2;
+      };
+    };
     home-directory = "/persist/tgs-data";
     # environmentFile =  # Required, add to host config to specify the database URI
     extra-path = lib.makeBinPath (
