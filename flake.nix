@@ -104,6 +104,14 @@
       overlays = [fenix.overlays.default];
     };
 
+    tg-globals = {
+      tgs = {
+        port = "5000";
+        root-path = "/persist/tgs-data";
+        instances-path = "${tg-globals.tgs.root-path}/instances";
+      };
+    };
+
     tgsatan = {
       deployment = {
         targetHost = "tgsatan.tg.lan";
@@ -396,6 +404,7 @@
             inputs
             nixpkgs
             fenix
+            tg-globals
             ;
           pkgs-unstable = import nixpkgs-unstable {
             system = "x86_64-linux";
@@ -438,7 +447,7 @@
         system = "x86_64-linux";
         modules = flakeModules ++ tgsatan.imports;
         specialArgs = {
-          inherit self inputs nixpkgs fenix;
+          inherit self inputs nixpkgs fenix tg-globals;
           pkgs-unstable = import nixpkgs-unstable {
             system = "x86_64-linux";
             config.allowUnfree = true;
@@ -450,7 +459,7 @@
         system = "x86_64-linux";
         modules = flakeModules ++ blockmoths.imports;
         specialArgs = {
-          inherit self inputs nixpkgs fenix;
+          inherit self inputs nixpkgs fenix tg-globals;
           pkgs-unstable = import nixpkgs-unstable {
             system = "x86_64-linux";
             config.allowUnfree = true;
@@ -462,7 +471,7 @@
         system = "x86_64-linux";
         modules = flakeModules ++ wiggle.imports;
         specialArgs = {
-          inherit self inputs nixpkgs fenix;
+          inherit self inputs nixpkgs fenix tg-globals;
           pkgs-unstable = import nixpkgs-unstable {
             system = "x86_64-linux";
             config.allowUnfree = true;
@@ -474,7 +483,7 @@
         system = "x86_64-linux";
         modules = flakeModules ++ vpn.imports;
         specialArgs = {
-          inherit self inputs nixpkgs fenix;
+          inherit self inputs nixpkgs fenix tg-globals;
           pkgs-unstable = import nixpkgs-unstable {
             system = "x86_64-linux";
             config.allowUnfree = true;
@@ -485,7 +494,7 @@
         system = "x86_64-linux";
         modules = flakeModules ++ dallas.imports;
         specialArgs = {
-          inherit self inputs nixpkgs fenix;
+          inherit self inputs nixpkgs fenix tg-globals;
           pkgs-unstable = import nixpkgs-unstable {
             system = "x86_64-linux";
             config.allowUnfree = true;
@@ -496,7 +505,7 @@
         system = "x86_64-linux";
         modules = flakeModules ++ chicago.imports;
         specialArgs = {
-          inherit self inputs nixpkgs fenix;
+          inherit self inputs nixpkgs fenix tg-globals;
           pkgs-unstable = import nixpkgs-unstable {
             system = "x86_64-linux";
             config.allowUnfree = true;
@@ -507,7 +516,7 @@
         system = "x86_64-linux";
         modules = flakeModules ++ atlanta.imports;
         specialArgs = {
-          inherit self inputs nixpkgs fenix;
+          inherit self inputs nixpkgs fenix tg-globals;
           pkgs-unstable = import nixpkgs-unstable {
             system = "x86_64-linux";
             config.allowUnfree = true;
@@ -518,7 +527,7 @@
         system = "x86_64-linux";
         modules = flakeModules ++ warsaw.imports;
         specialArgs = {
-          inherit self inputs nixpkgs fenix;
+          inherit self inputs nixpkgs fenix tg-globals;
           pkgs-unstable = import nixpkgs-unstable {
             system = "x86_64-linux";
             config.allowUnfree = true;
@@ -529,7 +538,7 @@
         system = "x86_64-linux";
         modules = flakeModules ++ lime.imports;
         specialArgs = {
-          inherit self inputs nixpkgs fenix;
+          inherit self inputs nixpkgs fenix tg-globals;
           pkgs-unstable = import nixpkgs-unstable {
             system = "x86_64-linux";
             config.allowUnfree = true;
@@ -540,7 +549,7 @@
         system = "aarch64-linux";
         modules = flakeModules ++ bratwurst.imports;
         specialArgs = {
-          inherit self inputs nixpkgs fenix;
+          inherit self inputs nixpkgs fenix tg-globals;
           pkgs-unstable = import nixpkgs-unstable {
             system = "aarch64-linux";
             config.allowUnfree = true;
@@ -551,7 +560,7 @@
         system = "aarch64-linux";
         modules = flakeModules ++ dachshund.imports;
         specialArgs = {
-          inherit self inputs nixpkgs fenix;
+          inherit self inputs nixpkgs fenix tg-globals;
           pkgs-unstable = import nixpkgs-unstable {
             system = "aarch64-linux";
             config.allowUnfree = true;
@@ -562,7 +571,7 @@
         system = "aarch64-linux";
         modules = flakeModules ++ knipp.imports;
         specialArgs = {
-          inherit self inputs nixpkgs fenix;
+          inherit self inputs nixpkgs fenix tg-globals;
           pkgs-unstable = import nixpkgs-unstable {
             system = "aarch64-linux";
             config.allowUnfree = true;

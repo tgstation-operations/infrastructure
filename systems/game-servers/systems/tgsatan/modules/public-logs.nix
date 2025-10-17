@@ -1,19 +1,23 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  tg-globals,
+  ...
+}: let
   public-logs-module = import ../../../modules/public-logs.nix;
 
-  location-sybil = "/persist/tgs-data/instances/sybil/Configuration/GameStaticFiles/data/logs";
+  location-sybil = "${tg-globals.tgs.instances-path}/sybil/Configuration/GameStaticFiles/data/logs";
   bind-port-sybil = "1338";
 
-  location-manuel = "/persist/tgs-data/instances/manuel/Configuration/GameStaticFiles/data/logs";
+  location-manuel = "${tg-globals.tgs.instances-path}/manuel/Configuration/GameStaticFiles/data/logs";
   bind-port-manuel = "1448";
 
-  location-tgmc = "/persist/tgs-data/instances/tgmc/Configuration/GameStaticFiles/data/logs";
+  location-tgmc = "${tg-globals.tgs.instances-path}/tgmc/Configuration/GameStaticFiles/data/logs";
   bind-port-tgmc = "5338";
 
-  location-eventus = "/persist/tgs-data/instances/eventhallus/Configuration/GameStaticFiles/data/logs";
+  location-eventus = "${tg-globals.tgs.instances-path}/eventhallus/Configuration/GameStaticFiles/data/logs";
   bind-port-eventus = "7778";
 
-  location-effigy = "/persist/tgs-data/instances/effigy/Configuration/GameStaticFiles/data/logs";
+  location-effigy = "${tg-globals.tgs.instances-path}/effigy/Configuration/GameStaticFiles/data/logs";
   bind-port-effigy = "7338";
 in {
   services.cloudflared.tunnels.primary-tunnel.ingress = {
@@ -26,8 +30,8 @@ in {
     #"tgmc-logs.tgstation13.org" = "http://localhost:${bind-port-tgmc}";
   };
   system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
-    chmod g+rx /persist/tgs-data
-    chmod g+rx /persist/tgs-data/instances
+    chmod g+rx ${tg-globals.tgs.root-path}
+    chmod g+rx ${tg-globals.tgs.instances-path}
     declare -a arr=(
       "sybil"
       "manuel"
@@ -36,11 +40,11 @@ in {
       "effigy"
       )
     for d in "''${arr[@]}"; do
-      chmod g+rx /persist/tgs-data/instances/$d
-      chmod g+rx /persist/tgs-data/instances/$d/Configuration
-      chmod g+rx /persist/tgs-data/instances/$d/Configuration/GameStaticFiles
-      chmod g+rx /persist/tgs-data/instances/$d/Configuration/GameStaticFiles/data
-      chmod -R g+rx /persist/tgs-data/instances/$d/Configuration/GameStaticFiles/data/logs
+      chmod g+rx ${tg-globals.tgs.instances-path}/$d
+      chmod g+rx ${tg-globals.tgs.instances-path}/$d/Configuration
+      chmod g+rx ${tg-globals.tgs.instances-path}/$d/Configuration/GameStaticFiles
+      chmod g+rx ${tg-globals.tgs.instances-path}/$d/Configuration/GameStaticFiles/data
+      chmod -R g+rx ${tg-globals.tgs.instances-path}/$d/Configuration/GameStaticFiles/data/logs
     done
   '';
   imports = [

@@ -4,6 +4,7 @@
   lib,
   fenix,
   nixpkgs,
+  tg-globals,
   ...
 }: {
   environment.systemPackages = with pkgs; [
@@ -175,7 +176,7 @@
         HostApiDocumentation = true;
         PrometheusPort = true;
         ValidInstancePaths = [
-          "/persist/tgs-data/instances"
+          tg-globals.tgs.instances-path
         ];
       };
       FileLogging = {
@@ -185,7 +186,7 @@
       Kestrel = {
         Endpoints = {
           Http = {
-            Url = "http://localhost:5000";
+            Url = "http://localhost:${tg-globals.tgs.port}";
           };
         };
       };
@@ -197,7 +198,7 @@
         UpdateRequiredNodeCount = 2;
       };
     });
-    home-directory = "/persist/tgs-data";
+    home-directory = tg-globals.tgs.root-path;
     # environmentFile =  # Required, add to host config to specify the database URI
     extra-path = lib.makeBinPath (
       with pkgs; [
