@@ -22,7 +22,7 @@ in {
     chmod -R g+rx ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
   '';
 
-  services.tg-public-log-parser."${server-name}" = {
+  services.tg-public-log-parser."${instance-name}" = {
     enable = true;
     supplementary-groups = group;
     config = {
