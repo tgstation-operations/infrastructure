@@ -6,10 +6,34 @@
   group ? "tgstation-server",
   ...
 }: let
+  public-logs-url = "${instance-name}-logs.tgstation13.org";
   logs-path = "${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs";
+  internal-port = "13452";
 in {
-  services.cloudflared.tunnels.primary-tunnel.ingress = {
-    "${instance-name}-logs.tgstation13.org" = "http://localhost:${bind-port}";
+  services = {
+    cloudflared.tunnels.primary-tunnel.ingress = {
+      "${public-logs-url}" = "http://localhost:${internal-port}";
+    };
+
+    caddy.virtualHosts."${public-logs-url}:${internal-port}" = {
+      extraConfig = ''
+        reverse_proxy localhost:${bind-port}
+
+        header Access-Control-Allow-Origin "*"
+      '';
+    };
+
+    tg-public-log-parser."${instance-name}" = {
+      enable = true;
+      supplementary-groups = group;
+      config = {
+        raw_logs_path = logs-path;
+        address = "0.0.0.0:${bind-port}";
+        ongoing_round_protection = {
+          serverinfo = "https://tgstation13.org/serverinfo.json";
+        };
+      };
+    }
   };
 
   system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
@@ -21,16 +45,4 @@ in {
     chmod g+rx ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data
     chmod -R g+rx ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
   '';
-
-  services.tg-public-log-parser."${instance-name}" = {
-    enable = true;
-    supplementary-groups = group;
-    config = {
-      raw_logs_path = logs-path;
-      address = "0.0.0.0:${bind-port}";
-      ongoing_round_protection = {
-        serverinfo = "https://tgstation13.org/serverinfo.json";
-      };
-    };
-  };
 }
