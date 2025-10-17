@@ -4,6 +4,7 @@
   inputs,
   modulesPath,
   config,
+  tg-globals,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;

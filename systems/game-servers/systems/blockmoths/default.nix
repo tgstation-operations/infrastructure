@@ -3,6 +3,7 @@
   pkgs,
   config,
   lib,
+  tg-globals,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
