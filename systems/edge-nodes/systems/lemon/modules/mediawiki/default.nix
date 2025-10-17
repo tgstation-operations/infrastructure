@@ -6,7 +6,11 @@
   ...
 }: let
   uploadsDir = "/persist/mediawiki/uploads";
+  logsDir = "/persist/mediawiki/logs";
   mediawikiVersion = "1.43.0";
+
+  user = "php-caddy";
+  group = "caddy";
 
   vector-assets = pkgs.fetchFromGitHub {
     owner = "tgstation";
@@ -21,6 +25,8 @@ in {
   ];
 
   services.mediawiki = {
+    inherit user group;
+
     enable = true;
     package = pkgs.mediawiki.overrideAttrs (old: rec {
       name = "tgstation-mediawiki";
@@ -104,8 +110,6 @@ in {
       VisualEditor = null;
       WikiEditor = null;
     };
-    user = "php-caddy";
-    group = "php-caddy";
     extraConfig = ''
       ## Secret key
       $wgSecretKey = $_ENV['WIKI_SECRET_KEY'];
@@ -166,6 +170,7 @@ in {
       $wgMaxShellMemory = 512000;
       $wgMaxImageArea = 250000000;
       $wgLocaltimezone = "UTC";
+      $wgDebugLogFile = "${logsDir}";
 
       ## Custom Namespaces
       define("NS_TGMC", 4200); // This MUST be even.
@@ -220,7 +225,7 @@ in {
         'plugin' => 'WSOAuth',
         'data' => [
           'type' => 'tgforum',
-          'clientId' => (int) $_ENV['WIKI_OAUTH2_CLIENT_ID'],
+          'clientId' => $_ENV['WIKI_OAUTH2_CLIENT_ID'],
           'clientSecret' => $_ENV['WIKI_OAUTH2_CLIENT_SECRET'],
         ],
       ];
@@ -232,6 +237,11 @@ in {
     enable = false;
     environment = {MEDIAWIKI_CONFIG = config.services.phpfpm.pools.mediawiki.phpEnv.MEDIAWIKI_CONFIG;};
   };
+
+  systemd.tmpfiles.rules = [
+    "d '${uploadsDir}' 0750 ${user} ${group} - -"
+    "d '${logsDir}' 0750 ${user} ${group} - -"
+  ];
 
   services.phpfpm.pools.mediawiki = {}; # delete unused phpfpm pool thats created by services.mediawiki
 }
