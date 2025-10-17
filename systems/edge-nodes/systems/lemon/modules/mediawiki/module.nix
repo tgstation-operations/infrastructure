@@ -559,7 +559,7 @@ in {
     };
 
     users.users.${cfg.user} = {
-      inherit (cfg) group;
+      group = lib.mkDefault cfg.group;
       isSystemUser = true;
     };
     users.groups.${cfg.group} = {};
