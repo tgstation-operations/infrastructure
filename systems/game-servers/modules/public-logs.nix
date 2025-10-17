@@ -17,6 +17,8 @@ in {
 
     caddy.virtualHosts."${public-logs-url}:${internal-port}" = {
       extraConfig = ''
+        tls off
+
         reverse_proxy localhost:${bind-port}
 
         header Access-Control-Allow-Origin "*"
