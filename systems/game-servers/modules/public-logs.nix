@@ -33,7 +33,7 @@ in {
           serverinfo = "https://tgstation13.org/serverinfo.json";
         };
       };
-    }
+    };
   };
 
   system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
