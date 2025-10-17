@@ -28,7 +28,6 @@ jobs:
           - "tgsatan"
           - "blockmoths"
           - "vpn"
-          - "idm"
           - "@relay-amd64"
           - "@staging"
         include:
