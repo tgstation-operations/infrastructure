@@ -3,6 +3,7 @@
   pkgs,
   config,
   lib,
+  tg-globals,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
@@ -16,7 +17,11 @@
     ./modules/caddy
     ./modules/haproxy
     ./modules/motd
-    ./modules/public-logs.nix
+    (import ../../modules/public-logs.nix {
+      inherit pkgs tg-globals;
+      instance-name = "terry";
+      bind-port = "3337";
+    })
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
