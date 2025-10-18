@@ -15,7 +15,7 @@ in {
       "${public-logs-url}" = "http://localhost:${internal-port}";
     };
 
-    caddy.virtualHosts."localhost:${internal-port}" = {
+    caddy.virtualHosts."http://localhost:${internal-port}" = {
       extraConfig = ''
         tls off
 
