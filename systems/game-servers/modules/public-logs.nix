@@ -3,12 +3,12 @@
   tg-globals,
   instance-name,
   bind-port,
+  internal-port,
   group ? "tgstation-server",
   ...
 }: let
   public-logs-url = "${instance-name}-logs.tgstation13.org";
   logs-path = "${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs";
-  internal-port = "13452";
 in {
   services = {
     cloudflared.tunnels.primary-tunnel.ingress = {

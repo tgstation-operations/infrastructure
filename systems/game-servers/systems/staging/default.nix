@@ -31,6 +31,7 @@
       inherit pkgs tg-globals;
       instance-name = "funnyname";
       bind-port = "3337";
+      internal-port = "13337";
     })
     ./modules/haproxy
     ./modules/motd

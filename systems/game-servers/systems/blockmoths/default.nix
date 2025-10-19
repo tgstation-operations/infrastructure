@@ -21,6 +21,7 @@
       inherit pkgs tg-globals;
       instance-name = "terry";
       bind-port = "3337";
+      internal-port = "13337";
     })
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
