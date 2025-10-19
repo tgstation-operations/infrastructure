@@ -11,8 +11,11 @@
   logs-path = "${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs";
 in {
   services = {
-    cloudflared.tunnels.primary-tunnel.ingress = {
-      "${public-logs-url}" = "http://localhost:${internal-port}";
+    cloudflared.tunnels.primary-tunnel = {
+      originRequest.httpHostHeader = "localhost";
+      ingress = {
+        "${public-logs-url}" = "http://localhost:${internal-port}";
+      };
     };
 
     caddy.virtualHosts."http://localhost:${internal-port}" = {
