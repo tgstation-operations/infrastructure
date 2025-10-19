@@ -28,26 +28,26 @@
     (import ../../modules/public-logs.nix {
       inherit pkgs tg-globals;
       instance-name = "sybil";
-      bind-port = "1338";
-      internal-port = "13338";
+      bind-port = "11338";
+      internal-port = "1338";
     })
     (import ../../modules/public-logs.nix {
       inherit pkgs tg-globals;
       instance-name = "manuel";
-      bind-port = "1448";
-      internal-port = "11448";
+      bind-port = "11448";
+      internal-port = "1448";
     })
     (import ../../modules/public-logs.nix {
       inherit pkgs tg-globals;
       instance-name = "eventhallus";
-      bind-port = "7778";
-      internal-port = "17778";
+      bind-port = "17778";
+      internal-port = "7778";
     })
     (import ../../modules/public-logs.nix {
       inherit pkgs tg-globals;
       instance-name = "effigy";
-      bind-port = "7338";
-      internal-port = "17338";
+      bind-port = "17338";
+      internal-port = "7338";
     })
     ./modules/atticd.nix
     ./modules/grafana
