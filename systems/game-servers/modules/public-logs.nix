@@ -12,7 +12,7 @@
 in {
   services = {
     cloudflared.tunnels.primary-tunnel.ingress = {
-      "${public-logs-url}" = "http://localhost:${bind-port}";
+      "${public-logs-url}" = "http://localhost:${internal-port}";
     };
 
     caddy.virtualHosts."http://localhost:${internal-port}" = {
