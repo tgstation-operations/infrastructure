@@ -12,10 +12,10 @@
 in {
   services = {
     cloudflared.tunnels.primary-tunnel.ingress = {
-      "${public-logs-url}" = "https://localhost:${internal-port}";
+      "${public-logs-url}" = "http://localhost:${internal-port}";
     };
 
-    caddy.virtualHosts."localhost:${internal-port}" = {
+    caddy.virtualHosts."http://localhost:${internal-port}" = {
       extraConfig = ''
         reverse_proxy localhost:${bind-port}
 
