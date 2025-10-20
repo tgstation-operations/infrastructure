@@ -21,6 +21,8 @@ in {
     caddy.virtualHosts."http://localhost:${internal-port}" = {
       extraConfig = ''
         reverse_proxy localhost:${bind-port}
+
+        header Access-Control-Allow-Origin "*"
       '';
     };
 
