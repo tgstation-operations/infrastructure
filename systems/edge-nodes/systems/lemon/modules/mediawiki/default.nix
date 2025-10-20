@@ -6,7 +6,7 @@
   ...
 }: let
   uploadsDir = "/persist/mediawiki/uploads";
-  logsDir = "/persist/mediawiki/logs";
+  logsDir = "/persist/mediawiki/logs/mediawiki.log";
   mediawikiVersion = "1.43.0";
 
   user = "php-caddy";
