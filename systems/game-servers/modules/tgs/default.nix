@@ -174,7 +174,7 @@
         ConfigVersion = "5.5.0";
         # GitHubAccessToken = TODO;
         HostApiDocumentation = true;
-        PrometheusPort = true;
+        PrometheusPort = 5001;
         ValidInstancePaths = [
           tg-globals.tgs.instances-path
         ];
