@@ -48,7 +48,7 @@ jobs:
 
       - name: Commit
         run: |
-          git checkout -b AutomaticWebsiteUpdate
+          git checkout -b Automatic${{ github.event.inputs.dependency }}Update
           git config user.name "tgstation-operations-ci[bot]"
           git config user.email "206383919+tgstation-operations-ci[bot]@users.noreply.github.com"
           git add flake.lock
@@ -59,6 +59,6 @@ jobs:
           git push -f "https://tgstation-operations-ci:${{ steps.app-token-generation.outputs.token }}@github.com/tgstation-operations/infrastructure"
 
       - name: Open PR
-        run: gh pr create -B main -H AutomaticWebsiteUpdate --title 'Automatic ${{ github.event.inputs.dependency }} Update' --body 'Created by Github actions'
+        run: gh pr create -B main -H Automatic${{ github.event.inputs.dependency }}Update --title 'Automatic ${{ github.event.inputs.dependency }} Update' --body 'Created by Github actions'
         env:
           GITHUB_TOKEN: ${{ steps.app-token-generation.outputs.token }}
