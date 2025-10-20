@@ -3,6 +3,7 @@
   pkgs,
   pkgs-unstable,
   inputs,
+  tg-globals,
   ...
 }: {
   # For Unix sockets, unused for now
@@ -80,9 +81,9 @@
         useACMEHost = "tgs.blockmoths.eu.tgstation13.org";
         extraConfig = ''
           encode gzip zstd
-          reverse_proxy localhost:5000 {
+          reverse_proxy localhost:${tg-globals.tgs.port} {
             health_uri /health
-            health_port 5000
+            health_port ${tg-globals.tgs.port}
           }
         '';
       };

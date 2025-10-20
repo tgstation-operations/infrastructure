@@ -4,6 +4,7 @@
   inputs,
   modulesPath,
   config,
+  tg-globals,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
@@ -26,9 +27,14 @@
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/tgs
+    (import ../../modules/public-logs.nix {
+      inherit pkgs tg-globals;
+      instance-name = "funnyname";
+      bind-port = "3337";
+      internal-port = "13337";
+    })
     ./modules/haproxy
     ./modules/motd
-    ./modules/public-logs.nix
     ./modules/caddy.nix
   ];
 in {

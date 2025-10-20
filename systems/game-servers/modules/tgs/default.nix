@@ -4,6 +4,7 @@
   lib,
   fenix,
   nixpkgs,
+  tg-globals,
   ...
 }: {
   environment.systemPackages = with pkgs; [
@@ -164,8 +165,40 @@
   };
   services.tgstation-server = {
     enable = true;
-    production-appsettings = ./tgs_config.yml;
-    home-directory = "/persist/tgs-data";
+    production-appsettings = pkgs.writeText "tgs_config.yml" (lib.generators.toYAML {} {
+      Database = {
+        DatabaseType = "MariaDB";
+        ResetAdminPassword = false;
+      };
+      General = {
+        ConfigVersion = "5.5.0";
+        # GitHubAccessToken = TODO;
+        HostApiDocumentation = true;
+        PrometheusPort = true;
+        ValidInstancePaths = [
+          tg-globals.tgs.instances-path
+        ];
+      };
+      FileLogging = {
+        Disable = false;
+        LogLevel = "Trace";
+      };
+      Kestrel = {
+        Endpoints = {
+          Http = {
+            Url = "http://localhost:${tg-globals.tgs.port}";
+          };
+        };
+      };
+      ControlPanel = {
+        Enable = true;
+        AllowAnyOrigin = true;
+      };
+      Swarm = {
+        UpdateRequiredNodeCount = 2;
+      };
+    });
+    home-directory = tg-globals.tgs.root-path;
     # environmentFile =  # Required, add to host config to specify the database URI
     extra-path = lib.makeBinPath (
       with pkgs; [

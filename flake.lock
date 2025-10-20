@@ -625,11 +625,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759008203,
-        "narHash": "sha256-5Cp0T2eMQcd8jk08CtSCF37wrTPKOR2J7WGhSnEWj4M=",
+        "lastModified": 1760884852,
+        "narHash": "sha256-yIQCPrwk6MVt/9a4rqGudXvEzbgPfkuMmYCvJTs2sdc=",
         "owner": "Mothblocks",
         "repo": "tg-public-log-parser",
-        "rev": "f7a2b884b9f3c557b2c67aa5a957e25f8b749ba4",
+        "rev": "deb3b48a9777a38c60a1fe07b4737ec3e7188eec",
         "type": "github"
       },
       "original": {
