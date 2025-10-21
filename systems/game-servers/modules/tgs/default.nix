@@ -197,6 +197,15 @@
       Swarm = {
         UpdateRequiredNodeCount = 2;
       };
+      Security = {
+        OpenIDConnect = {
+          Auth = {
+            Authority = "https://auth.tgstation13.org/application/o/tgstation-server";
+            ClientId = "YDKw6NpQtKp6KHONGXfjuL4OhdhWVgCj0xIqwQ4z";
+            FriendlyName = "/tg/ Identity";
+          }
+        }
+      }
     });
     home-directory = tg-globals.tgs.root-path;
     # environmentFile =  # Required, add to host config to specify the database URI
