@@ -203,6 +203,7 @@
             Authority = "https://auth.tgstation13.org/application/o/tgstation-server";
             ClientId = "YDKw6NpQtKp6KHONGXfjuL4OhdhWVgCj0xIqwQ4z";
             FriendlyName = "/tg/ Identity";
+            ThemeIconUrl = "https://tgstation13.org/assets/img/favicon.ico";
           };
         };
       };
