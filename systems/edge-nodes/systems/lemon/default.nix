@@ -32,6 +32,7 @@
       groupname = "caddy";
       cache-path = "/persist/tgstation-phpbb/cache";
       avatars-path = "/persist/tgstation-phpbb/avatars";
+      files-path = "/persist/tgstation-phpbb/files";
     };
     authentik = {
       environmentFile = config.age.secrets.authentik.path;
