@@ -8,7 +8,7 @@ on:
       - opened
 
 jobs:
-  approve-pr-if-website-update:
+  approve-pr-if-dependency-update:
     name: Approve PR if Dependency Update from GitHub Actions
     if: github.event.pull_request.user.id == 206383919 && (github.event.pull_request.title == 'Automatic Website Update' || github.event.pull_request.title == 'Automatic Forums Update')
     runs-on: ubuntu-latest
@@ -30,9 +30,3 @@ jobs:
           --header 'content-type: application/json' \
           -d '{"event":"APPROVE"}' \
           --fail
-
-      - name: Enable Automerge
-        uses: daneden/enable-automerge-action@f8558b65c5b8d8bfb592c4e74e3d491624a38fbd #v1.0.2-ish
-        with:
-          allowed-author: "tgstation-operations-ci[bot]"
-          github-token: ${{ steps.app-token-generation.outputs.token }}

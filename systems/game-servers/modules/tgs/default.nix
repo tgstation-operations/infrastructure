@@ -4,6 +4,7 @@
   lib,
   fenix,
   nixpkgs,
+  tg-globals,
   ...
 }: {
   environment.systemPackages = with pkgs; [
@@ -164,8 +165,50 @@
   };
   services.tgstation-server = {
     enable = true;
-    production-appsettings = ./tgs_config.yml;
-    home-directory = "/persist/tgs-data";
+    production-appsettings = pkgs.writeText "tgs_config.yml" (lib.generators.toYAML {} {
+      Database = {
+        DatabaseType = "MariaDB";
+        ResetAdminPassword = false;
+      };
+      General = {
+        ConfigVersion = "5.5.0";
+        # GitHubAccessToken = TODO;
+        HostApiDocumentation = true;
+        PrometheusPort = 5001;
+        ValidInstancePaths = [
+          tg-globals.tgs.instances-path
+        ];
+      };
+      FileLogging = {
+        Disable = false;
+        LogLevel = "Trace";
+      };
+      Kestrel = {
+        Endpoints = {
+          Http = {
+            Url = "http://localhost:${tg-globals.tgs.port}";
+          };
+        };
+      };
+      ControlPanel = {
+        Enable = true;
+        AllowAnyOrigin = true;
+      };
+      Swarm = {
+        UpdateRequiredNodeCount = 2;
+      };
+      Security = {
+        OpenIDConnect = {
+          Auth = {
+            Authority = "https://auth.tgstation13.org/application/o/tgstation-server";
+            ClientId = "YDKw6NpQtKp6KHONGXfjuL4OhdhWVgCj0xIqwQ4z";
+            FriendlyName = "/tg/ Identity";
+            ThemeIconUrl = "https://tgstation13.org/assets/img/favicon.ico";
+          };
+        };
+      };
+    });
+    home-directory = tg-globals.tgs.root-path;
     # environmentFile =  # Required, add to host config to specify the database URI
     extra-path = lib.makeBinPath (
       with pkgs; [
