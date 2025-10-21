@@ -27,7 +27,4 @@ in {
   "effigy-comms.age".publicKeys = final;
   #"effigy-tts_secrets.age".publicKeys = final;
   "effigy-extra_config-rclone.age".publicKeys = final;
-
-  # TGS OIDC Secret
-  "tgstation-server.age".publicKeys = final;
 }
