@@ -645,11 +645,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1760300336,
-        "narHash": "sha256-n8YtrZXqI7MRvj74BeF5a6FmES+CkgcZF6U+a9xgfQo=",
+        "lastModified": 1761089420,
+        "narHash": "sha256-CQ7AdR6dMTBkCNXw6BxY35CJXuNVTcjVYL2bkAkzyq8=",
         "owner": "tgstation-operations",
         "repo": "tgstation-phpbb",
-        "rev": "3bf2cec2113249796f926ca6b44a2636e83db4fe",
+        "rev": "f574c7c90f7ce1259d2c7700357e8247529d525a",
         "type": "github"
       },
       "original": {
