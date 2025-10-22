@@ -198,6 +198,7 @@
         UpdateRequiredNodeCount = 2;
       };
       Security = {
+        OidcStrictMode = true;
         OpenIDConnect = {
           Auth = {
             Authority = "https://auth.tgstation13.org/application/o/tgstation-server";
