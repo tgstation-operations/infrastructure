@@ -20,7 +20,7 @@
   age.secrets = {
     cloudflare-api.file = ../../../../../../secrets/cloudflare-api.age;
     aws_credentials.file = ../../secrets/aws_credentials.age;
-    caddy_env.file = ../../../../secrets/caddy_env.age;
+    caddy_env.file = ../../../secrets/caddy_env.age;
   };
   security.acme = {
     acceptTerms = true;
