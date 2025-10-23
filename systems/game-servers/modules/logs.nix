@@ -60,7 +60,7 @@ in {
             }
           }
         '';
-      }
+      };
     };
 
     tg-public-log-parser."${instance-name}" = {
