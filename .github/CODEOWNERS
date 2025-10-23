@@ -7,9 +7,7 @@
 /systems/game-servers/modules/haproxy_base/haproxy.conf @RigglePrime
 /systems/edge-nodes/modules/haproxy_base/haproxy.conf @RigglePrime
 
-# ZephyrTFA
-/modules/cockroachdb/cockroachdb-node.nix @ZephyrTFA
-
 # Multi-User
+
 /modules/ssh_keys_by_group.nix @RigglePrime @ZephyrTFA
 /modules/ssh_keys_systems.nix @RigglePrime @ZephyrTFA

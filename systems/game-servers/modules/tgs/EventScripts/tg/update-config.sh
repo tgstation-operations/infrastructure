@@ -17,7 +17,7 @@ git checkout origin/main
 git sparse-checkout set $SERVER/ title_screens/
 git reset --hard origin/main
 ln -sf $SERVER/motd.txt motd.txt
-ln -sf $SERVER/dynamic.json dynamic.json
+ln -sf $SERVER/dynamic.toml dynamic.toml
 ln -sf $SERVER/jobconfig.toml jobconfig.toml
 ln -sf /run/agenix/tg13-comms comms.txt
 ln -sf /run/agenix/tg13-dbconfig dbconfig.txt
