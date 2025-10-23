@@ -117,7 +117,7 @@
           ];
           hash = "sha256-w0pJEcwbawr9WKvnyWO++gGHYRUUUxGmGYkXqRvCQ8A=";
         };
-      }
+      };
     };
 
     tgsatan = {
