@@ -104,13 +104,13 @@
       overlays = [fenix.overlays.default];
     };
 
-    tg-globals = import nixpkgs-unstable {
+    tg-globals = {
       tgs = {
         port = "5000";
         root-path = "/persist/tgs-data";
         instances-path = "${tg-globals.tgs.root-path}/instances";
       };
-      caddy = {
+      caddy = import nixpkgs-unstable {
         security-plugin-package = caddy.withPlugins { # We use caddy on unstable so we get the latest version of it, consistent with the relays
           plugins = [
             "github.com/greenpau/caddy-security@v1.1.31" # Module to enable OIDC for raw-logs
