@@ -167,6 +167,10 @@ in {
             root /run/tgstation-server-info-fetcher/serverinfo.json
             file_server
           }
+          handle_path /clientstorage.html {
+            file_server 
+            root ${./clientstorage.html}
+          }
           redir /phpBB/ https://forums.tgstation13.org/
           redir /phpBB/*.php* https://forums.tgstation13.org/{http.request.orig_uri.path.file}?{http.request.orig_uri.query}{http.request.orig_uri.path.*/}
           handle_path /wiki/* {
