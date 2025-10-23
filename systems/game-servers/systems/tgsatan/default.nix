@@ -30,28 +30,28 @@
       instance-name = "sybil";
       bind-port = "1338";
       internal-port = "13338";
-      internal-port = "23338";
+      raw-port = "23338";
     })
     (import ../../modules/logs.nix {
       inherit pkgs tg-globals;
       instance-name = "manuel";
       bind-port = "1448";
       internal-port = "11448";
-      internal-port = "21448";
+      raw-port = "21448";
     })
     (import ../../modules/logs.nix {
       inherit pkgs tg-globals;
       instance-name = "eventhallus";
       bind-port = "7778";
       internal-port = "17778";
-      internal-port = "27778";
+      raw-port = "27778";
     })
     (import ../../modules/logs.nix {
       inherit pkgs tg-globals;
       instance-name = "effigy";
       bind-port = "7338";
       internal-port = "17338";
-      internal-port = "27338";
+      raw-port = "27338";
     })
     ./modules/atticd.nix
     ./modules/grafana
