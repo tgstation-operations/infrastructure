@@ -25,6 +25,27 @@ in {
       globalConfig = ''
         order authenticate before respond
         order authorize before basicauth
+
+        security {
+          oauth identity provider auth {
+            realm auth
+            driver generic
+            client_id Tkj3oWpUiNLIGpU4K6oKZ32UmADhCRSRwsPLo6Bc
+            client_secret {env.RAW_LOGS_CLIENT_SECRET}
+            scopes openid profile
+            base_auth_url https://auth.tgstation13.org
+            metadata_url https://auth.tgstation13.org/application/o/raw-logs/.well-known/openid-configuration
+          }
+
+          authentication portal myportal {
+            enable identity provider auth
+            cookie domain tgstation13.org
+            transform user {
+              match origin auth
+              action add role authp/user
+            }
+          }
+        }
       '';
       virtualHosts = {
         "http://localhost:${internal-port}" = {
@@ -39,27 +60,6 @@ in {
           extraConfig = ''
             file_server browse {
               root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
-            }
-
-            security {
-              oauth identity provider auth {
-                realm auth
-                driver generic
-                client_id Tkj3oWpUiNLIGpU4K6oKZ32UmADhCRSRwsPLo6Bc
-                client_secret {env.RAW_LOGS_CLIENT_SECRET}
-                scopes openid profile
-                base_auth_url https://auth.tgstation13.org
-                metadata_url https://auth.tgstation13.org/application/o/raw-logs/.well-known/openid-configuration
-              }
-
-              authentication portal myportal {
-                enable identity provider auth
-                cookie domain tgstation13.org
-                transform user {
-                  match origin auth
-                  action add role authp/user
-                }
-              }
             }
           '';
         };
