@@ -110,6 +110,14 @@
         root-path = "/persist/tgs-data";
         instances-path = "${tg-globals.tgs.root-path}/instances";
       };
+      caddy = {
+        security-plugin-package = nixpkgs-unstable.caddy.withPlugins { # We use caddy on unstable so we get the latest version of it, consistent with the relays
+          plugins = [
+            "github.com/greenpau/caddy-security@v1.1.31" # Module to enable OIDC for raw-logs
+          ];
+          hash = "sha256-w0pJEcwbawr9WKvnyWO++gGHYRUUUxGmGYkXqRvCQ8A=";
+        };
+      }
     };
 
     tgsatan = {
