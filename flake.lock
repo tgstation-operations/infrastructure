@@ -645,11 +645,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1761089420,
-        "narHash": "sha256-CQ7AdR6dMTBkCNXw6BxY35CJXuNVTcjVYL2bkAkzyq8=",
+        "lastModified": 1761170623,
+        "narHash": "sha256-SKeRoBGweqgA7awRF65Ug7JzHCwoOoz4wtyoPHq5PUY=",
         "owner": "tgstation-operations",
         "repo": "tgstation-phpbb",
-        "rev": "f574c7c90f7ce1259d2c7700357e8247529d525a",
+        "rev": "8a8e1306d23389553ba94dde330f537d4c331864",
         "type": "github"
       },
       "original": {
@@ -706,11 +706,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1761079769,
-        "narHash": "sha256-hCqLMOfnHNlichCwfItLrAXXu9+Q0DVdngRrIccqOSs=",
+        "lastModified": 1761177023,
+        "narHash": "sha256-DZqO7fE3enwCqld7eTstNRdAUnqaM6WSr5PtS5h0BsA=",
         "owner": "tgstation-operations",
         "repo": "website-v2",
-        "rev": "bd3fe590002287ca04c3d264760a043c50a7d222",
+        "rev": "a1535a0501d192ebcc9576a70842d238429d38df",
         "type": "github"
       },
       "original": {
