@@ -67,7 +67,12 @@
   };
   services.caddy = {
     enable = true;
-    package = pkgs-unstable.caddy; # We use caddy on unstable so we get the latest version of it, consistent with the relays
+    package = pkgs-unstable.caddy.withPlugins { # We use caddy on unstable so we get the latest version of it, consistent with the relays
+      plugins = [
+        "github.com/WeidiDeng/caddy-security@v1.1.31" # Module to enable OIDC for raw-logs
+      ];
+      hash = "sha256-w0pJEcwbawr9WKvnyWO++gGHYRUUUxGmGYkXqRvCQ8A=";
+    };
     enableReload = true; # Reload caddy instead of restarting it on config changes
     environmentFile = config.age.secrets.caddy_env.path;
     globalConfig = ''
