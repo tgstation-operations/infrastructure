@@ -119,7 +119,7 @@
           plugins = [
             "github.com/greenpau/caddy-security@v1.1.31" # Module to enable OIDC for raw-logs
           ];
-          hash = "sha256-w0pJEcwbawr9WKvnyWO++gGHYRUUUxGmGYkXqRvCQ8A=";
+          hash = "sha256-K+g5jBww3FCAWqxqxFT+f2dQasjp6+0ZEfDxncX8YoE=";
         };
       };
     };
