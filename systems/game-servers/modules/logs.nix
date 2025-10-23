@@ -22,7 +22,7 @@ in {
     };
 
     caddy = {
-      extraConfig = ''
+      globalConfig = ''
         order authenticate before respond
         order authorize before basicauth
       '';
