@@ -20,6 +20,7 @@
   age.secrets = {
     cloudflare-api.file = ../../../../../../secrets/cloudflare-api.age;
     aws_credentials.file = ../../secrets/aws_credentials.age;
+    caddy_env.file = ../../secrets/caddy_env.age;
   };
   security.acme = {
     acceptTerms = true;
@@ -69,6 +70,7 @@
     enable = true;
     package = pkgs-unstable.caddy; # We use caddy on unstable so we get the latest version of it, consistent with the relays
     enableReload = true; # Reload caddy instead of restarting it on config changes
+    environmentFile = config.age.secrets.caddy_env.path;
     globalConfig = ''
       auto_https disable_certs  # We use security.acme.certs for this where applicable, so we don't want it to try and get certs
       grace_period 30s # Make sure we're not infinitely waiting for clients on reload

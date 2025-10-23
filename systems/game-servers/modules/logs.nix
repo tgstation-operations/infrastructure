@@ -4,10 +4,12 @@
   instance-name,
   bind-port,
   internal-port,
+  raw-port,
   group ? "tgstation-server",
   ...
 }: let
   public-logs-url = "${instance-name}-logs.tgstation13.org";
+  raw-logs-url = "raw-${public-logs-url}";
   logs-path = "${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs";
 in {
   services = {
@@ -15,15 +17,50 @@ in {
       originRequest.httpHostHeader = "localhost";
       ingress = {
         "${public-logs-url}" = "http://localhost:${internal-port}";
+        "${raw-logs-url}" = "http://localhost:${raw-port}";
       };
     };
 
-    caddy.virtualHosts."http://localhost:${internal-port}" = {
-      extraConfig = ''
-        reverse_proxy localhost:${bind-port}
+    caddy.virtualHosts = {
+      "http://localhost:${internal-port}" = {
+        extraConfig = ''
+          reverse_proxy localhost:${bind-port}
 
-        header Access-Control-Allow-Origin "*"
-      '';
+          header Access-Control-Allow-Origin "*"
+        '';
+      };
+
+      "http://localhost:${raw-port}" = {
+        extraConfig = ''
+          file_server browse {
+            root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
+          }
+
+          order authenticate before respond
+          order authorize before basicauth
+
+          security {
+            oauth identity provider auth {
+              realm auth
+              driver generic
+              client_id Tkj3oWpUiNLIGpU4K6oKZ32UmADhCRSRwsPLo6Bc
+              client_secret {env.RAW_LOGS_CLIENT_SECRET}
+              scopes openid profile
+              base_auth_url https://auth.tgstation13.org
+              metadata_url https://auth.tgstation13.org/application/o/raw-logs/.well-known/openid-configuration
+            }
+
+            authentication portal myportal {
+              enable identity provider auth
+              cookie domain tgstation13.org
+              transform user {
+                match origin auth
+                action add role authp/user
+              }
+            }
+          }
+        '';
+      }
     };
 
     tg-public-log-parser."${instance-name}" = {

@@ -22,4 +22,6 @@ in {
   "grafana_db.age".publicKeys = final;
   "grafana_smtp.age".publicKeys = final;
   "grafana_admin.age".publicKeys = final;
+  # Contains RAW_LOGS_CLIENT_SECRET for OIDC for raw-logs
+  "caddy_env.age".publicKeys = final;
 }
