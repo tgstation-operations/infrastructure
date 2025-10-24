@@ -11,6 +11,9 @@
   public-logs-url = "${instance-name}-logs.tgstation13.org";
   raw-logs-url = "raw-${public-logs-url}";
   logs-path = "${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs";
+
+  # RS256 JWT public key from https://auth.tgstation13.org/application/o/raw-logs/jwks. See https://docs.authcrunch.com/docs/authorize/token-verification, plugin is too stupid to use the OIDC JWKS URL
+  public-key-path = ./public_key.pem;
 in {
   services = {
     cloudflared.tunnels.primary-tunnel = {
@@ -23,11 +26,7 @@ in {
 
     caddy = {
       group = "tgstation-server";
-      logFormat = ''
-        output stderr
-        level DEBUG
-        format console
-      '';
+
       globalConfig = ''
         order authenticate before respond
         order authorize before basicauth
@@ -44,8 +43,9 @@ in {
           }
 
           authentication portal myportal {
+            crypto key verify from file ${public-key-path}
             enable identity provider auth
-            cookie domain *.tgstation13.org
+            cookie domain ${raw-logs-url}
           }
 
           authorization policy mypolicy {

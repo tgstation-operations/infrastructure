@@ -17,7 +17,7 @@
     ./modules/caddy
     ./modules/haproxy
     ./modules/motd
-    (import ../../modules/logs.nix {
+    (import ../../modules/logs {
       inherit pkgs tg-globals;
       instance-name = "terry";
       bind-port = "3337";
