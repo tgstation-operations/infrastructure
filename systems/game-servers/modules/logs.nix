@@ -35,27 +35,24 @@ in {
             driver generic
             client_id Tkj3oWpUiNLIGpU4K6oKZ32UmADhCRSRwsPLo6Bc
             client_secret {env.RAW_LOGS_CLIENT_SECRET}
-            scopes openid profile
+            scopes openid
             base_auth_url https://auth.tgstation13.org/
             metadata_url https://auth.tgstation13.org/application/o/raw-logs/.well-known/openid-configuration
           }
 
           authentication portal myportal {
-            crypto default token lifetime 3600
-			      crypto key sign-verify {env.RAW_LOGS_CLIENT_SECRET}
             enable identity provider auth
             cookie domain *.tgstation13.org
           }
 
           authorization policy mypolicy {
 			      set auth url https://${raw-logs-url}/auth/
-			      crypto key verify {env.RAW_LOGS_CLIENT_SECRET}
             allow roles authp/guest
             validate bearer header
             inject headers with claims
           }
         }
-      '';
+      '';https://auth.tgstation13.org/if/flow/authorize/?client_id=Tkj3oWpUiNLIGpU4K6oKZ32UmADhCRSRwsPLo6Bc&nonce=Fl43ZHW6UggctdP7PckGoS9zJk0qqIYb&redirect_uri=https%3A%2F%2Fraw-funnyname-logs.tgstation13.org%2Fauth%2Foauth2%2Fauth%2Fauthorization-code-callback&response_type=code&scope=openid+profile&state=e910fc74-77a1-49a3-9993-63a838270286&inspector=available
       virtualHosts = {
         "http://localhost:${internal-port}" = {
           extraConfig = ''
