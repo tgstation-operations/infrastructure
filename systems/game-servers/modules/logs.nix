@@ -36,14 +36,14 @@ in {
             client_id Tkj3oWpUiNLIGpU4K6oKZ32UmADhCRSRwsPLo6Bc
             client_secret {env.RAW_LOGS_CLIENT_SECRET}
             scopes openid profile
-            base_auth_url https://auth.tgstation13.org
+            base_auth_url https://auth.tgstation13.org/
             metadata_url https://auth.tgstation13.org/application/o/raw-logs/.well-known/openid-configuration
           }
 
           authentication portal myportal {
             crypto default token lifetime 3600
             enable identity provider auth
-            cookie domain ${raw-logs-url}
+            cookie domain *.tgstation13.org
           }
 
           authorization policy mypolicy {
