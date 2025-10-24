@@ -25,6 +25,11 @@ in {
       group = "tgstation-server";
       globalConfig = ''
         debug
+        log {
+          output stderr
+          level DEBUG
+          format console
+        }
 
         order authenticate before respond
         order authorize before basicauth
