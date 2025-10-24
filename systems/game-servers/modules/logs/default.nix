@@ -36,26 +36,29 @@ in {
 
         "http://localhost:${raw-port}" = {
           extraConfig = ''
-            # https://old.reddit.com/r/selfhosted/comments/10wch2i/authentik_w_caddy/j7ml255/
-            # always forward outpost path to actual outpost
-            reverse_proxy /outpost.goauthentik.io/* https://auth.tgstation13.org {
-                header_up Host {http.reverse_proxy.upstream.host}
+            # directive execution order is only as stated if enclosed with route.
+            route {
+                # https://old.reddit.com/r/selfhosted/comments/10wch2i/authentik_w_caddy/j7ml255/
+                # always forward outpost path to actual outpost
+                reverse_proxy /outpost.goauthentik.io/* https://auth.tgstation13.org {
+                    header_up Host {http.reverse_proxy.upstream.host}
+                }
+
+                # forward authentication to outpost
+                forward_auth https://auth.tgstation13.org {
+                    uri /outpost.goauthentik.io/auth/caddy
+
+                    # capitalization of the headers is important, otherwise they will be empty
+                    copy_headers X-Authentik-Username X-Authentik-Groups X-Authentik-Email X-Authentik-Name X-Authentik-Uid X-Authentik-Jwt X-Authentik-Meta-Jwks X-Authentik-Meta-Outpost X-Authentik-Meta-Provider X-Authentik-Meta-App X-Authentik-Meta-Version
+
+                    # optional, in this config trust all private ranges, should probably be set to the outposts IP
+                    # Dominion: Just using the TS internal IP here
+                    trusted_proxies 100.64.0.0/16
+                }
+
+                file_server browse
+                root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
             }
-
-            # forward authentication to outpost
-            forward_auth https://auth.tgstation13.org {
-                uri /outpost.goauthentik.io/auth/caddy
-
-                # capitalization of the headers is important, otherwise they will be empty
-                copy_headers X-Authentik-Username X-Authentik-Groups X-Authentik-Email X-Authentik-Name X-Authentik-Uid X-Authentik-Jwt X-Authentik-Meta-Jwks X-Authentik-Meta-Outpost X-Authentik-Meta-Provider X-Authentik-Meta-App X-Authentik-Meta-Version
-
-                # optional, in this config trust all private ranges, should probably be set to the outposts IP
-                # Dominion: Just using the TS internal IP here
-                trusted_proxies 100.64.0.0/16
-            }
-
-            file_server browse
-            root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
           '';
         };
       };
