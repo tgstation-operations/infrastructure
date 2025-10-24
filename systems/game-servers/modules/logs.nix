@@ -24,6 +24,8 @@ in {
     caddy = {
       group = "tgstation-server";
       globalConfig = ''
+        debug
+
         order authenticate before respond
         order authorize before basicauth
 
