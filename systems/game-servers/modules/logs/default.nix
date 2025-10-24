@@ -15,11 +15,6 @@
   # RS256 JWT public key from https://auth.tgstation13.org/application/o/raw-logs/jwks. See https://docs.authcrunch.com/docs/authorize/token-verification, plugin is too stupid to use the OIDC JWKS URL
   public-key-path = ./public_key.pem;
 in {
-  # LIFE IS PAIN
-  networking.hosts = {
-    "100.64.3.35" = ["auth.tgstation13.org"];
-  };
-
   services = {
     cloudflared.tunnels.primary-tunnel = {
       originRequest.httpHostHeader = "localhost";
@@ -41,7 +36,7 @@ in {
           '';
         };
 
-        "http://localhost:${raw-port}" = {
+        "http://${config.networking.hostName}.tg.lan:${raw-port}" = {
           extraConfig = ''
             # directive execution order is only as stated if enclosed with route.
             route {
