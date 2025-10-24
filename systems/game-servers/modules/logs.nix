@@ -48,7 +48,7 @@ in {
           }
 
           authorization policy mypolicy {
-			      set auth url https://${raw-logs-url}/oauth2/auth
+			      set auth url https://${raw-logs-url}/auth/oauth2/auth
             allow roles authp/user
           }
         }
@@ -64,11 +64,13 @@ in {
 
         "http://localhost:${raw-port}" = {
           extraConfig = ''
-	          authorize with mypolicy
-            handle_path /logs/* {
-              file_server browse
-              root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
+            handle_path /auth/* {
+	            authenticate with myportal
             }
+
+            authorize with mypolicy
+            file_server browse
+            root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
           '';
         };
       };
