@@ -40,20 +40,13 @@ in {
 
           authentication portal myportal {
             crypto default token lifetime 3600
-            crypto key sign-verify {env.JWT_SHARED_KEY}
             enable identity provider auth
             cookie domain ${raw-logs-url}
-
-            transform user {
-              match origin auth
-              action add role authp/user
-            }
           }
 
           authorization policy mypolicy {
 			      set auth url https://${raw-logs-url}/auth/oauth2/auth
-            crypto key verify {env.JWT_SHARED_KEY}
-            allow roles authp/user
+            allow roles authp/guest
             validate bearer header
             inject headers with claims
           }
