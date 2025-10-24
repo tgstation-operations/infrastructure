@@ -110,6 +110,12 @@
         root-path = "/persist/tgs-data";
         instances-path = "${tg-globals.tgs.root-path}/instances";
       };
+      caddy = {
+        default-package = (import nixpkgs-unstable {
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+        }).caddy;
+      };
     };
 
     tgsatan = {
