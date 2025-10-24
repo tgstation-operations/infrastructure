@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   tg-globals,
   instance-name,
