@@ -40,11 +40,16 @@ in {
 
           authentication portal myportal {
             enable identity provider auth
-            cookie domain tgstation13.org
+            cookie domain ${raw-logs-url}
             transform user {
               match origin auth
               action add role authp/user
             }
+          }
+
+          authorization policy mypolicy {
+			      set auth url https://${raw-logs-url}/oauth2/auth
+            allow roles authp/user
           }
         }
       '';
@@ -59,8 +64,9 @@ in {
 
         "http://localhost:${raw-port}" = {
           extraConfig = ''
-            authenticate with myportal
-            file_server browse {
+	          authorize with mypolicy
+            handle_path /logs/* {
+              file_server browse
               root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
             }
           '';
