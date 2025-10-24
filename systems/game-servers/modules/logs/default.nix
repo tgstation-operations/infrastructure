@@ -25,37 +25,6 @@ in {
     };
 
     caddy = {
-      group = "tgstation-server";
-
-      globalConfig = ''
-        order authenticate before respond
-        order authorize before basicauth
-
-        security {
-          oauth identity provider auth {
-            realm auth
-            driver generic
-            client_id Tkj3oWpUiNLIGpU4K6oKZ32UmADhCRSRwsPLo6Bc
-            client_secret {env.RAW_LOGS_CLIENT_SECRET}
-            scopes openid
-            base_auth_url https://auth.tgstation13.org/
-            metadata_url https://auth.tgstation13.org/application/o/raw-logs/.well-known/openid-configuration
-          }
-
-          authentication portal myportal {
-            crypto key verify from file ${public-key-path}
-            enable identity provider auth
-            cookie domain ${raw-logs-url}
-          }
-
-          authorization policy mypolicy {
-			      set auth url https://${raw-logs-url}/auth/
-            allow roles authp/guest
-            validate bearer header
-            inject headers with claims
-          }
-        }
-      '';
       virtualHosts = {
         "http://localhost:${internal-port}" = {
           extraConfig = ''
@@ -67,14 +36,26 @@ in {
 
         "http://localhost:${raw-port}" = {
           extraConfig = ''
-            route /auth/* {
-	            authenticate with myportal
+            # https://old.reddit.com/r/selfhosted/comments/10wch2i/authentik_w_caddy/j7ml255/
+            # always forward outpost path to actual outpost
+            reverse_proxy /outpost.goauthentik.io/* https://auth.tgstation13.org {
+                header_up Host {http.reverse_proxy.upstream.host}
             }
-            route {
-              authorize with mypolicy
-              file_server browse
-              root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
+
+            # forward authentication to outpost
+            forward_auth https://auth.tgstation13.org {
+                uri /outpost.goauthentik.io/auth/caddy
+
+                # capitalization of the headers is important, otherwise they will be empty
+                copy_headers X-Authentik-Username X-Authentik-Groups X-Authentik-Email X-Authentik-Name X-Authentik-Uid X-Authentik-Jwt X-Authentik-Meta-Jwks X-Authentik-Meta-Outpost X-Authentik-Meta-Provider X-Authentik-Meta-App X-Authentik-Meta-Version
+
+                # optional, in this config trust all private ranges, should probably be set to the outposts IP
+                # Dominion: Just using the TS internal IP here
+                trusted_proxies 100.64.0.0/16
             }
+
+            file_server browse
+            root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
           '';
         };
       };

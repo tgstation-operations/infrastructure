@@ -68,7 +68,7 @@
   };
   services.caddy = {
     enable = true;
-    package = tg-globals.caddy.security-plugin-package;
+    package = tg-globals.caddy.default-package;
     enableReload = true; # Reload caddy instead of restarting it on config changes
     environmentFile = config.age.secrets.caddy_env.path;
     globalConfig = ''
