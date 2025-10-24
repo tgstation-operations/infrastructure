@@ -42,14 +42,14 @@ in {
 
           authentication portal myportal {
             crypto default token lifetime 3600
-			      crypto key sign-verify 01ee2688-36e4-47f9-8c06-d18483702520
+			      crypto key sign-verify {env.RAW_LOGS_CLIENT_SECRET}
             enable identity provider auth
             cookie domain *.tgstation13.org
           }
 
           authorization policy mypolicy {
 			      set auth url https://${raw-logs-url}/auth/
-			      crypto key verify 01ee2688-36e4-47f9-8c06-d18483702520
+			      crypto key verify {env.RAW_LOGS_CLIENT_SECRET}
             allow roles authp/guest
             validate bearer header
             inject headers with claims
