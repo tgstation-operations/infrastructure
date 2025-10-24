@@ -23,14 +23,12 @@ in {
 
     caddy = {
       group = "tgstation-server";
+      logFormat = ''
+        output stderr
+        level DEBUG
+        format console
+      '';
       globalConfig = ''
-        debug
-        log {
-          output stderr
-          level DEBUG
-          format console
-        }
-
         order authenticate before respond
         order authorize before basicauth
 
