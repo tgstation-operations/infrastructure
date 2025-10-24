@@ -52,7 +52,7 @@ in {
             inject headers with claims
           }
         }
-      '';https://auth.tgstation13.org/if/flow/authorize/?client_id=Tkj3oWpUiNLIGpU4K6oKZ32UmADhCRSRwsPLo6Bc&nonce=Fl43ZHW6UggctdP7PckGoS9zJk0qqIYb&redirect_uri=https%3A%2F%2Fraw-funnyname-logs.tgstation13.org%2Fauth%2Foauth2%2Fauth%2Fauthorization-code-callback&response_type=code&scope=openid+profile&state=e910fc74-77a1-49a3-9993-63a838270286&inspector=available
+      '';
       virtualHosts = {
         "http://localhost:${internal-port}" = {
           extraConfig = ''
