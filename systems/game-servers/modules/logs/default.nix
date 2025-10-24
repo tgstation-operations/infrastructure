@@ -63,8 +63,8 @@ in {
                     trusted_proxies 100.64.0.0/16
                 }
 
-                file_server browse
                 root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
+                file_server browse
             }
           '';
         };
