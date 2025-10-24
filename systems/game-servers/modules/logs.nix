@@ -52,7 +52,7 @@ in {
             validate bearer header
             inject headers with claims
           }
-        }https://auth.tgstation13.org/if/flow/authorize/?client_id=Tkj3oWpUiNLIGpU4K6oKZ32UmADhCRSRwsPLo6Bc&nonce=k7xCutw2qDFqA6iXNdX9gB4ZaTmePxhT&redirect_uri=https%3A%2F%2Fraw-funnyname-logs.tgstation13.org%2Fauth%2Foauth2%2Fauth%2Fauthorization-code-callback&response_type=code&scope=openid+profile&state=941273e2-cb89-49b2-9f9b-c83cf3f7b028&inspector=available
+        }
       '';
       virtualHosts = {
         "http://localhost:${internal-port}" = {
