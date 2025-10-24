@@ -25,6 +25,8 @@ in {
     };
 
     caddy = {
+      group = "tgstation-server";
+
       virtualHosts = {
         "http://localhost:${internal-port}" = {
           extraConfig = ''
