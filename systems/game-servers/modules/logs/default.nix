@@ -9,7 +9,6 @@
   ...
 }: let
   public-logs-url = "${instance-name}-logs.tgstation13.org";
-  raw-logs-url = "raw-${public-logs-url}";
   logs-path = "${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs";
 
   # RS256 JWT public key from https://auth.tgstation13.org/application/o/raw-logs/jwks. See https://docs.authcrunch.com/docs/authorize/token-verification, plugin is too stupid to use the OIDC JWKS URL
@@ -20,7 +19,6 @@ in {
       originRequest.httpHostHeader = "localhost";
       ingress = {
         "${public-logs-url}" = "http://localhost:${internal-port}";
-        "${raw-logs-url}" = "http://localhost:${raw-port}";
       };
     };
 
@@ -43,7 +41,7 @@ in {
                 # https://old.reddit.com/r/selfhosted/comments/10wch2i/authentik_w_caddy/j7ml255/
                 # always forward outpost path to actual outpost
                 reverse_proxy /outpost.goauthentik.io/* https://auth.tgstation13.org {
-                    header_up Host ${raw-logs-url}
+                    header_up Host {http.reverse_proxy.upstream.host}
                 }
 
                 # forward authentication to outpost
