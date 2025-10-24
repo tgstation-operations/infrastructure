@@ -43,7 +43,7 @@ in {
                 # https://old.reddit.com/r/selfhosted/comments/10wch2i/authentik_w_caddy/j7ml255/
                 # always forward outpost path to actual outpost
                 reverse_proxy /outpost.goauthentik.io/* https://auth.tgstation13.org {
-                    header_up Host {http.reverse_proxy.upstream.host}
+                    header_up Host ${raw-logs-url}
                 }
 
                 # forward authentication to outpost
