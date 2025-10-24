@@ -59,6 +59,7 @@ in {
 
         "http://localhost:${raw-port}" = {
           extraConfig = ''
+            authenticate with myportal
             file_server browse {
               root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
             }
