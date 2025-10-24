@@ -18,7 +18,7 @@
     ./modules/haproxy
     ./modules/motd
     (import ../../modules/logs {
-      inherit pkgs tg-globals;
+      inherit pkgs config tg-globals;
       instance-name = "terry";
       bind-port = "3337";
       internal-port = "13337";

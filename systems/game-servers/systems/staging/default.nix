@@ -28,7 +28,7 @@
     ../../modules/muffin-button.nix
     ../../modules/tgs
     (import ../../modules/logs {
-      inherit pkgs tg-globals;
+      inherit pkgs config tg-globals;
       instance-name = "funnyname";
       bind-port = "3337";
       internal-port = "13337";
