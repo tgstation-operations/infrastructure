@@ -42,12 +42,14 @@ in {
 
           authentication portal myportal {
             crypto default token lifetime 3600
+            crypto key sign-verify 7e78412e-2609-47a8-bafa-dc954578e72a
             enable identity provider auth
             cookie domain ${raw-logs-url}
           }
 
           authorization policy mypolicy {
 			      set auth url https://${raw-logs-url}/auth/oauth2/auth
+            crypto key verify 7e78412e-2609-47a8-bafa-dc954578e72a
             allow roles authp/guest
             validate bearer header
             inject headers with claims
