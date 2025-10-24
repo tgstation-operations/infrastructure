@@ -39,8 +39,11 @@ in {
           }
 
           authentication portal myportal {
+            crypto default token lifetime 3600
+            crypto key sign-verify {env.JWT_SHARED_KEY}
             enable identity provider auth
             cookie domain ${raw-logs-url}
+
             transform user {
               match origin auth
               action add role authp/user
@@ -49,7 +52,10 @@ in {
 
           authorization policy mypolicy {
 			      set auth url https://${raw-logs-url}/auth/oauth2/auth
+            crypto key verify {env.JWT_SHARED_KEY}
             allow roles authp/user
+            validate bearer header
+            inject headers with claims
           }
         }
       '';
@@ -64,13 +70,14 @@ in {
 
         "http://localhost:${raw-port}" = {
           extraConfig = ''
-            handle_path /auth/* {
+            route /auth/* {
 	            authenticate with myportal
             }
-
-            authorize with mypolicy
-            file_server browse
-            root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
+            route {
+              authorize with mypolicy
+              file_server browse
+              root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
+            }
           '';
         };
       };
