@@ -23,93 +23,93 @@ use MediaWiki\User\UserIdentity;
 
 class TgForumAuthProvider extends AuthProvider {
 
-	/**
-	 * @var GenericProvider
-	 */
-	private $provider;
+  /**
+   * @var GenericProvider
+   */
+  private $provider;
 
     private const HOST = 'https://forums.tgstation13.org/app.php/tgapi';
     private const VERIFIED_GROUP_ID = 11;
 
-	/**
-	 * @inheritDoc
-	 */
-	public function __construct(
-		string $clientId,
-		string $clientSecret,
-		?string $authUri,
-		?string $redirectUri,
-		array $extensionData = []
-	) {
-		$this->provider = new GenericProvider( [
-			'clientId' => $clientId,
-			'clientSecret' => $clientSecret,
-			'redirectUri' => $redirectUri,
-			'urlAuthorize' => self::HOST . '/oauth/auth',
-			'urlAccessToken' => self::HOST . '/oauth/token',
-			'urlResourceOwnerDetails' => self::HOST . '/user/me',
-			'scopes' => [ 'user.email user.groups' ]
-		] );
-	}
+  /**
+   * @inheritDoc
+   */
+  public function __construct(
+    string $clientId,
+    string $clientSecret,
+    ?string $authUri,
+    ?string $redirectUri,
+    array $extensionData = []
+  ) {
+    $this->provider = new GenericProvider( [
+      'clientId' => $clientId,
+      'clientSecret' => $clientSecret,
+      'redirectUri' => $redirectUri,
+      'urlAuthorize' => self::HOST . '/oauth/auth',
+      'urlAccessToken' => self::HOST . '/oauth/token',
+      'urlResourceOwnerDetails' => self::HOST . '/user/me',
+      'scopes' => [ 'user.email user.groups' ]
+    ] );
+  }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function login( ?string &$key, ?string &$secret, ?string &$authUrl ): bool {
-		$authUrl = $this->provider->getAuthorizationUrl();
+  /**
+   * @inheritDoc
+   */
+  public function login( ?string &$key, ?string &$secret, ?string &$authUrl ): bool {
+    $authUrl = $this->provider->getAuthorizationUrl();
 
-		$secret = $this->provider->getState();
+    $secret = $this->provider->getState();
 
-		return true;
-	}
+    return true;
+  }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function logout( UserIdentity &$user ): void {
-	}
+  /**
+   * @inheritDoc
+   */
+  public function logout( UserIdentity &$user ): void {
+  }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getUser( string $key, string $secret, &$errorMessage ) {
-		if ( !isset( $_GET['code'] ) ) {
-			return false;
-		}
+  /**
+   * @inheritDoc
+   */
+  public function getUser( string $key, string $secret, &$errorMessage ) {
+    if ( !isset( $_GET['code'] ) ) {
+      return false;
+    }
 
-		if ( !isset( $_GET['state'] ) || empty( $_GET['state'] ) || ( $_GET['state'] !== $secret ) ) {
-			return false;
-		}
+    if ( !isset( $_GET['state'] ) || empty( $_GET['state'] ) || ( $_GET['state'] !== $secret ) ) {
+      return false;
+    }
 
-		try {
-			$token = $this->provider->getAccessToken( 'authorization_code', [ 'code' => $_GET['code'] ] );
+    try {
+      $token = $this->provider->getAccessToken( 'authorization_code', [ 'code' => $_GET['code'] ] );
             $user = $this->provider->getResourceOwner( $token )->toArray();
 
-			$is_byond_user = false;
+      $is_byond_user = false;
 
-			foreach ( $user['groups'] as $forum_group ) {
-				if ( $forum_group['group_id'] === self::VERIFIED_GROUP_ID ) {
-					$is_byond_user = true;
-				}
-			}
+      foreach ( $user['groups'] as $forum_group ) {
+        if ( $forum_group['group_id'] === self::VERIFIED_GROUP_ID ) {
+          $is_byond_user = true;
+        }
+      }
 
-			if ( !$is_byond_user ) {
-				$errorMessage = "Please link your BYOND account with your forum account first.";
-				return false;
-			}
+      if ( !$is_byond_user ) {
+        $errorMessage = "Please link your BYOND account with your forum account first.";
+        return false;
+      }
 
-			return [
-				'name' => $user['username'],
+      return [
+        'name' => $user['username'],
                 'email' => $user['email']
-			];
-		} catch ( \Exception $e ) {
-			throw $e;
-		}
-	}
+      ];
+    } catch ( \Exception $e ) {
+      throw $e;
+    }
+  }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function saveExtraAttributes( int $id ): void {
-	}
+  /**
+   * @inheritDoc
+   */
+  public function saveExtraAttributes( int $id ): void {
+  }
 }
