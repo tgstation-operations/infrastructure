@@ -106,11 +106,11 @@
 			"src": ["group:keyholder-tg"],
 			"dst": ["tag:backend:*"]
 		},
-    	{
-      		"action": "accept",
-      		"src": ["group:keyholder-coolstation"],
-      		"dst": ["tag:backend:*"]
-		},
+        {
+            "action": "accept",
+            "src": ["group:keyholder-coolstation"],
+            "dst": ["tag:backend:*"]
+        },
 		{
 			"action": "accept",
 			"src": ["group:keyholder-effigy"],
