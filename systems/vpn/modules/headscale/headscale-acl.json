@@ -38,6 +38,11 @@
 			"spiders@"
 		],
 
+    "group:keyholder-coolstation": [
+      "warc@",
+      "tamber@"
+    ],
+
 		"group:keyholder-effigy": [
 			"LT3@",
 			"gallows@",
