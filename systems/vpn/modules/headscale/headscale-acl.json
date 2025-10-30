@@ -107,9 +107,9 @@
 			"dst": ["tag:backend:*"]
 		},
     {
-			"action": "accept",
-			"src": ["group:keyholder-coolstation"],
-			"dst": ["tag:backend:*"]
+      "action": "accept",
+      "src": ["group:keyholder-coolstation"],
+      "dst": ["tag:backend:*"]
     },
 		{
 			"action": "accept",
