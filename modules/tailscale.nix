@@ -1,4 +1,7 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  ...
+}: {
   services.tailscale = {
     enable = true;
     openFirewall = true;
@@ -9,12 +12,43 @@
     useRoutingFeatures = "client";
   };
 
+  # Bunch of workarounds here due to https://github.com/NixOS/nixpkgs/issues/180175
+  systemd.services.NetworkManager-wait-online.enable = false;
+
+  systemd.services.tgstation-wait-online = {
+    enable = true;
+    description = "tgstation-NetworkManager-wait-online-replacement";
+    requires = [ "NetworkManager.service" ];
+    after = [ "NetworkManager.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.networkmanager}/bin/nm-online -q";
+      Environment = "NM_ONLINE_TIMEOUT=60";
+    };
+    wantedBy = [ "network-online.target" ];
+  };
+
   systemd.services.tailscaled = {
     environment = {
       "TS_DEBUG_FIREWALL_MODE" = "nftables";
+
+      # Fixup for HTTP/3 + QUIC with MTUs approaching 1280. See https://github.com/tailscale/tailscale/issues/2633.
+      "TS_DEBUG_MTU" = "1350";
     };
-    # Required due to https://github.com/NixOS/nixpkgs/issues/180175
-    after = ["systemd-networkd-wait-online.service" "NetworkManager-wait-online.service"];
+    after = ["systemd-networkd-wait-online.service" "tgstation-wait-online.service"];
+    requires = [ "tgstation-wait-online.service" ];
+  };
+
+  systemd.services.tg-tailscale-wait-dhcp = {
+    serviceConfig = {
+      Type = "oneshot";
+      # See https://github.com/tailscale/tailscale/issues/11504#issuecomment-2692132659
+      ExecStart = "${pkgs.coreutils}/bin/timeout 60s ${pkgs.bash}/bin/bash -c \'until ${pkgs.tailscale}/bin/tailscale status --peers=false; do ${pkgs.coreutils}/bin/sleep 1; done\'";
+    };
+    wantedBy = [ "network-online.target" ];
+    before = [ "network-online.target" ];
+    after = [ "tailscaled.service" ];
+    requires = [ "tailscaled.service" ];
   };
 
   networking.firewall.trustedInterfaces = ["tailscale0"];

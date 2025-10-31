@@ -16,6 +16,8 @@
     Defaults lecture = never
   '';
 
+  nix.package = pkgs.lix;
+
   nix.settings = {
     experimental-features = [
       "nix-command"
@@ -27,7 +29,7 @@
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "tgstation-infrastructure:aaSrfZGLWk7a+RtcX0NaFYkOs6E4QlJ+5MZ8padOt3o="
+      "tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA="
     ];
     trusted-users = ["@wheel"];
   };
@@ -36,7 +38,7 @@
   programs.command-not-found.enable = false;
   nixpkgs.config.allowUnfree = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_6_12;
+  boot.kernelPackages = pkgs.linuxPackages_6_15;
   environment.systemPackages = with pkgs; [
     alejandra
     btop
@@ -113,6 +115,10 @@
 
   programs.fish.enable = true;
   programs.zsh.enable = true;
+
+  # Raise UDP send/recv buffer size since we rely _very_ heavily on QUIC/WireGuard
+  boot.kernel.sysctl."net.core.wmem_max" = 7500000;
+  boot.kernel.sysctl."net.core.rmem_max" = 7500000;
 
   home-manager.backupFileExtension = ".hm-backup";
 }

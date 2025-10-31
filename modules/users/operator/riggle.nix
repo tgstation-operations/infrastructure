@@ -13,6 +13,7 @@
 
     extraGroups = [
       "wheel"
+      "db-operator"
     ];
 
     shell = pkgs.zsh;
@@ -27,7 +28,7 @@
     programs.starship.enable = true;
     programs.zoxide.enable = true;
 
-    programs.zsh.initExtra = ''
+    programs.zsh.initContent = ''
       eval $(${pkgs.nix-your-shell}/bin/nix-your-shell zsh)
       bindkey '^H' backward-kill-word
       bindkey '5~' kill-word

@@ -4,11 +4,13 @@
   inputs,
   modulesPath,
   config,
+  tg-globals,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
   baseModules = [
     (import hw.common-cpu-intel)
+    inputs.tg-public-log-parser.nixosModules.default
     inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
@@ -17,14 +19,23 @@
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
-    ../../modules/maria.nix
+    ../../../../modules/maria.nix
+    (import ../../modules/cloudflared.nix {
+      inherit pkgs config lib;
+      age-file = ./secrets/cloudflared.age;
+    })
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/tgs
+    (import ../../modules/public-logs.nix {
+      inherit pkgs tg-globals;
+      instance-name = "funnyname";
+      bind-port = "3337";
+      internal-port = "13337";
+    })
     ./modules/haproxy
     ./modules/motd
     ./modules/caddy.nix
-    ./modules/kanidm.nix
   ];
 in {
   networking.hostName = "wiggle";
@@ -38,7 +49,6 @@ in {
 
   programs.nix-ld.enable = true;
 
-
   networking.nameservers = [
     "9.9.9.9"
     "1.1.1.1"
@@ -49,6 +59,7 @@ in {
     owner = "${config.services.tgstation-server.username}";
     group = "${config.services.tgstation-server.groupname}";
   };
+
   services.tgstation-server = {
     environmentFile = config.age.secrets.tgs.path;
   };
@@ -79,14 +90,19 @@ in {
     ];
   };
 
-  swapDevices = [];
-
-  services.kanidm = {
-    serverSettings = {
-      domain = "idm.staging.tgstation13.org"; # If changed, you MUST run `kanidmd domain rename` immediately after. changes will break shit
-      origin = "https://idm.staging.tgstation13.org";
+  services.mysql = {
+    settings = {
+      mariadb = {
+        log_bin = "staging_wiggle_bin";
+        server_id = 2;
+        log-basename = "staging_wiggle_log";
+        binlog-format = "mixed";
+      };
     };
   };
+
+  swapDevices = [];
+
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction

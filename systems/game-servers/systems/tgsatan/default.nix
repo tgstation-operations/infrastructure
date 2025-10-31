@@ -3,34 +3,63 @@
   pkgs,
   lib,
   self,
-  fenix,
+  tg-globals,
   ...
 }: let
   hw = self.inputs.nixos-hardware.nixosModules;
   baseModules = [
     (import hw.common-gpu-nvidia)
     (import hw.common-cpu-amd)
+    self.inputs.tg-public-log-parser.nixosModules.default
     self.inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
     ../../../../modules/fail2ban.nix
+    ../../../../modules/maria.nix
+    ../../../../modules/postgres.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
+    ../../../../modules/restic.nix
     ../../modules/garage.nix
-    ../../modules/maria.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
-    ../../modules/podman.nix
+    ../../modules/docker.nix
     ../../modules/tgs
-    ./modules/monitoring
-    ./modules/grafana
-    ./modules/postgres.nix
+    (import ../../modules/cloudflared.nix {
+      inherit pkgs config lib;
+      age-file = ./secrets/cloudflared.age;
+    })
+    (import ../../modules/public-logs.nix {
+      inherit pkgs tg-globals;
+      instance-name = "sybil";
+      bind-port = "1338";
+      internal-port = "13338";
+    })
+    (import ../../modules/public-logs.nix {
+      inherit pkgs tg-globals;
+      instance-name = "manuel";
+      bind-port = "1448";
+      internal-port = "11448";
+    })
+    (import ../../modules/public-logs.nix {
+      inherit pkgs tg-globals;
+      instance-name = "eventhallus";
+      bind-port = "7778";
+      internal-port = "17778";
+    })
+    (import ../../modules/public-logs.nix {
+      inherit pkgs tg-globals;
+      instance-name = "effigy";
+      bind-port = "7338";
+      internal-port = "17338";
+    })
     ./modules/atticd.nix
+    ./modules/grafana
+    ./modules/monitoring
+    ./modules/motd
     ./modules/nvidia.nix
     ./modules/redbot.nix
     ./modules/discourse.nix
-    ./modules/dragonflydb.nix
-    ./modules/motd
   ];
 in {
   networking.hostName = "tgsatan";
@@ -68,6 +97,7 @@ in {
       "/var/lib/tailscale"
       "/etc/NetworkManager/system-connections"
       "/var/lib/acme"
+      "/var/lib/postgresql"
     ];
   };
 
@@ -99,11 +129,6 @@ in {
     trim.enable = true;
     autoSnapshot.enable = false;
   };
-
-  services.mysql = {
-    dataDir = "/persist/mariadb";
-  };
-
   age.secrets.tgs = {
     file = ./secrets/tgs.age;
     owner = "${config.services.tgstation-server.username}";
@@ -111,9 +136,6 @@ in {
   };
   services.tgstation-server = {
     environmentFile = config.age.secrets.tgs.path;
-  };
-  systemd.services.tgstation-server = {
-    wants = ["mysql.service"];
   };
 
   services.grafana = {
@@ -125,30 +147,42 @@ in {
     };
   };
 
-  # TODO: Move this to it's own module, either in modules/ or a host based one
-  age.secrets.restic-env.file = ./secrets/restic-env.age;
-  age.secrets.restic-key.file = ./secrets/restic-key.age;
-  services.restic = {
-    backups.persist = {
-      environmentFile = config.age.secrets.restic-env.path;
-      passwordFile = config.age.secrets.restic-key.path;
-      repository = "s3:s3.us-east-005.backblazeb2.com/tgstation-backups";
-      extraBackupArgs = ["-v"];
-      paths = ["/persist" "/root/tgsatan_maria.sql"];
-      exclude = [
-        "/persist/garage/data"
-      ];
-      backupPrepareCommand = ''
-        ${pkgs.mariadb}/bin/mysqldump --all-databases > /root/tgsatan_maria.sql
-      '';
-      backupCleanupCommand = ''
-        rm /root/tgsatan_maria.sql
-      '';
-    };
+  services.postgresql = {
+    enable = true;
+    # If you change this, you will need to perform manual cleanup
+    # of removed users
+    ensureUsers = [
+      {
+        name = "root";
+      }
+      # {
+      #   name = "tgstation";
+      #   ensureDBOwnership = true;
+      # }
+      # {
+      #   name = "tgmc";
+      #   ensureDBOwnership = true;
+      # }
+      {
+        name = "grafana";
+        ensureDBOwnership = true;
+      }
+      {
+        name = "atticd";
+        ensureDBOwnership = true;
+      }
+    ];
+
+    ensureDatabases = [
+      # "tgstation";
+      # "tgmc";
+      "grafana"
+      "atticd"
+    ];
   };
 
   virtualisation.oci-containers = {
-    backend = "podman";
+    backend = "docker";
     containers = {
       nvidia-stats = {
         hostname = "nvidia-stats";

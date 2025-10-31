@@ -3,11 +3,13 @@
   pkgs,
   config,
   lib,
+  tg-globals,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
   baseModules = [
     (import hw.common-cpu-amd)
+    inputs.tg-public-log-parser.nixosModules.default
     inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
@@ -15,13 +17,24 @@
     ./modules/caddy
     ./modules/haproxy
     ./modules/motd
+    (import ../../modules/public-logs.nix {
+      inherit pkgs tg-globals;
+      instance-name = "terry";
+      bind-port = "3337";
+      internal-port = "13337";
+    })
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
+    ../../../../modules/restic.nix
+    (import ../../modules/cloudflared.nix {
+      inherit pkgs config lib;
+      age-file = ./secrets/cloudflared.age;
+    })
     ../../modules/garage.nix
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
-    ../../modules/podman.nix
+    ../../modules/docker.nix
     ../../modules/tgs
   ];
 in {
@@ -65,22 +78,6 @@ in {
       "/etc/NetworkManager/system-connections"
       "/var/lib/acme"
     ];
-  };
-
-  age.secrets.restic-env.file = ./secrets/restic-env.age;
-  age.secrets.restic-key.file = ./secrets/restic-key.age;
-
-  services.restic = {
-    backups.persist = {
-      environmentFile = config.age.secrets.restic-env.path;
-      passwordFile = config.age.secrets.restic-key.path;
-      repository = "s3:s3.us-east-005.backblazeb2.com/tgstation-backups";
-      extraBackupArgs = ["-v"];
-      paths = ["/persist"];
-      exclude = [
-        "/persist/garage"
-      ];
-    };
   };
 
   networking.hosts = {

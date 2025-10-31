@@ -3,14 +3,12 @@
   pkgs,
   pkgs-unstable,
   inputs,
-  headscaleIPv4,
   ...
 }: {
   # For Unix sockets, unused for now
   systemd.tmpfiles.rules = [
     "d /run/caddy 644 ${config.services.caddy.user} ${config.services.caddy.group}"
     "d /run/php/caddy 770 ${config.services.caddy.user} ${config.services.caddy.group}"
-    "d /run/tgstation-website-v2 770 ${config.services.caddy.user} ${config.services.caddy.group}"
   ];
 
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
@@ -20,10 +18,7 @@
     80
     443
   ];
-  networking.hosts = {
-    "100.64.0.25" = ["idm.staging.tgstation13.org"];
-  };
-  age.secrets.cloudflare_api.file = ../secrets/cloudflare_api.age;
+  age.secrets.cloudflare-api.file = ../../../../../secrets/cloudflare-api.age;
   security.acme = {
     acceptTerms = true;
     defaults = {
@@ -31,13 +26,12 @@
       email = "acme@tgstation13.org";
       dnsPropagationCheck = true;
       credentialFiles = {
-        "CF_DNS_API_TOKEN_FILE" = config.age.secrets.cloudflare_api.path;
+        "CF_DNS_API_TOKEN_FILE" = config.age.secrets.cloudflare-api.path;
       };
       server = "https://acme-v02.api.letsencrypt.org/directory"; # Production
     };
     certs = {
       "web.staging.tgstation13.org" = {};
-      "idm.staging.tgstation13.org" = {};
     };
   };
   users.users.php-caddy = {
@@ -70,7 +64,7 @@
       plugins = [
         "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb" # Module to retrieve trusted proxy IPs from cloudflare
       ];
-      hash = "sha256-o/A1YSVSfUvwaepb7IusiwCt2dAGmzZrtM3cb8i8Too=";
+      hash = "sha256-w0pJEcwbawr9WKvnyWO++gGHYRUUUxGmGYkXqRvCQ8A=";
     };
     enableReload = true; # Reload caddy instead of restarting it on config changes
     globalConfig = ''
@@ -83,6 +77,7 @@
           interval 12h
           timeout 15s
         }
+        client_ip_headers CF-Connecting-IP X-Forwarded-For
         #trusted_proxies_strict # <https://caddyserver.com/docs/caddyfile/options#trusted-proxies-strict>
       }
     '';
@@ -98,38 +93,11 @@
             env _GET 127.0.0.1
           }
           handle_path /serverinfo.json {
-            root /run/tgstation-website-v2/serverinfo.json
+            root /run/tgstation-server-info-fetcher/serverinfo.json
             file_server
           }
         '';
       };
-      "idm.staging.tgstation13.org" = {
-        useACMEHost = "idm.staging.tgstation13.org";
-        extraConfig = ''
-          encode gzip zstd
-          reverse_proxy https://idm.staging.tgstation13.org:8443
-        '';
-      };
-    };
-  };
-  # Server Info Fetcher
-  systemd.services."tgstation-serverdatasync" = {
-    serviceConfig = {
-      User = "caddy";
-      Group = "caddy";
-      ExecStart = pkgs.writeShellScript "server-info-fetcher.sh" ''
-        ${pkgs.rustPlatform.buildRustPackage rec {
-          pname = "server-info-fetcher";
-          version = "0.1.0";
-          src = pkgs.fetchFromGitHub {
-            owner = "tgstation-operations";
-            repo = pname;
-            rev = "e6964f414101be212d12e4510767b54e45160e53";
-            hash = "sha256-I5tVl9Wh4sovO9bVJRPpIQOn4S9dfa5mYad/AB8WPNs=";
-          };
-          cargoHash = "sha256-vRVVGVXAvKbQ8lpgDknTKnIL+HYgkPy1R//TbUG4F6o=";
-        }}/bin/server-info-fetcher --servers 100.64.0.11:3336,100.64.0.1:1337,100.64.0.1:1447,100.64.0.1:5337 /run/tgstation-website-v2/serverinfo.json
-      '';
     };
   };
 }

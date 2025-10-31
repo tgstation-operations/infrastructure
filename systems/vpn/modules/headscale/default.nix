@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   ...
 }: {
@@ -25,6 +24,15 @@
       server_url = "https://vpn.tgstation13.org";
       tls_letsencrypt_hostname = "vpn.tgstation13.org";
       metrics_listen_addr = "127.0.0.1:9532";
+      dns = {
+        override_local_dns = false;
+        nameservers.global = [
+          "1.1.1.1"
+          "1.0.0.1"
+          "2606:4700:4700::1111"
+          "2606:4700:4700::1001"
+        ];
+      };
     };
   };
   security.wrappers = {

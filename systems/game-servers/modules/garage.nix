@@ -12,7 +12,7 @@
 
   services.garage = {
     enable = true;
-    package = pkgs.garage_1_x; # Has to be set explicitly, to account for major version updates
+    package = pkgs.garage_1; # Has to be set explicitly, to account for major version updates
     environmentFile = config.age.secrets.garage.path;
     settings = {
       # <https://garagehq.deuxfleurs.fr/documentation/reference-manual/configuration/>
@@ -57,8 +57,8 @@
       Group = "garage";
       DynamicUser = false;
     };
-    after = [
-      "tailscaled.service" # Required, as it's how our nodes get accessed and swarm
-    ];
+    environment = {
+      "IM_LITERALLY_JUST_SETTING_THIS_TO_RESTART_GARAGE_REMOVE_IT" = "chumbis";
+    };
   };
 }

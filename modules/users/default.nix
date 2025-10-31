@@ -4,4 +4,8 @@
     ./keyholder
     ./operator
   ];
+
+  users.groups = {
+    db-operator = {};
+  };
 }

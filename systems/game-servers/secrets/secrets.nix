@@ -1,24 +1,30 @@
 let
-  users = import ../../../modules/ssh_keys.nix;
-
-  # Systems
-  tgsatan = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAgFJAiZ7gf+LoAyNVqMBXTNcGETJJZreVzMOGbOd2C5";
-  blockmoths = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHhSMBihD1sohp9h6tKYUd/BuyAsl0zOh/Uv86Gk/E/z";
-  systems = [tgsatan blockmoths];
-
-  wiggle = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILz3vKC6Xr5fmXXU8BsY5oityIM60NmIaCyPTPUuZ35+";
+  users = import ../../../modules/ssh_keys_by_group.nix {};
+  systems = import ../../../modules/ssh_keys_systems.nix;
+  final = users ++ systems.game-nodes-all;
 in {
-  "garage.age".publicKeys = users ++ systems;
+  # Obtained by running "cloudflared login" then copying from ~/.cloudflared/cert.pem
+  # Currently tied to Dominion's account
+  "cloudflared-cert.age".publicKeys = final;
 
-  "rsc-cdn.age".publicKeys = users ++ systems ++ [wiggle];
+  "garage.age".publicKeys = final;
+
+  "rsc-cdn.age".publicKeys = final;
   # /tg/station13 main server secrets
-  "tg13-dbconfig.age".publicKeys = users ++ systems ++ [wiggle];
-  "tg13-comms.age".publicKeys = users ++ systems ++ [wiggle];
-  "tg13-tts_secrets.age".publicKeys = users ++ systems ++ [wiggle];
-  "tg13-webhooks.age".publicKeys = users ++ systems ++ [wiggle];
-  "tg13-extra_config-rclone.age".publicKeys = users ++ systems ++ [wiggle];
+  "tg13-dbconfig.age".publicKeys = final;
+  # The comms key in here is also used in the PR announcer
+  # If you change it here change it there as well
+  "tg13-comms.age".publicKeys = final;
+  "tg13-tts_secrets.age".publicKeys = final;
+  "tg13-webhooks.age".publicKeys = final;
+  "tg13-extra_config-rclone.age".publicKeys = final;
   # TGMC Secret
-  "tgmc-dbconfig.age".publicKeys = users ++ systems ++ [wiggle];
-  "tgmc-tts_secrets.age".publicKeys = users ++ systems ++ [wiggle];
-  "tgmc-extra_config-rclone.age".publicKeys = users ++ systems ++ [wiggle];
+  "tgmc-dbconfig.age".publicKeys = final;
+  "tgmc-tts_secrets.age".publicKeys = final;
+  "tgmc-extra_config-rclone.age".publicKeys = final;
+  # Effigy server secrets
+  "effigy-dbconfig.age".publicKeys = final;
+  "effigy-comms.age".publicKeys = final;
+  #"effigy-tts_secrets.age".publicKeys = final;
+  "effigy-extra_config-rclone.age".publicKeys = final;
 }

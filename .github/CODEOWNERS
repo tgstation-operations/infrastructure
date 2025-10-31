@@ -2,8 +2,12 @@
 
 **/haproxy @RigglePrime
 **/haproxy_base @RigglePrime
-/modules/ssh_keys.nix @RigglePrime
 /systems/game-servers/systems/tgsatan/modules/redbot.nix @RigglePrime
 /systems/game-servers/systems/tgsatan/modules/monitoring/relay-nodes.nix @RigglePrime
 /systems/game-servers/modules/haproxy_base/haproxy.conf @RigglePrime
 /systems/edge-nodes/modules/haproxy_base/haproxy.conf @RigglePrime
+
+# Multi-User
+
+/modules/ssh_keys_by_group.nix @RigglePrime @ZephyrTFA
+/modules/ssh_keys_systems.nix @RigglePrime @ZephyrTFA
