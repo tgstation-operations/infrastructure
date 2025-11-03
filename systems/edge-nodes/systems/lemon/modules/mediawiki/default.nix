@@ -98,7 +98,9 @@ in {
         };
         phases = ["unpackPhase" "patchPhase" "installPhase"];
         patchPhase = ''
-          cat ${./TgForumAuthProvider.php} > src/AuthenticationProvider/TgForumAuthProvider.php
+          cat <<'EOF'
+          ${builtins.readFile ./TgForumAuthProvider.php}
+          EOF > src/AuthenticationProvider/TgForumAuthProvider.php
         '';
         installPhase = ''
           mkdir -p $out
