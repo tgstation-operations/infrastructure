@@ -109,7 +109,7 @@
         {
             "action": "accept",
             "src": ["group:keyholder-coolstation"],
-            "dst": ["tag:backend:*"]
+            "dst": ["tag:backend:80", "tag:backend:443"]
         },
 		{
 			"action": "accept",
