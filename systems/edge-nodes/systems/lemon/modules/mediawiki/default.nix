@@ -96,11 +96,15 @@ in {
           rev = "bd760054b379bdac54cb430cfe3554e59b01d559";
           hash = "sha256-01Yx3WjxtFkr3VzvZZYF4HuadXw1kHSlJZAg3IA2gPI=";
         };
+        buildInputs = [
+          pkgs.php83Packages.composer
+        ]
         phases = ["unpackPhase" "patchPhase" "installPhase"];
         patchPhase = ''
           cat <<'EOF' > src/AuthenticationProvider/TgForumAuthProvider.php
           ${builtins.readFile ./TgForumAuthProvider.php}
           EOF
+          composer install --no-dev
         '';
         installPhase = ''
           mkdir -p $out
