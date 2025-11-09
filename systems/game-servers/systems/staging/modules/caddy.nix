@@ -17,10 +17,7 @@
     80
     443
   ];
-  age.secrets = {
-    cloudflare-api.file = ../../../../../secrets/cloudflare-api.age;
-    caddy_env.file = ../../../secrets/caddy_env.age;
-  };
+  age.secrets.cloudflare-api.file = ../../../../../secrets/cloudflare-api.age;
   security.acme = {
     acceptTerms = true;
     defaults = {
@@ -40,7 +37,6 @@
     enable = true;
     package = tg-globals.caddy.default-package;
     enableReload = true; # Reload caddy instead of restarting it on config changes
-    environmentFile = config.age.secrets.caddy_env.path;
     globalConfig = ''
       auto_https disable_certs  # We use security.acme.certs for this where applicable, so we don't want it to try and get certs
       grace_period 30s # Make sure we're not infinitely waiting for clients on reload
