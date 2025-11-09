@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   pkgs,
   tg-globals,
@@ -8,6 +9,15 @@
   raw-port,
   raw-internal-port,
   group ? "tgstation-server",
+  enable-public-logs ? true,
+  oidc-settings ? {
+    OpenIDConnectSettings = {
+      Authority = "https://auth.tgstation13.org/application/o/raw-logs";
+      ClientId = "kD6xu5pXLjXmOGqpsavXuq3dkDQ9m14oRdLv1NmX";
+    };
+    age-name = "raw-logs-oidc-reverse-proxy";
+    age-path = ../../secrets/raw-logs-oidc-reverse-proxy.age;
+  },
   ...
 }: let
   public-logs-url = "${instance-name}-logs.tgstation13.org";
@@ -18,7 +28,7 @@ in {
     cloudflared.tunnels.primary-tunnel = {
       originRequest.httpHostHeader = "localhost";
       ingress = {
-        "${public-logs-url}" = "http://localhost:${internal-port}";
+        "${public-logs-url}" = lib.mkIf enable-public-logs "http://localhost:${internal-port}";
         "${raw-logs-url}" = "http://localhost:${raw-port}";
       };
     };
@@ -44,7 +54,7 @@ in {
       };
     };
 
-    tg-public-log-parser."${instance-name}" = {
+    tg-public-log-parser."${instance-name}" = lib.mkIf enable-public-logs {
       enable = true;
       supplementary-groups = group;
       config = {
@@ -60,16 +70,13 @@ in {
       enable = true;
       config = {
         TargetUrl = "http://localhost:${raw-internal-port}";
-        OpenIDConnectSettings = {
-          Authority = "https://auth.tgstation13.org/application/o/raw-logs";
-          ClientId = "kD6xu5pXLjXmOGqpsavXuq3dkDQ9m14oRdLv1NmX";
-        };
+        OpenIDConnectSettings = oidc-settings.OpenIDConnectSettings;
       };
-      environmentFile = config.age.secrets.raw-logs-oidc-reverse-proxy.path;
+      environmentFile = config.age.secrets."${oidc-settings.age-name}".path;
     };
   };
 
-  age.secrets.raw-logs-oidc-reverse-proxy.file = ../../secrets/raw-logs-oidc-reverse-proxy.age;
+  age.secrets."${oidc-settings.age-name}".file = oidc-settings.age-path;
 
   system.activationScripts.tgs-data-chmod = pkgs.lib.stringAfter ["users"] ''
     chmod g+rx ${tg-globals.tgs.root-path}

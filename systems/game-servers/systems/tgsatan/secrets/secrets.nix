@@ -22,4 +22,5 @@ in {
   "grafana_db.age".publicKeys = final;
   "grafana_smtp.age".publicKeys = final;
   "grafana_admin.age".publicKeys = final;
+  "tgmc-raw-logs-oidc-reverse-proxy.age".publicKeys = final;
 }

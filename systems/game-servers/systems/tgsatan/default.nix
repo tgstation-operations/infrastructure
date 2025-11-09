@@ -62,6 +62,19 @@
       raw-port = "27338";
       raw-internal-port = "27339";
     })
+    (import ../../modules/logs/raw.nix {
+      inherit pkgs config tg-globals;
+      instance-name = "tgmc";
+      bind-port = "7238";
+      internal-port = "17238";
+      raw-port = "37338";
+      raw-internal-port = "37339";
+      enable-public-logs = false;
+      oidc-settings = {
+        age-name = "tgmc-raw-logs-oidc-reverse-proxy";
+        age-path = ./secrets/tgmc-raw-logs-oidc-reverse-proxy.age;
+      };
+    })
     ./modules/atticd.nix
     ./modules/grafana
     ./modules/monitoring
