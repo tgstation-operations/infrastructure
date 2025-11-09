@@ -34,6 +34,7 @@
       bind-port = "3337";
       internal-port = "13337";
       raw-port = "23337";
+      raw-internal-port = "23338";
     })
     ./modules/haproxy
     ./modules/motd

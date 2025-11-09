@@ -32,6 +32,7 @@
       bind-port = "1338";
       internal-port = "13338";
       raw-port = "23338";
+      raw-internal-port = "23339";
     })
     (import ../../modules/logs {
       inherit pkgs config tg-globals;
@@ -39,6 +40,7 @@
       bind-port = "1448";
       internal-port = "11448";
       raw-port = "21448";
+      raw-internal-port = "21449";
     })
     (import ../../modules/logs {
       inherit pkgs config tg-globals;
@@ -46,6 +48,7 @@
       bind-port = "7778";
       internal-port = "17778";
       raw-port = "27778";
+      raw-internal-port = "27779";
     })
     (import ../../modules/logs {
       inherit pkgs config tg-globals;
@@ -53,6 +56,7 @@
       bind-port = "7338";
       internal-port = "17338";
       raw-port = "27338";
+      raw-internal-port = "27339";
     })
     ./modules/atticd.nix
     ./modules/grafana
