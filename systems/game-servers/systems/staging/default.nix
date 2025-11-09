@@ -10,6 +10,7 @@
   hw = inputs.nixos-hardware.nixosModules;
   baseModules = [
     (import hw.common-cpu-intel)
+    inputs.oidc-reverse-proxy.nixosModules.default
     inputs.tg-public-log-parser.nixosModules.default
     inputs.tgstation-server.nixosModules.default
   ];

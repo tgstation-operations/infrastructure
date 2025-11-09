@@ -36,6 +36,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dragon-bot.url = "github:tgstation/dragon-bot";
+    oidc-reverse-proxy = {
+      url = "github:Cyberboss/oidc-reverse-proxy";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     tg-public-log-parser = {
       url = "github:Mothblocks/tg-public-log-parser";
       inputs.nixpkgs.follows = "nixpkgs";

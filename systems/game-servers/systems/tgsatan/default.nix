@@ -10,6 +10,7 @@
   baseModules = [
     (import hw.common-gpu-nvidia)
     (import hw.common-cpu-amd)
+    self.inputs.oidc-reverse-proxy.nixosModules.default
     self.inputs.tg-public-log-parser.nixosModules.default
     self.inputs.tgstation-server.nixosModules.default
   ];

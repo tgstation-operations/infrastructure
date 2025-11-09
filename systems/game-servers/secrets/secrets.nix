@@ -29,4 +29,7 @@ in {
   "effigy-extra_config-rclone.age".publicKeys = final;
   # Contains RAW_LOGS_CLIENT_SECRET for OIDC for raw-logs
   "caddy_env.age".publicKeys = final;
+
+  # OIDC Secret for raw-logs client
+  "raw-logs-oidc-reverse-proxy.age".publicKeys = final;
 }
