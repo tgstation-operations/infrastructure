@@ -1,5 +1,4 @@
 {
-  lib,
   config,
   pkgs,
   tg-globals,
@@ -28,7 +27,7 @@ in {
     cloudflared.tunnels.primary-tunnel = {
       originRequest.httpHostHeader = "localhost";
       ingress = {
-        "${public-logs-url}" = lib.mkIf enable-public-logs "http://localhost:${internal-port}";
+        "${public-logs-url}" = pkgs.lib.mkIf enable-public-logs "http://localhost:${internal-port}";
         "${raw-logs-url}" = "http://localhost:${raw-port}";
       };
     };
@@ -54,7 +53,7 @@ in {
       };
     };
 
-    tg-public-log-parser."${instance-name}" = lib.mkIf enable-public-logs {
+    tg-public-log-parser."${instance-name}" = pkgs.lib.mkIf enable-public-logs {
       enable = true;
       supplementary-groups = group;
       config = {
