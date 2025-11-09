@@ -22,11 +22,6 @@
   public-logs-url = "${instance-name}-logs.tgstation13.org";
   raw-logs-url = "raw-${public-logs-url}";
   logs-path = "${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs";
-  full-oidc-settings = {
-    Authority = oidc-settings.Authority;
-    ClientId = oidc-settings.ClientId;
-    RedirectUrl = "https://${raw-logs-url}/";
-  };
 in {
   services = {
     cloudflared.tunnels.primary-tunnel = {
@@ -75,7 +70,7 @@ in {
       config = {
         Urls = "http://localhost:${raw-port}";
         TargetUrl = "http://localhost:${raw-internal-port}";
-        OpenIDConnectSettings = full-oidc-settings;
+        OpenIDConnectSettings = oidc-settings.OpenIDConnectSettings;
       };
       environmentFile = config.age.secrets."${oidc-settings.age-name}".path;
     };
