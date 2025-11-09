@@ -65,7 +65,7 @@ in {
           ClientId = "kD6xu5pXLjXmOGqpsavXuq3dkDQ9m14oRdLv1NmX";
         };
       };
-      environmentFile = config.age.secrets.raw-logs-oidc-reverse-proxy.path
+      environmentFile = config.age.secrets.raw-logs-oidc-reverse-proxy.path;
     };
   };
 
