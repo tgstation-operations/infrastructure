@@ -68,6 +68,7 @@ in {
     oidc-reverse-proxy."${instance-name}" = {
       enable = true;
       config = {
+        Urls = "http://localhost:${raw-port}";
         TargetUrl = "http://localhost:${raw-internal-port}";
         OpenIDConnectSettings = oidc-settings.OpenIDConnectSettings;
       };
