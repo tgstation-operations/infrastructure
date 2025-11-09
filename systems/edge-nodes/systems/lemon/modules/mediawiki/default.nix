@@ -89,26 +89,25 @@ in {
         rev = "a89e96396fc9c3b3a0637552ef35fa092081ac65";
         hash = "sha256-XKmlNf70cNbInXdNlZ4JaAn9vwWIp2/kGRUNb5dXfYM=";
       };
-      WSOAuth = stdenvNoCC.mkDerivation {
-        name = "WSOAuth-with-tgstation";
+      WSOAuth = pkgs.php83.buildComposerProject2 rec {
+        pname = "WSOAuth-with-tgstation";
+        version = "1.0.0";
         src = fetchgit {
           url = "https://gerrit.wikimedia.org/r/mediawiki/extensions/WSOAuth.git";
           rev = "bd760054b379bdac54cb430cfe3554e59b01d559";
           hash = "sha256-01Yx3WjxtFkr3VzvZZYF4HuadXw1kHSlJZAg3IA2gPI=";
         };
-        buildInputs = [
-          pkgs.php83Packages.composer
-        ];
-        phases = ["unpackPhase" "patchPhase" "installPhase"];
-        patchPhase = ''
+        composerLock = ./composer.wsoauth.lock; # because wsoauth does not have its own lockfile
+        composerNoDev = true;
+        composerStrictValidation = false; # we dont care if the composer json does not define a package name
+        vendorHash = "sha256-16iLmAjSfPzi5/v0ks4+VzQpYTlDDfFDVsQSQDtqC/Q=";
+        postPatch = ''
           cat <<'EOF' > src/AuthenticationProvider/TgForumAuthProvider.php
           ${builtins.readFile ./TgForumAuthProvider.php}
           EOF
-          composer install --no-dev
         '';
-        installPhase = ''
-          mkdir -p $out
-          cp -r ./* $out
+        postInstall = ''
+          cp -r . "$out"/
         '';
       };
       ParserFunctions = null;
