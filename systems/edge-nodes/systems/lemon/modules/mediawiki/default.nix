@@ -98,7 +98,7 @@ in {
         };
         buildInputs = [
           pkgs.php83Packages.composer
-        ]
+        ];
         phases = ["unpackPhase" "patchPhase" "installPhase"];
         patchPhase = ''
           cat <<'EOF' > src/AuthenticationProvider/TgForumAuthProvider.php
