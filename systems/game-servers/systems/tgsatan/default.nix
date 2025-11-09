@@ -26,6 +26,10 @@
     ../../modules/muffin-button.nix
     ../../modules/docker.nix
     ../../modules/tgs
+    (import ../../modules/cloudflared.nix {
+      inherit pkgs config lib;
+      age-file = ./secrets/cloudflared.age;
+    })
     (import ../../modules/logs {
       inherit pkgs config tg-globals;
       instance-name = "sybil";
