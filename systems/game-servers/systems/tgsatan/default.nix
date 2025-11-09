@@ -62,7 +62,7 @@
       raw-port = "27338";
       raw-internal-port = "27339";
     })
-    (import ../../modules/logs/raw.nix {
+    (import ../../modules/logs {
       inherit pkgs config tg-globals;
       instance-name = "tgmc";
       bind-port = "7238";
@@ -71,6 +71,10 @@
       raw-internal-port = "37339";
       enable-public-logs = false;
       oidc-settings = {
+        OpenIDConnectSettings = {
+          Authority = "https://auth.tgstation13.org/application/o/tgmc-raw-logs";
+          ClientId = "mtumSnN4SUweJicI6r1mRXtd8bBqfYjM6K8KdVA4";
+        };
         age-name = "tgmc-raw-logs-oidc-reverse-proxy";
         age-path = ./secrets/tgmc-raw-logs-oidc-reverse-proxy.age;
       };
