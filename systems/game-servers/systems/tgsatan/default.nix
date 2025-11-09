@@ -59,6 +59,7 @@
     ./modules/motd
     ./modules/nvidia.nix
     ./modules/redbot.nix
+    ./modules/discourse.nix
   ];
 in {
   networking.hostName = "tgsatan";

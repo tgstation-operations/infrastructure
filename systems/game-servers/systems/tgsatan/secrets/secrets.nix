@@ -22,4 +22,8 @@ in {
   "grafana_db.age".publicKeys = final;
   "grafana_smtp.age".publicKeys = final;
   "grafana_admin.age".publicKeys = final;
+  # Discourse
+  "discourse_db.age".publicKeys = users ++ systems;
+  "discourse_smtp.age".publicKeys = users ++ systems;
+  "discourse_admin.age".publicKeys = users ++ systems;
 }
