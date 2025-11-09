@@ -38,6 +38,11 @@
 			"spiders@"
 		],
 
+    "group:keyholder-coolstation": [
+      "warc@",
+      "tamber@"
+    ],
+
 		"group:keyholder-effigy": [
 			"LT3@",
 			"gallows@",
@@ -101,6 +106,11 @@
 			"src": ["group:keyholder-tg"],
 			"dst": ["tag:backend:*"]
 		},
+        {
+            "action": "accept",
+            "src": ["group:keyholder-coolstation"],
+            "dst": ["tag:backend:80", "tag:backend:443"]
+        },
 		{
 			"action": "accept",
 			"src": ["group:keyholder-effigy"],
