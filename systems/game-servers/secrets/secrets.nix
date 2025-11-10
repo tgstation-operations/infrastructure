@@ -27,4 +27,6 @@ in {
   "effigy-comms.age".publicKeys = final;
   #"effigy-tts_secrets.age".publicKeys = final;
   "effigy-extra_config-rclone.age".publicKeys = final;
+  # OIDC Secret for raw-logs client
+  "raw-logs-oidc-reverse-proxy.age".publicKeys = final;
 }

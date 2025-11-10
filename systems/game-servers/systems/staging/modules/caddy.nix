@@ -35,7 +35,7 @@
   };
   services.caddy = {
     enable = true;
-    package = pkgs-unstable.caddy; # We use caddy on unstable so we get the latest version of it, consistent with the relays
+    package = tg-globals.caddy.default-package;
     enableReload = true; # Reload caddy instead of restarting it on config changes
     globalConfig = ''
       auto_https disable_certs  # We use security.acme.certs for this where applicable, so we don't want it to try and get certs

@@ -10,6 +10,7 @@
   baseModules = [
     (import hw.common-gpu-nvidia)
     (import hw.common-cpu-amd)
+    self.inputs.oidc-reverse-proxy.nixosModules.default
     self.inputs.tg-public-log-parser.nixosModules.default
     self.inputs.tgstation-server.nixosModules.default
   ];
@@ -29,29 +30,54 @@
       inherit pkgs config lib;
       age-file = ./secrets/cloudflared.age;
     })
-    (import ../../modules/public-logs.nix {
-      inherit pkgs tg-globals;
+    (import ../../modules/logs {
+      inherit pkgs config tg-globals;
       instance-name = "sybil";
       bind-port = "1338";
       internal-port = "13338";
+      raw-port = "23338";
+      raw-internal-port = "23339";
     })
-    (import ../../modules/public-logs.nix {
-      inherit pkgs tg-globals;
+    (import ../../modules/logs {
+      inherit pkgs config tg-globals;
       instance-name = "manuel";
       bind-port = "1448";
       internal-port = "11448";
+      raw-port = "21448";
+      raw-internal-port = "21449";
     })
-    (import ../../modules/public-logs.nix {
-      inherit pkgs tg-globals;
+    (import ../../modules/logs {
+      inherit pkgs config tg-globals;
       instance-name = "eventhallus";
       bind-port = "7778";
       internal-port = "17778";
+      raw-port = "27778";
+      raw-internal-port = "27779";
     })
-    (import ../../modules/public-logs.nix {
-      inherit pkgs tg-globals;
+    (import ../../modules/logs {
+      inherit pkgs config tg-globals;
       instance-name = "effigy";
       bind-port = "7338";
       internal-port = "17338";
+      raw-port = "27338";
+      raw-internal-port = "27339";
+    })
+    (import ../../modules/logs {
+      inherit pkgs config tg-globals;
+      instance-name = "tgmc";
+      bind-port = "7238";
+      internal-port = "17238";
+      raw-port = "37338";
+      raw-internal-port = "37339";
+      enable-public-logs = false;
+      oidc-settings = {
+        OpenIDConnectSettings = {
+          Authority = "https://auth.tgstation13.org/application/o/tgmc-raw-logs";
+          ClientId = "mtumSnN4SUweJicI6r1mRXtd8bBqfYjM6K8KdVA4";
+        };
+        age-name = "tgmc-raw-logs-oidc-reverse-proxy";
+        age-path = ./secrets/tgmc-raw-logs-oidc-reverse-proxy.age;
+      };
     })
     ./modules/atticd.nix
     ./modules/grafana
