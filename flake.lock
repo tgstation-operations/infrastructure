@@ -453,11 +453,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1762735016,
-        "narHash": "sha256-jLXaOQM/MRhYnOaW4sbWwkPdex/oNmB9WDJ6EHQUN5Y=",
+        "lastModified": 1762739710,
+        "narHash": "sha256-5Cz3FjD6VKUKQ+Za4CHdhFUhNDCx6xSn+AImW9w0GRI=",
         "owner": "Cyberboss",
         "repo": "oidc-reverse-proxy",
-        "rev": "35d36dca263e1efd1518a6d65437ec1e1f080804",
+        "rev": "2ce2e9bf1082bf961629fb8693c728f784bde78d",
         "type": "github"
       },
       "original": {
