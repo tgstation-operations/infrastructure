@@ -19,12 +19,6 @@
       npm run generateDbClient
     '';
   };
-
-  start-script = pkgs.writeShellScript "bab.sh" ''
-    cd ${package}
-    ${pkgs.python311Packages.pip}/bin/pip install -U pip wheel Red-DiscordBot
-    exec redbot --team-members-are-owners ${id}
-  '';
 in {
   systemd.services.byond-authentication-bridge = {
     enable = true;
