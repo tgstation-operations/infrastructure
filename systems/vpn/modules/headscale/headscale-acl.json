@@ -1,169 +1,255 @@
 {
-	"groups": {
-		"group:op": [
-			"scriptis@",
-			"sothanforax@",
-			"ivory@",
-			"dominion@",
-			"riggle@",
-			"zephyrtfa@",
-			"lowrp@",
-			"iain0@",
-			"dax@",
-			"alexkar598@"
-		],
-		"group:keyholder-tg": [
-			"watermelon@",
-			"oranges@",
-			"ned@",
-			"niknak@",
-			"iamgoofball@",
-			"mothblocks@",
-			"maxipat@",
-			"smartkar@",
-			"aa07@",
-			"mrmelbert@",
-			"kieth4@",
-			"timberpoes@",
-			"spookuni@",
-			"fikou@",
-			"isratosh@",
-			"iansdoor@",
-			"namelessfairy@",
-			"thefinalpotatoe@",
-			"thebiblemelts@",
-			"cheshify@",
-			"shadowhand@",
-			"tattle@",
-			"spiders@"
-		],
-
+  "groups": {
+    "group:op": [
+      "scriptis@",
+      "sothanforax@",
+      "ivory@",
+      "dominion@",
+      "riggle@",
+      "zephyrtfa@",
+      "lowrp@",
+      "iain0@",
+      "dax@",
+      "alexkar598@",
+      "aa07@"
+    ],
+    "group:keyholder-tg": [
+      "watermelon@",
+      "oranges@",
+      "ned@",
+      "niknak@",
+      "iamgoofball@",
+      "mothblocks@",
+      "maxipat@",
+      "smartkar@",
+      "mrmelbert@",
+      "kieth4@",
+      "timberpoes@",
+      "spookuni@",
+      "fikou@",
+      "isratosh@",
+      "iansdoor@",
+      "namelessfairy@",
+      "thefinalpotatoe@",
+      "thebiblemelts@",
+      "cheshify@",
+      "shadowhand@",
+      "tattle@",
+      "spiders@"
+    ],
     "group:keyholder-coolstation": [
       "warc@",
       "tamber@"
     ],
-
-		"group:keyholder-effigy": [
-			"LT3@",
-			"gallows@",
-			"bluwu016@"
-		],
-
-		"group:keyholder-tgmc": [
-			"aiia@",
-			"barnet@",
-			"darkbyond@",
-			"ivanmixo@",
-			"lumipharon@",
-			"minimeatwad@",
-			"naaanii@",
-			"stormwell@",
-			"tivianne@",
-			"tiviplus@",
-			"kiseki@"
-		]
-	},
-	"tagOwners": {
-		"tag:backend": ["group:op"],
-		"tag:ci": ["group:op"],
-		"tag:ci-staging": ["group:op"],
-		"tag:ci-build": ["group:op"],
-		"tag:dbcluster": ["group:op"],
-		"tag:garage": ["group:op"],
-		"tag:relay": ["group:op"],
-		"tag:statbus": ["group:op"],
-		"tag:staging": ["group:op"],
-		"tag:mothbus": ["group:op"]
-	},
-	"acls": [
-		{
-			"action": "accept",
-			"src": ["tag:ci"],
-			"dst": [
-				"tag:backend:22",
-				"tag:staging:22",
-				"tag:backend:80",
-				"tag:backend:443"
-			]
-		},
-		{
-			"action": "accept",
-			"src": ["tag:ci-build"],
-			"dst": ["tag:backend:80", "tag:backend:443"]
-		},
-		{
-			"action": "accept",
-			"src": ["tag:ci-staging"],
-			"dst": ["tag:staging:22", "tag:backend:80", "tag:backend:443"]
-		},
-		{
-			"action": "accept",
-			"src": ["group:op"],
-			"dst": ["tag:backend:*"]
-		},
-		{
-			"action": "accept",
-			"src": ["group:keyholder-tg"],
-			"dst": ["tag:backend:*"]
-		},
-        {
-            "action": "accept",
-            "src": ["group:keyholder-coolstation"],
-            "dst": ["tag:backend:80", "tag:backend:443"]
-        },
-		{
-			"action": "accept",
-			"src": ["group:keyholder-effigy"],
-			"dst": ["tag:backend:*"]
-		},
-		{
-			"action": "accept",
-			"src": ["group:keyholder-tgmc"],
-			"dst": ["tag:backend:*"]
-		},
-		{
-			"action": "accept",
-			"src": ["tag:dbcluster"],
-			"dst": ["tag:dbcluster:*"]
-		},
-		{
-			"action": "accept",
-			"src": ["tag:backend"],
-			"dst": ["tag:backend:*"]
-		},
-		{
-			"action": "accept",
-			"src": ["tag:relay"],
-			"dst": ["group:op:*"]
-		},
-		{
-			"action": "accept",
-			"src": ["tag:backend"],
-			"dst": ["autogroup:internet:*"]
-		},
-		{
-			"action": "accept",
-			"src": ["tag:statbus"],
-			"dst": ["tag:dbcluster:3306"]
-		},
-		{
-			"action": "accept",
-			"src": ["group:op", "group:keyholder-tg", "tag:backend", "tag:staging"],
-			"dst": ["tag:staging:*"]
-		},
-		{
-			"action": "accept",
-			"src": ["tag:mothbus"],
-			"dst": ["tag:garage:80", "tag:garage:443", "tag:dbcluster:3306"]
-		},
-		{
-			"action": "accept",
-			"src": ["tag:dbcluster"],
-			"dst": [
-				"tag:dbcluster:3306",
-				"tag:dbcluster:26257",
-				"tag:dbcluster:26258"
-			]
-		}
-	]
+    "group:keyholder-effigy": [
+      "LT3@",
+      "gallows@",
+      "bluwu016@"
+    ],
+    "group:keyholder-tgmc": [
+      "aiia@",
+      "barnet@",
+      "darkbyond@",
+      "ivanmixo@",
+      "lumipharon@",
+      "minimeatwad@",
+      "naaanii@",
+      "stormwell@",
+      "tivianne@",
+      "tiviplus@",
+      "kiseki@"
+    ]
+  },
+  "tagOwners": {
+    "tag:backend": [
+      "group:op"
+    ],
+    "tag:ci": [
+      "group:op"
+    ],
+    "tag:ci-staging": [
+      "group:op"
+    ],
+    "tag:ci-build": [
+      "group:op"
+    ],
+    "tag:dbcluster": [
+      "group:op"
+    ],
+    "tag:garage": [
+      "group:op"
+    ],
+    "tag:relay": [
+      "group:op"
+    ],
+    "tag:statbus": [
+      "group:op"
+    ],
+    "tag:staging": [
+      "group:op"
+    ],
+    "tag:mothbus": [
+      "group:op"
+    ]
+  },
+  "acls": [
+    {
+      "action": "accept",
+      "src": [
+        "tag:ci"
+      ],
+      "dst": [
+        "tag:backend:22",
+        "tag:staging:22",
+        "tag:backend:80",
+        "tag:backend:443"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:ci-build"
+      ],
+      "dst": [
+        "tag:backend:80",
+        "tag:backend:443"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:ci-staging"
+      ],
+      "dst": [
+        "tag:staging:22",
+        "tag:backend:80",
+        "tag:backend:443"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "group:op"
+      ],
+      "dst": [
+        "tag:backend:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "group:keyholder-tg"
+      ],
+      "dst": [
+        "tag:backend:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "group:keyholder-coolstation"
+      ],
+      "dst": [
+        "tag:backend:80",
+        "tag:backend:443"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "group:keyholder-effigy"
+      ],
+      "dst": [
+        "tag:backend:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "group:keyholder-tgmc"
+      ],
+      "dst": [
+        "tag:backend:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:dbcluster"
+      ],
+      "dst": [
+        "tag:dbcluster:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:backend"
+      ],
+      "dst": [
+        "tag:backend:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:relay"
+      ],
+      "dst": [
+        "group:op:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:backend"
+      ],
+      "dst": [
+        "autogroup:internet:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:statbus"
+      ],
+      "dst": [
+        "tag:dbcluster:3306"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "group:op",
+        "group:keyholder-tg",
+        "tag:backend",
+        "tag:staging"
+      ],
+      "dst": [
+        "tag:staging:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:mothbus"
+      ],
+      "dst": [
+        "tag:garage:80",
+        "tag:garage:443",
+        "tag:dbcluster:3306"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:dbcluster"
+      ],
+      "dst": [
+        "tag:dbcluster:3306",
+        "tag:dbcluster:26257",
+        "tag:dbcluster:26258"
+      ]
+    }
+  ]
 }
