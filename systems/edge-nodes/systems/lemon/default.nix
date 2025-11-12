@@ -12,7 +12,7 @@
     ../../modules/server-info-fetcher.nix
     ./modules/mediawiki
     ./modules/caddy.nix
-    # ../modules/tgstation-pr-announcer/default.nix
+    ./modules/bab
     self.inputs.tgstation-phpbb.nixosModules.default
   ];
   networking.hostName = "lemon";
