@@ -13,7 +13,9 @@
     };
     npmDepsHash = "sha256-dK8gACPM9GIZS5GvDfsssHm8+Y7IPY9AVI6d9gC7Myo=";
     preBuild = ''
+      echo "Start my sed"
       sed -i 's/"name": "bab",/"name": "bab","bin":{"bab":"dist/index.js"}/g' package.json
+      echo "End my sed"
     '';
     postBuild = ''
       npm run generateDbClient
