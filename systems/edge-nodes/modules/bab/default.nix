@@ -12,7 +12,7 @@
     cat ${source}/package-lock.json | ${pkgs.jq}/bin/jq -r '.packages."node_modules/prisma".version' > $out
   '';
   prisma = pkgs.prisma.overrideAttrs (finalAttrs: previousAttrs: {
-
+    version = prisma-version;
   });
   package = pkgs.buildNpmPackage {
     pname = "byond-authentication-bridge";
