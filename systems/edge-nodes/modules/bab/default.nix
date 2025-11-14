@@ -51,7 +51,7 @@ in {
         server = {
           publicUrl = "http://localhost:12385";
           host = "0.0.0.0";
-          proxy = false;
+          proxy = true;
           port = 12385;
         };
         database = {
