@@ -13,7 +13,7 @@
     dataDir = "/persist/postgres/data";
     settings = {
       listen_addresses = "localhost, ${config.networking.hostName}.tg.lan";
-    }
+    };
 
     # https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
     # type  database  user  [address]  [mask]  auth-method  [auth-options]
