@@ -52,6 +52,7 @@ in {
           publicUrl = "http://localhost:12385";
           host = "0.0.0.0";
           proxy = false;
+          port = 12385;
         };
         database = {
           connectionString = "postgresql://postgres:asdfasdf@database:5432/postgres?schema=byond-authentication-bridge";
