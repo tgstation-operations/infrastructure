@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   ...
 }: let
   source = pkgs.fetchFromGitHub {
