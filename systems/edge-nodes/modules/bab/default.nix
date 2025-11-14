@@ -52,7 +52,7 @@ in {
           publicUrl = "https://bab.tgstation13.org";
           host = "0.0.0.0";
           proxy = true;
-          port = 12385;
+          port = "12385";
         };
         logging = {
           http = {
