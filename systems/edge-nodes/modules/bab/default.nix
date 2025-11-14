@@ -49,30 +49,37 @@ in {
     };
   };
 
-  environment.etc."byond-authentication-brige/config/production.json" = {
-    text = builtins.toJSON {
-      server = {
-        publicUrl = "http://localhost:12385";
-        host = "0.0.0.0";
-        proxy = false;
-      };
-      database = {
-        connectionString = "postgresql://postgres:asdfasdf@database:5432/postgres?schema=byond-authentication-bridge";
-      };
-      logging = {
-        http = {
-          meta = false;
+  environment.etc = {
+    "byond-authentication-brige/config/production.json" = {
+      text = builtins.toJSON {
+        server = {
+          publicUrl = "http://localhost:12385";
+          host = "0.0.0.0";
+          proxy = false;
         };
-        file = {
-          enabled = true;
+        database = {
+          connectionString = "postgresql://postgres:asdfasdf@database:5432/postgres?schema=byond-authentication-bridge";
         };
-        file-err = {
-          enabled = true;
+        logging = {
+          http = {
+            meta = false;
+          };
+          file = {
+            enabled = true;
+          };
+          file-err = {
+            enabled = true;
+          };
         };
       };
+      group = "byond-authentication-bridge";
+      mode = "0444";
     };
-    group = "byond-authentication-bridge";
-    mode = "0444";
+    "byond-authentication-brige/config/default.json" = {
+      source = "${source}/config/default.json";
+      group = "byond-authentication-bridge";
+      mode = "0444";
+    };
   };
 
   security.acme.certs."bab.tgstation13.org" = {};
