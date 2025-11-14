@@ -96,6 +96,7 @@ in {
     ensureUsers = [
       {
         name = "byond-authentication-bridge";
+        password = "asdfasdf";
         ensureDBOwnership = true;
       }
     ];
