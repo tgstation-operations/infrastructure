@@ -12,7 +12,7 @@
     checkConfig = true;
     dataDir = "/persist/postgres/data";
     settings = {
-      listen_addresses = "localhost, ${config.networking.hostName}.tg.lan";
+      listen_addresses = lib.mkForce "localhost, ${config.networking.hostName}.tg.lan";
     };
 
     # https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
