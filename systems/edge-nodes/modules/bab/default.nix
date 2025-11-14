@@ -49,7 +49,7 @@ in {
     "byond-authentication-brige/config/production.json" = {
       text = builtins.toJSON {
         server = {
-          publicUrl = "http://localhost:12385";
+          publicUrl = "https://bab.tgstation13.org";
           host = "0.0.0.0";
           proxy = true;
           port = 12385;
