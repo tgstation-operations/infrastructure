@@ -30,10 +30,6 @@ in {
     ../../../../modules/postgres.nix
   ];
 
-  users = {
-    groups.byond-authentication-bridge = { };
-  };
-
   systemd.services.byond-authentication-bridge = {
     enable = true;
     wantedBy = ["multi-user.target"];
