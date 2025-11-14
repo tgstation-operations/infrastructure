@@ -44,7 +44,7 @@ in {
     };
   };
 
-  environment.etc.byond-authentication-brige."local.json" = {
+  environment.etc."byond-authentication-brige/config/production.json" = {
     text = builtins.toJSON {
       server = {
         publicUrl = "http://localhost:12385";
