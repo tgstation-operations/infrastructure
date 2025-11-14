@@ -36,7 +36,7 @@ in {
     serviceConfig = {
       DynamicUser = "true";
       ExecStart = "${package}/bin/bab";
-      Environment = "NODE_ENV=produdction";
+      Environment = "NODE_ENV=production";
       WorkingDirectory = "/etc/byond-authentication-bridge";
     };
   };
