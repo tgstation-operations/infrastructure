@@ -25,6 +25,10 @@
     '';
   };
 in {
+  imports = [
+    ../../../../modules/postgres.nix
+  ];
+
   users = {
     groups.byond-authentication-bridge = { };
     users.byond-authentication-bridge = {
@@ -80,7 +84,6 @@ in {
   };
 
   services.postgresql = {
-    enable = true;
     ensureDatabases = ["byond-authentication-bridge"];
     ensureUsers = [
       {
