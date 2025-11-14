@@ -30,6 +30,8 @@ in {
     ../../../../modules/postgres.nix
   ];
 
+  age.secrets.bab_db_connection_string.file = ./../../secrets/bab_db_connection_string.age;
+
   systemd.services.byond-authentication-bridge = {
     enable = true;
     wantedBy = ["multi-user.target"];
@@ -37,6 +39,7 @@ in {
       DynamicUser = "true";
       ExecStart = "${package}/bin/bab";
       Environment = "NODE_ENV=production";
+      EnvironmentFile = config.age.secrets.bab_db_connection_string.path;
       WorkingDirectory = "/etc/byond-authentication-bridge";
     };
   };
@@ -50,9 +53,6 @@ in {
           proxy = true;
           port = 12385;
         };
-        database = {
-          connectionString = "postgresql://postgres:asdfasdf@database:5432/postgres?schema=byond-authentication-bridge";
-        };
         logging = {
           http = {
             meta = false;
@@ -63,6 +63,15 @@ in {
           file-err = {
             enabled = false;
           };
+        };
+      };
+      group = "byond-authentication-bridge";
+      mode = "0444";
+    };
+    "byond-authentication-brige/config/custom-environment-variables.json" = {
+      text = builtins.toJSON {
+        database = {
+          connectionString = "BAB_DB_CONNECTION_STRING";
         };
       };
       group = "byond-authentication-bridge";
