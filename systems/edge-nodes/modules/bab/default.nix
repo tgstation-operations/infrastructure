@@ -32,17 +32,13 @@ in {
 
   users = {
     groups.byond-authentication-bridge = { };
-    users.byond-authentication-bridge = {
-      isSystemUser = true;
-      group = "byond-authentication-bridge";
-    };
   };
 
   systemd.services.byond-authentication-bridge = {
     enable = true;
     wantedBy = ["multi-user.target"];
     serviceConfig = {
-      User = "byond-authentication-bridge";
+      DynamicUser = "true";
       ExecStart = "${package}/bin/bab";
       Environment = "NODE_ENV=produdction";
       WorkingDirectory = "/etc/byond-authentication-bridge";
@@ -65,10 +61,10 @@ in {
             meta = false;
           };
           file = {
-            enabled = true;
+            enabled = false;
           };
           file-err = {
-            enabled = true;
+            enabled = false;
           };
         };
       };
