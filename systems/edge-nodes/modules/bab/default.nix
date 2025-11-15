@@ -18,7 +18,7 @@
   });
   package = pkgs.buildNpmPackage {
     pname = "byond-authentication-bridge";
-    version = "1.0.1";
+    version = "1.0.0";
     src = source;
     nativeBuildInputs = [ source prisma ];
     npmDepsHash = "sha256-dK8gACPM9GIZS5GvDfsssHm8+Y7IPY9AVI6d9gC7Myo=";
