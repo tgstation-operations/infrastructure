@@ -9,13 +9,6 @@
     rev = "7f8c0572b3b546523a65246e14e9d80f6b20cf03";
     hash = "sha256-8jb08XbHu3padD7kfnmuxGFkSCqxdGHB+yZ8/u7ddU8=";
   };
-  prisma-version = pkgs.runCommand "prisma-version" {} ''
-    cat ${source}/package-lock.json | ${pkgs.jq}/bin/jq -r '.packages."node_modules/prisma".version' > $out
-  '';
-  prisma = pkgs.prisma.overrideAttrs (finalAttrs: previousAttrs: {
-    version = builtins.readFile prisma-version;
-    __intentionallyOverridingVersion = true;
-  });
   package = pkgs.buildNpmPackage {
     pname = "byond-authentication-bridge";
     version = "1.0.0";
@@ -25,7 +18,7 @@
     preBuild = ''
       sed -i 's/"name": "bab",/"name": "bab","bin":{"bab":"dist\/index.js"},/g' package.json
       sed -i 's/  provider = "prisma-client-js"/  provider = "prisma-client-js"\n  binaryTargets = ["native", "linux-nixos"]/g' prisma/schema.prisma
-      ${prisma}/bin/prisma generate
+      npm run generateDbClient
     '';
   };
 in {
