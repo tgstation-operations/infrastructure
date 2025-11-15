@@ -44,7 +44,7 @@ in {
     serviceConfig = {
       DynamicUser = "true";
       ExecStart = "${package}/bin/bab";
-      Environment = "NODE_ENV=production PRISMA_QUERY_ENGINE_BINARY="${prisma-engines}/bin/query-engine" PRISMA_QUERY_ENGINE_LIBRARY="${prisma-engines}/lib/libquery_engine.node" PRISMA_INTROSPECTION_ENGINE_BINARY="${prisma-engines}/bin/introspection-engine" PRISMA_FMT_BINARY="${prisma-engines}/bin/prisma-fmt"";
+      Environment = "NODE_ENV=production PRISMA_QUERY_ENGINE_BINARY=\"${prisma-engines}/bin/query-engine\" PRISMA_QUERY_ENGINE_LIBRARY=\"${prisma-engines}/lib/libquery_engine.node\" PRISMA_INTROSPECTION_ENGINE_BINARY=\"${prisma-engines}/bin/introspection-engine\" PRISMA_FMT_BINARY=\"${prisma-engines}/bin/prisma-fmt\"";
       EnvironmentFile = config.age.secrets.bab_db_connection_string.path;
       WorkingDirectory = "/etc/byond-authentication-bridge";
     };
