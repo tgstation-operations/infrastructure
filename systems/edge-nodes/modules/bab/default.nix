@@ -9,6 +9,13 @@
     rev = "7f8c0572b3b546523a65246e14e9d80f6b20cf03";
     hash = "sha256-8jb08XbHu3padD7kfnmuxGFkSCqxdGHB+yZ8/u7ddU8=";
   };
+  prisma-version = pkgs.runCommand "prisma-version" {} ''
+    cat ${source}/package-lock.json | ${pkgs.jq}/bin/jq -r '.packages."node_modules/prisma".version' > $out
+  '';
+  prisma-engines = pkgs.prisma-engines.overrideAttrs (finalAttrs: previousAttrs: {
+    version = builtins.readFile prisma-version;
+    __intentionallyOverridingVersion = true;
+  });
   package = pkgs.buildNpmPackage {
     pname = "byond-authentication-bridge";
     version = "1.0.0";
@@ -17,6 +24,10 @@
     preBuild = ''
       sed -i 's/"name": "bab",/"name": "bab","bin":{"bab":"dist\/index.js"},/g' package.json
       sed -i 's/  provider = "prisma-client-js"/  provider = "prisma-client-js"\n  binaryTargets = ["native", "linux-nixos"]/g' prisma/schema.prisma
+      export PRISMA_QUERY_ENGINE_BINARY="${prisma-engines}/bin/query-engine"
+      export PRISMA_QUERY_ENGINE_LIBRARY="${prisma-engines}/lib/libquery_engine.node"
+      export PRISMA_INTROSPECTION_ENGINE_BINARY="${prisma-engines}/bin/introspection-engine"
+      export PRISMA_FMT_BINARY="${prisma-engines}/bin/prisma-fmt"
       npm run generateDbClient
     '';
   };
@@ -33,7 +44,7 @@ in {
     serviceConfig = {
       DynamicUser = "true";
       ExecStart = "${package}/bin/bab";
-      Environment = "NODE_ENV=production";
+      Environment = "NODE_ENV=production PRISMA_QUERY_ENGINE_BINARY="${prisma-engines}/bin/query-engine" PRISMA_QUERY_ENGINE_LIBRARY="${prisma-engines}/lib/libquery_engine.node" PRISMA_INTROSPECTION_ENGINE_BINARY="${prisma-engines}/bin/introspection-engine" PRISMA_FMT_BINARY="${prisma-engines}/bin/prisma-fmt"";
       EnvironmentFile = config.age.secrets.bab_db_connection_string.path;
       WorkingDirectory = "/etc/byond-authentication-bridge";
     };
