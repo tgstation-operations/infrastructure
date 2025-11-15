@@ -7,7 +7,7 @@
     owner = "alexkar598";
     repo = "bab";
     rev = "7f8c0572b3b546523a65246e14e9d80f6b20cf03";
-    hash = "sha256-90mGS1xwbt68QtRN8T/TLI2Njw2Keet3I2HybwDmoO1=";
+    hash = "sha256-8jb08XbHu3padD7kfnmuxGFkSCqxdGHB+yZ8/u7ddU8=";
   };
   prisma-version = pkgs.runCommand "prisma-version" {} ''
     cat ${source}/package-lock.json | ${pkgs.jq}/bin/jq -r '.packages."node_modules/prisma".version' > $out
