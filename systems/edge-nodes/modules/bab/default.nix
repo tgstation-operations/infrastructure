@@ -48,7 +48,7 @@ in {
   };
 
   environment.etc = {
-    "byond-authentication-brige/config/production.json" = {
+    "byond-authentication-bridge/config/production.json" = {
       text = builtins.toJSON {
         server = {
           publicUrl = "https://bab.tgstation13.org";
@@ -71,7 +71,7 @@ in {
       group = "byond-authentication-bridge";
       mode = "0444";
     };
-    "byond-authentication-brige/config/custom-environment-variables.json" = {
+    "byond-authentication-bridge/config/custom-environment-variables.json" = {
       text = builtins.toJSON {
         database = {
           connectionString = "BAB_DB_CONNECTION_STRING";
@@ -80,7 +80,7 @@ in {
       group = "byond-authentication-bridge";
       mode = "0444";
     };
-    "byond-authentication-brige/config/default.json" = {
+    "byond-authentication-bridge/config/default.json" = {
       source = "${source}/config/default.json";
       group = "byond-authentication-bridge";
       mode = "0444";
