@@ -20,6 +20,7 @@
     pname = "byond-authentication-bridge";
     version = "1.0.1";
     src = source;
+    nativeBuildInputs = [ source prisma ];
     npmDepsHash = "sha256-dK8gACPM9GIZS5GvDfsssHm8+Y7IPY9AVI6d9gC7Myo=";
     preBuild = ''
       sed -i 's/"name": "bab",/"name": "bab","bin":{"bab":"dist\/index.js"},/g' package.json
