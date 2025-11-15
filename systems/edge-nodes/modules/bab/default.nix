@@ -18,7 +18,7 @@
   });
   package = pkgs.buildNpmPackage {
     pname = "byond-authentication-bridge";
-    version = "1.0.0";
+    version = "1.0.1";
     src = source;
     npmDepsHash = "sha256-dK8gACPM9GIZS5GvDfsssHm8+Y7IPY9AVI6d9gC7Myo=";
     preBuild = ''
