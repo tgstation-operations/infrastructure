@@ -23,7 +23,7 @@
     npmDepsHash = "sha256-dK8gACPM9GIZS5GvDfsssHm8+Y7IPY9AVI6d9gC7Myo=";
     preBuild = ''
       sed -i 's/"name": "bab",/"name": "bab","bin":{"bab":"dist\/index.js"},/g' package.json
-      sed -i 's/  provider = "prisma-client-js"/  provider = "prisma-client-js"\n  binaryTargets = ["native", "linux-nixos"]/g' prisma/schema.prisma
+      sed -i 's/  provider = "prisma-client-js"/  provider = "prisma-client-js"\n  binaryTargets = [ "linux-nixos" ]/g' prisma/schema.prisma
       export PRISMA_QUERY_ENGINE_BINARY="${prisma-engines}/bin/query-engine"
       export PRISMA_QUERY_ENGINE_LIBRARY="${prisma-engines}/lib/libquery_engine.node"
       export PRISMA_INTROSPECTION_ENGINE_BINARY="${prisma-engines}/bin/introspection-engine"
