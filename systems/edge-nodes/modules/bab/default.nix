@@ -6,7 +6,7 @@
   source = pkgs.fetchFromGitHub {
     owner = "alexkar598";
     repo = "bab";
-    rev = "d72ea2505a726fb6758223a198604e944b228bd4";
+    rev = "7f8c0572b3b546523a65246e14e9d80f6b20cf03";
     hash = "sha256-91mGS1xwbt68QtRN8T/TLI2Njw2Keet3I2HybwDmoO0=";
   };
   prisma-version = pkgs.runCommand "prisma-version" {} ''
