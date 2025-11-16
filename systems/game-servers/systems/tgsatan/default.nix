@@ -3,7 +3,7 @@
   pkgs,
   lib,
   self,
-  headscaleIPv4
+  headscaleIPv4,
   tg-globals,
   ...
 }: let
