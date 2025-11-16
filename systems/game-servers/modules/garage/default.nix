@@ -1,12 +1,15 @@
 {
   config,
   pkgs,
-  pkgs-unstable,
   lib,
   headscaleIPv4,
   enable-webui ? false,
   ...
-}: {
+}:
+let
+  package = import ./webui.nix;
+in
+{
   networking.firewall.allowedTCPPorts = [
     3901 # RPC
   ];
@@ -67,7 +70,7 @@
         DynamicUser = true;
         SupplementaryGroups = "garage";
         Environment = "\"PORT=3919\" \"CONFIG_PATH=/etc/garage.toml\"";
-        ExecStart = "${pkgs-unstable.garage-webui}/bin/garage-webui";
+        ExecStart = "${package}/bin/garage-webui";
       };
       wantedBy = ["multi-user.target"];
     };

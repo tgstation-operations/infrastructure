@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  pkgs-unstable,
   lib,
   self,
   headscaleIPv4,
@@ -23,8 +22,8 @@
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../../../modules/restic.nix
-    (import ../../modules/garage.nix {
-      inherit pkgs pkgs-unstable config lib headscaleIPv4;
+    (import ../../modules/garage {
+      inherit pkgs config lib headscaleIPv4;
       enable-webui = true;
     })
     ../../modules/motd.nix

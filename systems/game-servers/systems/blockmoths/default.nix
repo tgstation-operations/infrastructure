@@ -34,7 +34,7 @@
       inherit pkgs config lib;
       age-file = ./secrets/cloudflared.age;
     })
-    ../../modules/garage.nix
+    ../../modules/garage
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/docker.nix
