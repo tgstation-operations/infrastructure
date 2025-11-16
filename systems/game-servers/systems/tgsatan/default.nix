@@ -3,6 +3,7 @@
   pkgs,
   lib,
   self,
+  headscaleIPv4
   tg-globals,
   ...
 }: let
@@ -22,7 +23,7 @@
     ../../../../modules/tailscale.nix
     ../../../../modules/restic.nix
     (import ../../modules/garage.nix {
-      inherit pkgs config lib;
+      inherit pkgs config lib headscaleIPv4;
       enable-webui = true;
     })
     ../../modules/motd.nix
