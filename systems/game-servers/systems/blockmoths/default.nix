@@ -34,7 +34,10 @@
       inherit pkgs config lib;
       age-file = ./secrets/cloudflared.age;
     })
-    ../../modules/garage
+    (import ../../modules/garage {
+      inherit pkgs config lib headscaleIPv4;
+      enable-webui = false;
+    })
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/docker.nix

@@ -3,7 +3,7 @@
   pkgs,
   lib,
   headscaleIPv4,
-  enable-webui ? false,
+  enable-webui,
   ...
 }:
 let
