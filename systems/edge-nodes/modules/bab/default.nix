@@ -58,7 +58,7 @@ in {
     "byond-authentication-bridge/config/production.json" = {
       text = builtins.toJSON {
         server = {
-          publicUrl = "https://bab.tgstation13.org";
+          publicUrl = "https://byond-authentication-bridge.tgstation13.org";
           host = "0.0.0.0";
           proxy = true;
           port = "12385";
@@ -94,9 +94,9 @@ in {
     };
   };
 
-  security.acme.certs."bab.tgstation13.org" = {};
-  services.caddy.virtualHosts."bab.tgstation13.org" = {
-    useACMEHost = "bab.tgstation13.org";
+  security.acme.certs."byond-authentication-bridge.tgstation13.org" = {};
+  services.caddy.virtualHosts."byond-authentication-bridge.tgstation13.org" = {
+    useACMEHost = "byond-authentication-bridge.tgstation13.org";
     extraConfig = ''
       encode gzip zstd
       reverse_proxy localhost:12385
