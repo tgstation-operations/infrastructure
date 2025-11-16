@@ -8,11 +8,12 @@
     ../../base.nix
     ../../../../modules/maria.nix
     ../../../../modules/restic.nix
+    ../../../../modules/postgres.nix
+    ../../modules/bab
     ../../modules/tgstation-pr-announcer
     ../../modules/server-info-fetcher.nix
     ./modules/mediawiki
     ./modules/caddy.nix
-    # ../modules/tgstation-pr-announcer/default.nix
     self.inputs.tgstation-phpbb.nixosModules.default
   ];
   networking.hostName = "lemon";
