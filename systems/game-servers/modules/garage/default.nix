@@ -10,6 +10,7 @@ let
   package = import ./webui.nix {
     inherit lib pkgs;
   };
+  webui-port = "3919";
 in
 {
   networking.firewall.allowedTCPPorts = [
@@ -17,38 +18,47 @@ in
   ];
   age.secrets.garage.file = ../../secrets/garage.age;
 
-  services.garage = {
-    enable = true;
-    package = pkgs.garage_1; # Has to be set explicitly, to account for major version updates
-    environmentFile = config.age.secrets.garage.path;
-    settings = {
-      # <https://garagehq.deuxfleurs.fr/documentation/reference-manual/configuration/>
-      data_dir = "/persist/garage/data"; # This can be specified with an array of attribute sets instead to use multiple directories, if desired
-      replication_factor = 2;
-      metadata_dir = "/persist/garage/meta";
-      db_engine = "lmdb";
-      block_size = "1M"; # Default
-      compression_level = 9;
-      rpc_bind_addr = "${headscaleIPv4}:3901";
-      rpc_public_addr = "${headscaleIPv4}:3901";
-      # rpc_secret is set by $GARAGE_RPC_SECRET
-      s3_api = {
-        s3_region = "garage";
-        api_bind_addr = "127.0.0.1:3900";
-        root_domain = ".s3.tgstation13.org";
+  services = {
+    garage = {
+      enable = true;
+      package = pkgs.garage_1; # Has to be set explicitly, to account for major version updates
+      environmentFile = config.age.secrets.garage.path;
+      settings = {
+        # <https://garagehq.deuxfleurs.fr/documentation/reference-manual/configuration/>
+        data_dir = "/persist/garage/data"; # This can be specified with an array of attribute sets instead to use multiple directories, if desired
+        replication_factor = 2;
+        metadata_dir = "/persist/garage/meta";
+        db_engine = "lmdb";
+        block_size = "1M"; # Default
+        compression_level = 9;
+        rpc_bind_addr = "${headscaleIPv4}:3901";
+        rpc_public_addr = "${headscaleIPv4}:3901";
+        # rpc_secret is set by $GARAGE_RPC_SECRET
+        s3_api = {
+          s3_region = "garage";
+          api_bind_addr = "127.0.0.1:3900";
+          root_domain = ".s3.tgstation13.org";
+        };
+        s3_web = {
+          s3_region = "garage";
+          bind_addr = "127.0.0.1:3902";
+          root_domain = ".s3-web.tgstation13.org";
+        };
+        # k2v_api = {
+        #   api_bind_addr = "[::]:3904";
+        # };
+        admin = {
+          api_bind_addr = "127.0.0.1:3903";
+          # admin_token and metrics_token are set by $GARAGE_ADMIN_TOKEN and $GARAGE_METRICS_TOKEN respectively if desired
+        };
       };
-      s3_web = {
-        s3_region = "garage";
-        bind_addr = "127.0.0.1:3902";
-        root_domain = ".s3-web.tgstation13.org";
-      };
-      # k2v_api = {
-      #   api_bind_addr = "[::]:3904";
-      # };
-      admin = {
-        api_bind_addr = "127.0.0.1:3903";
-        # admin_token and metrics_token are set by $GARAGE_ADMIN_TOKEN and $GARAGE_METRICS_TOKEN respectively if desired
-      };
+    };
+    caddy.virtualHosts."garage.tgstation13.org" = lib.mkIf enable-webui {
+      useACMEHost = "garage.tgstation13.org";
+      extraConfig = ''
+        encode gzip zstd
+        reverse_proxy localhost:${webui-port}
+      '';
     };
   };
   # All of this below disables dynamicuser and uses a specific user account for running garage
@@ -71,10 +81,12 @@ in
       serviceConfig = {
         DynamicUser = true;
         SupplementaryGroups = "garage";
-        Environment = "\"PORT=3919\" \"CONFIG_PATH=/etc/garage.toml\"";
+        Environment = "\"PORT=${webui-port}\" \"CONFIG_PATH=/etc/garage.toml\"";
         ExecStart = "${package}/bin/garage-webui";
       };
       wantedBy = ["multi-user.target"];
     };
   };
+
+  security.acme.certs."garage.tgstation13.org" = lib.mkIf enable-webui {};
 }
