@@ -69,6 +69,6 @@
         ExecStart = "${pkgs.garage-webui}/bin/garage-webui";
       };
       wantedBy = ["multi-user.target"];
-    }
+    };
   };
 }
