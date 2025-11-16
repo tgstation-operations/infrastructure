@@ -4,7 +4,6 @@
 }: {
   imports = [
     ./base.nix
-    ../../modules/bab
     ../../modules/server-info-fetcher.nix
     self.inputs.tgstation-phpbb.nixosModules.default
   ];

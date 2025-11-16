@@ -11,5 +11,5 @@ in {
   "tgstation-pr-announcer.age".publicKeys = lemon-final;
   "phpbb_db.age".publicKeys = lemon-final;
   "authentik.age".publicKeys = lemon-final;
-  "bab_db_connection_string.age".publicKeys = final;
+  "bab_db_connection_string.age".publicKeys = lemon-final;
 }
