@@ -21,7 +21,10 @@
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../../../modules/restic.nix
-    ../../modules/garage.nix
+    (import ../../modules/garage.nix {
+      inherit pkgs config lib;
+      enable-webui = true;
+    })
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/docker.nix

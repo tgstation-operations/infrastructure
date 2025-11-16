@@ -3,6 +3,7 @@
   pkgs,
   lib,
   headscaleIPv4,
+  enable-webui ? false,
   ...
 }: {
   networking.firewall.allowedTCPPorts = [
@@ -51,14 +52,23 @@
     group = "garage";
   };
   users.groups.garage = {};
-  systemd.services.garage = {
-    serviceConfig = {
-      User = "garage";
-      Group = "garage";
-      DynamicUser = false;
+  systemd.services = {
+    garage = {
+      serviceConfig = {
+        User = "garage";
+        Group = "garage";
+        DynamicUser = false;
+      };
     };
-    environment = {
-      "IM_LITERALLY_JUST_SETTING_THIS_TO_RESTART_GARAGE_REMOVE_IT" = "chumbis";
-    };
+
+    garage-web-ui = lib.mkIf enable-webui {
+      serviceConfig = {
+        DynamicUser = true;
+        SupplementaryGroups = "garage";
+        Environment = "\"PORT=3919\" \"CONFIG_PATH=/etc/garage.toml\"";
+        ExecStart = "${pkgs.garage-webui}/bin/garage-webui";
+      };
+      wantedBy = ["multi-user.target"];
+    }
   };
 }
