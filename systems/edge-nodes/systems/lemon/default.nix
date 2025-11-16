@@ -8,6 +8,7 @@
     ../../base.nix
     ../../../../modules/maria.nix
     ../../../../modules/restic.nix
+    ../../../../modules/postgres.nix
     ../../modules/bab
     ../../modules/tgstation-pr-announcer
     ../../modules/server-info-fetcher.nix
