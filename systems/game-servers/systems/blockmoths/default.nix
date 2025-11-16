@@ -4,6 +4,7 @@
   config,
   lib,
   tg-globals,
+  headscaleIPv4,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
@@ -34,7 +35,10 @@
       inherit pkgs config lib;
       age-file = ./secrets/cloudflared.age;
     })
-    ../../modules/garage.nix
+    (import ../../modules/garage {
+      inherit pkgs config lib headscaleIPv4;
+      enable-webui = false;
+    })
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/docker.nix

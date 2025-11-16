@@ -3,6 +3,7 @@
   pkgs,
   lib,
   self,
+  headscaleIPv4,
   tg-globals,
   ...
 }: let
@@ -21,7 +22,10 @@
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../../../modules/restic.nix
-    ../../modules/garage.nix
+    (import ../../modules/garage {
+      inherit pkgs config lib headscaleIPv4;
+      enable-webui = true;
+    })
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/docker.nix
