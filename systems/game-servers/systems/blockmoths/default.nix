@@ -4,6 +4,7 @@
   config,
   lib,
   tg-globals,
+  headscaleIPv4,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
