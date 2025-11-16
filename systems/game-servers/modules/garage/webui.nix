@@ -10,7 +10,7 @@ pkgs.buildGoModule (finalAttrs: {
   pname = "garage-webui";
   version = "1.1.0";
 
-  src = fetchFromGitHub {
+  src = pkgs.fetchFromGitHub {
     owner = "khairul169";
     repo = "garage-webui";
     tag = finalAttrs.version;
