@@ -7,7 +7,9 @@
   ...
 }:
 let
-  package = import ./webui.nix {};
+  package = import ./webui.nix {
+    inherit lib pkgs;
+  };
 in
 {
   networking.firewall.allowedTCPPorts = [

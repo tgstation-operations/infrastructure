@@ -1,16 +1,12 @@
 {
   lib,
   stdenv,
-  fetchFromGitHub,
-  buildGoModule,
-  nodejs,
-  pnpm_9,
-  nix-update-script,
+  pkgs,
 }:
 let
-  pnpm = pnpm_9;
+  pnpm = pkgs.pnpm_9;
 in
-buildGoModule (finalAttrs: {
+pkgs.buildGoModule (finalAttrs: {
   pname = "garage-webui";
   version = "1.1.0";
 
@@ -21,12 +17,12 @@ buildGoModule (finalAttrs: {
     hash = "sha256-bqUAhZBSQkWZ1QsgPslEUDwt8NOg25Os0NGlPoyjPL4=";
   };
 
-  frontend = stdenv.mkDerivation (finalAttrs': {
+  frontend = pkgs.stdenv.mkDerivation (finalAttrs': {
     pname = "${finalAttrs.pname}-frontend";
     inherit (finalAttrs) version src;
 
     nativeBuildInputs = [
-      nodejs
+      pkgs.nodejs
       pnpm.configHook
     ];
 
@@ -59,7 +55,7 @@ buildGoModule (finalAttrs: {
   vendorHash = "sha256-7z6r6w/SbBlYYHMxm11xFl/QEYZc2KebnOJZRgYRUYk=";
 
   passthru = {
-    updateScript = nix-update-script { };
+    updateScript = pkgs.nix-update-script { };
   };
 
   meta = {
