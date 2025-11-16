@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
   lib,
   headscaleIPv4,
   enable-webui ? false,
@@ -66,7 +67,7 @@
         DynamicUser = true;
         SupplementaryGroups = "garage";
         Environment = "\"PORT=3919\" \"CONFIG_PATH=/etc/garage.toml\"";
-        ExecStart = "${pkgs.garage-webui}/bin/garage-webui";
+        ExecStart = "${pkgs-unstable.garage-webui}/bin/garage-webui";
       };
       wantedBy = ["multi-user.target"];
     };
