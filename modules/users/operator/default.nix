@@ -1,8 +1,6 @@
 {...}: {
   imports = [
     ./aa07.nix
-    ./alexkar598.nix
-    ./dax.nix
     ./dominion.nix
     ./iain0.nix
     ./ivory.nix
