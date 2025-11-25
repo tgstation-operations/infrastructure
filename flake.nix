@@ -61,7 +61,7 @@
       url = "github:tgstation-operations/server-info-fetcher";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    impermanence.url = "github:scriptis/impermanence";
+    impermanence.url = "github:nix-community/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     colmena = {
       url = "github:zhaofengli/colmena/5fdd743a11e7291bd8ac1e169d62ba6156c99be4";

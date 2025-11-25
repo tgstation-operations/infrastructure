@@ -8,15 +8,14 @@ This place is not a place of honor... no highly esteemed deed is commemorated he
 
 # Single points of failure
 
-tgsatan - scriptis out of band access
+tgsatan - the foundation
 
 # Server owners
 
-- tgsatan - scriptis (dedicated)
-- chicago, dallas, atlanta (scriptis, vultr relays)
-- warsaw - scriptis (nobody knows??)
+- tgsatan - the foundation
+- chicago, dallas, atlanta, warsaw (scriptis, vultr relays) - to be migrated to ovh under the foundation
 - wiggle - riggle (magic??)
-- knipp,daschund,bratwurst - mothblocks (hetzner vm relays)
+- knipp,daschund,bratwurst - the foundation (hetzner vm relays)
 
 The rest are org owned.
 
