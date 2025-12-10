@@ -344,15 +344,15 @@
     },
     "impermanence": {
       "locked": {
-        "lastModified": 1728334393,
-        "narHash": "sha256-bINxHw0Z8oVRf9W6t1neJvNp9A5KP5Z1kgbtMKJJ1RU=",
-        "owner": "scriptis",
+        "lastModified": 1737831083,
+        "narHash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI=",
+        "owner": "nix-community",
         "repo": "impermanence",
-        "rev": "3d55c2bf99bb9b2dcda477f92c8e87639abdac9c",
+        "rev": "4b3e914cdf97a5b536a889e939fb2fd2b043a170",
         "type": "github"
       },
       "original": {
-        "owner": "scriptis",
+        "owner": "nix-community",
         "repo": "impermanence",
         "type": "github"
       }
@@ -446,6 +446,26 @@
         "type": "github"
       }
     },
+    "oidc-reverse-proxy": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1762739710,
+        "narHash": "sha256-5Cz3FjD6VKUKQ+Za4CHdhFUhNDCx6xSn+AImW9w0GRI=",
+        "owner": "Cyberboss",
+        "repo": "oidc-reverse-proxy",
+        "rev": "2ce2e9bf1082bf961629fb8693c728f784bde78d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Cyberboss",
+        "repo": "oidc-reverse-proxy",
+        "type": "github"
+      }
+    },
     "pyproject-build-systems": {
       "inputs": {
         "nixpkgs": [
@@ -510,6 +530,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "oidc-reverse-proxy": "oidc-reverse-proxy",
         "server-info-fetcher": "server-info-fetcher",
         "tg-public-log-parser": "tg-public-log-parser",
         "tgstation-phpbb": "tgstation-phpbb",
@@ -706,11 +727,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1762388224,
-        "narHash": "sha256-nlBOgJ9aNDKHbPPqdgnpz5q4Z2nU8Svcwkn6E8fnU3Y=",
+        "lastModified": 1763251070,
+        "narHash": "sha256-PSNm9f2S3YeNn/uUkMliTdKlhTAOJ6/IVdVxfyZwFOA=",
         "owner": "tgstation-operations",
         "repo": "website-v2",
-        "rev": "f0f2036811b10ec32274aa6fd77149aee9282eed",
+        "rev": "f3f017723809f57282248907e30b4a0759311c2f",
         "type": "github"
       },
       "original": {

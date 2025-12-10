@@ -10,6 +10,7 @@
   hw = inputs.nixos-hardware.nixosModules;
   baseModules = [
     (import hw.common-cpu-intel)
+    inputs.oidc-reverse-proxy.nixosModules.default
     inputs.tg-public-log-parser.nixosModules.default
     inputs.tgstation-server.nixosModules.default
   ];
@@ -27,11 +28,13 @@
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/tgs
-    (import ../../modules/public-logs.nix {
-      inherit pkgs tg-globals;
+    (import ../../modules/logs {
+      inherit pkgs config tg-globals;
       instance-name = "funnyname";
       bind-port = "3337";
       internal-port = "13337";
+      raw-port = "23337";
+      raw-internal-port = "23338";
     })
     ./modules/haproxy
     ./modules/motd

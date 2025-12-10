@@ -4,11 +4,13 @@
   config,
   lib,
   tg-globals,
+  headscaleIPv4,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
   baseModules = [
     (import hw.common-cpu-amd)
+    inputs.oidc-reverse-proxy.nixosModules.default
     inputs.tg-public-log-parser.nixosModules.default
     inputs.tgstation-server.nixosModules.default
   ];
@@ -17,11 +19,13 @@
     ./modules/caddy
     ./modules/haproxy
     ./modules/motd
-    (import ../../modules/public-logs.nix {
-      inherit pkgs tg-globals;
+    (import ../../modules/logs {
+      inherit pkgs config tg-globals;
       instance-name = "terry";
       bind-port = "3337";
       internal-port = "13337";
+      raw-port = "23337";
+      raw-internal-port = "23338";
     })
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
@@ -31,7 +35,10 @@
       inherit pkgs config lib;
       age-file = ./secrets/cloudflared.age;
     })
-    ../../modules/garage.nix
+    (import ../../modules/garage {
+      inherit pkgs config lib headscaleIPv4;
+      enable-webui = false;
+    })
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/docker.nix

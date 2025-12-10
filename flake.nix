@@ -36,6 +36,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dragon-bot.url = "github:tgstation/dragon-bot";
+    oidc-reverse-proxy = {
+      url = "github:Cyberboss/oidc-reverse-proxy";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     tg-public-log-parser = {
       url = "github:Mothblocks/tg-public-log-parser";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -57,7 +61,7 @@
       url = "github:tgstation-operations/server-info-fetcher";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    impermanence.url = "github:scriptis/impermanence";
+    impermanence.url = "github:nix-community/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     colmena = {
       url = "github:zhaofengli/colmena/5fdd743a11e7291bd8ac1e169d62ba6156c99be4";
@@ -109,6 +113,12 @@
         port = "5000";
         root-path = "/persist/tgs-data";
         instances-path = "${tg-globals.tgs.root-path}/instances";
+      };
+      caddy = {
+        default-package = (import nixpkgs-unstable {
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+        }).caddy;
       };
     };
 
