@@ -13,6 +13,7 @@
 
     extraGroups = [
       "wheel"
+      "docker"
     ];
 
     shell = pkgs.zsh;

@@ -9,6 +9,7 @@
     extraGroups = [
       "redbot-user"
       "wheel"
+      "docker"
     ];
   };
 }

@@ -14,6 +14,7 @@
     extraGroups = [
       "wheel"
       "db-operator"
+      "docker"
     ];
   };
 
