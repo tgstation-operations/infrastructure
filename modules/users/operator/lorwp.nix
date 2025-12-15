@@ -3,7 +3,7 @@
   config,
   ...
 }: {
-  users.users.lowrp = {
+  users.users.lorwp = {
     isNormalUser = true;
 
     openssh.authorizedKeys.keys = [
@@ -18,24 +18,25 @@
     shell = pkgs.fish;
   };
 
-  home-manager.users.lowrp = {
-    programs.helix = {
-      defaultEditor = true;
-      enable = true;
-      extraPackages = [
-        pkgs.nixd
-        pkgs.git
-        pkgs.alejandra
-      ];
-      settings = {
-        theme = "catppuccin_macchiato";
-      };
-    };
+  home-manager.users.lorwp = {
+#    programs.helix = {
+#      defaultEditor = true;
+#      enable = true;
+#      extraPackages = [
+#        pkgs.nixd
+#        pkgs.git
+#        pkgs.alejandra
+#      ];
+#      settings = {
+#        theme = "catppuccin_macchiato";
+#      };
+#    };
     home.packages = with pkgs; [
       bandwhich
       btop
       termscp
       lazygit
+      jq
     ];
     programs.zsh = {
       enable = true;
