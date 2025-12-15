@@ -215,9 +215,7 @@ in {
             env DB_NAME {env.DB_NAME}
             env DB_USER {env.DB_USER}
             env DB_PASSWORD {env.DB_PASSWORD}
-            # Only rewrite REMOTE_ADDR for Cloudflare requests
-            env REMOTE_ADDR {http.request.header.CF-Connecting-IP} @cloudflare
-            header_up X-Real-IP {http.request.header.CF-Connecting-IP} @cloudflare
+            header_up X-CFReal-IP {http.request.header.CF-Connecting-IP} @cloudflare
           }
         '';
       };
