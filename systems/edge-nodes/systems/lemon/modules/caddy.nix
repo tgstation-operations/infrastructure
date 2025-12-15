@@ -180,12 +180,44 @@ in {
           encode gzip zstd
           root /run/tgstation-phpbb/source
           file_server
+          # Match only requests coming from Cloudflare IPs
+          @cloudflare {
+              # IPv4 ranges
+              remote_ip 173.245.48.0/20
+              remote_ip 103.21.244.0/22
+              remote_ip 103.22.200.0/22
+              remote_ip 103.31.4.0/22
+              remote_ip 141.101.64.0/18
+              remote_ip 108.162.192.0/18
+              remote_ip 190.93.240.0/20
+              remote_ip 188.114.96.0/20
+              remote_ip 197.234.240.0/22
+              remote_ip 198.41.128.0/17
+              remote_ip 162.158.0.0/15
+              remote_ip 104.16.0.0/13
+              remote_ip 104.24.0.0/14
+              remote_ip 172.64.0.0/13
+              remote_ip 131.0.72.0/22
+      
+              # IPv6 ranges
+              remote_ip 2400:cb00::/32
+              remote_ip 2606:4700::/32
+              remote_ip 2803:f800::/32
+              remote_ip 2405:b500::/32
+              remote_ip 2405:8100::/32
+              remote_ip 2a06:98c0::/29
+              remote_ip 2c0f:f248::/32
+          }
+
           php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
             env DB_HOST {env.DB_HOST}
             env DB_PORT {env.DB_PORT}
             env DB_NAME {env.DB_NAME}
             env DB_USER {env.DB_USER}
             env DB_PASSWORD {env.DB_PASSWORD}
+            # Only rewrite REMOTE_ADDR for Cloudflare requests
+            env REMOTE_ADDR {http.request.header.CF-Connecting-IP} @cloudflare
+            header_up X-Real-IP {http.request.header.CF-Connecting-IP} @cloudflare
           }
         '';
       };
