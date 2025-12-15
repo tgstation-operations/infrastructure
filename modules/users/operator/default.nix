@@ -4,7 +4,7 @@
     ./dominion.nix
     ./iain0.nix
     ./ivory.nix
-    ./lowrp.nix
+    ./lorwp.nix
     ./mothblocks.nix
     ./ned.nix
     ./riggle.nix
