@@ -12,7 +12,6 @@
 
     extraGroups = [
       "wheel"
-      "docker"
     ];
   };
 
