@@ -9,11 +9,6 @@ cd "$1"
 # load dependencies
 . dependencies.sh
 
-# initialize/update submodule (BODGE!)
-echo "secret submodule: update"
-git submodule set-url +secret git@github.com:coolstation/coolstation-secret.git
-git submodule update --init
-
 # create a dedicated folder for running the script
 work_directory="${TGS_INSTANCE_ROOT}/Configuration/EventScriptsScratch"
 mkdir -p $work_directory
