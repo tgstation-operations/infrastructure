@@ -222,7 +222,7 @@
         nodejs_22
         bun
         dotnetCorePackages.sdk_8_0
-        curl
+        curlFull
         gnutar
         gzip
         coreutils # md5sum, for RSC
