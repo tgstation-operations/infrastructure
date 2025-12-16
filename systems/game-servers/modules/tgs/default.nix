@@ -222,7 +222,7 @@
         nodejs_22
         bun
         dotnetCorePackages.sdk_8_0
-        curl
+        pkgsi686Linux.curl # DD needs 32 bit libcurl since 516.1664
         gnutar
         gzip
         coreutils # md5sum, for RSC
