@@ -9,7 +9,7 @@ cd "$1"
 # load dependencies
 . dependencies.sh
 
-# initialized/update submodule
+# initialize/update submodule
 echo "secret submodule: update"
 git submodule set-url +secret git@github.com:coolstation/coolstation-secret.git
 git submodule update --init
