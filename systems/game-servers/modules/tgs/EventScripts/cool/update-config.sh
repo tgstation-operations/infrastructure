@@ -14,7 +14,7 @@ git fetch
 git checkout origin/main
 git reset --hard origin/main
 ln -sf /run/agenix/cool-apitoken apitoken.txt
-curl -sf http://localhost:3903/health
+curl -sf http://localhost:3903/health #garage stuff still here just incase extra secrets later...
 if [ $? -ne 0 ]; then
   echo garage status check failed!
   exit
