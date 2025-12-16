@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
-set -x
+set -ex
 
 # move to deployment folder
 cd "$1"
