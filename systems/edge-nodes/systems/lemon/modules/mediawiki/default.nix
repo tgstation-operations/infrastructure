@@ -184,6 +184,11 @@ in {
       $wgExtraNamespaces[NS_TGMC] = "TGMC";
       $wgExtraNamespaces[NS_TGMC_TALK] = "TGMC Talk";
 
+      $wgVisualEditorAvailableNamespaces = [
+        "TGMC" => true,
+        "TGMC Talk" => true
+      ];
+
       ## Group Permissions
 
       $wgGroupPermissions['*']['read'] = true;
