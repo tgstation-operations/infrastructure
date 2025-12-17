@@ -8,6 +8,7 @@
 
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPvRq0FC5TOB9c+XRJdx20JUSga76R3Ohni3FH7trzgE derg@derg-nix"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBWWfCrgbiXe608weuYqyakrXXeLQQZSLatp1qVDjdiX derg@framework"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICzChQLIu0ccsRpsxyQPoQh65D9iBw2wyWvsQNuFYP7i matth@MSI"
     ];
 
