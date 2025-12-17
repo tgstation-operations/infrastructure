@@ -57,6 +57,9 @@
       "tivianne@",
       "tiviplus@",
       "kiseki@"
+    ],
+    "group:dbaccess": [
+      "metek@"
     ]
   },
   "tagOwners": {
@@ -211,6 +214,15 @@
       "action": "accept",
       "src": [
         "tag:statbus"
+      ],
+      "dst": [
+        "tag:dbcluster:3306"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "group:dbaccess"
       ],
       "dst": [
         "tag:dbcluster:3306"
