@@ -8,6 +8,7 @@
     ./mothblocks.nix
     ./ned.nix
     ./riggle.nix
+    ./smartkar.nix
     ./sothanforax.nix
     ./zephyrtfa.nix
     ./oranges.nix
