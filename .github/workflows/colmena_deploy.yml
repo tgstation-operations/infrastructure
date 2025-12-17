@@ -30,17 +30,17 @@ jobs:
           known_hosts: ${{ vars.COLMENA_KNOWN_HOSTS }}
 
       - name: Login to headscale
-        uses: tailscale/github-action@8688eb839e58e6b25c1ae96cd99d1c173299b842 # Connect to headscale
+        uses: tailscale/github-action@a392da0a182bba0e9613b6243ebd69529b1878aa # Connect to headscale
         with:
           authkey: ${{ secrets.TS_AUTHKEY }}
           args: --login-server=https://vpn.tgstation13.org
 
       - name: Checkout (Branch)
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
         if: github.event_name != 'pull_request_target'
 
       - name: Checkout (PR Merge)
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
         if: github.event_name == 'pull_request_target'
         with:
           ref: "refs/pull/${{ inputs.pull_request_number }}/merge"
@@ -55,7 +55,7 @@ jobs:
 
       - name: Generate App Token
         id: app-token-generation
-        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5
+        uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf
         with:
           app-id: ${{ secrets.CI_APP_ID }}
           private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
