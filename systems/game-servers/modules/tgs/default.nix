@@ -98,6 +98,33 @@
       group = "tgstation-server";
       mode = "0755";
     };
+
+    #COOLSTATION
+    "tgs-EventScripts.d/cool/DreamDaemonPreLaunch.sh" = {
+      text = builtins.readFile ./EventScripts/cool/DreamDaemonPreLaunch.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/cool/PostCompile.sh" = {
+      text = builtins.readFile ./EventScripts/effigy/PostCompile.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/cool/PreCompile.sh" = {
+      text = builtins.readFile ./EventScripts/cool/PreCompile.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/cool/cool-exciting-roundend.sh" = {
+      text = builtins.readFile ./EventScripts/cool/cool-exciting-roundend.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/cool/update-config.sh" = {
+      text = builtins.readFile ./EventScripts/cool/update-config.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
   };
 
   # Secrets used by the game servers
@@ -159,6 +186,11 @@
     #};
     effigy-extra_config-rclone = {
       file = ../../secrets/effigy-extra_config-rclone.age;
+      owner = "${config.services.tgstation-server.username}";
+      group = "${config.services.tgstation-server.groupname}";
+    };
+    cool-apitoken = {
+      file = ../../secrets/cool-apitoken.age;
       owner = "${config.services.tgstation-server.username}";
       group = "${config.services.tgstation-server.groupname}";
     };
