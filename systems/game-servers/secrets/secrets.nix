@@ -29,4 +29,6 @@ in {
   "effigy-extra_config-rclone.age".publicKeys = final;
   # OIDC Secret for raw-logs client
   "raw-logs-oidc-reverse-proxy.age".publicKeys = final;
+  # Coolstation server secrets
+  "cool-apitoken.age".publicKeys = final;
 }

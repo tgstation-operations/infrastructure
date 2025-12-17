@@ -666,11 +666,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1761308400,
-        "narHash": "sha256-2mRENrw0JcIv9Sfa3ZhlTD5ok+pPY0r6+OpMpi62Zys=",
+        "lastModified": 1765765224,
+        "narHash": "sha256-jN/OKS/tU/KBnQow3mewELc9jIbWnXzYq5kzACLMdw8=",
         "owner": "tgstation-operations",
         "repo": "tgstation-phpbb",
-        "rev": "4c4d10d08ce181459799b5f31a24a49b5bd7a1d6",
+        "rev": "585159a5e7356f9c625cd9bce20796ada1209578",
         "type": "github"
       },
       "original": {
