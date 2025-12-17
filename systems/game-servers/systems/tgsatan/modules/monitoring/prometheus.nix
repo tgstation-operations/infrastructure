@@ -82,7 +82,7 @@ in {
         static_configs = [
           {
             targets = [
-              "lime.tg.lan:${prAnnouncerPort}"
+              "lemon.tg.lan:${prAnnouncerPort}"
             ];
           }
         ];

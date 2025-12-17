@@ -8,11 +8,10 @@ in {
   "restic-key.age".publicKeys = final;
   # TGS
   "tgs.age".publicKeys = final;
-  # Cloudflare
-  "cloudflare_api.age".publicKeys = final;
-  # Cloudflared
-  "cloudflared.age".publicKeys = final;
-  "cloudflared-pem.age".publicKeys = final;
+  # Cloudflared tunnel credentials file
+  # Run "cloudflared tunnel create --cred-file cred.json tgsatan" after logging in to generate in cred.json
+  # NAME MUST MATCH HOSTNAME
+  "cloudflared-tunnel.age".publicKeys = final;
   # Tgstation website api key
   "tgstation-web-apikey.age".publicKeys = final;
   # AWS Route 53 DNS-01
@@ -23,4 +22,5 @@ in {
   "grafana_db.age".publicKeys = final;
   "grafana_smtp.age".publicKeys = final;
   "grafana_admin.age".publicKeys = final;
+  "tgmc-raw-logs-oidc-reverse-proxy.age".publicKeys = final;
 }

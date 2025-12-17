@@ -1,6 +1,11 @@
-{...}: {
+{
+  self,
+  ...
+}: {
   imports = [
     ./base.nix
+    ../../modules/server-info-fetcher.nix
+    self.inputs.tgstation-phpbb.nixosModules.default
   ];
   ## WARSAW - Warsaw, Poland. Owned by Host. Staging.
   networking.hostName = "warsaw";
@@ -9,6 +14,12 @@
     efiSupport = true;
     efiInstallAsRemovable = true;
     device = "nodev";
+  };
+  services.tgstation-phpbb = {
+    enable = true;
+    groupname = "caddy";
+    cache-path = "/persist/tgstation-phpbb/cache";
+    avatars-path = "/persist/tgstation-phpbb/avatars";
   };
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/E997-16AB";

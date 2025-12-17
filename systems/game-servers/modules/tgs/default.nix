@@ -4,6 +4,7 @@
   lib,
   fenix,
   nixpkgs,
+  tg-globals,
   ...
 }: {
   environment.systemPackages = with pkgs; [
@@ -97,6 +98,33 @@
       group = "tgstation-server";
       mode = "0755";
     };
+
+    #COOLSTATION
+    "tgs-EventScripts.d/cool/DreamDaemonPreLaunch.sh" = {
+      text = builtins.readFile ./EventScripts/cool/DreamDaemonPreLaunch.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/cool/PostCompile.sh" = {
+      text = builtins.readFile ./EventScripts/effigy/PostCompile.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/cool/PreCompile.sh" = {
+      text = builtins.readFile ./EventScripts/cool/PreCompile.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/cool/cool-exciting-roundend.sh" = {
+      text = builtins.readFile ./EventScripts/cool/cool-exciting-roundend.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
+    "tgs-EventScripts.d/cool/update-config.sh" = {
+      text = builtins.readFile ./EventScripts/cool/update-config.sh;
+      group = "tgstation-server";
+      mode = "0755";
+    };
   };
 
   # Secrets used by the game servers
@@ -161,15 +189,63 @@
       owner = "${config.services.tgstation-server.username}";
       group = "${config.services.tgstation-server.groupname}";
     };
+    cool-apitoken = {
+      file = ../../secrets/cool-apitoken.age;
+      owner = "${config.services.tgstation-server.username}";
+      group = "${config.services.tgstation-server.groupname}";
+    };
   };
   services.tgstation-server = {
     enable = true;
-    production-appsettings = ./tgs_config.yml;
-    home-directory = "/persist/tgs-data";
+    production-appsettings = pkgs.writeText "tgs_config.yml" (lib.generators.toYAML {} {
+      Database = {
+        DatabaseType = "MariaDB";
+        ResetAdminPassword = false;
+      };
+      General = {
+        ConfigVersion = "5.5.0";
+        # GitHubAccessToken = TODO;
+        HostApiDocumentation = true;
+        PrometheusPort = 5001;
+        ValidInstancePaths = [
+          tg-globals.tgs.instances-path
+        ];
+      };
+      FileLogging = {
+        Disable = false;
+        LogLevel = "Trace";
+      };
+      Kestrel = {
+        Endpoints = {
+          Http = {
+            Url = "http://localhost:${tg-globals.tgs.port}";
+          };
+        };
+      };
+      ControlPanel = {
+        Enable = true;
+        AllowAnyOrigin = true;
+      };
+      Swarm = {
+        UpdateRequiredNodeCount = 2;
+      };
+      Security = {
+        OidcStrictMode = true;
+        OpenIDConnect = {
+          Auth = {
+            Authority = "https://auth.tgstation13.org/application/o/tgstation-server";
+            ClientId = "YDKw6NpQtKp6KHONGXfjuL4OhdhWVgCj0xIqwQ4z";
+            FriendlyName = "/tg/ Identity";
+            ThemeIconUrl = "https://tgstation13.org/assets/img/favicon.ico";
+          };
+        };
+      };
+    });
+    home-directory = tg-globals.tgs.root-path;
     # environmentFile =  # Required, add to host config to specify the database URI
     extra-path = lib.makeBinPath (
       with pkgs; [
-        (with fenix.packages.x86_64-linux; combine [stable.toolchain targets.i686-unknown-linux-gnu.stable.rust-std])
+        (with fenix.packages.x86_64-linux; combine [minimal.toolchain targets.i686-unknown-linux-gnu.minimal.rust-std])
         clangMultiStdenv.cc
         llvmPackages.libclang
         which
@@ -178,7 +254,7 @@
         nodejs_22
         bun
         dotnetCorePackages.sdk_8_0
-        curl
+        pkgsi686Linux.curl # DD needs 32 bit libcurl since 516.1664
         gnutar
         gzip
         coreutils # md5sum, for RSC

@@ -3,28 +3,88 @@
   pkgs,
   lib,
   self,
+  headscaleIPv4,
+  tg-globals,
   ...
 }: let
   hw = self.inputs.nixos-hardware.nixosModules;
   baseModules = [
     (import hw.common-gpu-nvidia)
     (import hw.common-cpu-amd)
+    self.inputs.oidc-reverse-proxy.nixosModules.default
+    self.inputs.tg-public-log-parser.nixosModules.default
     self.inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
     ../../../../modules/fail2ban.nix
     ../../../../modules/maria.nix
+    ../../../../modules/postgres.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
-    ../../modules/garage.nix
+    ../../../../modules/restic.nix
+    (import ../../modules/garage {
+      inherit pkgs config lib headscaleIPv4;
+      enable-webui = true;
+    })
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/docker.nix
     ../../modules/tgs
+    (import ../../modules/cloudflared.nix {
+      inherit pkgs config lib;
+      age-file = ./secrets/cloudflared.age;
+    })
+    (import ../../modules/logs {
+      inherit pkgs config tg-globals;
+      instance-name = "sybil";
+      bind-port = "1338";
+      internal-port = "13338";
+      raw-port = "23338";
+      raw-internal-port = "23339";
+    })
+    (import ../../modules/logs {
+      inherit pkgs config tg-globals;
+      instance-name = "manuel";
+      bind-port = "1448";
+      internal-port = "11448";
+      raw-port = "21448";
+      raw-internal-port = "21449";
+    })
+    (import ../../modules/logs {
+      inherit pkgs config tg-globals;
+      instance-name = "eventhallus";
+      bind-port = "7778";
+      internal-port = "17778";
+      raw-port = "27778";
+      raw-internal-port = "27779";
+    })
+    (import ../../modules/logs {
+      inherit pkgs config tg-globals;
+      instance-name = "effigy";
+      bind-port = "7338";
+      internal-port = "17338";
+      raw-port = "27338";
+      raw-internal-port = "27339";
+    })
+    (import ../../modules/logs {
+      inherit pkgs config tg-globals;
+      instance-name = "tgmc";
+      bind-port = "7238";
+      internal-port = "17238";
+      raw-port = "37338";
+      raw-internal-port = "37339";
+      enable-public-logs = false;
+      oidc-settings = {
+        OpenIDConnectSettings = {
+          Authority = "https://auth.tgstation13.org/application/o/tgmc-raw-logs";
+          ClientId = "mtumSnN4SUweJicI6r1mRXtd8bBqfYjM6K8KdVA4";
+        };
+        age-name = "tgmc-raw-logs-oidc-reverse-proxy";
+        age-path = ./secrets/tgmc-raw-logs-oidc-reverse-proxy.age;
+      };
+    })
     ./modules/atticd.nix
-    ./modules/cockroachdb
     ./modules/grafana
-    ./modules/postgres.nix
     ./modules/monitoring
     ./modules/motd
     ./modules/nvidia.nix
@@ -98,11 +158,6 @@ in {
     trim.enable = true;
     autoSnapshot.enable = false;
   };
-
-  services.mysql = {
-    dataDir = "/persist/mariadb";
-  };
-
   age.secrets.tgs = {
     file = ./secrets/tgs.age;
     owner = "${config.services.tgstation-server.username}";
@@ -121,26 +176,38 @@ in {
     };
   };
 
-  # TODO: Move this to it's own module, either in modules/ or a host based one
-  age.secrets.restic-env.file = ./secrets/restic-env.age;
-  age.secrets.restic-key.file = ./secrets/restic-key.age;
-  services.restic = {
-    backups.persist = {
-      environmentFile = config.age.secrets.restic-env.path;
-      passwordFile = config.age.secrets.restic-key.path;
-      repository = "s3:s3.us-east-005.backblazeb2.com/tgstation-backups";
-      extraBackupArgs = ["-v"];
-      paths = ["/persist" "/root/tgsatan_maria.sql"];
-      exclude = [
-        "/persist/garage/data"
-      ];
-      backupPrepareCommand = ''
-        ${pkgs.mariadb}/bin/mysqldump --all-databases > /root/tgsatan_maria.sql
-      '';
-      backupCleanupCommand = ''
-        rm /root/tgsatan_maria.sql
-      '';
-    };
+  services.postgresql = {
+    enable = true;
+    # If you change this, you will need to perform manual cleanup
+    # of removed users
+    ensureUsers = [
+      {
+        name = "root";
+      }
+      # {
+      #   name = "tgstation";
+      #   ensureDBOwnership = true;
+      # }
+      # {
+      #   name = "tgmc";
+      #   ensureDBOwnership = true;
+      # }
+      {
+        name = "grafana";
+        ensureDBOwnership = true;
+      }
+      {
+        name = "atticd";
+        ensureDBOwnership = true;
+      }
+    ];
+
+    ensureDatabases = [
+      # "tgstation";
+      # "tgmc";
+      "grafana"
+      "atticd"
+    ];
   };
 
   virtualisation.oci-containers = {
