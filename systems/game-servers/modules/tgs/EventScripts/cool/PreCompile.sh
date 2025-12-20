@@ -55,9 +55,3 @@ cp "${TGS_INSTANCE_ROOT}/Configuration/EventScripts.old/libauxcpu_byondapi.so" "
 
 cd "$work_directory"
 echo "auxcpu: deployment finish"
-
-# compile tgui
-echo "tgui: deployment begin"
-cd "$1"
-env TG_BOOTSTRAP_CACHE="$work_directory" CBT_BUILD_MODE="TGS" tools/bootstrap/javascript.sh tools/build/build.ts
-echo "tgui: deployment finish"
