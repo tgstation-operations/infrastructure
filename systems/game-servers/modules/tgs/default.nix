@@ -106,7 +106,7 @@
       mode = "0755";
     };
     "tgs-EventScripts.d/cool/PostCompile.sh" = {
-      text = builtins.readFile ./EventScripts/effigy/PostCompile.sh;
+      text = builtins.readFile ./EventScripts/cool/PostCompile.sh;
       group = "tgstation-server";
       mode = "0755";
     };
