@@ -32,14 +32,14 @@ jobs:
 
       - name: "Remove Stale 'CI Cleared' Label"
         if: github.event.action == 'synchronize' || github.event.action == 'reopened'
-        uses: actions-ecosystem/action-remove-labels@2ce5d41b4b6aa8503e285553f75ed56e0a40bae0
+        uses: actions-ecosystem/action-remove-labels@d05162525702062b6bdef750ed8594fc024b3ed7
         with:
           labels: CI Cleared
           github_token: ${{ steps.app-token-generation.outputs.token }}
 
       - name: "Remove 'CI Approval Required' Label"
         if: (github.event.action == 'synchronize' || github.event.action == 'reopened') || ((github.event.action == 'opened' || github.event.action == 'labeled') && contains(github.event.pull_request.labels.*.name, 'CI Cleared'))
-        uses: actions-ecosystem/action-remove-labels@2ce5d41b4b6aa8503e285553f75ed56e0a40bae0
+        uses: actions-ecosystem/action-remove-labels@d05162525702062b6bdef750ed8594fc024b3ed7
         with:
           labels: CI Approval Required
           github_token: ${{ steps.app-token-generation.outputs.token }}
