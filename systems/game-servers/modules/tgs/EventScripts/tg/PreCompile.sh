@@ -63,7 +63,7 @@ echo "dreamluau: deployment finish"
 echo "auxcpu: deployment begin"
 if [ ! -d "auxcpu" ]; then
   echo "auxcpu: cloning"
-  git clone https://github.com/Absolucy/auxcpu >/dev/null
+  git clone https://github.com/spacestation13/auxcpu >/dev/null
   cd auxcpu
 else
   echo "auxcpu: fetching"
