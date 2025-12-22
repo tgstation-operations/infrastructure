@@ -5,6 +5,7 @@
 
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
     13336 # Terry
+    18086 # Cool
   ];
 
   services.haproxy.config =
