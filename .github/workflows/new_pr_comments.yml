@@ -21,7 +21,7 @@ jobs:
           private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
 
       - name: Comment on new Fork PR
-        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b
+        uses: thollander/actions-comment-pull-request@e4a76dd2b0a3c2027c3fd84147a67c22ee4c90fa
         with:
           message: As this pull request is from a fork, the Colmena workflow requires repository secrets to deploy to staging. Maintainers can add the `CI Cleared` label to allow it to run. Note that any changes to ci_security.yml, colmena.yml, and colmena_deploy.yml will not be reflected.
           github-token: ${{ steps.app-token-generation.outputs.token }}
