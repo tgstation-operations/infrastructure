@@ -176,6 +176,7 @@ in {
       $wgMaxImageArea = 250000000;
       $wgLocaltimezone = "UTC";
       $wgDebugLogFile = "${logsDir}";
+      $wgUploadDirectory = "${uploadsDir}";
 
       ## Custom Namespaces
       define("NS_TGMC", 4200); // This MUST be even.
