@@ -45,7 +45,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     tgstation-server = {
-      url = "github:tgstation/tgstation-server/302b73c5cc19884c0451e03fcbc1551d27007b3e?dir=build/package/nix";
+      url = "github:tgstation/tgstation-server/3fddfc2b0fbd8c8e03fc4fa3fdde21e2164e4e1c?dir=build/package/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     tgstation-pr-announcer.url = "github:tgstation/tgstation/be9ae13cd50cc2f2f6680883424b86feb3c22725?dir=tools/Tgstation.PRAnnouncer";
