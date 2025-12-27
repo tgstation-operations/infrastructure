@@ -30,7 +30,7 @@ jobs:
           known_hosts: ${{ vars.COLMENA_KNOWN_HOSTS }}
 
       - name: Login to headscale
-        uses: tailscale/github-action@a392da0a182bba0e9613b6243ebd69529b1878aa # Connect to headscale
+        uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # Connect to headscale
         with:
           authkey: ${{ secrets.TS_AUTHKEY }}
           args: --login-server=https://vpn.tgstation13.org

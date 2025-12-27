@@ -185,7 +185,7 @@ in {
       $wgExtraNamespaces[NS_TGMC] = "TGMC";
       $wgExtraNamespaces[NS_TGMC_TALK] = "TGMC Talk";
 
-      $wgContentNamespaces = [ NS_TGMC ];
+      $wgContentNamespaces[] = NS_TGMC;
 
       ## Group Permissions
 
