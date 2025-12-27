@@ -65,6 +65,30 @@
       };
     };
   };
+  users.users.php-caddy = {
+    isSystemUser = true;
+    extraGroups = [
+      "caddy"
+    ];
+    group = "php-caddy";
+  };
+  users.groups.php-caddy = {};
+  services.phpfpm.pools = {
+    php-caddy = {
+      user = "php-caddy";
+      group = "caddy";
+      settings = {
+        "pm" = "dynamic";
+        "pm.max_children" = 75;
+        "pm.start_servers" = 10;
+        "pm.min_spare_servers" = 5;
+        "pm.max_spare_servers" = 20;
+        "pm.max_requests" = 500;
+        "listen.owner" = config.services.caddy.user;
+        "listen.group" = config.services.caddy.group;
+      };
+    };
+  };
   services.caddy = {
     enable = true;
     package = tg-globals.caddy.default-package;
@@ -134,6 +158,15 @@
           reverse_proxy localhost:3903 {
             health_uri /health
             health_port 3903
+          }
+        '';
+      };
+      "localhost:8086" = {
+        extraConfig =''
+          file_server
+          root * /srv/www
+          php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
+            env _GET 127.0.0.1
           }
         '';
       };
