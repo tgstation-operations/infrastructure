@@ -12,6 +12,7 @@
     # 4337 # event-eu
     7337 # Effigy
     7777 # event-us (idk ask scriptis)
+    8085 # Coolstation
   ];
 
   services.haproxy.config =
