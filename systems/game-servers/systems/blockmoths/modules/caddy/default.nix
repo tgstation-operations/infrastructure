@@ -137,6 +137,13 @@
           }
         '';
       };
+      "localhost, 127.0.0.1" = {
+        file_server
+        root * /srv/www/html
+        handle_path /api/* {
+          reverse_proxy 127.0.0.1:8086
+        }
+      };
     };
   };
 }
