@@ -3,13 +3,13 @@
   pkgs,
   pkgs-unstable,
   inputs,
+  tg-globals,
   ...
 }: {
   # For Unix sockets, unused for now
   systemd.tmpfiles.rules = [
     "d /run/caddy 644 ${config.services.caddy.user} ${config.services.caddy.group}"
     "d /run/php/caddy 770 ${config.services.caddy.user} ${config.services.caddy.group}"
-    "d /run/tgstation-website-v2 770 ${config.services.caddy.user} ${config.services.caddy.group}"
   ];
 
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
@@ -17,7 +17,7 @@
     80
     443
   ];
-  age.secrets.cloudflare_api.file = ../secrets/cloudflare_api.age;
+  age.secrets.cloudflare-api.file = ../../../../../secrets/cloudflare-api.age;
   security.acme = {
     acceptTerms = true;
     defaults = {
@@ -25,7 +25,7 @@
       email = "acme@tgstation13.org";
       dnsPropagationCheck = true;
       credentialFiles = {
-        "CF_DNS_API_TOKEN_FILE" = config.age.secrets.cloudflare_api.path;
+        "CF_DNS_API_TOKEN_FILE" = config.age.secrets.cloudflare-api.path;
       };
       server = "https://acme-v02.api.letsencrypt.org/directory"; # Production
     };
@@ -35,7 +35,7 @@
   };
   services.caddy = {
     enable = true;
-    package = pkgs-unstable.caddy; # We use caddy on unstable so we get the latest version of it, consistent with the relays
+    package = tg-globals.caddy.default-package;
     enableReload = true; # Reload caddy instead of restarting it on config changes
     globalConfig = ''
       auto_https disable_certs  # We use security.acme.certs for this where applicable, so we don't want it to try and get certs
@@ -49,9 +49,9 @@
         useACMEHost = "tgs.wiggle.staging.tgstation13.org";
         extraConfig = ''
           encode gzip zstd
-          reverse_proxy localhost:5000 {
+          reverse_proxy localhost:${tg-globals.tgs.port} {
             health_uri /health
-            health_port 5000
+            health_port ${tg-globals.tgs.port}
           }
         '';
       };

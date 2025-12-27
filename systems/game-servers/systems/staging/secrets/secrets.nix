@@ -1,12 +1,12 @@
 let
-  users = import ../../../../../modules/ssh_keys.nix;
-
-  # Systems
-  wiggle = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILz3vKC6Xr5fmXXU8BsY5oityIM60NmIaCyPTPUuZ35+";
-  systems = [wiggle];
+  users = import ../../../../../modules/ssh_keys_by_group.nix {};
+  wiggle = (import ../../../../../modules/ssh_keys_systems.nix).wiggle;
+  final = users ++ [wiggle];
 in {
   # TGS
-  "tgs.age".publicKeys = users ++ systems;
-  # Cloudflare DNS-01
-  "cloudflare_api.age".publicKeys = users ++ systems;
+  "tgs.age".publicKeys = final;
+  # Cloudflared tunnel credentials file
+  # Run "cloudflared tunnel create --cred-file cred.json wiggle" after logging in to generate in cred.json
+  # NAME MUST MATCH HOSTNAME
+  "cloudflared.age".publicKeys = final;
 }

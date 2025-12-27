@@ -3,6 +3,7 @@
   pkgs,
   pkgs-unstable,
   inputs,
+  tg-globals,
   ...
 }: {
   # For Unix sockets, unused for now
@@ -17,7 +18,7 @@
     80
   ];
   age.secrets = {
-    cloudflare_api.file = ../../secrets/cloudflare_api.age;
+    cloudflare-api.file = ../../../../../../secrets/cloudflare-api.age;
     aws_credentials.file = ../../secrets/aws_credentials.age;
   };
   security.acme = {
@@ -27,7 +28,7 @@
       email = "acme@tgstation13.org";
       dnsPropagationCheck = true;
       credentialFiles = {
-        "CF_DNS_API_TOKEN_FILE" = config.age.secrets.cloudflare_api.path;
+        "CF_DNS_API_TOKEN_FILE" = config.age.secrets.cloudflare-api.path;
       };
       server = "https://acme-v02.api.letsencrypt.org/directory"; # Production
     };
@@ -64,9 +65,33 @@
       };
     };
   };
+  users.users.php-caddy = {
+    isSystemUser = true;
+    extraGroups = [
+      "caddy"
+    ];
+    group = "php-caddy";
+  };
+  users.groups.php-caddy = {};
+  services.phpfpm.pools = {
+    php-caddy = {
+      user = "php-caddy";
+      group = "caddy";
+      settings = {
+        "pm" = "dynamic";
+        "pm.max_children" = 75;
+        "pm.start_servers" = 10;
+        "pm.min_spare_servers" = 5;
+        "pm.max_spare_servers" = 20;
+        "pm.max_requests" = 500;
+        "listen.owner" = config.services.caddy.user;
+        "listen.group" = config.services.caddy.group;
+      };
+    };
+  };
   services.caddy = {
     enable = true;
-    package = pkgs-unstable.caddy; # We use caddy on unstable so we get the latest version of it, consistent with the relays
+    package = tg-globals.caddy.default-package;
     enableReload = true; # Reload caddy instead of restarting it on config changes
     globalConfig = ''
       auto_https disable_certs  # We use security.acme.certs for this where applicable, so we don't want it to try and get certs
@@ -80,9 +105,9 @@
         useACMEHost = "tgs.blockmoths.eu.tgstation13.org";
         extraConfig = ''
           encode gzip zstd
-          reverse_proxy localhost:5000 {
+          reverse_proxy localhost:${tg-globals.tgs.port} {
             health_uri /health
-            health_port 5000
+            health_port ${tg-globals.tgs.port}
           }
         '';
       };
@@ -133,6 +158,15 @@
           reverse_proxy localhost:3903 {
             health_uri /health
             health_port 3903
+          }
+        '';
+      };
+      "localhost:8086" = {
+        extraConfig =''
+          file_server
+          root * /srv/www
+          php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
+            env _GET 127.0.0.1
           }
         '';
       };

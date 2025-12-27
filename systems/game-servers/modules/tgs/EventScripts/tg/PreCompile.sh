@@ -15,6 +15,8 @@ mkdir -p $work_directory
 
 cd $work_directory
 
+export TARGET_CC=$(which clang)
+export TARGET_CXX=$(which clang++)
 echo "rust-g: deployment begin"
 if [ ! -d "rust-g" ]; then
   echo "rust-g: cloning"
@@ -45,14 +47,41 @@ else
 fi
 echo "dreamluau: checkout"
 git checkout "$DREAMLUAU_VERSION" >/dev/null
+
 echo "dreamluau: building"
-env LIBCLANG_PATH="$(find /nix/store -name *-clang-*-lib)/lib" cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
+export LIBCLANG_PATH="$(find /nix/store -name *-clang-*-lib | head -n1)/lib"
+echo "Using libclang path: $LIBCLANG_PATH"
+
+cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
 cp target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
-cd "$work_directory"
+
 echo "dreamluau: deployment finish"
+
+echo "auxcpu: deployment begin"
+cd "$work_directory"
+if [ ! -d "auxcpu" ]; then
+  echo "auxcpu: cloning"
+  git clone https://github.com/spacestation13/auxcpu >/dev/null
+  cd auxcpu
+else
+  echo "auxcpu: fetching"
+  cd auxcpu
+  git fetch >/dev/null
+fi
+echo "auxcpu: checkout"
+git checkout main >/dev/null
+echo "auxcpu: building"
+#cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
+#cp target/i686-unknown-linux-gnu/release/libauxcpu_byondapi.so "$1/libauxcpu_byondapi.so"
+
+# EMERGENCY FIX, SOMETHING IS WRONG WITH THE ABOVE
+cp "${TGS_INSTANCE_ROOT}/Configuration/EventScripts.old/libauxcpu_byondapi.so" "$1/libauxcpu_byondapi.so"
+
+cd "$work_directory"
+echo "auxcpu: deployment finish"
 
 # compile tgui
 echo "tgui: deployment begin"
 cd "$1"
-env TG_BOOTSTRAP_CACHE="$work_directory" TG_BOOTSTRAP_NODE_LINUX=1 CBT_BUILD_MODE="TGS" tools/bootstrap/node tools/build/build.js
+env TG_BOOTSTRAP_CACHE="$work_directory" CBT_BUILD_MODE="TGS" tools/bootstrap/javascript.sh tools/build/build.ts
 echo "tgui: deployment finish"

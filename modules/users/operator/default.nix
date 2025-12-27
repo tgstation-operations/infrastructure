@@ -1,15 +1,15 @@
 {...}: {
   imports = [
-    ./alexkar598.nix
-    ./dax.nix
+    ./aa07.nix
     ./dominion.nix
     ./iain0.nix
     ./ivory.nix
-    ./lowrp.nix
+    ./lorwp.nix
     ./mothblocks.nix
     ./ned.nix
     ./riggle.nix
-    ./scriptis.nix
+    ./smartkar.nix
+    ./sothanforax.nix
     ./zephyrtfa.nix
     ./oranges.nix
   ];

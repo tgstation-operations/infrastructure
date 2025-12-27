@@ -6,6 +6,7 @@
   networking.firewall.allowedTCPPorts = [
     # Game Servers
     8989 # funnyname
+    8085
   ];
 
   services.haproxy.config =

@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
   workflow_call:
     inputs:
       pull_request_number:
@@ -42,41 +39,60 @@ jobs:
       UPLOAD_TO_ATTIC: "no" # This is here to shut up the GitHub Actions intellisense in VSC
     steps:
       - name: Set UPLOAD_TO_ATTIC envvar
-        if: ${{ env.USE_ATTIC == 'yes' && (github.repository == 'tgstation-operations/infrastructure' && (github.ref == 'refs/heads/main' || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main'))) && matrix.node == '@staging' }}
+        if: ${{ env.USE_ATTIC == 'yes' && (github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main' && matrix.node == '@staging'))) }}
         run: echo "UPLOAD_TO_ATTIC=yes" >> $GITHUB_ENV
 
       # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
       - name: Login to headscale
-        uses: tailscale/github-action@8688eb839e58e6b25c1ae96cd99d1c173299b842 # Connect to headscale
+        uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # Connect to headscale
         if: ${{ env.USE_ATTIC == 'yes' }}
         with:
           authkey: ${{ secrets.TS_BUILD_AUTHKEY }}
           args: --login-server=https://vpn.tgstation13.org
 
       - name: Checkout (Branch)
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
         if: github.event_name != 'pull_request_target'
 
       - name: Checkout (PR Merge)
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
         if: github.event_name == 'pull_request_target'
         with:
           ref: "refs/pull/${{ inputs.pull_request_number }}/merge"
 
+      - name: Mount compressed fs at /nix
+        shell: bash
+        run: |
+          dd if=/dev/zero of=./nix-store.img bs=1 count=0 seek=15G
+          mkfs.btrfs -M ./nix-store.img
+          sudo mkdir /nix
+          sudo mount -o defaults,noatime,compress=zstd ./nix-store.img /nix
+
+      - name: Generate App Token
+        id: app-token-generation
+        uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf
+        with:
+          app-id: ${{ secrets.CI_APP_ID }}
+          private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
+
       - name: Install Nix (Without Attic)
         if: ${{ env.USE_ATTIC != 'yes' }}
-        uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72 # Install nix itself. We don't need to specify a channel since we're using flakes
-        with:
-          extra_nix_config: |
+        run: sh .github/workflows/install_lix.sh
+        env:
+          EXTRA_NIX_CONFIG: |
+            access-tokens = github.com=${{ steps.app-token-generation.outputs.token }}
+            experimental-features = nix-command flakes
             accept-flake-config = true
             extra-substituters = https://nix-community.cachix.org
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
 
       - name: Install Nix (With Attic)
         if: ${{ env.USE_ATTIC == 'yes' }}
-        uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72
-        with:
-          extra_nix_config: |
+        run: sh .github/workflows/install_lix.sh
+        env:
+          EXTRA_NIX_CONFIG: |
+            access-tokens = github.com=${{ steps.app-token-generation.outputs.token }}
+            experimental-features = nix-command flakes
             accept-flake-config = true
             extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA=
@@ -91,17 +107,24 @@ jobs:
       - name: Print nix config before Build
         run: nix config show
 
+      - name: Install Colmena
+        run: |
+          COLMENA_REVISION=$(jq -r '.nodes.colmena.locked.rev' flake.lock)
+          echo "Current Colmena revision is: $COLMENA_REVISION"
+          nix profile install github:zhaofengli/colmena/$COLMENA_REVISION
+
       - name: Build closure
-        run: nix run github:zhaofengli/colmena -- build --impure -v --eval-node-limit 2 --keep-result --on ${{ matrix.node }}
+        run: |
+          colmena build --impure -v --eval-node-limit 2 --keep-result --on ${{ matrix.node }}
 
       - name: Push closure to attic
         if: ${{ env.UPLOAD_TO_ATTIC == 'yes' }}
-        run: attic push tgstation:tgstation-infrastructure .gcroots/*
+        run: attic push tgstation:tgstation-infrastructure $(ls -d /nix/store/*/)
 
   deploy-staging:
     name: Deploy Staging
     needs: build
-    if: ${{ github.repository == 'tgstation-operations/infrastructure' && (github.ref == 'refs/heads/main' || (((github.event_name == 'pull_request' && github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id) || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main')) }}
+    if: ${{ github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || (((github.event_name == 'pull_request' && github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id) || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main')) }}
     uses: ./.github/workflows/colmena_deploy.yml
     secrets: inherit
     with:
@@ -116,12 +139,12 @@ jobs:
         node:
           - "@staging"
         environment:
-          - staging
+          - Staging
 
   deploy-production:
     name: Deploy Production
     needs: build
-    if: ${{ github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
     uses: ./.github/workflows/colmena_deploy.yml
     secrets: inherit
     with:
@@ -139,11 +162,11 @@ jobs:
           - "vpn"
           - "@relay-amd64"
         environment:
-          - production
+          - Production
         include:
           - runner: ubuntu-24.04-arm
             node: "@relay-arm"
-            environment: production
+            environment: Production
 
   close-bad-website-pr:
     name: Close Bad Website PR
@@ -157,3 +180,16 @@ jobs:
         run: gh pr close https://github.com/tgstation-operations/infrastructure/pull/${{ github.event.pull_request.number }}
         env:
           GH_TOKEN: ${{ github.token }}
+
+  ci-completion-gate:
+    if: always() && !cancelled()
+    name: CI Completion Gate
+    timeout-minutes: 1
+    needs: [close-bad-website-pr, deploy-staging, deploy-production]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Decide whether the needed jobs succeeded or failed
+        uses: re-actors/alls-green@2765efec08f0fd63e83ad900f5fd75646be69ff6
+        with:
+          allowed-skips: close-bad-website-pr,deploy-production
+          jobs: ${{ toJSON(needs) }}

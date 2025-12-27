@@ -1,29 +1,29 @@
 # /tg/station Infrastructure
+
 [![Run Colmena](https://github.com/tgstation-operations/infrastructure/actions/workflows/colmena.yml/badge.svg)](https://github.com/tgstation-operations/infrastructure/actions/workflows/colmena.yml)
 
 This repository holds the IaC Config for the /tg/station Space Station 13 Server. This is built primarily using nix with [Colmena](https://github.com/zhaofengli/colmena)
 
 This place is not a place of honor... no highly esteemed deed is commemorated here... nothing valued is here.
+
 # Single points of failure
 
-oranges - out of band access to lime/ domain owner
-
-mothblocks - out of band access to blockmoths and eu relays
-
-scriptis/lorwp - cloudflare dns
+tgsatan - the foundation
 
 # Server owners
-lime - oranges (ovh us vm)
-tgsatan - scriptis (dedicated)
-warsaw - scriptis (nobody knows??)
-wiggle - riggle (magic??)
-blockmoths - mothblocks (hetzner dedi)
-knipp,daschund,bratwurst - mothblocks (hetzner vms)
+
+- tgsatan - the foundation
+- chicago, dallas, atlanta, warsaw (scriptis, vultr relays) - to be migrated to ovh under the foundation
+- wiggle - riggle (magic??)
+- knipp,daschund,bratwurst - the foundation (hetzner vm relays)
+
+The rest are org owned.
 
 # Repository structure
+
 ```
 <blorbo_name> = placeholder for the name of a blorbo
-[/root/some/path] = this folder follows the same structure as /root/some/path 
+[/root/some/path] = this folder follows the same structure as /root/some/path
 
 root/
 |-  modules/
@@ -41,18 +41,21 @@ root/
 |   |   |-  secrets/ [root/secrets]
 |   |-  <system_group_name>/
 |   |   |-  modules/ [root/modules]
-|   |   |-  secrets/ [root/secrets]  
-|   |   |-  systems/ [root/systems]  
-``` 
+|   |   |-  secrets/ [root/secrets]
+|   |   |-  systems/ [root/systems]
+```
 
 # Flow of byond packets through infrastructure
+
 ```mermaid
 architecture-beta
     %% The groups
-    group usrelay(cloud)[US Relays]
-    group eurelay(cloud)[EU Relays]
-    group usdc(cloud)[US Server]
-    group eudc(cloud)[EU Server]
+    group frontend [FRONTEND]
+    group backend [BOTTOMENDS]
+    group usrelay(cloud)[US Relays] in frontend
+    group eurelay(cloud)[EU Relays] in frontend
+    group usdc(cloud)[US Server] in backend
+    group eudc(cloud)[EU Server] in backend
     %% Allows for routing of lines
     junction usjunction1 in usrelay
     junction usjunction2 in usrelay
@@ -60,18 +63,18 @@ architecture-beta
     junction eujunction1 in eurelay
     junction eujunction2 in eurelay
     junction eujunction3 in eurelay
-    
-    %% Connects backends and frontends
-    junction connecttop
-    junction connectbottom
 
-    %% ALlows for routing of us servers
+    %% Connects backends and frontends
+    junction connecttop in frontend
+    junction connectbottom in backend
+
+    %% Allows for routing of us servers
     junction usserverjunction1 in usdc
     junction usserverjunction2 in usdc
     junction usserverjunction3 in usdc
     usserverjunction1:L -- R:usserverjunction2
     usserverjunction2:L -- R:usserverjunction3
-    
+
     %%US frontend
     service relay1(server)[HaProxy Frontend] in usrelay
     relay1:B -- T:usjunction1
@@ -110,12 +113,14 @@ architecture-beta
     usserverjunction2:B -- T:sybil
     usserverjunction3:B -- T:tgmc
     usserverjunction2:T -- B:backend1
-    
+
     backend2:B -- T:terry
     backend1:R <-- L:connectbottom
     backend2:L <-- R:connectbottom
 ```
+
 # Explanation of how the transparent proxying works with HAproxy
+
 ```mermaid
 sequenceDiagram
    Relay->>Backend: Client Traffic, ProxyProtocolV2

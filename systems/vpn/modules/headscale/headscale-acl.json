@@ -1,53 +1,65 @@
 {
   "groups": {
     "group:op": [
-      "scriptis",
-      "dominion",
-      "riggle",
-      "zephyrtfa",
-      "lowrp",
-      "iain0",
-      "ivory",
-      "dax",
-      "alexkar598"
+      "sothanforax@",
+      "ivory@",
+      "dominion@",
+      "riggle@",
+      "zephyrtfa@",
+      "lowrp@",
+      "iain0@",
+      "dax@",
+      "alexkar598@",
+      "aa07@",
+      "smartkar@"
     ],
     "group:keyholder-tg": [
-      "watermelon",
-      "oranges",
-      "ned",
-      "niknak",
-      "iamgoofball",
-      "mothblocks",
-      "smartkar",
-      "aa07",
-      "mrmelbert",
-      "kieth4",
-      "timberpoes",
-      "spookuni",
-      "fikou",
-      "namelessfairy",
-      "burgerman",
-      "thefinalpotatoe",
-      "thebiblemelts",
-      "cheshify",
-      "rex9001",
-      "san7890",
-      "shadowhand",
-      "tattle",
-      "spiders",
-      "vekter"
+      "watermelon@",
+      "oranges@",
+      "ned@",
+      "niknak@",
+      "iamgoofball@",
+      "mothblocks@",
+      "maxipat@",
+      "mrmelbert@",
+      "kieth4@",
+      "timberpoes@",
+      "spookuni@",
+      "fikou@",
+      "isratosh@",
+      "iansdoor@",
+      "namelessfairy@",
+      "thefinalpotatoe@",
+      "thebiblemelts@",
+      "cheshify@",
+      "shadowhand@",
+      "tattle@",
+      "spiders@"
+    ],
+    "group:keyholder-coolstation": [
+      "warc@",
+      "tamber@"
+    ],
+    "group:keyholder-effigy": [
+      "LT3@",
+      "gallows@",
+      "bluwu016@"
     ],
     "group:keyholder-tgmc": [
-      "aiia",
-      "barnet",
-      "darkbyond",
-      "ivanmixo",
-      "lumipharon",
-      "minimeatwad",
-      "naaanii",
-      "stormwell",
-      "tiviplus",
-      "kiseki"
+      "aiia@",
+      "barnet@",
+      "darkbyond@",
+      "ivanmixo@",
+      "lumipharon@",
+      "minimeatwad@",
+      "naaanii@",
+      "stormwell@",
+      "tivianne@",
+      "tiviplus@",
+      "kiseki@"
+    ],
+    "group:dbaccess": [
+      "metek@"
     ]
   },
   "tagOwners": {
@@ -137,6 +149,25 @@
     {
       "action": "accept",
       "src": [
+        "group:keyholder-coolstation"
+      ],
+      "dst": [
+        "tag:backend:80",
+        "tag:backend:443"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "group:keyholder-effigy"
+      ],
+      "dst": [
+        "tag:backend:*"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
         "group:keyholder-tgmc"
       ],
       "dst": [
@@ -191,6 +222,15 @@
     {
       "action": "accept",
       "src": [
+        "group:dbaccess"
+      ],
+      "dst": [
+        "tag:dbcluster:3306"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
         "group:op",
         "group:keyholder-tg",
         "tag:backend",
@@ -209,6 +249,17 @@
         "tag:garage:80",
         "tag:garage:443",
         "tag:dbcluster:3306"
+      ]
+    },
+    {
+      "action": "accept",
+      "src": [
+        "tag:dbcluster"
+      ],
+      "dst": [
+        "tag:dbcluster:3306",
+        "tag:dbcluster:26257",
+        "tag:dbcluster:26258"
       ]
     }
   ]
