@@ -7,7 +7,6 @@
   internal-port,
   raw-port,
   raw-internal-port,
-  group ? "tgstation-server",
   enable-public-logs ? true,
   oidc-settings ? {
     OpenIDConnectSettings = {
@@ -22,7 +21,10 @@
   public-logs-url = "${instance-name}-logs.tgstation13.org";
   raw-logs-url = "raw-${public-logs-url}";
   logs-path = "${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs";
+  group = config.services.tgstation-server.groupname;
 in {
+  users.users.caddy.extraGroups = [ group ];
+
   services = {
     cloudflared.tunnels.primary-tunnel = {
       originRequest.httpHostHeader = "localhost";
@@ -33,8 +35,6 @@ in {
     };
 
     caddy = {
-      group = "tgstation-server";
-
       virtualHosts = {
         "http://localhost:${internal-port}" = {
           extraConfig = ''
