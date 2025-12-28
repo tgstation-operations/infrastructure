@@ -10,12 +10,12 @@
   compose = builtins.readFile ./docker-compose.yml;
 in {
   users = {
-    users."${usergroup-name}" = {
-      group = usergroup-name;
+    users."${name}" = {
+      group = name;
       isSystemUser = true;
     };
 
-    groups."${usergroup-name}" = {};
+    groups."${name}" = {};
   };
 
   systemd.services = {
@@ -26,7 +26,7 @@ in {
       after = [ "docker.service" ];
       serviceConfig = {
         Type = "oneshot";
-        User = usergroup-name;
+        User = name;
         ExecStart = pkgs.writeShellScript "tg-tts-build.sh" ''
           if [ -z "$(${pkgs.docker}/bin/docker images -q ${name} 2> /dev/null)" ]; then
             echo "${name} image needs to be built"
@@ -45,7 +45,7 @@ in {
       after = [ "docker.service" "${build-service-name}.service" ];
       serviceConfig = {
         Type = "simple";
-        User = usergroup-name;
+        User = name;
         ExecStart = "${pkgs.docker}/bin/docker compose -f ${compose} up";
       };
       wantedBy = [ "multi-user.target" ];
