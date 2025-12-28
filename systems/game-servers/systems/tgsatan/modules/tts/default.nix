@@ -7,7 +7,10 @@
   source-directory = "/persist/flakes/tgtts2/fish-speech";
   name = "tgtts";
   build-service-name = "${name}-build";
-  compose = builtins.readFile ./docker-compose.yml;
+  compose = pkgs.writeTextFile {
+    name = "tgtts-docker-compose.yml";
+    text = builtins.readFile ./docker-compose.yml;
+  };
 in {
   users = {
     users."${name}" = {
