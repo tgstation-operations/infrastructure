@@ -1,0 +1,145 @@
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.0.0/24"
+          gateway: "192.168.0.1"
+services:
+  haproxy:
+    image: docker.io/library/haproxy:3.0.11 # previously 3.3-dev
+    volumes:
+      - /persist/flakes/tgtts2/fish-speech/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    networks:
+      #             - tts
+      - default
+    depends_on:
+      - tts1
+      - tts2
+      - tts3
+      - tts4
+      - tts5
+      - api1
+      - api2
+      - api3
+      - api4
+      - api5
+    ports:
+      - 5011:5002
+  api1:
+    image: tgtts:latest
+    command: python tts_server.py
+    networks:
+      #             - tts
+      - default
+  api2:
+    image: tgtts:latest
+    command: python tts_server.py
+    networks:
+      #             - tts
+      - default
+  api3:
+    image: tgtts:latest
+    command: python tts_server.py
+    networks:
+      #             - tts
+      - default
+  api4:
+    image: tgtts:latest
+    command: python tts_server.py
+    networks:
+      #             - tts
+      - default
+  api5:
+    image: tgtts:latest
+    command: python tts_server.py
+    networks:
+      #             - tts
+      - default
+  tts1:
+    image: tgtts:latest
+    command: python tts_api.py
+    networks:
+      #             - tts
+      - default
+    volumes:
+      - /persist/tgtts2-blips:/workspace/samples:rw
+      # - /dev:/dev
+    environment:
+      - TORCH_USE_CUDA_DSA=1
+      - TORCH_CUDNN_SDPA_ENABLED=1
+      - TORCH_LOG=perf_hints
+    devices:
+      - nvidia.com/gpu=all
+  tts2:
+    image: tgtts:latest
+    command: python tts_api.py
+    networks:
+      #             - tts
+      - default
+    volumes:
+      - /persist/tgtts2-blips:/workspace/samples:rw
+      # - /dev:/dev
+    environment:
+      - TORCH_USE_CUDA_DSA=1
+      - TORCH_CUDNN_SDPA_ENABLED=1
+      - TORCH_LOG=perf_hints
+    devices:
+      - nvidia.com/gpu=all
+  tts3:
+    image: tgtts:latest
+    command: python tts_api.py
+    networks:
+      #             - tts
+      - default
+    volumes:
+      - /persist/tgtts2-blips:/workspace/samples:rw
+      # - /dev:/dev
+    environment:
+      - TORCH_USE_CUDA_DSA=1
+      - TORCH_CUDNN_SDPA_ENABLED=1
+      - TORCH_LOG=perf_hints
+    devices:
+      - nvidia.com/gpu=all
+  tts4:
+    image: tgtts:latest
+    command: python tts_api.py
+    networks:
+      #             - tts
+      - default
+    volumes:
+      - /persist/tgtts2-blips:/workspace/samples:rw
+      # - /dev:/dev
+    environment:
+      - TORCH_USE_CUDA_DSA=1
+      - TORCH_CUDNN_SDPA_ENABLED=1
+      - TORCH_LOG=perf_hints
+    devices:
+      - nvidia.com/gpu=all
+  blips:
+    image: tgtts:latest
+    command: python tts_blips_api.py
+    networks:
+      #             - tts
+      - default
+    volumes:
+      - /persist/tgtts2-blips:/workspace/samples:rw
+      # - /dev:/dev
+    devices:
+      - nvidia.com/gpu=all
+  tts5:
+    image: tgtts:latest
+    command: python tts_api.py
+    networks:
+      #             - tts
+      - default
+    volumes:
+      - /persist/tgtts2-blips:/workspace/samples:rw
+      # - /dev:/dev
+    environment:
+      - TORCH_USE_CUDA_DSA=1
+      - TORCH_CUDNN_SDPA_ENABLED=1
+      - TORCH_LOG=perf_hints
+    devices:
+      - nvidia.com/gpu=all
