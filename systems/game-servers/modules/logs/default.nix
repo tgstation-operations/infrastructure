@@ -23,6 +23,8 @@
   raw-logs-url = "raw-${public-logs-url}";
   logs-path = "${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs";
 in {
+  users.users.caddy.extraGroups = [ "tgstation-server" ];
+
   services = {
     cloudflared.tunnels.primary-tunnel = {
       originRequest.httpHostHeader = "localhost";
@@ -33,8 +35,6 @@ in {
     };
 
     caddy = {
-      group = "tgstation-server";
-
       virtualHosts = {
         "http://localhost:${internal-port}" = {
           extraConfig = ''
