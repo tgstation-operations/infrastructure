@@ -70,6 +70,11 @@ in {
         rev = "fd63faae60460707dc0ac04279a39e81543f4518";
         hash = "sha256-aykCJ6vbpWIvxhBfLqURZ4HU0ELiz+sSfNQxD7cGRVQ=";
       };
+      OpenIDConnect = fetchgit {
+        url = "https://gerrit.wikimedia.org/r/mediawiki/extensions/OpenIDConnect.git";
+        rev = "75db8c5d619f76aa4e7611afff82998152a18d05";
+        hash = "sha256-aykCJ6vbpWIvxhBfLqURZ4HU0ELiz+sSfNQxD7cGRVQ=";
+      };
       Tabs = applyPatches {
         src = fetchgit {
           url = "https://gerrit.wikimedia.org/r/mediawiki/extensions/Tabs.git";
@@ -229,6 +234,7 @@ in {
         'tgforum' => \WSOAuth\AuthenticationProvider\TgForumAuthProvider::class
       ];
 
+      /*
       $wgPluggableAuth_Config['tgforum'] = [
         'plugin' => 'WSOAuth',
         'data' => [
@@ -236,6 +242,26 @@ in {
           'clientId' => $_ENV['WIKI_OAUTH2_CLIENT_ID'],
           'clientSecret' => $_ENV['WIKI_OAUTH2_CLIENT_SECRET'],
         ],
+      ];
+      */
+
+      $wgPluggableAuth_Config['tgauth'] = [
+        'plugin' => 'OpenIDConnect',
+        'data' => [
+          'providerURL' => 'https://auth.tgstation13.org/application/o/wiki/',
+          'clientId' => $_ENV['WIKI_AUTH_CLIENT_ID'],
+          'clientSecret' => $_ENV['WIKI_AUTH_CLIENT_SECRET'],
+          'scope' => ['openid', 'profile']
+        ],
+        'groupsyncs' => [
+          [
+            'type' => 'mapped',
+            'map' => [
+              'HeadAdministrator' => ['groups' => '/tg/13 Head Admin'],
+              'WikiJannie' => ['groups' => 'Wiki Jannie']
+            ]
+          ]
+        ]
       ];
     '';
     passwordSender = "apache@🌻.invalid";
