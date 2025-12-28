@@ -161,10 +161,10 @@
           }
         '';
       };
-      "localhost:8086" = {
+      "127.0.0.1:8086, localhost:8086" = {
         extraConfig =''
           file_server
-          root * /srv/www
+          root * /persist/www
           php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
             env _GET 127.0.0.1
           }
