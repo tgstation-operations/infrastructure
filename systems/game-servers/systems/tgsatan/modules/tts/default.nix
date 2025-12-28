@@ -28,7 +28,7 @@ in {
         Type = "oneshot";
         User = usergroup-name;
         ExecStart = pkgs.writeShellScript "tg-tts-build.sh" ''
-          if [ -z "$(${pkgs.docker}/bin/docker images -q ${image-name} 2> /dev/null)" ]; then
+          if [ -z "$(${pkgs.docker}/bin/docker images -q ${name} 2> /dev/null)" ]; then
             echo "${name} image needs to be built"
             exec ${pkgs.docker}/bin/docker build ${source-directory} -t ${name}
           else
