@@ -22,14 +22,16 @@ in {
     users."${name}" = {
       group = name;
       isSystemUser = true;
+      linger = true;
     };
 
     groups."${name}" = {};
   };
 
-  systemd.services = {
+  systemd.user.services = {
     "${build-service-name}" = {
       enable = true;
+      unitConfig.ConditionUser = name;
       description = "tgstation TTS Server Image Build";
       requires = [ "docker.service" ];
       after = [ "docker.service" ];
@@ -49,6 +51,7 @@ in {
     };
     "${name}" = {
       enable = true;
+      unitConfig.ConditionUser = name;
       description = "tgstation TTS Server";
       requires = [ "docker.service" "${build-service-name}.service" ];
       after = [ "docker.service" "${build-service-name}.service" ];
