@@ -13,7 +13,7 @@
   };
   compose-file = pkgs.writeTextFile {
     name = "tgtts-docker-compose.yml";
-    text = builtins.replaceStrings [ "$TGTTS_HAPROXY_CFG_PATH$" ] [ haproxy-cfg ] (builtins.readFile ./docker-compose.yml);
+    text = builtins.replaceStrings [ "$TGTTS_HAPROXY_CFG_PATH$" ] [ "${haproxy-cfg}" ] (builtins.readFile ./docker-compose.yml);
   };
 in {
   users = {
