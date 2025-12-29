@@ -21,6 +21,7 @@ in {
   users = {
     users."${name}" = {
       group = name;
+      isNormalUser = true;
       linger = true;
     };
 
