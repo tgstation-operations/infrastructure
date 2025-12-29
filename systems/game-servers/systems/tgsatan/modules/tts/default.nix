@@ -7,9 +7,13 @@
   source-directory = "/persist/flakes/tgtts2/fish-speech";
   name = "tgtts";
   build-service-name = "${name}-build";
-  compose = pkgs.writeTextFile {
+  haproxy-cfg = pkgs.writeTextFile {
+    name = "tgtts-haproxy.cfg";
+    text = builtins.readFile ./haproxy.cfg;
+  };
+  compose-file = pkgs.writeTextFile {
     name = "tgtts-docker-compose.yml";
-    text = builtins.readFile ./docker-compose.yml;
+    text = builtins.replaceStrings [ "$TGTTS_HAPROXY_CFG_PATH$" ] [ haproxy-cfg ] (builtins.readFile ./docker-compose.yml);
   };
 in {
   users = {
@@ -49,7 +53,7 @@ in {
       serviceConfig = {
         Type = "simple";
         User = name;
-        ExecStart = "${pkgs.docker}/bin/docker compose -f ${compose} up";
+        ExecStart = "${pkgs.docker}/bin/docker compose -f ${compose-file} up";
       };
       wantedBy = [ "multi-user.target" ];
     };

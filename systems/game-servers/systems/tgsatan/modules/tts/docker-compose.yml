@@ -10,7 +10,7 @@ services:
   haproxy:
     image: docker.io/library/haproxy:3.0.11 # previously 3.3-dev
     volumes:
-      - /persist/flakes/tgtts2/fish-speech/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - $TGTTS_HAPROXY_CFG_PATH$:/usr/local/etc/haproxy/haproxy.cfg:ro
     networks:
       #             - tts
       - default
