@@ -4,8 +4,10 @@
   lib,
   ...
 }: let
-  source-directory = "/persist/flakes/tgtts2/fish-speech";
   name = "tgtts";
+  port = 5011;
+  source-directory = "/persist/flakes/tgtts2/fish-speech";
+  workspace-directory = "/persist/tgtts2-blips";
   build-service-name = "${name}-build";
   haproxy-cfg = pkgs.writeTextFile {
     name = "tgtts-haproxy.cfg";
@@ -13,7 +15,7 @@
   };
   compose-file = pkgs.writeTextFile {
     name = "tgtts-docker-compose.yml";
-    text = builtins.replaceStrings [ "$TGTTS_HAPROXY_CFG_PATH$" ] [ "${haproxy-cfg}" ] (builtins.readFile ./docker-compose.yml);
+    text = builtins.replaceStrings [ "$TGTTS_HAPROXY_CFG_PATH$" "$TGTTS_BLIPS_PATH$" "$TGTTS_IMAGE_NAME$" "$TGTTS_PUBLIC_PORT$" ] [ "${haproxy-cfg}" workspace-directory name "${port}" ] (builtins.readFile ./docker-compose.yml);
   };
 in {
   users = {
