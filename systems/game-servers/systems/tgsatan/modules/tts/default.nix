@@ -28,9 +28,7 @@ in {
     groups."${name}" = {};
   };
 
-  home-manager.users."${name}" = {
-    home.stateVersion = config.system.stateVersion;
-  };
+  home-manager.users."${name}".home.stateVersion = config.system.stateVersion;
 
   systemd.user.services = {
     "${build-service-name}" = {
