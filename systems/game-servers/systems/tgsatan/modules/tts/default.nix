@@ -28,6 +28,8 @@ in {
     groups."${name}" = {};
   };
 
+  home-manager.users."${name}" = {};
+
   systemd.user.services = {
     "${build-service-name}" = {
       enable = true;
