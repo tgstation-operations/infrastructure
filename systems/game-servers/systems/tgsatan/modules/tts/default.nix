@@ -28,7 +28,17 @@ in {
     groups."${name}" = {};
   };
 
-  home-manager.users."${name}".home.stateVersion = config.system.stateVersion;
+  home-manager.users."${name}" = {
+    programs.bash = {
+      enable = true;
+      enableCompletion = true;
+      initExtra = ''
+        eval $(${pkgs.starship}/bin/starship init bash)
+      '';
+    };
+
+    home.stateVersion = config.system.stateVersion;
+  };
 
   systemd.user.services = {
     "${build-service-name}" = {
