@@ -66,7 +66,7 @@ sed -Ei "s/(BUILD_TIME_MONTH)\s+[[:digit:]]+/\1 `date +%-m`/" "${1}/_std/__build
 sed -Ei "s/(BUILD_TIME_HOUR)\s+[[:digit:]]+/\1 `date +%-H`/" "${1}/_std/__build.dm"
 sed -Ei "s/(BUILD_TIME_MINUTE)\s+[[:digit:]]+/\1 `date +%-M`/" "${1}/_std/__build.dm"
 
-RSC_URL = "https\:\/\/rsc.tgstation13.org\/coolstation.rsc.zip"
+RSC_URL="https\:\/\/rsc.tgstation13.org\/coolstation.rsc.zip"
 sed -Er "s/(\#define.PRELOAD_RSC_URL\s+).+/\1\"${RSC_URL}\"/g" "${1}/_std/__build.dm"
 
 echo "injected time and date to build.dm"
