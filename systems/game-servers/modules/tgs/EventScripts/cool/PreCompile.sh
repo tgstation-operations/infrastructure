@@ -59,6 +59,8 @@ echo "auxcpu: deployment finish"
 # Change the build day & month, and all that, so we get nice snazzy holiday/event
 # stuff. (e.g. Halloween, Xmas, etc.)
 
+# map switcher support
+cp "${TGS_INSTANCE_ROOT}/Configuration/GameStaticFiles/data/map.dm" "${1}/_std/_map.dm"
 
 # match    V   this       V  & 1 or more nums - replace with matched bit in parens, plus the relevant day/month/hour/minute
 sed -Ei "s/(BUILD_TIME_DAY)\s+[[:digit:]]+/\1 `date +%-d`/" "${1}/_std/__build.dm"
