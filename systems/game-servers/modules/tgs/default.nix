@@ -30,7 +30,7 @@
       mode = "0755";
     };
     "tgs-EventScripts.d/tg/PreCompile.sh" = {
-      text = builtins.replaceStrings [ "%NIX_CLANG_PATH%" ] [ "${pkgs.clang}" ] (builtins.readFile ./EventScripts/tg/PreCompile.sh);
+      text = builtins.replaceStrings [ "%NIX_CLANG_PATH%" ] [ "${pkgs.clang_multi}" ] (builtins.readFile ./EventScripts/tg/PreCompile.sh);
       group = config.services.tgstation-server.groupname;
       mode = "0755";
     };
