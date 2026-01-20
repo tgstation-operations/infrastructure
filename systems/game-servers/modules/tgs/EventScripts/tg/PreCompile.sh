@@ -17,6 +17,7 @@ cd $work_directory
 
 export TARGET_CC=@NIX_CLANG_PATH@/bin/clang
 export TARGET_CXX=@NIX_CLANG_PATH@/bin/clang++
+export CARGO_TARGET_I686_UNKNOWN_LINUX_GNU_LINKER=@NIX_CLANG_PATH@/bin/clang
 echo "rust-g: deployment begin"
 if [ ! -d "rust-g" ]; then
   echo "rust-g: cloning"
