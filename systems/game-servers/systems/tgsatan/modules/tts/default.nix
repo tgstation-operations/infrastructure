@@ -19,7 +19,7 @@
       TGTTS_HAPROXY_CFG_PATH = "${haproxy-cfg}";
       TGTTS_BLIPS_PATH = workspace-directory;
       TGTTS_IMAGE_NAME = name;
-      TGTTS_PUBLIC_PORT = toString port
+      TGTTS_PUBLIC_PORT = toString port;
      });
   };
 in {
