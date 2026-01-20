@@ -15,7 +15,12 @@
   };
   compose-file = pkgs.writeTextFile {
     name = "tgtts-docker-compose.yml";
-    text = builtins.replaceStrings [ "$TGTTS_HAPROXY_CFG_PATH$" "$TGTTS_BLIPS_PATH$" "$TGTTS_IMAGE_NAME$" "$TGTTS_PUBLIC_PORT$" ] [ "${haproxy-cfg}" workspace-directory name "${toString port}" ] (builtins.readFile ./docker-compose.yml);
+    text = pkgs.replaceVars ./docker-compose.yml {
+      TGTTS_HAPROXY_CFG_PATH = "${haproxy-cfg}";
+      TGTTS_BLIPS_PATH = workspace-directory;
+      TGTTS_IMAGE_NAME = name;
+      TGTTS_PUBLIC_PORT = toString port
+     };
   };
 in {
   users = {
