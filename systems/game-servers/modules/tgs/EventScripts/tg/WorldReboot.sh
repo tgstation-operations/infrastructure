@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-./update-config.sh
-
 mkdir -p "${TGS_INSTANCE_ROOT}/Configuration/event_maps"
 mkdir -p "${TGS_INSTANCE_ROOT}/Game/Live/_maps/custom"
-cp "${TGS_INSTANCE_ROOT}/Configuration/event_maps/*" "${TGS_INSTANCE_ROOT}/Configuration/event_maps"
+cp "${TGS_INSTANCE_ROOT}/Game/Live/_maps/custom/*" "${TGS_INSTANCE_ROOT}/Configuration/event_maps"
