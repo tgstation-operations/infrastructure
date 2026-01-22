@@ -71,7 +71,13 @@
           type = "prometheus";
           access = "proxy";
           url = "http://tgsatan.tg.lan:9090"; # Change when prometheus is moved
-          isDefault = true;
+          isDefault = true; # dead var?
+        }
+        {
+          name = "loki";
+          type = "loki";
+          proxy = "proxy";
+          url = "http://tgsatan.tg.lan:3100"; # Change when Loki is moved
         }
       ];
 
