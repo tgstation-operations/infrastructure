@@ -51,11 +51,11 @@ jobs:
           args: --login-server=https://vpn.tgstation13.org
 
       - name: Checkout (Branch)
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
         if: github.event_name != 'pull_request_target'
 
       - name: Checkout (PR Merge)
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
         if: github.event_name == 'pull_request_target'
         with:
           ref: "refs/pull/${{ inputs.pull_request_number }}/merge"
