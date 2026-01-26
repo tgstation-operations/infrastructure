@@ -87,3 +87,9 @@ echo "tgui: deployment begin"
 cd "$1"
 env TG_BOOTSTRAP_CACHE="$work_directory" CBT_BUILD_MODE="TGS" tools/bootstrap/javascript.sh tools/build/build.ts
 echo "tgui: deployment finish"
+
+# create symlinks for custom map persistence
+
+mkdir -p "${TGS_INSTANCE_ROOT}/Configuration/event_maps"
+mkdir -p "$1/_maps"
+ln -sf "${TGS_INSTANCE_ROOT}/Configuration/event_maps" "$1/_maps/custom"
