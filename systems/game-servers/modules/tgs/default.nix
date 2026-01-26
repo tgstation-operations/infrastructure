@@ -34,6 +34,14 @@
       group = "tgstation-server";
       mode = "0755";
     };
+    "tgs-EventScripts.d/tg/RepoFetch.sh" = {
+      text = builtins.readFile (pkgs.replaceVars ./EventScripts/tg/RepoFetch.sh {
+        NIX_GH_PATH = "${pkgs.gh}";
+        NIX_COREUTILS_PATH = "${pkgs.coreutils}";
+      });
+      group = config.services.tgstation-server.groupname;
+      mode = "0755";
+    };
     "tgs-EventScripts.d/tg/tg-Roundend.sh" = {
       text = builtins.readFile ./EventScripts/tg/tg-Roundend.sh;
       group = "tgstation-server";
