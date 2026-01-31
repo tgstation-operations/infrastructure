@@ -95,6 +95,13 @@
       group = "tgstation-server";
       mode = "0755";
     };
+    "tgs-EventScripts.d/effigy/RepoFetch.sh" = {
+      text = builtins.readFile (pkgs.replaceVars ./EventScripts/effigy/RepoFetch.sh {
+        NIX_GH_PATH = "${pkgs.gh}";
+      });
+      group = config.services.tgstation-server.groupname;
+      mode = "0755";
+    };
     "tgs-EventScripts.d/effigy/tg-Roundend.sh" = {
       text = builtins.readFile ./EventScripts/effigy/tg-Roundend.sh;
       group = "tgstation-server";
