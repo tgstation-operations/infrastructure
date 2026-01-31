@@ -22,7 +22,6 @@ ln -sf $SERVER/jobconfig.toml jobconfig.toml
 ln -sf /run/agenix/tg13-comms comms.txt
 ln -sf /run/agenix/tg13-dbconfig dbconfig.txt
 ln -sf /run/agenix/tg13-tts_secrets tts_secrets.txt
-ln -sf /run/agenix/tg13-webhooks webhooks.txt
 #Check garage is alive before rcloning from it
 curl -sf http://localhost:3903/health
 if [ $? -ne 0 ]; then
