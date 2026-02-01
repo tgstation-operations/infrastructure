@@ -41,7 +41,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     tg-public-log-parser = {
-      url = "github:Mothblocks/tg-public-log-parser";
+      url = "github:tgstation/tg-public-log-parser";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     tgstation-server = {
