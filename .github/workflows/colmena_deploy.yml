@@ -23,7 +23,7 @@ jobs:
     runs-on: ${{ inputs.runner }}
     steps:
       - name: Install private ssh key
-        uses: shimataro/ssh-key-action@d4fffb50872869abe2d9a9098a6d9c5aa7d16be4 # Install our ssh key. TODO: Replace with our own bash script
+        uses: shimataro/ssh-key-action@98b6ffdca73c84c005461bfcb9fa38a59b449556 # Install our ssh key. TODO: Replace with our own bash script
         with:
           key: ${{ secrets.COLMENA_SSH_KEY }}
           name: id_ed25519
