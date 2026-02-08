@@ -71,6 +71,8 @@ in {
       log_errors = On
       error_log = syslog
       variables_order = EGPCS
+      post_max_size = 10M
+      upload_max_filesize = 10M
     '';
     pools = {
       php-caddy = {
@@ -84,8 +86,6 @@ in {
           "pm.min_spare_servers" = 5;
           "pm.max_spare_servers" = 20;
           "pm.max_requests" = 500;
-          "post_max_size" = "10M";
-          "upload_max_filesize" = "10M";
           "listen.owner" = config.services.caddy.user;
           "listen.group" = config.services.caddy.group;
         };
