@@ -47,20 +47,18 @@ else
 fi
 echo "dreamluau: checkout"
 git checkout "$DREAMLUAU_VERSION" >/dev/null
+
 echo "dreamluau: building"
-
 export LIBCLANG_PATH="$(find /nix/store -name *-clang-*-lib | head -n1)/lib"
+echo "Using libclang path: $LIBCLANG_PATH"
 
-#cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
-#cp target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
+cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
+cp target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
 
-# EMERGENCY FIX, SOMETHING IS WRONG WITH THE ABOVE
-cp "${TGS_INSTANCE_ROOT}/Configuration/EventScripts.old/libdreamluau.so" "$1/libdreamluau.so"
-
-cd "$work_directory"
 echo "dreamluau: deployment finish"
 
 echo "auxcpu: deployment begin"
+cd "$work_directory"
 if [ ! -d "auxcpu" ]; then
   echo "auxcpu: cloning"
   git clone https://github.com/spacestation13/auxcpu >/dev/null
