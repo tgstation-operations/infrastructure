@@ -44,7 +44,7 @@ jobs:
 
       # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
       - name: Login to headscale
-        uses: tailscale/github-action@9c1802ce6b7a51ade939359f9af50a30a70d0f1a # Connect to headscale
+        uses: tailscale/github-action@94b700f285f67fc55c0486504d82d7e9008191d0 # Connect to headscale
         if: ${{ env.USE_ATTIC == 'yes' }}
         with:
           authkey: ${{ secrets.TS_BUILD_AUTHKEY }}
