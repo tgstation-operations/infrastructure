@@ -16,7 +16,6 @@ in {
   # If you change it here change it there as well
   "tg13-comms.age".publicKeys = final;
   "tg13-tts_secrets.age".publicKeys = final;
-  "tg13-webhooks.age".publicKeys = final;
   "tg13-extra_config-rclone.age".publicKeys = final;
   # TGMC Secret
   "tgmc-dbconfig.age".publicKeys = final;
