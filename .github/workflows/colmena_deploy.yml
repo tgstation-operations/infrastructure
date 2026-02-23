@@ -23,24 +23,24 @@ jobs:
     runs-on: ${{ inputs.runner }}
     steps:
       - name: Install private ssh key
-        uses: shimataro/ssh-key-action@d4fffb50872869abe2d9a9098a6d9c5aa7d16be4 # Install our ssh key. TODO: Replace with our own bash script
+        uses: shimataro/ssh-key-action@29f88e1c0cdd41583a9d961c82e23f128f8d91d5 # Install our ssh key. TODO: Replace with our own bash script
         with:
           key: ${{ secrets.COLMENA_SSH_KEY }}
           name: id_ed25519
           known_hosts: ${{ vars.COLMENA_KNOWN_HOSTS }}
 
       - name: Login to headscale
-        uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # Connect to headscale
+        uses: tailscale/github-action@9c1802ce6b7a51ade939359f9af50a30a70d0f1a # Connect to headscale
         with:
           authkey: ${{ secrets.TS_AUTHKEY }}
           args: --login-server=https://vpn.tgstation13.org
 
       - name: Checkout (Branch)
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
         if: github.event_name != 'pull_request_target'
 
       - name: Checkout (PR Merge)
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
         if: github.event_name == 'pull_request_target'
         with:
           ref: "refs/pull/${{ inputs.pull_request_number }}/merge"

@@ -71,6 +71,8 @@ in {
       log_errors = On
       error_log = syslog
       variables_order = EGPCS
+      post_max_size = 10M
+      upload_max_filesize = 10M
     '';
     pools = {
       php-caddy = {

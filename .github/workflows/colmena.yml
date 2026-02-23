@@ -44,18 +44,18 @@ jobs:
 
       # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
       - name: Login to headscale
-        uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # Connect to headscale
+        uses: tailscale/github-action@9c1802ce6b7a51ade939359f9af50a30a70d0f1a # Connect to headscale
         if: ${{ env.USE_ATTIC == 'yes' }}
         with:
           authkey: ${{ secrets.TS_BUILD_AUTHKEY }}
           args: --login-server=https://vpn.tgstation13.org
 
       - name: Checkout (Branch)
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
         if: github.event_name != 'pull_request_target'
 
       - name: Checkout (PR Merge)
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
         if: github.event_name == 'pull_request_target'
         with:
           ref: "refs/pull/${{ inputs.pull_request_number }}/merge"
