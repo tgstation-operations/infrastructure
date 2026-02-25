@@ -8,7 +8,7 @@ networks:
           gateway: "192.168.0.1"
 services:
   haproxy:
-    image: docker.io/library/haproxy:3.3.2 # previously 3.3-dev
+    image: docker.io/library/haproxy:3.3.4 # previously 3.3-dev
     volumes:
       - $TGTTS_HAPROXY_CFG_PATH$:/usr/local/etc/haproxy/haproxy.cfg:ro
     networks:
