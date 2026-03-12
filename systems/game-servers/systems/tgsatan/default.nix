@@ -106,7 +106,16 @@ in {
     ];
 
   hardware.nvidia-container-toolkit.enable = true;
-
+  # Allow the 10.10.11.0/24 range to talk to each other over bridge
+  # This allows docker container 2 container networking to work for a specific network only
+  # if you change the container network you should update this.
+  networking.firewall = {
+    enable = true;
+    # This appends rules to the 'forward-allow' chain in the nixos-fw table
+    extraForwardRules = ''
+      iifname "br-*" oifname "br-*" ip saddr 10.10.11.0/24 ip daddr 10.10.11.0/24 accept
+    '';
+  };
   programs.nix-ld.enable = true;
 
   boot = {
