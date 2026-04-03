@@ -10,9 +10,9 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBCaat3EUVrqal/XlY2e4mgXFhX/Izp7H+C/i32feW4P"
     ];
 
-    # extraGroups = [
-    #   "wheel"
-    # ];
+    extraGroups = [
+      "wheel"
+    ];
     shell = pkgs.fish;
   };
 
