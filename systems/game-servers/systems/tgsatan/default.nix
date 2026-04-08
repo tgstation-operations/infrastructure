@@ -111,9 +111,12 @@ in {
   # if you change the container network you should update this.
   networking.firewall = {
     enable = true;
+    # Allow docker bridges and docker default network traffic in
+    trustedInterfaces = ["docker0" "br-*"];
     # This appends rules to the 'forward-allow' chain in the nixos-fw table
     extraForwardRules = ''
-      iifname "br-*" oifname "br-*" ip saddr 10.10.11.0/24 ip daddr 10.10.11.0/24 accept
+      iifname "br-*" accept
+      iifname "docker0" accept
     '';
   };
   programs.nix-ld.enable = true;
