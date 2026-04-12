@@ -68,8 +68,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     fenix = {
-      # fenix is pinned to that specific hash because we need 1.86 for TGS otherwise openssl can't build
-      url = "github:nix-community/fenix?rev=76ffc1b7b3ec8078fe01794628b6abff35cbda8f";
+      url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     authentik-nix = {
