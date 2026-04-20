@@ -1,4 +1,8 @@
-{...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   users.users.oranges = {
     isNormalUser = true;
 
@@ -10,5 +14,16 @@
       "redbot-user"
       "wheel"
     ];
+  };
+
+  home-manager.users.oranges = {
+    home.packages = with pkgs; [
+      nvtopPackages.nvidia
+      zip
+      dnsutils
+      vim
+    ];
+
+    home.stateVersion = config.system.stateVersion;
   };
 }
