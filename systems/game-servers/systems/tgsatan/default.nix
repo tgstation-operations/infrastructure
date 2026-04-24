@@ -141,7 +141,15 @@ in {
       "/etc/NetworkManager/system-connections"
       "/var/lib/acme"
       "/var/lib/postgresql"
+      "/var/lib/docker"
     ];
+
+    users.tgtts = {
+      directories = [
+        ".local/share/docker"
+        ".config/docker"
+      ];
+    };
   };
 
   boot.initrd.postResumeCommands = lib.mkAfter ''
