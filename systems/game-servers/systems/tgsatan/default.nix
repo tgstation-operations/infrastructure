@@ -90,6 +90,7 @@
     ./modules/nvidia.nix
     ./modules/redbot.nix
     ./modules/tts
+    ./modules/tgtts-qwen-cache-cleaner.nix
   ];
 in {
   networking.hostName = "tgsatan";
