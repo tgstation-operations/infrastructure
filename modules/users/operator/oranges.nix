@@ -22,6 +22,7 @@
       zip
       dnsutils
       vim
+      magic-wormhole
     ];
 
     home.stateVersion = config.system.stateVersion;
