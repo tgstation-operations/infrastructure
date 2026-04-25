@@ -5,7 +5,9 @@
       Type = "oneshot";
       ExecStart = pkgs.writeShellScript "tgtts-qwen3-cache-cleaner.sh" ''
         if [ -d /persist/flakes/tgtts-qwen3/cache/ ]; then
-          ${pkgs.findutils}/bin/find /persist/flakes/tgtts-qwen3/cache/ -mindepth 1 -ctime +2 -delete
+          # Split into two steps to avoid "Directory not empty" errors from find -delete
+          ${pkgs.findutils}/bin/find /persist/flakes/tgtts-qwen3/cache/ -mindepth 1 -ctime +2 -type f -delete
+          ${pkgs.findutils}/bin/find /persist/flakes/tgtts-qwen3/cache/ -mindepth 1 -ctime +2 -type d -empty -delete
         fi
       '';
     };
