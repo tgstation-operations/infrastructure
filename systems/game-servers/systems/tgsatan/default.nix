@@ -90,6 +90,7 @@
     ./modules/nvidia.nix
     ./modules/redbot.nix
     ./modules/tts
+    ./modules/tgtts-qwen-cache-cleaner.nix
   ];
 in {
   networking.hostName = "tgsatan";
@@ -140,7 +141,15 @@ in {
       "/etc/NetworkManager/system-connections"
       "/var/lib/acme"
       "/var/lib/postgresql"
+      "/var/lib/docker"
     ];
+
+    users.tgtts = {
+      directories = [
+        ".local/share/docker"
+        ".config/docker"
+      ];
+    };
   };
 
   boot.initrd.postResumeCommands = lib.mkAfter ''
