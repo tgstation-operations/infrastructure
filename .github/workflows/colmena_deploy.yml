@@ -84,6 +84,15 @@ jobs:
           echo "Current Colmena revision is: $COLMENA_REVISION"
           nix profile install github:zhaofengli/colmena/$COLMENA_REVISION
 
+      - name: Restore and save Nix store
+        uses: nix-community/cache-nix-action@v7
+        with:
+          primary-key: nix-${{ runner.os }}-${{ matrix.node }}
+          gc-max-store-size-linux: 1G
+          purge: true
+          purge-prefixes: nix-${{ runner.os }}-
+          purge-primary-key: never
+
       - name: Deploy closure to Nodes
         run: |
           colmena apply --impure -v --on ${{ inputs.node }}

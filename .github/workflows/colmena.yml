@@ -19,7 +19,10 @@ jobs:
   build:
     name: Build
     # Only run if secrets are enabled
-    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id || !contains(github.event.pull_request.labels.*.name, 'CI Cleared') }}
+    if: ${{ github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.id ==
+      github.event.pull_request.base.repo.id ||
+      !contains(github.event.pull_request.labels.*.name, 'CI Cleared') }}
     strategy:
       matrix:
         runner:
@@ -35,11 +38,18 @@ jobs:
             runner: ubuntu-24.04-arm
     runs-on: ${{ matrix.runner }}
     env:
-      USE_ATTIC: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id) && 'yes' || 'no' }}
+      USE_ATTIC: ${{ (github.event_name != 'pull_request' ||
+        github.event.pull_request.head.repo.id ==
+        github.event.pull_request.base.repo.id) && 'yes' || 'no' }}
       UPLOAD_TO_ATTIC: "no" # This is here to shut up the GitHub Actions intellisense in VSC
     steps:
       - name: Set UPLOAD_TO_ATTIC envvar
-        if: ${{ env.USE_ATTIC == 'yes' && (github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main' && matrix.node == '@staging'))) }}
+        if: ${{ env.USE_ATTIC == 'yes' && (github.repository ==
+          'tgstation-operations/infrastructure' && ((github.ref ==
+          'refs/heads/main' && github.event_name == 'push') ||
+          ((github.event_name == 'pull_request' || github.event_name ==
+          'pull_request_target') && github.event.pull_request.base.ref == 'main'
+          && matrix.node == '@staging'))) }}
         run: echo "UPLOAD_TO_ATTIC=yes" >> $GITHUB_ENV
 
       # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
@@ -113,6 +123,15 @@ jobs:
           echo "Current Colmena revision is: $COLMENA_REVISION"
           nix profile install github:zhaofengli/colmena/$COLMENA_REVISION
 
+      - name: Restore and save Nix store
+        uses: nix-community/cache-nix-action@v7
+        with:
+          primary-key: nix-${{ runner.os }}-${{ matrix.node }}
+          gc-max-store-size-linux: 1G
+          purge: true
+          purge-prefixes: nix-${{ runner.os }}-
+          purge-primary-key: never
+
       - name: Build closure
         run: |
           colmena build --impure -v --eval-node-limit 2 --keep-result --on ${{ matrix.node }}
@@ -124,7 +143,13 @@ jobs:
   deploy-staging:
     name: Deploy Staging
     needs: build
-    if: ${{ github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || (((github.event_name == 'pull_request' && github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id) || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main')) }}
+    if: ${{ github.repository == 'tgstation-operations/infrastructure' &&
+      ((github.ref == 'refs/heads/main' && github.event_name == 'push') ||
+      (((github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.id ==
+      github.event.pull_request.base.repo.id) || github.event_name ==
+      'pull_request_target') && github.event.pull_request.base.ref == 'main'))
+      }}
     uses: ./.github/workflows/colmena_deploy.yml
     secrets: inherit
     with:
@@ -144,7 +169,8 @@ jobs:
   deploy-production:
     name: Deploy Production
     needs: build
-    if: ${{ github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    if: ${{ github.repository == 'tgstation-operations/infrastructure' && github.ref
+      == 'refs/heads/main' && github.event_name == 'push' }}
     uses: ./.github/workflows/colmena_deploy.yml
     secrets: inherit
     with:
@@ -170,14 +196,17 @@ jobs:
 
   close-bad-website-pr:
     name: Close Bad Website PR
-    if: failure() && github.event_name != 'push' && github.event.pull_request.user.id == 206383919 && github.event.pull_request.title == 'Automatic Website Update'
+    if: failure() && github.event_name != 'push' &&
+      github.event.pull_request.user.id == 206383919 &&
+      github.event.pull_request.title == 'Automatic Website Update'
     needs: build
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     steps:
       - name: Close PR
-        run: gh pr close https://github.com/tgstation-operations/infrastructure/pull/${{ github.event.pull_request.number }}
+        run: gh pr close https://github.com/tgstation-operations/infrastructure/pull/${{
+          github.event.pull_request.number }}
         env:
           GH_TOKEN: ${{ github.token }}
 
@@ -185,7 +214,7 @@ jobs:
     if: always() && !cancelled()
     name: CI Completion Gate
     timeout-minutes: 1
-    needs: [close-bad-website-pr, deploy-staging, deploy-production]
+    needs: [ close-bad-website-pr, deploy-staging, deploy-production ]
     runs-on: ubuntu-latest
     steps:
       - name: Decide whether the needed jobs succeeded or failed
