@@ -11,7 +11,9 @@
     "d /run/caddy 644 ${config.services.caddy.user} ${config.services.caddy.group}"
     "d /run/php/caddy 770 ${config.services.caddy.user} ${config.services.caddy.group}"
   ];
-
+  imports = [
+    (import ../../../../../modules/admin-2fa.nix {website = "https://2fa-staging.tgstation13.org";authfile="../systems/game-servers/systems/staging/secrets/admin_2fa_db_staging.age";})
+  ];
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
     2019 # Caddy admin API and metrics
     80
@@ -31,6 +33,7 @@
     };
     certs = {
       "tgs.wiggle.staging.tgstation13.org" = {};
+      "2fa-staging.tgstation13.org" = {};
     };
   };
   services.caddy = {
@@ -54,6 +57,9 @@
             health_port ${tg-globals.tgs.port}
           }
         '';
+      };
+      "https://2fa-staging.tgstation13.org" = {
+        useACMEHost = "2fa-staging.tgstation13.org"; # some kind of staging special I guess
       };
     };
   };
