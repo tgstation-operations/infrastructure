@@ -9,4 +9,5 @@ in {
   # Run "cloudflared tunnel create --cred-file cred.json wiggle" after logging in to generate in cred.json
   # NAME MUST MATCH HOSTNAME
   "cloudflared.age".publicKeys = final;
+  "admin_2fa_db_staging.age".publicKeys = final;
 }
