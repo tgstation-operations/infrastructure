@@ -11,6 +11,25 @@
     rclone
   ];
 
+  # Common environment variables for 32-bit cross-compilation
+  tgs-env-vars = {
+    CC_i686_unknown_linux_gnu = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/cc";
+    CXX_i686_unknown_linux_gnu = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/c++";
+    CARGO_TARGET_I686_UNKNOWN_LINUX_GNU_LINKER = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/cc";
+    TARGET_CC = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/cc";
+    TARGET_CXX = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/c++";
+    PKG_CONFIG_PATH_i686_unknown_linux_gnu = lib.makeSearchPath "lib/pkgconfig" (with pkgs.pkgsi686Linux; [
+      openssl.dev
+      zlib.dev
+      mariadb
+      sqlite.dev
+    ]);
+    # This helps with 32-bit bindgen/libclang issues
+    LIBCLANG_PATH = "${pkgs.pkgsi686Linux.llvmPackages.libclang.lib}/lib";
+  };
+
+  tgs-env-setup = lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "export ${k}=\"${v}\"") tgs-env-vars);
+
   # `<instance>/Configuration/EventScripts` is symlinked to these directories
   environment.etc = {
     #TG
@@ -30,7 +49,7 @@
       mode = "0755";
     };
     "tgs-EventScripts.d/tg/PreCompile.sh" = {
-      text = builtins.readFile ./EventScripts/tg/PreCompile.sh;
+      text = tgs-env-setup + "\n" + builtins.readFile ./EventScripts/tg/PreCompile.sh;
       group = "tgstation-server";
       mode = "0755";
     };
@@ -64,7 +83,7 @@
       mode = "0755";
     };
     "tgs-EventScripts.d/tgmc/PreCompile.sh" = {
-      text = builtins.readFile ./EventScripts/tgmc/PreCompile.sh;
+      text = tgs-env-setup + "\n" + builtins.readFile ./EventScripts/tgmc/PreCompile.sh;
       group = "tgstation-server";
       mode = "0755";
     };
@@ -91,7 +110,7 @@
       mode = "0755";
     };
     "tgs-EventScripts.d/effigy/PreCompile.sh" = {
-      text = builtins.readFile ./EventScripts/effigy/PreCompile.sh;
+      text = tgs-env-setup + "\n" + builtins.readFile ./EventScripts/effigy/PreCompile.sh;
       group = "tgstation-server";
       mode = "0755";
     };
@@ -125,7 +144,7 @@
       mode = "0755";
     };
     "tgs-EventScripts.d/cool/PreCompile.sh" = {
-      text = builtins.readFile ./EventScripts/cool/PreCompile.sh;
+      text = tgs-env-setup + "\n" + builtins.readFile ./EventScripts/cool/PreCompile.sh;
       group = "tgstation-server";
       mode = "0755";
     };
@@ -278,20 +297,7 @@
     );
   };
 
-  systemd.services.tgstation-server.environment = {
-    CC_i686_unknown_linux_gnu = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/cc";
-    CXX_i686_unknown_linux_gnu = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/c++";
-    TARGET_CC = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/cc";
-    TARGET_CXX = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/c++";
-    PKG_CONFIG_PATH_i686_unknown_linux_gnu = lib.makeSearchPath "lib/pkgconfig" (with pkgs.pkgsi686Linux; [
-      openssl.dev
-      zlib.dev
-      mariadb
-      sqlite.dev
-    ]);
-    # This helps with 32-bit bindgen/libclang issues
-    LIBCLANG_PATH = "${pkgs.pkgsi686Linux.llvmPackages.libclang.lib}/lib";
-  };
+  systemd.services.tgstation-server.environment = tgs-env-vars;
   age.secrets.rsc-cdn = {
     file = ../../secrets/rsc-cdn.age;
     owner = "${config.services.tgstation-server.username}";
