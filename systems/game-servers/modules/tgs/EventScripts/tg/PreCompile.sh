@@ -46,7 +46,7 @@ fi
 echo "dreamluau: checkout"
 git checkout "$DREAMLUAU_VERSION" >/dev/null
 echo "dreamluau: building"
-cargo update -p ahash
+cargo update -p ahash --precise 0.8.7
 cargo build --release --target=i686-unknown-linux-gnu
 cp target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
 
