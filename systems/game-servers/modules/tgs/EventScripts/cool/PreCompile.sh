@@ -27,7 +27,7 @@ fi
 echo "rust-g: checkout"
 git checkout "$RUST_G_VERSION" >/dev/null
 echo "rust-g: building"
-cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu --features all
+cargo build --release --target=i686-unknown-linux-gnu --features all
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd "$work_directory"
 echo "rust-g: deployment finish"
@@ -45,7 +45,7 @@ fi
 echo "auxcpu: checkout"
 git checkout main >/dev/null
 echo "auxcpu: building"
-cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
+cargo build --release --target=i686-unknown-linux-gnu
 cp target/i686-unknown-linux-gnu/release/libauxcpu_byondapi.so "$1/libauxcpu_byondapi.so"
 
 cd "$work_directory"
