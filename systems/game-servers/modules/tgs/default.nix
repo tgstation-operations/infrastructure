@@ -22,9 +22,10 @@
     ]);
     # bindgen runs on the host arch, so LIBCLANG_PATH must point at host libclang.
     LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
-    # Still parse headers for the i686 target when cross-compiling.
+    # Tell bindgen to parse headers for the i686 target when cross-compiling.
+    # Cargo normalises hyphens to underscores when looking up env vars, so only
+    # the underscore form is needed (and it's the only form bash can export).
     BINDGEN_EXTRA_CLANG_ARGS_i686_unknown_linux_gnu = "--target=i686-unknown-linux-gnu";
-    "BINDGEN_EXTRA_CLANG_ARGS_i686-unknown-linux-gnu" = "--target=i686-unknown-linux-gnu";
   };
 
   tgs-env-setup = lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "export ${k}=\"${v}\"") tgs-env-vars);
