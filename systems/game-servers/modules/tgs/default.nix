@@ -20,8 +20,11 @@
       mariadb
       sqlite.dev
     ]);
-    # This helps with 32-bit bindgen/libclang issues
-    LIBCLANG_PATH = "${pkgs.pkgsi686Linux.llvmPackages.libclang.lib}/lib";
+    # bindgen runs on the host arch, so LIBCLANG_PATH must point at host libclang.
+    LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
+    # Still parse headers for the i686 target when cross-compiling.
+    BINDGEN_EXTRA_CLANG_ARGS_i686_unknown_linux_gnu = "--target=i686-unknown-linux-gnu";
+    "BINDGEN_EXTRA_CLANG_ARGS_i686-unknown-linux-gnu" = "--target=i686-unknown-linux-gnu";
   };
 
   tgs-env-setup = lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "export ${k}=\"${v}\"") tgs-env-vars);
