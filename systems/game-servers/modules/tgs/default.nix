@@ -277,6 +277,21 @@
       ]
     );
   };
+
+  systemd.services.tgstation-server.environment = {
+    CC_i686_unknown_linux_gnu = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/cc";
+    CXX_i686_unknown_linux_gnu = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/c++";
+    TARGET_CC = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/cc";
+    TARGET_CXX = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/c++";
+    PKG_CONFIG_PATH_i686_unknown_linux_gnu = lib.makeSearchPath "lib/pkgconfig" (with pkgs.pkgsi686Linux; [
+      openssl.dev
+      zlib.dev
+      mariadb
+      sqlite.dev
+    ]);
+    # This helps with 32-bit bindgen/libclang issues
+    LIBCLANG_PATH = "${pkgs.pkgsi686Linux.llvmPackages.libclang.lib}/lib";
+  };
   age.secrets.rsc-cdn = {
     file = ../../secrets/rsc-cdn.age;
     owner = "${config.services.tgstation-server.username}";

@@ -14,8 +14,6 @@ mkdir -p $work_directory
 
 cd $work_directory
 
-export TARGET_CC=$(which clang)
-export TARGET_CXX=$(which clang++)
 echo "rust-g: deployment begin"
 if [ ! -d "rust-g" ]; then
   echo "rust-g: cloning"

@@ -15,8 +15,6 @@ mkdir -p $work_directory
 
 cd $work_directory
 
-export TARGET_CC=$(which clang)
-export TARGET_CXX=$(which clang++)
 echo "rust-g: deployment begin"
 if [ ! -d "rust-g" ]; then
   echo "rust-g: cloning"
@@ -48,8 +46,6 @@ fi
 echo "dreamluau: checkout"
 git checkout "$DREAMLUAU_VERSION" >/dev/null
 echo "dreamluau: building"
-
-export LIBCLANG_PATH="$(find /nix/store -name *-clang-*-lib | head -n1)/lib"
 
 #cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
 #cp target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
