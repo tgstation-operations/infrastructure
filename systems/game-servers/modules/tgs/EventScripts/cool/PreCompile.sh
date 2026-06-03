@@ -45,11 +45,8 @@ fi
 echo "auxcpu: checkout"
 git checkout main >/dev/null
 echo "auxcpu: building"
-#cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
-#cp target/i686-unknown-linux-gnu/release/libauxcpu_byondapi.so "$1/libauxcpu_byondapi.so"
-
-# EMERGENCY FIX, SOMETHING IS WRONG WITH THE ABOVE
-cp "${TGS_INSTANCE_ROOT}/Configuration/EventScripts.old/libauxcpu_byondapi.so" "$1/libauxcpu_byondapi.so"
+cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
+cp target/i686-unknown-linux-gnu/release/libauxcpu_byondapi.so "$1/libauxcpu_byondapi.so"
 
 cd "$work_directory"
 echo "auxcpu: deployment finish"
