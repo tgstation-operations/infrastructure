@@ -15,6 +15,9 @@ mkdir -p $work_directory
 
 cd $work_directory
 
+# Allows zerocopy to use this unstable std feature
+export RUSTFLAGS="-Z unstable-options -Z crate-attr=feature(stdarch_x86_avx512)"
+
 echo "rust-g: deployment begin"
 if [ ! -d "rust-g" ]; then
   echo "rust-g: cloning"
@@ -46,7 +49,6 @@ fi
 echo "dreamluau: checkout"
 git checkout "$DREAMLUAU_VERSION" >/dev/null
 echo "dreamluau: building"
-cargo update -p ahash --precise 0.8.7
 cargo build --release --target=i686-unknown-linux-gnu
 cp target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
 
