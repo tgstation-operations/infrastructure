@@ -6,11 +6,7 @@
   nixpkgs,
   tg-globals,
   ...
-}: {
-  environment.systemPackages = with pkgs; [
-    rclone
-  ];
-
+}: let
   # Common environment variables for 32-bit cross-compilation
   tgs-env-vars = {
     CC_i686_unknown_linux_gnu = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/cc";
@@ -29,6 +25,10 @@
   };
 
   tgs-env-setup = lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "export ${k}=\"${v}\"") tgs-env-vars);
+in {
+  environment.systemPackages = with pkgs; [
+    rclone
+  ];
 
   # `<instance>/Configuration/EventScripts` is symlinked to these directories
   environment.etc = {
