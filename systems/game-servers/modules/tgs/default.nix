@@ -28,6 +28,17 @@
   };
 
   tgs-env-setup = lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "export ${k}=\"${v}\"") tgs-env-vars);
+
+  inject-env-after-shebang = script: let
+    lines = lib.splitString "\n" script;
+    first-line = lib.head lines;
+    remaining-lines = lib.tail lines;
+    rest = lib.concatStringsSep "\n" remaining-lines;
+  in
+    if lib.hasPrefix "#!" first-line then
+      "${first-line}\n${tgs-env-setup}\n${rest}"
+    else
+      "#!/usr/bin/env bash\n${tgs-env-setup}\n${script}";
 in {
   environment.systemPackages = with pkgs; [
     rclone
@@ -52,7 +63,7 @@ in {
       mode = "0755";
     };
     "tgs-EventScripts.d/tg/PreCompile.sh" = {
-      text = tgs-env-setup + "\n" + builtins.readFile ./EventScripts/tg/PreCompile.sh;
+      text = inject-env-after-shebang (builtins.readFile ./EventScripts/tg/PreCompile.sh);
       group = "tgstation-server";
       mode = "0755";
     };
@@ -86,7 +97,7 @@ in {
       mode = "0755";
     };
     "tgs-EventScripts.d/tgmc/PreCompile.sh" = {
-      text = tgs-env-setup + "\n" + builtins.readFile ./EventScripts/tgmc/PreCompile.sh;
+      text = inject-env-after-shebang (builtins.readFile ./EventScripts/tgmc/PreCompile.sh);
       group = "tgstation-server";
       mode = "0755";
     };
@@ -113,7 +124,7 @@ in {
       mode = "0755";
     };
     "tgs-EventScripts.d/effigy/PreCompile.sh" = {
-      text = tgs-env-setup + "\n" + builtins.readFile ./EventScripts/effigy/PreCompile.sh;
+      text = inject-env-after-shebang (builtins.readFile ./EventScripts/effigy/PreCompile.sh);
       group = "tgstation-server";
       mode = "0755";
     };
@@ -147,7 +158,7 @@ in {
       mode = "0755";
     };
     "tgs-EventScripts.d/cool/PreCompile.sh" = {
-      text = tgs-env-setup + "\n" + builtins.readFile ./EventScripts/cool/PreCompile.sh;
+      text = inject-env-after-shebang (builtins.readFile ./EventScripts/cool/PreCompile.sh);
       group = "tgstation-server";
       mode = "0755";
     };
