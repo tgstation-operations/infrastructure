@@ -45,7 +45,7 @@ fi
 echo "auxcpu: checkout"
 git checkout main >/dev/null
 echo "auxcpu: building"
-cargo build --release --target=i686-unknown-linux-gnu
+cargo build -p auxcpu-byondapi --release --target=i686-unknown-linux-gnu
 cp target/i686-unknown-linux-gnu/release/libauxcpu_byondapi.so "$1/libauxcpu_byondapi.so"
 
 cd "$work_directory"

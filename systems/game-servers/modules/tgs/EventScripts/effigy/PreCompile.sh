@@ -16,7 +16,6 @@ mkdir -p $work_directory
 cd $work_directory
 
 # Allows zerocopy to use this unstable std feature
-export RUSTFLAGS="-Z unstable-options -Z crate-attr=feature(stdarch_x86_avx512)"
 echo "rust-g: deployment begin"
 if [ ! -d "rust-g" ]; then
   echo "rust-g: cloning"
@@ -67,7 +66,7 @@ fi
 echo "auxcpu: checkout"
 git checkout main >/dev/null
 echo "auxcpu: building"
-cargo build --release --target=i686-unknown-linux-gnu
+cargo build -p auxcpu-byondapi --release --target=i686-unknown-linux-gnu
 cp target/i686-unknown-linux-gnu/release/libauxcpu_byondapi.so "$1/libauxcpu_byondapi.so"
 
 cd "$work_directory"
