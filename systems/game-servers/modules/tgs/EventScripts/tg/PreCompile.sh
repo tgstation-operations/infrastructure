@@ -15,7 +15,6 @@ mkdir -p $work_directory
 
 cd $work_directory
 
-# Allows zerocopy to use this unstable std feature
 
 echo "rust-g: deployment begin"
 if [ ! -d "rust-g" ]; then
