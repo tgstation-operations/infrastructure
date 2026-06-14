@@ -28,4 +28,9 @@ in {
       "deploy"
     ];
   };
+
+  home-manager.users.deploy = {
+    home.file.".hushlogin".text = "";
+    home.stateVersion = config.system.stateVersion;
+  };
 }

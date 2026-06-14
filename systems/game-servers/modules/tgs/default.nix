@@ -6,7 +6,41 @@
   nixpkgs,
   tg-globals,
   ...
-}: {
+}: let
+  # Common environment variables for 32-bit cross-compilation
+  tgs-env-vars = {
+    CC_i686_unknown_linux_gnu = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/cc";
+    CXX_i686_unknown_linux_gnu = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/c++";
+    CARGO_TARGET_I686_UNKNOWN_LINUX_GNU_LINKER = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/cc";
+    TARGET_CC = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/cc";
+    TARGET_CXX = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/c++";
+    PKG_CONFIG_PATH_i686_unknown_linux_gnu = lib.makeSearchPath "lib/pkgconfig" (with pkgs.pkgsi686Linux; [
+      openssl.dev
+      zlib.dev
+      mariadb
+      sqlite.dev
+    ]);
+    # bindgen runs on the host arch, so LIBCLANG_PATH must point at host libclang.
+    LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
+    # Tell bindgen to parse headers for the i686 target when cross-compiling.
+    # Cargo normalises hyphens to underscores when looking up env vars, so only
+    # the underscore form is needed (and it's the only form bash can export).
+    BINDGEN_EXTRA_CLANG_ARGS_i686_unknown_linux_gnu = "--target=i686-unknown-linux-gnu";
+  };
+
+  tgs-env-setup = lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "export ${k}=\"${v}\"") tgs-env-vars);
+
+  inject-env-after-shebang = script: let
+    lines = lib.splitString "\n" script;
+    first-line = lib.head lines;
+    remaining-lines = lib.tail lines;
+    rest = lib.concatStringsSep "\n" remaining-lines;
+  in
+    if lib.hasPrefix "#!" first-line then
+      "${first-line}\n${tgs-env-setup}\n${rest}"
+    else
+      "#!/usr/bin/env bash\n${tgs-env-setup}\n${script}";
+in {
   environment.systemPackages = with pkgs; [
     rclone
   ];
@@ -30,7 +64,7 @@
       mode = "0755";
     };
     "tgs-EventScripts.d/tg/PreCompile.sh" = {
-      text = builtins.readFile ./EventScripts/tg/PreCompile.sh;
+      text = inject-env-after-shebang (builtins.readFile ./EventScripts/tg/PreCompile.sh);
       group = "tgstation-server";
       mode = "0755";
     };
@@ -64,7 +98,7 @@
       mode = "0755";
     };
     "tgs-EventScripts.d/tgmc/PreCompile.sh" = {
-      text = builtins.readFile ./EventScripts/tgmc/PreCompile.sh;
+      text = inject-env-after-shebang (builtins.readFile ./EventScripts/tgmc/PreCompile.sh);
       group = "tgstation-server";
       mode = "0755";
     };
@@ -91,7 +125,7 @@
       mode = "0755";
     };
     "tgs-EventScripts.d/effigy/PreCompile.sh" = {
-      text = builtins.readFile ./EventScripts/effigy/PreCompile.sh;
+      text = inject-env-after-shebang (builtins.readFile ./EventScripts/effigy/PreCompile.sh);
       group = "tgstation-server";
       mode = "0755";
     };
@@ -125,7 +159,7 @@
       mode = "0755";
     };
     "tgs-EventScripts.d/cool/PreCompile.sh" = {
-      text = builtins.readFile ./EventScripts/cool/PreCompile.sh;
+      text = inject-env-after-shebang (builtins.readFile ./EventScripts/cool/PreCompile.sh);
       group = "tgstation-server";
       mode = "0755";
     };
@@ -277,6 +311,8 @@
       ]
     );
   };
+
+  systemd.services.tgstation-server.environment = tgs-env-vars;
   age.secrets.rsc-cdn = {
     file = ../../secrets/rsc-cdn.age;
     owner = "${config.services.tgstation-server.username}";
