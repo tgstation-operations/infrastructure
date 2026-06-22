@@ -18,6 +18,10 @@ in {
   "tg13-tts_secrets.age".publicKeys = final;
   "tg13-webhooks.age".publicKeys = final;
   "tg13-extra_config-rclone.age".publicKeys = final;
+  # /tg/station Pentest secrets
+  "tgtest-dbconfig.age".publicKeys = final;
+  "tgtest-comms.age".publicKeys = final;
+  "tgtest-extra_config-rclone.age".publicKeys = final;
   # TGMC Secret
   "tgmc-dbconfig.age".publicKeys = final;
   "tgmc-tts_secrets.age".publicKeys = final;

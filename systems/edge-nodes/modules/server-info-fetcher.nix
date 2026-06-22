@@ -10,6 +10,7 @@
       "blockmoths.tg.lan:3336"
       "tgsatan.tg.lan:1337"
       "tgsatan.tg.lan:1447"
+      "tgsatan.tg.lan:1993"
       "tgsatan.tg.lan:1887"
       "tgsatan.tg.lan:5337"
       "tgsatan.tg.lan:7337"
