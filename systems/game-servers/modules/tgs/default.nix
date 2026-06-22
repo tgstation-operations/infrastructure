@@ -243,11 +243,6 @@ in {
       owner = "${config.services.tgstation-server.username}";
       group = "${config.services.tgstation-server.groupname}";
     };
-    tgtest-webhooks = {
-      file = ../../secrets/tgtest-webhooks.age;
-      owner = "${config.services.tgstation-server.username}";
-      group = "${config.services.tgstation-server.groupname}";
-    };
     tgtest-extra_config-rclone = {
       file = ../../secrets/tgtest-extra_config-rclone.age;
       owner = "${config.services.tgstation-server.username}";
