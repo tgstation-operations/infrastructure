@@ -271,7 +271,7 @@
           "relay-arm"
         ];
       };
-      nixpkgs.system = "aarch64-linux";
+      nixpkgs.hostPlatform = "aarch64-linux";
       imports =
         flakeModules
         ++ [
@@ -288,7 +288,7 @@
           "relay-arm"
         ];
       };
-      nixpkgs.system = "aarch64-linux";
+      nixpkgs.hostPlatform = "aarch64-linux";
       imports =
         flakeModules
         ++ [
@@ -305,7 +305,7 @@
           "relay-arm"
         ];
       };
-      nixpkgs.system = "aarch64-linux";
+      nixpkgs.hostPlatform = "aarch64-linux";
       imports =
         flakeModules
         ++ [
@@ -322,7 +322,7 @@
           "pmx-node"
         ];
       };
-      nixpkgs.system = "x86_64-linux";
+      nixpkgs.hostPlatform = "x86_64-linux";
       imports =
         flakeModules
         ++ [
@@ -341,7 +341,7 @@
           "pmx-node"
         ];
       };
-      nixpkgs.system = "x86_64-linux";
+      nixpkgs.hostPlatform = "x86_64-linux";
       imports =
         flakeModules
         ++ [
