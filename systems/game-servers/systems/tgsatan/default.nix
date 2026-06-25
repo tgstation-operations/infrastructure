@@ -8,6 +8,16 @@
   ...
 }: let
   hw = self.inputs.nixos-hardware.nixosModules;
+  persistedSystemDirectories = [
+    "/var/log"
+    "/var/lib/nixos"
+    "/var/lib/systemd/coredump"
+    "/var/lib/tailscale"
+    "/etc/NetworkManager/system-connections"
+    "/var/lib/acme"
+    "/var/lib/postgresql"
+    "/var/lib/docker"
+  ];
   baseModules = [
     (import hw.common-gpu-nvidia)
     (import hw.common-cpu-amd)
@@ -141,16 +151,7 @@ in {
   environment.persistence."/persist/system" = {
     hideMounts = false;
 
-    directories = [
-      "/var/log"
-      "/var/lib/nixos"
-      "/var/lib/systemd/coredump"
-      "/var/lib/tailscale"
-      "/etc/NetworkManager/system-connections"
-      "/var/lib/acme"
-      "/var/lib/postgresql"
-      "/var/lib/docker"
-    ];
+    directories = persistedSystemDirectories;
 
     users.tgtts = {
       directories = [
@@ -160,13 +161,19 @@ in {
     };
   };
 
+  fileSystems =
+    lib.genAttrs persistedSystemDirectories (_: {
+      fsType = lib.mkDefault "none";
+    })
+    // {
+      "/persist" = {
+        neededForBoot = true;
+      };
+    };
+
   boot.initrd.postResumeCommands = lib.mkAfter ''
     zfs rollback -r zroot/root@blank
   '';
-
-  fileSystems."/persist" = {
-    neededForBoot = true;
-  };
 
   networking.hosts = {
     "127.0.0.1" = ["manuel.tgstation13.org" "sybil.tgstation13.org" "tgsatan.us.tgstation13.org" "tgs.tgsatan.us.tgstation13.org" "s3.tgsatan.us.tgstation13.org" "s3.tgstation13.org"];

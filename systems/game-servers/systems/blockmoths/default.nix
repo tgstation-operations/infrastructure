@@ -8,6 +8,16 @@
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
+  persistedSystemDirectories = [
+    "/var/log"
+    "/var/lib/nixos"
+    "/var/lib/systemd/coredump"
+    "/var/lib/headscale"
+    "/var/lib/tailscale"
+    "/etc/NetworkManager/system-connections"
+    "/var/lib/acme"
+    "/var/lib/docker"
+  ];
   baseModules = [
     (import hw.common-cpu-amd)
     inputs.oidc-reverse-proxy.nixosModules.default
@@ -76,17 +86,18 @@ in {
   environment.persistence."/persist/system" = {
     hideMounts = false;
 
-    directories = [
-      "/var/log"
-      "/var/lib/nixos"
-      "/var/lib/systemd/coredump"
-      "/var/lib/headscale"
-      "/var/lib/tailscale"
-      "/etc/NetworkManager/system-connections"
-      "/var/lib/acme"
-      "/var/lib/docker"
-    ];
+    directories = persistedSystemDirectories;
   };
+
+  fileSystems =
+    lib.genAttrs persistedSystemDirectories (_: {
+      fsType = lib.mkDefault "none";
+    })
+    // {
+      "/persist" = {
+        neededForBoot = true;
+      };
+    };
 
   networking.hosts = {
     "127.0.0.1" = ["terry.tgstation13.org" "blockmoths.eu.tgstation13.org" "tgs.blockmoths.eu.tgstation13.org" "s3.blockmoths.eu.tgstation13.org" "s3.tgstation13.org"];
@@ -95,10 +106,6 @@ in {
   boot.initrd.postResumeCommands = lib.mkAfter ''
     zfs rollback -r zroot/root@blank
   '';
-
-  fileSystems."/persist" = {
-    neededForBoot = true;
-  };
 
   boot = {
     supportedFilesystems = ["zfs"];
