@@ -11,7 +11,7 @@
   };
   systemd.services.haproxy = {
     serviceConfig = {
-      AmbientCapabilities = lib.mkForce "CAP_NET_BIND_SERVCE CAP_NET_RAW";
+      AmbientCapabilities = lib.mkForce "CAP_NET_BIND_SERVICE CAP_NET_RAW";
       CapabilityBoundingSet = "CAP_NET_BIND_SERVICE CAP_NET_RAW";
     };
     environment = {
