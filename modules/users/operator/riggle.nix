@@ -40,7 +40,6 @@
 
     home.packages = with pkgs; [
       bat
-      dogdns
       jq
       tshark
       zoxide
