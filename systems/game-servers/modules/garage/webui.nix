@@ -26,9 +26,9 @@ pkgs.buildGoModule (finalAttrs: {
     ];
 
     pnpmDeps = pnpm.fetchDeps {
-      inherit (finalAttrs') pname version src;
-      fetcherVersion = 2;
-      hash = "sha256-8eQhR/fuDFNL8W529Ev7piCaseVaFahgZJQk3AJA3ng=";
+      inherit (finalAttrs) pname version src;
+      fetcherVersion = 3;
+      hash = "sha256-z/Y9q/SE2c/KYzIOAfATlprjr6NjmmUHQB+ZbO39OK4=";
     };
 
     buildPhase = ''

@@ -90,10 +90,7 @@ in {
   };
 
   fileSystems =
-    lib.genAttrs persistedSystemDirectories (_: {
-      fsType = lib.mkDefault "none";
-    })
-    // {
+    {
       "/persist" = {
         neededForBoot = true;
       };

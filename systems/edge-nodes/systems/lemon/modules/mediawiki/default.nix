@@ -100,7 +100,7 @@ in {
         composerLock = ./composer.wsoauth.lock; # because wsoauth does not have its own lockfile
         composerNoDev = true;
         composerStrictValidation = false; # we dont care if the composer json does not define a package name
-        vendorHash = "sha256-9GqqYVInp0kF2niT2HvuOX0UtLx5QVtRUW6I6P6yTkI=";
+        vendorHash = "sha256-nS1cBGPHzvtRRwKW0XMlK6zBWBjE9Kzid3Y7ns2jiSY=";
         postPatch = ''
           cat <<'EOF' > src/AuthenticationProvider/TgForumAuthProvider.php
           ${builtins.readFile ./TgForumAuthProvider.php}

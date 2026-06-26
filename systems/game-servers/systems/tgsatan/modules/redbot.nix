@@ -9,12 +9,12 @@
     wantedBy = ["multi-user.target"];
     # nss-lookup.target ensures DNS is available
     after = ["network.target" "nss-lookup.target"];
-    path = with pkgs; [wget git python311Packages.fuzzywuzzy];
+    path = with pkgs; [wget git python312Packages.fuzzywuzzy];
     serviceConfig = {
       User = "redbot-user";
       ExecStart = pkgs.writeShellScript "redbot-runner.sh" ''
         source /persist/redbot/bin/activate
-        ${pkgs.python311Packages.pip}/bin/pip install -U pip wheel Red-DiscordBot
+        ${pkgs.python312Packages.pip}/bin/pip install -U pip wheel Red-DiscordBot
         exec redbot --team-members-are-owners ${id}
       '';
       TemporaryFileSystem = [

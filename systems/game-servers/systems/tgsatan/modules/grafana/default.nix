@@ -30,6 +30,7 @@
         admin_username = "admin";
         admin_password = "$__file{${config.age.secrets.grafana_admin.path}}";
         strict_transport_security = true;
+        secret_key = "SW2YcwTIb9zpOOhoPsMm"; # used to be a hard coded key
       };
 
       server = {
