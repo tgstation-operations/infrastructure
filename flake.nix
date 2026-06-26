@@ -72,7 +72,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     authentik-nix = {
-      url = "github:nix-community/authentik-nix?rev=69fac057b2e553ee17c9a09b822d735823d65a6c";
+      url = "github:nix-community/authentik-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # lix-module = {
