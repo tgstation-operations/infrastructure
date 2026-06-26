@@ -171,9 +171,18 @@ in {
       };
     };
 
-  boot.initrd.postResumeCommands = lib.mkAfter ''
-    zfs rollback -r zroot/root@blank
-  '';
+  boot.initrd.systemd.services.zfs-root-rollback = {
+    description = "Rollback zroot/root to @blank before mounting sysroot";
+    wantedBy = ["initrd.target"];
+    after = ["zfs-import.target"];
+    before = ["sysroot.mount"];
+    path = [pkgs.zfs];
+    unitConfig.DefaultDependencies = "no";
+    serviceConfig.Type = "oneshot";
+    script = ''
+      zfs rollback -r zroot/root@blank
+    '';
+  };
 
   networking.hosts = {
     "127.0.0.1" = ["manuel.tgstation13.org" "sybil.tgstation13.org" "tgsatan.us.tgstation13.org" "tgs.tgsatan.us.tgstation13.org" "s3.tgsatan.us.tgstation13.org" "s3.tgstation13.org"];
