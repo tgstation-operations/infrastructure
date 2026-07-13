@@ -47,6 +47,7 @@ fi
 echo "dreamluau: checkout"
 git checkout "$DREAMLUAU_VERSION" >/dev/null
 echo "dreamluau: building"
+cargo update --precise 0.8.12 ahash || true # ensure ahash is up-to-date, else compile will fail due to https://github.com/tkaitchuck/aHash/pull/183
 cargo build --release --target=i686-unknown-linux-gnu
 cp target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
 
