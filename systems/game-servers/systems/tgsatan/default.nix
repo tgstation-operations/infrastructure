@@ -52,6 +52,14 @@
     })
     (import ../../modules/logs {
       inherit pkgs config tg-globals;
+      instance-name = "manuel2";
+      bind-port = "1888";
+      internal-port = "11888";
+      raw-port = "21888";
+      raw-internal-port = "21889";
+    })
+    (import ../../modules/logs {
+      inherit pkgs config tg-globals;
       instance-name = "eventhallus";
       bind-port = "7778";
       internal-port = "17778";
