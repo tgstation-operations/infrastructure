@@ -72,6 +72,26 @@ cp target/i686-unknown-linux-gnu/release/libauxcpu_byondapi.so "$1/libauxcpu_byo
 cd "$work_directory"
 echo "auxcpu: deployment finish"
 
+# compile byond-tracy / libprof.so
+echo "byond-tracy: deployment begin"
+if [ ! -d "byond-tracy" ]; then
+  echo "byond-tracy: cloning"
+  git clone https://github.com/ParadiseSS13/byond-tracy >/dev/null
+  cd byond-tracy
+else
+  echo "byond-tracy: fetching"
+  cd byond-tracy
+  git fetch >/dev/null
+fi
+echo "byond-tracy: checkout"
+git checkout master >/dev/null
+echo "byond-tracy: building"
+clang -D_FILE_OFFSET_BITS=64 -std=c11 -m32 -shared -fPIC -O3 -s -DNDEBUG prof.c -pthread -o libprof.so
+cp ./libprof.so "$1/libprof.so"
+
+cd "$work_directory"
+echo "byond-tracy: deployment finish"
+
 # compile tgui
 echo "tgui: deployment begin"
 cd "$1"
