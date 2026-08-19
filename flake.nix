@@ -72,8 +72,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     authentik-nix = {
-      url = "github:nix-community/authentik-nix?rev=69fac057b2e553ee17c9a09b822d735823d65a6c";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/authentik-nix?rev=afdb2eeca1e0b38fabb93c4a8944be73d3581268";
+      # add this follows back when we bump nixpkgs
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
     # lix-module = {
     #   url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.2-1.tar.gz";
@@ -114,10 +115,11 @@
         instances-path = "${tg-globals.tgs.root-path}/instances";
       };
       caddy = {
-        default-package = (import nixpkgs-unstable {
-          system = "x86_64-linux";
-          config.allowUnfree = true;
-        }).caddy;
+        default-package =
+          (import nixpkgs-unstable {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          }).caddy;
       };
     };
 
