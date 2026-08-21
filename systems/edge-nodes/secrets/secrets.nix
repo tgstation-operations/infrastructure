@@ -12,4 +12,5 @@ in {
   "phpbb_db.age".publicKeys = lemon-final;
   "authentik.age".publicKeys = lemon-final;
   "bab_db_connection_string.age".publicKeys = lemon-final;
+  "admin_2fa_db.age".publicKeys = lemon-final;
 }
