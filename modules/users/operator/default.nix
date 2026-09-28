@@ -10,6 +10,5 @@
     ./riggle.nix
     ./smartkar.nix
     ./sothanforax.nix
-    ./zephyrtfa.nix
   ];
 }
