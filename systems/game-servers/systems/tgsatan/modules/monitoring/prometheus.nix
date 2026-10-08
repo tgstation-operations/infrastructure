@@ -23,6 +23,11 @@ in {
         job_name = "caddy";
         static_configs = [{targets = ["tgsatan.tg.lan:2019"];}];
       }
+      {
+        job_name = "loki";
+        metrics_path = "/metrics";
+        static_configs = [{targets = ["tgsatan.tg.lan:3100"];}];
+      }
       # {
       #  job_name = "tgsatan_forgejo";
       #  static_configs [ { targets= [ "tgsatan.tg.lan:9001" ]; } ];

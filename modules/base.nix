@@ -7,6 +7,7 @@
   imports = [
     ./node-exporter.nix
     ./systemd-exporter.nix
+    ./alloy.nix
   ];
 
   environment.variables."FLAKE" = "${self}";
