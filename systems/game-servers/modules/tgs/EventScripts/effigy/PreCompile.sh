@@ -28,7 +28,7 @@ fi
 echo "rust-g: checkout"
 git checkout "$RUST_G_VERSION" >/dev/null
 echo "rust-g: building"
-cargo build --release --target=i686-unknown-linux-gnu --features all
+cargo build --locked --release --target=i686-unknown-linux-gnu --features all
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd "$work_directory"
 echo "rust-g: deployment finish"
@@ -47,7 +47,7 @@ echo "dreamluau: checkout"
 git checkout "$DREAMLUAU_VERSION" >/dev/null
 echo "dreamluau: building"
 cargo update --precise 0.8.12 ahash || true # ensure ahash is up-to-date, else compile will fail due to https://github.com/tkaitchuck/aHash/pull/183
-cargo build --release --target=i686-unknown-linux-gnu
+cargo build --locked --release --target=i686-unknown-linux-gnu
 cp target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
 
 cd "$work_directory"
@@ -66,7 +66,7 @@ fi
 echo "auxcpu: checkout"
 git checkout main >/dev/null
 echo "auxcpu: building"
-cargo build -p auxcpu-byondapi --release --target=i686-unknown-linux-gnu
+cargo build --locked -p auxcpu-byondapi --release --target=i686-unknown-linux-gnu
 cp target/i686-unknown-linux-gnu/release/libauxcpu_byondapi.so "$1/libauxcpu_byondapi.so"
 
 cd "$work_directory"
