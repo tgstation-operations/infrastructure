@@ -8,6 +8,7 @@
     ./mothblocks.nix
     ./ned.nix
     ./riggle.nix
+    ./scriptis.nix
     ./smartkar.nix
     ./sothanforax.nix
   ];
