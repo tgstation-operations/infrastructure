@@ -730,11 +730,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791853380,
-        "narHash": "sha256-ymkSKrnA00LvpgwoLnXpSoE/2Tm8hJ1Vh6wrX0l2ys0=",
+        "lastModified": 1792626441,
+        "narHash": "sha256-mgAqOV+tl/5OGBupUW6RbwEhsf8JTlhlGJyDmT+GGps=",
         "owner": "tgstation-operations",
         "repo": "website-v2",
-        "rev": "be95eecfac21d0e724a62f08b58bae46f796f868",
+        "rev": "7b90500b570fb3798c5b30cbbb720b5170006043",
         "type": "github"
       },
       "original": {
