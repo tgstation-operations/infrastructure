@@ -81,22 +81,13 @@ jobs:
             extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA=
 
-      - name: Authenticate Attic Binary Cache
-        if: steps.undeployed.outputs.on != ''
-        run: |
-          nix profile install nixpkgs#attic-client
-          attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
-
       - name: Print nix config before Build
         if: steps.undeployed.outputs.on != ''
         run: nix config show
 
       - name: Install Colmena
         if: steps.undeployed.outputs.on != ''
-        run: |
-          COLMENA_REVISION=$(jq -r '.nodes.colmena.locked.rev' flake.lock)
-          echo "Current Colmena revision is: $COLMENA_REVISION"
-          nix profile install github:zhaofengli/colmena/$COLMENA_REVISION
+        run: nix profile install --inputs-from . colmena#colmena
 
       - name: Deploy closure to Nodes
         if: steps.undeployed.outputs.on != ''

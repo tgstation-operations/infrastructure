@@ -132,21 +132,13 @@ jobs:
             extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA=
 
-      - name: Setup attic Binary Cache
-        if: ${{ env.USE_ATTIC == 'yes' }}
-        # Format for pointing to caches is server:cache in these commands
-        run: |
-          nix profile install nixpkgs#attic-client
-          attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
-
       - name: Print nix config before Build
         run: nix config show
 
-      - name: Install Colmena
-        run: |
-          COLMENA_REVISION=$(jq -r '.nodes.colmena.locked.rev' flake.lock)
-          echo "Current Colmena revision is: $COLMENA_REVISION"
-          nix profile install github:zhaofengli/colmena/$COLMENA_REVISION
+      # As flake.lock pins them: attic from the nixpkgs the build evaluates
+      # anyway, rather than a second one from the registry.
+      - name: Install Colmena and attic
+        run: nix profile install --inputs-from . colmena#colmena nixpkgs#attic-client
 
       - name: Build closure
         env:
@@ -154,9 +146,16 @@ jobs:
         run: |
           colmena build --impure -v --eval-node-limit 2 --keep-result --on "$ON"
 
+      # Logged in only now, so the token is not on disk while the checked-out
+      # code evaluates. Format for pointing to caches is server:cache in these
+      # commands
       - name: Push closure to attic
         if: ${{ env.UPLOAD_TO_ATTIC == 'yes' }}
-        run: attic push tgstation:tgstation-infrastructure $(ls -d /nix/store/*/)
+        env:
+          ATTIC_TOKEN: ${{ secrets.ATTIC_JWT_TOKEN }}
+        run: |
+          attic login tgstation https://attic.tgstation13.org "$ATTIC_TOKEN"
+          attic push tgstation:tgstation-infrastructure $(ls -d /nix/store/*/)
 
   deploy-staging:
     name: Deploy Staging
