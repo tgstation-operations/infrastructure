@@ -28,6 +28,7 @@ jobs:
       contents: read
     outputs:
       build: ${{ steps.plan.outputs.build }}
+      systems: ${{ steps.plan.outputs.systems }}
       rev: ${{ steps.plan.outputs.rev }}
     steps:
       # attic is only on the tailnet. Without it, everything is built.
@@ -165,6 +166,7 @@ jobs:
       runner: ${{ matrix.runner }}
       node: ${{ matrix.node }}
       ref: ${{ needs.plan.outputs.rev }}
+      systems: ${{ needs.plan.outputs.systems }}
     strategy:
       matrix:
         runner:
@@ -185,6 +187,7 @@ jobs:
       runner: ${{ matrix.runner }}
       node: ${{ matrix.node }}
       ref: ${{ needs.plan.outputs.rev }}
+      systems: ${{ needs.plan.outputs.systems }}
     strategy:
       matrix:
         runner:

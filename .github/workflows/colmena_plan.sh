@@ -2,8 +2,10 @@
 # Plans a colmena run. Every host is evaluated, and a host is built unless its
 # system is already in the binary cache at $1, where only a successful build
 # puts it: git history says nothing about what was built or deployed. Writes
-# `build`, the build matrix, to $GITHUB_OUTPUT, or stdout: per tag, or per
-# untagged host, and per system, the hosts to build.
+# to $GITHUB_OUTPUT, or stdout:
+#   build    the build matrix: per tag, or per untagged host, and per system,
+#            the hosts to build
+#   systems  each host's system and deployment target, for the deploy jobs
 set -euo pipefail
 
 cache=$1
@@ -17,10 +19,12 @@ mapfile -t hosts < <(nix eval --json "$flake#colmenaHive.nodes" --apply builtins
 evaluate() {
   nix eval --json "$flake#colmenaHive.nodes.$1" --apply 'n: let
     t = n.config.system.build.toplevel;
+    d = n.config.deployment;
   in {
     out = t.outPath;
     inherit (t) system;
-    inherit (n.config.deployment) tags;
+    inherit (d) tags;
+    target = "${d.targetUser}@${d.targetHost}";
   }' >"$dir/$1.json" 2>"$dir/$1.err" || rm "$dir/$1.json"
 }
 
@@ -80,3 +84,4 @@ echo "build=$(jq -sc '
   | group_by([.node, .system])
   | map({node: .[0].node, system: .[0].system, on: (map(.host) | join(","))})
 ' "$dir/plan")"
+echo "systems=$(jq -sc 'map({key: .host, value: {out, target, tags}}) | from_entries' "$dir/plan")"

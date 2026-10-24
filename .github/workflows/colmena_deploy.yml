@@ -15,6 +15,9 @@ on:
       ref:
         required: true
         type: string
+      systems:
+        required: true
+        type: string
 
 jobs:
   deploy:
@@ -41,7 +44,17 @@ jobs:
         with:
           ref: ${{ inputs.ref }}
 
+      # colmena apply builds every system it deploys on the runner first, so on
+      # a host that already runs its system it costs as much as a real deploy.
+      - name: Find hosts that do not run their systems
+        id: undeployed
+        env:
+          NODE: ${{ inputs.node }}
+          SYSTEMS: ${{ inputs.systems }}
+        run: bash .github/workflows/colmena_undeployed.sh "$NODE"
+
       - name: Mount compressed fs at /nix
+        if: steps.undeployed.outputs.on != ''
         shell: bash
         run: |
           dd if=/dev/zero of=./nix-store.img bs=1 count=0 seek=15G
@@ -50,6 +63,7 @@ jobs:
           sudo mount -o defaults,noatime,compress=zstd ./nix-store.img /nix
 
       - name: Generate App Token
+        if: steps.undeployed.outputs.on != ''
         id: app-token-generation
         uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf
         with:
@@ -57,6 +71,7 @@ jobs:
           private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
 
       - name: Install Nix
+        if: steps.undeployed.outputs.on != ''
         run: sh .github/workflows/install_lix.sh
         env:
           EXTRA_NIX_CONFIG: |
@@ -67,19 +82,25 @@ jobs:
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA=
 
       - name: Authenticate Attic Binary Cache
+        if: steps.undeployed.outputs.on != ''
         run: |
           nix profile install nixpkgs#attic-client
           attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
 
       - name: Print nix config before Build
+        if: steps.undeployed.outputs.on != ''
         run: nix config show
 
       - name: Install Colmena
+        if: steps.undeployed.outputs.on != ''
         run: |
           COLMENA_REVISION=$(jq -r '.nodes.colmena.locked.rev' flake.lock)
           echo "Current Colmena revision is: $COLMENA_REVISION"
           nix profile install github:zhaofengli/colmena/$COLMENA_REVISION
 
       - name: Deploy closure to Nodes
+        if: steps.undeployed.outputs.on != ''
+        env:
+          ON: ${{ steps.undeployed.outputs.on }}
         run: |
-          colmena apply --impure -v --on ${{ inputs.node }}
+          colmena apply --impure -v --on "$ON"
