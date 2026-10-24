@@ -28,6 +28,7 @@
     })
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
+    ../../modules/rollback-root.nix
     ../../modules/docker.nix
     ../../modules/tgs
     (import ../../modules/cloudflared.nix {
@@ -151,10 +152,6 @@ in {
       ];
     };
   };
-
-  boot.initrd.postResumeCommands = lib.mkAfter ''
-    zfs rollback -r zroot/root@blank
-  '';
 
   fileSystems."/persist" = {
     neededForBoot = true;
