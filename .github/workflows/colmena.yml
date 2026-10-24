@@ -16,24 +16,60 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build
+  # Picks the hosts to build, those whose systems are not in attic yet. The jobs
+  # after it check out the commit it evaluated, since a pull request's merge ref
+  # moves with main.
+  plan:
+    name: Plan
     # Only run if secrets are enabled
     if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id || !contains(github.event.pull_request.labels.*.name, 'CI Cleared') }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    outputs:
+      build: ${{ steps.plan.outputs.build }}
+      rev: ${{ steps.plan.outputs.rev }}
+    steps:
+      # attic is only on the tailnet. Without it, everything is built.
+      - name: Login to headscale
+        uses: tailscale/github-action@94b700f285f67fc55c0486504d82d7e9008191d0 # Connect to headscale
+        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id }}
+        with:
+          authkey: ${{ secrets.TS_BUILD_AUTHKEY }}
+          args: --login-server=https://vpn.tgstation13.org
+
+      - name: Checkout (Branch)
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+        if: github.event_name != 'pull_request_target'
+
+      - name: Checkout (PR Merge)
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+        if: github.event_name == 'pull_request_target'
+        with:
+          ref: "refs/pull/${{ inputs.pull_request_number }}/merge"
+
+      - name: Install Nix
+        run: sh .github/workflows/install_lix.sh
+        env:
+          EXTRA_NIX_CONFIG: |
+            access-tokens = github.com=${{ github.token }}
+            experimental-features = nix-command flakes
+
+      - name: Plan
+        id: plan
+        run: |
+          echo "rev=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          bash .github/workflows/colmena_plan.sh https://attic.tgstation13.org/tgstation-infrastructure
+
+  build:
+    name: Build
+    needs: plan
+    # The matrix is applied after this, so an empty one is never expanded
+    if: ${{ needs.plan.outputs.build != '[]' }}
     strategy:
       matrix:
-        runner:
-          - ubuntu-24.04
-        node:
-          - "tgsatan"
-          - "blockmoths"
-          - "vpn"
-          - "@relay-amd64"
-          - "@staging"
-        include:
-          - node: "@relay-arm"
-            runner: ubuntu-24.04-arm
-    runs-on: ${{ matrix.runner }}
+        include: ${{ fromJSON(needs.plan.outputs.build) }}
+    runs-on: ${{ matrix.system == 'aarch64-linux' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
     env:
       USE_ATTIC: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id) && 'yes' || 'no' }}
       UPLOAD_TO_ATTIC: "no" # This is here to shut up the GitHub Actions intellisense in VSC
@@ -50,15 +86,10 @@ jobs:
           authkey: ${{ secrets.TS_BUILD_AUTHKEY }}
           args: --login-server=https://vpn.tgstation13.org
 
-      - name: Checkout (Branch)
+      - name: Checkout
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
-        if: github.event_name != 'pull_request_target'
-
-      - name: Checkout (PR Merge)
-        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
-        if: github.event_name == 'pull_request_target'
         with:
-          ref: "refs/pull/${{ inputs.pull_request_number }}/merge"
+          ref: ${{ needs.plan.outputs.rev }}
 
       - name: Mount compressed fs at /nix
         shell: bash
@@ -114,8 +145,10 @@ jobs:
           nix profile install github:zhaofengli/colmena/$COLMENA_REVISION
 
       - name: Build closure
+        env:
+          ON: ${{ matrix.on }}
         run: |
-          colmena build --impure -v --eval-node-limit 2 --keep-result --on ${{ matrix.node }}
+          colmena build --impure -v --eval-node-limit 2 --keep-result --on "$ON"
 
       - name: Push closure to attic
         if: ${{ env.UPLOAD_TO_ATTIC == 'yes' }}
@@ -123,15 +156,15 @@ jobs:
 
   deploy-staging:
     name: Deploy Staging
-    needs: build
-    if: ${{ github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || (((github.event_name == 'pull_request' && github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id) || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main')) }}
+    needs: [plan, build]
+    if: ${{ !cancelled() && needs.plan.result == 'success' && (needs.build.result == 'success' || needs.build.result == 'skipped') && github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || (((github.event_name == 'pull_request' && github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id) || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main')) }}
     uses: ./.github/workflows/colmena_deploy.yml
     secrets: inherit
     with:
       environment: ${{ matrix.environment }}
       runner: ${{ matrix.runner }}
       node: ${{ matrix.node }}
-      pull_request_number: ${{ inputs.pull_request_number }}
+      ref: ${{ needs.plan.outputs.rev }}
     strategy:
       matrix:
         runner:
@@ -143,15 +176,15 @@ jobs:
 
   deploy-production:
     name: Deploy Production
-    needs: build
-    if: ${{ github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    needs: [plan, build]
+    if: ${{ !cancelled() && needs.plan.result == 'success' && (needs.build.result == 'success' || needs.build.result == 'skipped') && github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
     uses: ./.github/workflows/colmena_deploy.yml
     secrets: inherit
     with:
       environment: ${{ matrix.environment }}
       runner: ${{ matrix.runner }}
       node: ${{ matrix.node }}
-      pull_request_number: ${{ inputs.pull_request_number }}
+      ref: ${{ needs.plan.outputs.rev }}
     strategy:
       matrix:
         runner:
