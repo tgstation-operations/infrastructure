@@ -2,14 +2,11 @@
   config,
   lib,
   pkgs,
-  self,
   ...
 }: let
   cfg = config.services.tgstation-pr-announcer;
 
-  package = pkgs.callPackage ../../../../nix/packages/tgstation-pr-announcer/package.nix {
-    src = builtins.path {path = self.inputs.tgstation-pr-announcer;};
-  };
+  package = pkgs.callPackage ../../../../nix/packages/tgstation-pr-announcer/package.nix {};
 in {
   ##### interface. here we define the options that users of our service can specify
   options = {
