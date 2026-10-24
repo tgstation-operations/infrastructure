@@ -14,6 +14,7 @@ in
       pkgs.deadnix
       pkgs.jq
       pkgs.statix
+      pkgs.zola
       fmt
       audit
     ];
