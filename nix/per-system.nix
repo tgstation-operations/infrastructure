@@ -8,4 +8,7 @@
 in {
   packages = {inherit fmt audit;};
   devShell = import ./devshell.nix {inherit pkgs inputs fmt audit;};
+  checks = pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isx86_64 {
+    rollback-root = import ./tests/rollback-root.nix {inherit pkgs inputs;};
+  };
 }

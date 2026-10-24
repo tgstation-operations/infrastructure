@@ -556,6 +556,7 @@
 
     packages = builtins.mapAttrs (_: s: s.packages) perSystem;
     devShells = builtins.mapAttrs (_: s: {default = s.devShell;}) perSystem;
+    checks = builtins.mapAttrs (_: s: s.checks) perSystem;
 
     formatter.x86_64-linux = alejandra.defaultPackage.x86_64-linux;
     formatter.x86_64-darwin = alejandra.defaultPackage.x86_64-darwin;
