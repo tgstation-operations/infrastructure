@@ -44,7 +44,7 @@
           "root" = {
             type = "zfs_fs";
             mountpoint = "/";
-            postCreateHook = "zfs snapshot zroot/root@blank";
+            postCreateHook = "zfs list -H -o name zroot/root@blank || zfs snapshot zroot/root@blank";
           };
           "nix" = {
             type = "zfs_fs";
