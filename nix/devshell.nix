@@ -11,7 +11,9 @@ in
       inputs.agenix.packages.${system}.default
       inputs.colmena.packages.${system}.colmena
       inputs.alejandra.defaultPackage.${system}
+      pkgs.deadnix
       pkgs.jq
+      pkgs.statix
       fmt
       audit
     ];

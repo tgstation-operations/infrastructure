@@ -45,6 +45,24 @@
         text = "git ls-files -z -- '*.sh' '.githooks/*' | xargs -0 shellcheck -S warning";
       })
       (stage {
+        name = "statix";
+        tier = "hook";
+        runtimeInputs = [pkgs.git pkgs.statix];
+        text = ''
+          status=0
+          while IFS= read -r -d "" f; do
+            statix check --config statix.toml "$f" || status=1
+          done < <(git ls-files -z -- '*.nix')
+          exit "$status"
+        '';
+      })
+      (stage {
+        name = "deadnix";
+        tier = "hook";
+        runtimeInputs = [pkgs.git pkgs.deadnix];
+        text = "git ls-files -z -- '*.nix' | xargs -0 deadnix --no-lambda-arg --fail";
+      })
+      (stage {
         name = "hosts";
         tier = "ci";
         runtimeInputs = [pkgs.findutils pkgs.gnugrep pkgs.jq];

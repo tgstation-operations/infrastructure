@@ -1,0 +1,3 @@
+# Dotted keys, `security.sudo.foo` beside `security.sudo.bar`, are how this
+# repository writes options, and nesting all of them would be churn.
+disabled = ["repeated_keys"]
