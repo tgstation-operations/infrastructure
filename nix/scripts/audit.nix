@@ -18,6 +18,16 @@
     });
   };
 
+  vmTest = name:
+    stage {
+      inherit name;
+      tier = "ci";
+      text = ''
+        nix --extra-experimental-features "nix-command flakes" --option accept-flake-config false \
+          build --no-link .#checks.x86_64-linux.${name}
+      '';
+    };
+
   stages =
     [
       (stage {
@@ -75,14 +85,10 @@
         text = "python3 ${./audit/rekey.py}";
       })
     ]
-    ++ lib.optional pkgs.stdenv.hostPlatform.isx86_64 (stage {
-      name = "rollback-root";
-      tier = "ci";
-      text = ''
-        nix --extra-experimental-features "nix-command flakes" --option accept-flake-config false \
-          build --no-link .#checks.x86_64-linux.rollback-root
-      '';
-    });
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isx86_64 (map vmTest [
+      "rollback-root"
+      "tgstation-server"
+    ]);
 
   count = tier:
     toString (builtins.length (
