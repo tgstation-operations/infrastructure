@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+_: {
   users.users.aa07 = {
     isNormalUser = true;
 
@@ -13,17 +9,5 @@
     extraGroups = [
       "wheel"
     ];
-  };
-
-  home-manager.users.aa07 = {
-    programs.bash = {
-      enable = true;
-      enableCompletion = true;
-      initExtra = ''
-        eval $(${pkgs.starship}/bin/starship init bash)
-      '';
-    };
-
-    home.stateVersion = config.system.stateVersion;
   };
 }
