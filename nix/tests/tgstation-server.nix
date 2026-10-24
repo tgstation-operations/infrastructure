@@ -104,6 +104,21 @@ in
           return machine.succeed("systemctl show --property MainPID --value tgstation-server.service").strip()
 
 
+      # A detach, as opposed to a shutdown that takes the game servers down
+      # with it: the watchdog forwards SIGUSR2 and the host shuts down without
+      # waiting for them.
+      forwarded = "Received SIGUSR2, forwarding to main TGS process!"
+      detaching = 'Begin "semi-graceful shutdown"...'
+
+
+      def journal_count(text):
+          return int(machine.succeed(f"journalctl -u tgstation-server.service --output cat | grep -cF {shlex.quote(text)} || true"))
+
+
+      def log_count(text):
+          return int(machine.succeed(f"cat /var/log/tgstation-server/* | grep -cF {shlex.quote(text)} || true"))
+
+
       def instance_limit():
           return json.loads(machine.succeed(api("GET", "")))["instanceLimit"]
 
@@ -145,6 +160,15 @@ in
           assert instance["path"] == "${tgs.instances-path}/test", instance
           machine.succeed("test -d ${tgs.instances-path}/test")
           machine.succeed("mysql -N -e 'SELECT Name FROM Instances' tgs | grep -x test")
+
+      with subtest("a restart detaches TGS from its game servers"):
+          pid = main_pid()
+          forwards, detaches = journal_count(forwarded), log_count(detaching)
+          machine.succeed("systemctl restart tgstation-server.service")
+          machine.wait_until_succeeds(api("GET", ""), timeout=120)
+          assert main_pid() != pid
+          assert journal_count(forwarded) == forwards + 1
+          assert log_count(detaching) == detaches + 1
 
       with subtest("a deploy that changes only the appsettings reloads TGS and keeps its game servers"):
           # A stand-in for a running game server: a process in the unit's
