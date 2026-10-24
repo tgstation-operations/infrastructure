@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{pkgs, ...}: let
   redbot-instance = id: {
     enable = true;
     wantedBy = ["multi-user.target"];

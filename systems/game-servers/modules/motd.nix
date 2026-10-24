@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+_: {
   users.motdFile = "/var/lib/rust-motd/motd";
 
   programs.rust-motd = {

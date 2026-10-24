@@ -10,9 +10,7 @@
     mkDefault
     mkEnableOption
     mkPackageOption
-    mkForce
     mkIf
-    mkMerge
     mkOption
     ;
   inherit
@@ -27,7 +25,6 @@
     ;
 
   cfg = config.services.mediawiki;
-  fpm = config.services.phpfpm.pools.mediawiki;
 
   cacheDir = "/var/cache/mediawiki";
   stateDir = "/var/lib/mediawiki";
@@ -235,11 +232,6 @@
         ${cfg.extraConfig}
     '';
   };
-
-  withTrailingSlash = str:
-    if lib.hasSuffix "/" str
-    then str
-    else "${str}/";
 in {
   # interface
   options = {

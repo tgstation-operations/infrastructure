@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+_: {
   services.prometheus.exporters = {
     node = {
       enable = true;

@@ -1,8 +1,5 @@
 {
   config,
-  pkgs,
-  pkgs-unstable,
-  inputs,
   tg-globals,
   ...
 }: let

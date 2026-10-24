@@ -1,8 +1,4 @@
-{
-  pkgs,
-  config,
-  ...
-}: let
+{config, ...}: let
   deployUsers = import ./ssh_keys_by_group.nix {};
 in {
   # Configuration required to use github actions to deploy to nodes

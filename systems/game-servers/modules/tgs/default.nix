@@ -3,7 +3,6 @@
   pkgs,
   lib,
   fenix,
-  nixpkgs,
   tg-globals,
   ...
 }: let
