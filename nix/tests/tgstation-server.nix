@@ -17,38 +17,9 @@ in
       ...
     }: let
       cfg = config.services.tgstation-server;
-      appsettings = {
-        Database = {
-          DatabaseType = "MariaDB";
-          ResetAdminPassword = false;
-        };
-        General = {
-          ConfigVersion = "5.5.0";
-          HostApiDocumentation = true;
-          PrometheusPort = 5001;
-          ValidInstancePaths = [
-            tgs.instances-path
-          ];
-        };
-        FileLogging = {
-          Disable = false;
-          LogLevel = "Trace";
-        };
-        Kestrel = {
-          Endpoints = {
-            Http = {
-              Url = "http://localhost:${tgs.port}";
-            };
-          };
-        };
-        ControlPanel = {
-          Enable = true;
-          AllowAnyOrigin = true;
-        };
-        Swarm = {
-          UpdateRequiredNodeCount = 2;
-        };
-      };
+      # Production signs in through OIDC in strict mode, which turns password
+      # login off and needs the network.
+      appsettings = removeAttrs (import ../../systems/game-servers/modules/tgs/appsettings.nix {inherit (specialArgs) tg-globals;}) ["Security"];
       appsettingsFile = settings: pkgs.writeText "tgs_config.yml" (lib.generators.toYAML {} settings);
       withInstanceLimit = limit:
         lib.mkForce (appsettingsFile (lib.recursiveUpdate appsettings {General.InstanceLimit = limit;}));
