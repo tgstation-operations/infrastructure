@@ -17,10 +17,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-headscale.url = "github:nixos/nixpkgs/9807714d6944a957c2e036f84b0ff8caf9930bc0";
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -90,7 +86,6 @@
     ...
   }: let
     flakeModules = [
-      inputs.home-manager.nixosModules.home-manager
       inputs.agenix.nixosModules.default
       inputs.disko.nixosModules.default
       # inputs.lix-module.nixosModules.default
