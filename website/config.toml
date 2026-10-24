@@ -1,0 +1,3 @@
+base_url = "https://tgstation13.org"
+title = "tgstation13"
+compile_sass = true

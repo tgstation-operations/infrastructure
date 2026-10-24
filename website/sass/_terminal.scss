@@ -1,0 +1,38 @@
+@use "variables" as *;
+
+.Terminal {
+  background-color: #000;
+  color: #0f0;
+  font-family: $monospace;
+  margin: -1rem;
+  padding: 1rem;
+  text-shadow: 0 0 8px #0f0;
+
+  &:after {
+    display: inline-block;
+    content: ".";
+    width: 1rem;
+    background-color: #0f0;
+    margin-left: 1rem;
+
+    @keyframes TerminalBlink {
+      0% {
+        opacity: 1;
+      }
+
+      49% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    animation: TerminalBlink 1s linear infinite;
+  }
+}

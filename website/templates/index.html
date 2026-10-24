@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script src="servers.js" defer></script>
+{% endblock head %}
+
+{% block body %}
+<div class="Parallax">
+  <div class="Parallax__Layer Parallax__Layer-0"></div>
+  <div class="Parallax__Planet"></div>
+  <div class="Parallax__Layer Parallax__Layer-1"></div>
+  <div class="Parallax__Layer Parallax__Layer-2"></div>
+</div>
+<main class="App">
+  <div class="Content">
+    <header class="Header">
+      <div class="Header__LogoContainer">
+        <a class="Header__Link" href="./">
+          <img
+            class="Header__Logo"
+            src="tgstation13.png"
+            width="574"
+            height="70"
+            alt="tgstation13 Logo"
+            title="tgstation 13"
+          />
+        </a>
+      </div>
+      <nav class="Header__Nav">
+        <a class="Header__NavItem" rel="noreferrer noorigin" href="https://forums.tgstation13.org">Forums</a>
+        <a class="Header__NavItem" target="_blank" rel="noreferrer noorigin" href="https://discord.gg/tg13">Discord <span>↗</span></a>
+        <a class="Header__NavItem" target="_blank" rel="noreferrer noorigin" href="https://opencollective.com/tgstation13">Donate <span>↗</span></a>
+        <a class="Header__NavItem" rel="noreferrer noorigin" href="https://wiki.tgstation13.org">Wiki</a>
+        <a class="Header__NavItem" href="https://tgstation13.org/newsletters/">Newsletter</a>
+      </nav>
+    </header>
+
+    <div class="Servers">
+      {% for server in section.extra.servers %}
+      <div class="Server" data-server="{{ server.identifier }}">
+        <div class="Server__Inner">
+          <img src="{{ server.icon }}" class="Server__Background-Image" alt="" />
+          <div class="Server__Flags">
+            <div class="Server__Address">{{ server.address }}</div>
+            <div class="Server__Flags-Content">
+              <div class="Server__Flag Server__Flag--Commit" hidden></div>
+              <div class="Server__Flag Server__Flag--Hub" hidden>
+                <span title="This server is listed on the BYOND Hub.">🌎</span>
+              </div>
+            </div>
+          </div>
+          <div class="Server__Name">{{ server.name }}</div>
+          <div class="Server__GameMode">Status unknown</div>
+          <div class="Server__Stats">
+            <div class="Server__Stats--Left">
+              <div class="Server__CurrentPlayers">--</div>
+              <div class="Server__PlayerSlash">/</div>
+              <div class="Server__MaxPlayers">--</div>
+            </div>
+            <div class="Server__Stats--Right">
+              <div class="Server__Timer">--:--</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="Content__Inner">
+      <p class="Terminal">
+        SUBJECT: Welcome Aboard <br />
+        FROM: Nanotrasen Employee Relations (noreply@hr.ntnet) <br /><br />
+        Welcome, [EMPLOYEE NAME HERE], to Nanotrasen's latest and greatest research facility—Space Station 13! Out here on the frontier of the hotly contested Spinward Sector, you'll work with your crew to advance the bleeding edge of science. Just sign on the dotted line and don't worry about the rest; and remember, we're counting on YOU!
+      </p>
+    </div>
+  </div>
+
+  <footer class="Footer">
+    Made with ❤️ by
+    <a class="ExternalLink" href="https://forums.tgstation13.org/viewtopic.php?t=32076">Scriptis</a>, based on prior designs by
+    <a class="ExternalLink" rel="noreferrer noorigin" href="https://github.com/tgstation/tgstation13.org/issues/70">mozi_h <span>↗</span></a> and jeb! Artwork licensed under
+    <a class="ExternalLink" rel="noreferrer noorigin" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons 3.0 BY-SA <span>↗</span></a> and source code licensed under AGPLv3. Risk of electrical shock. May contain bananas or banana derivatives. Handle with care.
+  </footer>
+</main>
+{% endblock body %}
