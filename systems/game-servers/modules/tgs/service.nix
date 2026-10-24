@@ -161,7 +161,7 @@ in {
       };
       reloadTriggers = [
         (lib.mkIf (cfg.environmentFile != null) [cfg.environmentFile])
-        "/etc/tgstation.server.d/appsettings.Production.yml"
+        cfg.production-appsettings
       ];
       restartIfChanged = false; # So that the TGS service doesn't just get restarted whenever it's updated, and boots players
       wantedBy = ["multi-user.target"];
