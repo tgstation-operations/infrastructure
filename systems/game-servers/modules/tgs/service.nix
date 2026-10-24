@@ -116,7 +116,7 @@ in {
 
     environment.etc = {
       "tgstation-server.d/appsettings.yml" = {
-        text = builtins.readFile "${package}/bin/appsettings.yml";
+        source = "${package}/bin/appsettings.yml";
         group = cfg.groupname;
         mode = "0644";
       };

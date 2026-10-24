@@ -67,9 +67,9 @@ in {
       mode = "0755";
     };
     "tgs-EventScripts.d/tg/RepoFetch.sh" = {
-      text = builtins.readFile (pkgs.replaceVars ./EventScripts/tg/RepoFetch.sh {
+      source = pkgs.replaceVars ./EventScripts/tg/RepoFetch.sh {
         NIX_GH_PATH = "${pkgs.gh}";
-      });
+      };
       group = config.services.tgstation-server.groupname;
       mode = "0755";
     };
@@ -128,9 +128,9 @@ in {
       mode = "0755";
     };
     "tgs-EventScripts.d/effigy/RepoFetch.sh" = {
-      text = builtins.readFile (pkgs.replaceVars ./EventScripts/effigy/RepoFetch.sh {
+      source = pkgs.replaceVars ./EventScripts/effigy/RepoFetch.sh {
         NIX_GH_PATH = "${pkgs.gh}";
-      });
+      };
       group = config.services.tgstation-server.groupname;
       mode = "0755";
     };
