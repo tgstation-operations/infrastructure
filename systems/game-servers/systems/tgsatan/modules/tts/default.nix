@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   name = "tgtts";
   port = 5011;
   source-directory = "/persist/flakes/tgtts2/fish-speech";
@@ -25,18 +21,6 @@ in {
     };
 
     groups."${name}" = {};
-  };
-
-  home-manager.users."${name}" = {
-    programs.bash = {
-      enable = true;
-      enableCompletion = true;
-      initExtra = ''
-        eval $(${pkgs.starship}/bin/starship init bash)
-      '';
-    };
-
-    home.stateVersion = config.system.stateVersion;
   };
 
   systemd.user.services = {
