@@ -4,12 +4,10 @@
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
-      "https://alejandra.cachix.org"
       "https://attic.tgstation13.org/tgstation-infrastructure"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "alejandra.cachix.org-1:NjZ8kI0mf4HCq8yPnBfiTurb96zp1TBWl8EC54Pzjm0="
       "tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA="
     ];
   };
@@ -23,10 +21,6 @@
     };
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    alejandra = {
-      url = "github:kamadorueda/alejandra/3.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dragon-bot.url = "github:tgstation/dragon-bot";
@@ -76,7 +70,6 @@
     nixpkgs,
     nixpkgs-unstable,
     colmena,
-    alejandra,
     fenix,
     ...
   }: let
@@ -381,9 +374,9 @@
     devShells = builtins.mapAttrs (_: s: {default = s.devShell;}) perSystem;
     checks = builtins.mapAttrs (_: s: s.checks) perSystem;
 
-    formatter.x86_64-linux = alejandra.defaultPackage.x86_64-linux;
-    formatter.x86_64-darwin = alejandra.defaultPackage.x86_64-darwin;
-    formatter.aarch64-darwin = alejandra.defaultPackage.aarch64-darwin;
-    formatter.aarch64-linux = alejandra.defaultPackage.aarch64-linux;
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+    formatter.x86_64-darwin = nixpkgs.legacyPackages.x86_64-darwin.alejandra;
+    formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
+    formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.alejandra;
   };
 }

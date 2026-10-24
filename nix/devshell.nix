@@ -10,7 +10,7 @@ in
     packages = [
       inputs.agenix.packages.${system}.default
       inputs.colmena.packages.${system}.colmena
-      inputs.alejandra.defaultPackage.${system}
+      pkgs.alejandra
       pkgs.deadnix
       pkgs.jq
       pkgs.statix

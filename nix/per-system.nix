@@ -2,7 +2,7 @@
   pkgs,
   inputs,
 }: let
-  alejandra = inputs.alejandra.defaultPackage.${pkgs.stdenv.hostPlatform.system};
+  inherit (pkgs) alejandra;
   fmt = import ./scripts/fmt.nix {inherit pkgs alejandra;};
   audit = import ./scripts/audit.nix {inherit pkgs fmt;};
 in {
