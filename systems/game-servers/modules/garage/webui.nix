@@ -2,7 +2,7 @@
   lib,
   pkgs,
 }: let
-  pnpm = pkgs.pnpm_9;
+  pnpm = pkgs.pnpm;
 in
   pkgs.buildGoModule (finalAttrs: {
     pname = "garage-webui";
@@ -21,13 +21,15 @@ in
 
       nativeBuildInputs = [
         pkgs.nodejs
-        pnpm.configHook
+        pkgs.pnpmConfigHook
+        pnpm
       ];
 
-      pnpmDeps = pnpm.fetchDeps {
+      pnpmDeps = pkgs.fetchPnpmDeps {
         inherit (finalAttrs') pname version src;
-        fetcherVersion = 2;
-        hash = "sha256-8eQhR/fuDFNL8W529Ev7piCaseVaFahgZJQk3AJA3ng=";
+        inherit pnpm;
+        fetcherVersion = 3;
+        hash = "sha256-8NKCJJTPSfwnPSn8zBzAWu0XvfUtR3alqRZiWNGLGMc=";
       };
 
       buildPhase = ''
