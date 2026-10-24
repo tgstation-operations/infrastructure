@@ -2,8 +2,10 @@
   inherit (pkgs) lib;
   package = pkgs.callPackage ../packages/byond-authentication-bridge/package.nix {};
   domain = "byond-authentication-bridge.tgstation13.org";
+  # lemon's database keeps bab's tables in a schema of their own, not public.
+  schema = "byond-authentication-bridge";
   environmentFile = pkgs.writeText "bab-environment" ''
-    BAB_DB_CONNECTION_STRING=postgresql://byond-authentication-bridge@localhost/byond-authentication-bridge?host=/run/postgresql
+    BAB_DB_CONNECTION_STRING=postgresql://byond-authentication-bridge@localhost/byond-authentication-bridge?host=/run/postgresql&schema=${schema}
   '';
   # Pushes bab's schema the way its devUpdateDb script does, leaving no
   # migration history.
@@ -41,8 +43,9 @@ in
       migrations = int(machine.succeed("ls -d ${package}/lib/node_modules/bab/prisma/migrations/*/ | wc -l"))
 
       def psql(sql, database="byond-authentication-bridge"):
+          options = shlex.quote('-c search_path="${schema}"')
           return machine.succeed(
-              f"runuser -u postgres -- psql -d {database} -At -v ON_ERROR_STOP=1 -c {shlex.quote(sql)}"
+              f"runuser -u postgres -- env PGOPTIONS={options} psql -d {database} -At -v ON_ERROR_STOP=1 -c {shlex.quote(sql)}"
           ).strip()
 
       def assert_logged(text):
