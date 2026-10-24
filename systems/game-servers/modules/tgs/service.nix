@@ -160,6 +160,9 @@ in {
       # A deploy would otherwise stop and start a changed unit, and stopping TGS
       # stops its game servers. A reload detaches from them instead.
       reloadIfChanged = true;
+      # Where it cannot reload, a deploy restarts instead of stopping and
+      # starting, and a restart detaches as well.
+      stopIfChanged = false;
       wantedBy = ["multi-user.target"];
       wants = ["network-online.target"];
       after = [

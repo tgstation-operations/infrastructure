@@ -59,6 +59,10 @@ in
           services.tgstation-server.production-appsettings = withInstanceLimit 12;
           systemd.services.tgstation-server.environment.TGS_TEST_UNIT_CHANGED = "1";
         };
+        restart-queued.configuration = {
+          services.tgstation-server.production-appsettings = withInstanceLimit 13;
+          systemd.services.tgstation-server.environment.TGS_TEST_UNIT_CHANGED = "2";
+        };
       };
 
       # On first start the watchdog downloads the server host from GitHub into
@@ -206,6 +210,20 @@ in
           assert new_pid != pid
           machine.succeed(f"tr '\\0' '\\n' < /proc/{new_pid}/environ | grep -x TGS_TEST_UNIT_CHANGED=1")
           assert instance_limit() == 12
+          assert journal_count(forwarded) == forwards + 1
+          assert log_count(detaching) == detaches + 1
+          machine.succeed(f"grep -x {stand_in} ${cgroup}/cgroup.procs")
+
+      with subtest("a deploy that cannot reload TGS restarts it, which detaches"):
+          # switch-to-configuration resumes the restarts an interrupted switch
+          # left queued, and does not reload a unit queued for one.
+          machine.succeed("mkdir -p /run/nixos && echo tgstation-server.service >> /run/nixos/restart-list")
+          pid = main_pid()
+          forwards, detaches = journal_count(forwarded), log_count(detaching)
+          assert switch("restart-queued") == ["restarting"]
+          machine.wait_until_succeeds(api("GET", ""), timeout=120)
+          assert main_pid() != pid
+          assert instance_limit() == 13
           assert journal_count(forwarded) == forwards + 1
           assert log_count(detaching) == detaches + 1
           machine.succeed(f"grep -x {stand_in} ${cgroup}/cgroup.procs")
