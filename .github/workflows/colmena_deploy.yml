@@ -87,7 +87,7 @@ jobs:
 
       - name: Install Colmena
         if: steps.undeployed.outputs.on != ''
-        run: nix profile install --inputs-from . colmena#colmena
+        run: nix profile install --inputs-from . nixpkgs#colmena
 
       - name: Deploy closure to Nodes
         if: steps.undeployed.outputs.on != ''

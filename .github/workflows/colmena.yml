@@ -136,10 +136,10 @@ jobs:
       - name: Print nix config before Build
         run: nix config show
 
-      # As flake.lock pins them: attic from the nixpkgs the build evaluates
-      # anyway, rather than a second one from the registry.
+      # From the nixpkgs the build evaluates anyway, where cache.nixos.org has
+      # them.
       - name: Install Colmena and attic
-        run: nix profile install --inputs-from . colmena#colmena nixpkgs#attic-client
+        run: nix profile install --inputs-from . nixpkgs#colmena nixpkgs#attic-client
 
       # keep-going builds what a failure leaves buildable, for the push. colmena
       # passes its --nix-option to evaluation only, not to nix-store --realise.

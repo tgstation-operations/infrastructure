@@ -9,7 +9,7 @@ in
   pkgs.mkShell {
     packages = [
       inputs.agenix.packages.${system}.default
-      inputs.colmena.packages.${system}.colmena
+      pkgs.colmena
       pkgs.alejandra
       pkgs.deadnix
       pkgs.jq

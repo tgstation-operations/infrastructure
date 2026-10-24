@@ -305,7 +305,9 @@
         pkgs = nixpkgs.legacyPackages.${system};
       });
   in {
-    colmenaHive = colmena.lib.makeHive self.outputs.colmena;
+    colmenaHive = assert nixpkgs.lib.assertMsg (colmenaPackages.colmena.src.outPath == colmena.outPath)
+    "nixpkgs' colmena deploys the hive the colmena input builds, so the input must be at its source.";
+      colmena.lib.makeHive self.outputs.colmena;
     colmena = {
       inherit
         tgsatan
