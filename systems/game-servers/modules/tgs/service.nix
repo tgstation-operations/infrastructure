@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  systemdUtils,
   nixpkgs,
   pkgs,
   ...
@@ -101,14 +100,6 @@ in {
         default = null;
         description = ''
           Environment file as defined in {manpage}`systemd.exec(5)`
-        '';
-      };
-
-      wants = lib.mkOption {
-        type = lib.types.listOf systemdUtils.lib.unitNameType;
-        default = [];
-        description = ''
-          Start the specified units when this unit is started.
         '';
       };
     };
