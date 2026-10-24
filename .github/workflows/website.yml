@@ -1,0 +1,82 @@
+name: Website
+
+# Publishes website/ with mock server data to GitHub Pages, in any copy of this
+# repository whose Pages build from GitHub Actions. Elsewhere, and for pull
+# requests, it only builds.
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - website/**
+      - .github/workflows/website.yml
+  push:
+    branches:
+      - main
+    paths:
+      - website/**
+      - .github/workflows/website.yml
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      # configure-pages reads the Pages site for its URL.
+      pages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+
+      - name: Install Nix
+        run: sh .github/workflows/install_lix.sh
+        env:
+          EXTRA_NIX_CONFIG: |
+            access-tokens = github.com=${{ github.token }}
+            experimental-features = nix-command flakes
+
+      - name: Configure Pages
+        id: pages
+        if: github.event_name != 'pull_request' && github.event.repository.has_pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d
+
+      # The mock data is added to the output, never to the site's own files, so
+      # the build tgstation13.org serves cannot pick it up.
+      - name: Build
+        env:
+          BASE_URL: ${{ steps.pages.outputs.base_url }}
+        run: |
+          nix shell --inputs-from . nixpkgs#zola --command \
+            zola --root website build ${BASE_URL:+--base-url "$BASE_URL"} --output-dir "$RUNNER_TEMP/site"
+          cp website/mock/serverinfo.json "$RUNNER_TEMP/site/"
+
+      - name: Upload
+        if: steps.pages.outcome == 'success'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
+        with:
+          path: ${{ runner.temp }}/site
+
+  deploy:
+    name: Deploy
+    needs: build
+    if: github.event_name != 'pull_request' && github.event.repository.has_pages
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deploy
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346
