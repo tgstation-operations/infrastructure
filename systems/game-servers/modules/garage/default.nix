@@ -5,14 +5,12 @@
   headscaleIPv4,
   enable-webui,
   ...
-}:
-let
+}: let
   package = import ./webui.nix {
     inherit lib pkgs;
   };
   webui-port = "3919";
-in
-{
+in {
   networking.firewall.allowedTCPPorts = [
     3901 # RPC
   ];

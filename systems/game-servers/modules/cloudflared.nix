@@ -5,7 +5,10 @@
   lib,
   ...
 }: let
-  published-route-script-name-map = builtins.listToAttrs (map (published-route: { name = "cloudflared-publish-route-${published-route}"; value = published-route; }) (lib.attrNames config.services.cloudflared.tunnels.primary-tunnel.ingress));
+  published-route-script-name-map = builtins.listToAttrs (map (published-route: {
+    name = "cloudflared-publish-route-${published-route}";
+    value = published-route;
+  }) (lib.attrNames config.services.cloudflared.tunnels.primary-tunnel.ingress));
 in {
   services.cloudflared = {
     enable = true;
@@ -22,14 +25,17 @@ in {
     cloudflared-tunnel.file = age-file;
   };
 
-  system.activationScripts = builtins.mapAttrs (script-name: published-route:
-    # Register the tunnel with DNS
-    # Need the cert in-place temporarily for this
-    pkgs.lib.stringAfter ["users"] ''
-      mkdir -p /root/.cloudflared
-      cp ${config.age.secrets.cloudflared-cert.path} /root/.cloudflared/cert.pem
-      ${config.services.cloudflared.package}/bin/cloudflared tunnel route dns ${config.networking.hostName} ${published-route}
-      rm -rf /root/.cloudflared
-    ''
-    ) published-route-script-name-map;
+  system.activationScripts =
+    builtins.mapAttrs (
+      script-name: published-route:
+      # Register the tunnel with DNS
+      # Need the cert in-place temporarily for this
+        pkgs.lib.stringAfter ["users"] ''
+          mkdir -p /root/.cloudflared
+          cp ${config.age.secrets.cloudflared-cert.path} /root/.cloudflared/cert.pem
+          ${config.services.cloudflared.package}/bin/cloudflared tunnel route dns ${config.networking.hostName} ${published-route}
+          rm -rf /root/.cloudflared
+        ''
+    )
+    published-route-script-name-map;
 }

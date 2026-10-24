@@ -2,8 +2,7 @@
   config,
   self,
   ...
-}:
-{
+}: {
   imports = [
     self.inputs.tgstation-pr-announcer.nixosModules.default
   ];

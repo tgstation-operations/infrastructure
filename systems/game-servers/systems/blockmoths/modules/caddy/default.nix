@@ -162,7 +162,7 @@
         '';
       };
       "http://127.0.0.1:8086, http://localhost:8086" = {
-        extraConfig =''
+        extraConfig = ''
           file_server
           root * /persist/www
           php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {

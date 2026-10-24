@@ -3,7 +3,8 @@
   config,
   ...
 }: {
-  users.users.sothanforax = { # I am bad at coming up with usernames and I don't feel like bothering with my local one, as much as dmr needs his respects paid.
+  users.users.sothanforax = {
+    # I am bad at coming up with usernames and I don't feel like bothering with my local one, as much as dmr needs his respects paid.
     isNormalUser = true;
 
     openssh.authorizedKeys.keys = [

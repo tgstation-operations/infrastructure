@@ -36,10 +36,9 @@
     remaining-lines = lib.tail lines;
     rest = lib.concatStringsSep "\n" remaining-lines;
   in
-    if lib.hasPrefix "#!" first-line then
-      "${first-line}\n${tgs-env-setup}\n${rest}"
-    else
-      "#!/usr/bin/env bash\n${tgs-env-setup}\n${script}";
+    if lib.hasPrefix "#!" first-line
+    then "${first-line}\n${tgs-env-setup}\n${rest}"
+    else "#!/usr/bin/env bash\n${tgs-env-setup}\n${script}";
 in {
   environment.systemPackages = with pkgs; [
     rclone
@@ -228,9 +227,9 @@ in {
       group = "${config.services.tgstation-server.groupname}";
     };
     #effigy-tts_secrets = { for a rainy day...
-      #file = ../../secrets/effigy-tts_secrets.age;
-      #owner = "${config.services.tgstation-server.username}";
-      #group = "${config.services.tgstation-server.groupname}";
+    #file = ../../secrets/effigy-tts_secrets.age;
+    #owner = "${config.services.tgstation-server.username}";
+    #group = "${config.services.tgstation-server.groupname}";
     #};
     effigy-extra_config-rclone = {
       file = ../../secrets/effigy-extra_config-rclone.age;

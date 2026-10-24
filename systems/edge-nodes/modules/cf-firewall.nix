@@ -20,10 +20,10 @@ in {
   networking.firewall.extraInputRules = ''
     # Allow connections from cloudflare
     tcp dport { http, https } ip saddr {
-      ${builtins.replaceStrings [ "\n" ] [",\n"] ips-v4 }
+      ${builtins.replaceStrings ["\n"] [",\n"] ips-v4}
     } accept
     tcp dport { http, https } ip6 saddr {
-      ${builtins.replaceStrings [ "\n" ] [",\n"] ips-v6 }
+      ${builtins.replaceStrings ["\n"] [",\n"] ips-v6}
     } accept
   '';
 }

@@ -23,7 +23,7 @@
   logs-path = "${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs";
   group = config.services.tgstation-server.groupname;
 in {
-  users.users.caddy.extraGroups = [ group ];
+  users.users.caddy.extraGroups = [group];
 
   services = {
     cloudflared.tunnels.primary-tunnel = {
@@ -46,8 +46,8 @@ in {
 
         "http://localhost:${raw-internal-port}" = {
           extraConfig = ''
-              root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
-              file_server browse
+            root ${tg-globals.tgs.instances-path}/${instance-name}/Configuration/GameStaticFiles/data/logs
+            file_server browse
           '';
         };
       };

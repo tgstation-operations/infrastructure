@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{config, ...}: {
   age.secrets.restic_key.file = ../secrets/restic_key.age;
 
   services.restic = {
