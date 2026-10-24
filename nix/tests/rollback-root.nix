@@ -7,11 +7,7 @@ in
   inputs.disko.lib.testLib.makeDiskoTest {
     inherit pkgs;
     name = "rollback-root";
-    # The helper formats twice to check idempotency, and the host's hook fails
-    # the second time because the snapshot already exists.
-    disko-config = pkgs.lib.recursiveUpdate (import ../../systems/game-servers/systems/tgsatan/disko.nix) {
-      disko.devices.zpool.zroot.datasets.root.postCreateHook = "zfs list -H -o name zroot/root@blank || zfs snapshot zroot/root@blank";
-    };
+    disko-config = import ../../systems/game-servers/systems/tgsatan/disko.nix;
     extraInstallerConfig.networking.hostId = hostId;
     extraSystemConfig = {
       imports = [../../systems/game-servers/modules/rollback-root.nix];
