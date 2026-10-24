@@ -1,9 +1,9 @@
 # shellcheck shell=bash
-# Every host evaluates, and its system does not depend on the repository's own
-# source, which would change every host on every commit. nixosConfigurations is
-# the hive's nodes, so the hive is all there is to evaluate. One host per
-# process: evaluating them all in one took 40 GB.
-nix=(nix --extra-experimental-features "nix-command flakes" --option accept-flake-config false)
+# Every host evaluates without building anything, and its system does not
+# depend on the repository's own source, which would change every host on every
+# commit. nixosConfigurations is the hive's nodes, so the hive is all there is to
+# evaluate. One host per process: evaluating them all in one took 40 GB.
+nix=(nix --extra-experimental-features "nix-command flakes" --option accept-flake-config false --option allow-import-from-derivation false)
 err=$(mktemp)
 trap 'rm -f "$err"' EXIT
 
