@@ -564,7 +564,6 @@
         "tg-public-log-parser": "tg-public-log-parser",
         "tgstation-phpbb": "tgstation-phpbb",
         "tgstation-pr-announcer": "tgstation-pr-announcer",
-        "tgstation-server": "tgstation-server",
         "tgstation-website": "tgstation-website"
       }
     },
@@ -708,29 +707,6 @@
         "owner": "tgstation",
         "repo": "tgstation",
         "rev": "be9ae13cd50cc2f2f6680883424b86feb3c22725",
-        "type": "github"
-      }
-    },
-    "tgstation-server": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "dir": "build/package/nix",
-        "lastModified": 1766608965,
-        "narHash": "sha256-3mPvNo76vqBjANT5q3zz5JwANMw3MB4j2VTthmElwXU=",
-        "owner": "tgstation",
-        "repo": "tgstation-server",
-        "rev": "4204cc13a035545aa61c8116976b5e4a5c68c1a5",
-        "type": "github"
-      },
-      "original": {
-        "dir": "build/package/nix",
-        "owner": "tgstation",
-        "repo": "tgstation-server",
-        "rev": "4204cc13a035545aa61c8116976b5e4a5c68c1a5",
         "type": "github"
       }
     },
