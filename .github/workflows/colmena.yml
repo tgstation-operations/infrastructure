@@ -68,6 +68,7 @@ jobs:
     # The matrix is applied after this, so an empty one is never expanded
     if: ${{ needs.plan.outputs.build != '[]' }}
     strategy:
+      fail-fast: false
       matrix:
         include: ${{ fromJSON(needs.plan.outputs.build) }}
     runs-on: ${{ matrix.system == 'aarch64-linux' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
@@ -140,22 +141,31 @@ jobs:
       - name: Install Colmena and attic
         run: nix profile install --inputs-from . colmena#colmena nixpkgs#attic-client
 
+      # keep-going builds what a failure leaves buildable, for the push. colmena
+      # passes its --nix-option to evaluation only, not to nix-store --realise.
       - name: Build closure
+        id: build
         env:
           ON: ${{ matrix.on }}
+          NIX_CONFIG: keep-going = true
         run: |
           colmena build --impure -v --eval-node-limit 2 --keep-result --on "$ON"
 
       # Logged in only now, so the token is not on disk while the checked-out
       # code evaluates. Format for pointing to caches is server:cache in these
       # commands
+      #
+      # After a failed or cancelled build too: what it finished is valid in the
+      # store, and attic serves a path only once its upload completes. A failed
+      # build never produces the system, so the next plan still builds the host.
       - name: Push closure to attic
-        if: ${{ env.UPLOAD_TO_ATTIC == 'yes' }}
+        if: ${{ always() && env.UPLOAD_TO_ATTIC == 'yes' && steps.build.outcome != 'skipped' }}
+        shell: bash
         env:
           ATTIC_TOKEN: ${{ secrets.ATTIC_JWT_TOKEN }}
         run: |
           attic login tgstation https://attic.tgstation13.org "$ATTIC_TOKEN"
-          attic push tgstation:tgstation-infrastructure $(ls -d /nix/store/*/)
+          nix path-info --all | grep -v '\.drv$' | attic push --stdin tgstation:tgstation-infrastructure
 
   deploy-staging:
     name: Deploy Staging
