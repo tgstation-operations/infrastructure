@@ -1,0 +1,54 @@
+name: Audit
+
+# No secrets: this runs on pull requests from forks as they are.
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Audit
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+
+      - name: Mount compressed fs at /nix
+        shell: bash
+        run: |
+          dd if=/dev/zero of=./nix-store.img bs=1 count=0 seek=15G
+          mkfs.btrfs -M ./nix-store.img
+          sudo mkdir /nix
+          sudo mount -o defaults,noatime,compress=zstd ./nix-store.img /nix
+
+      # For the NixOS VM tests. Before installing Nix, so the daemon starts with
+      # the kvm feature.
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Install Nix
+        run: sh .github/workflows/install_lix.sh
+        env:
+          # The read-only token every job gets, so fetching the flake's GitHub
+          # inputs is not rate limited.
+          EXTRA_NIX_CONFIG: |
+            access-tokens = github.com=${{ github.token }}
+            experimental-features = nix-command flakes
+            system-features = nixos-test benchmark big-parallel kvm
+
+      - name: Audit
+        run: nix run --option accept-flake-config false .#audit
