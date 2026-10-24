@@ -1,4 +1,4 @@
-{config, ...}: let
+_: let
   deployUsers = import ./ssh_keys_by_group.nix {};
 in {
   # Configuration required to use github actions to deploy to nodes
@@ -23,10 +23,5 @@ in {
     trusted-users = [
       "deploy"
     ];
-  };
-
-  home-manager.users.deploy = {
-    home.file.".hushlogin".text = "";
-    home.stateVersion = config.system.stateVersion;
   };
 }

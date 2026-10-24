@@ -25,8 +25,8 @@ in {
     ];
   };
 
-  home-manager.users.deploy = {
-    home.file.".hushlogin".text = "";
-    home.stateVersion = config.system.stateVersion;
+  # L+ because an f line fails on the symlink home-manager left at this path
+  systemd.tmpfiles.settings.deploy-hushlogin = {
+    "${config.users.users.deploy.home}/.hushlogin"."L+".argument = "/dev/null";
   };
 }
