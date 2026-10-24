@@ -75,8 +75,11 @@ jobs:
       USE_ATTIC: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id) && 'yes' || 'no' }}
       UPLOAD_TO_ATTIC: "no" # This is here to shut up the GitHub Actions intellisense in VSC
     steps:
+      # Same-repo pull requests push every group, so the run on main after a
+      # merge finds them built. A fork's builds push only what staging deploys:
+      # main does not build again a system that attic has.
       - name: Set UPLOAD_TO_ATTIC envvar
-        if: ${{ env.USE_ATTIC == 'yes' && (github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main' && matrix.node == '@staging'))) }}
+        if: ${{ env.USE_ATTIC == 'yes' && (github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main' && (matrix.node == '@staging' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id)))) }}
         run: echo "UPLOAD_TO_ATTIC=yes" >> $GITHUB_ENV
 
       # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
