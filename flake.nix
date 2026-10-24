@@ -38,7 +38,6 @@
       url = "github:tgstation/tg-public-log-parser";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    tgstation-pr-announcer.url = "github:tgstation/tgstation/be9ae13cd50cc2f2f6680883424b86feb3c22725?dir=tools/Tgstation.PRAnnouncer";
     tgstation-website = {
       url = "github:tgstation-operations/website-v2";
       inputs.nixpkgs.follows = "nixpkgs";
