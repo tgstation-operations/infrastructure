@@ -55,7 +55,7 @@
     networkd-dispatcher
     nh
     nil
-    nixfmt-rfc-style
+    nixfmt
     pciutils
     restic
     ripgrep
