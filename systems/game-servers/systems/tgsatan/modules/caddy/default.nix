@@ -5,7 +5,11 @@
   inputs,
   tg-globals,
   ...
-}: {
+}: let
+  # Copied on its own, so the units depend on this file rather than on the
+  # whole repository's source.
+  awsEnv = builtins.path {path = ./aws.env;};
+in {
   # For Unix sockets, unused for now
   systemd.tmpfiles.rules = [
     "d /run/caddy 644 ${config.services.caddy.user} ${config.services.caddy.group}"
@@ -36,7 +40,7 @@
         credentialFiles = {
           "AWS_SHARED_CREDENTIALS_FILE" = config.age.secrets.aws_credentials.path;
         };
-        environmentFile = ./aws.env;
+        environmentFile = awsEnv;
       };
       "s3.tgstation13.org" = {};
       "s3-web.tgstation13.org" = {};
@@ -45,21 +49,21 @@
         credentialFiles = {
           "AWS_SHARED_CREDENTIALS_FILE" = config.age.secrets.aws_credentials.path;
         };
-        environmentFile = ./aws.env;
+        environmentFile = awsEnv;
       };
       "s3-web.tgsatan.us.tgstation13.org" = {
         dnsProvider = "route53";
         credentialFiles = {
           "AWS_SHARED_CREDENTIALS_FILE" = config.age.secrets.aws_credentials.path;
         };
-        environmentFile = ./aws.env;
+        environmentFile = awsEnv;
       };
       "s3.tgsatan.us.tgstation13.org" = {
         dnsProvider = "route53";
         credentialFiles = {
           "AWS_SHARED_CREDENTIALS_FILE" = config.age.secrets.aws_credentials.path;
         };
-        environmentFile = ./aws.env;
+        environmentFile = awsEnv;
       };
       "attic.tgstation13.org" = {};
     };
