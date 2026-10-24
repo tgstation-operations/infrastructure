@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  pkgs-unstable,
   lib,
   ...
 }: let
@@ -89,7 +88,7 @@ in {
         rev = "a89e96396fc9c3b3a0637552ef35fa092081ac65";
         hash = "sha256-XKmlNf70cNbInXdNlZ4JaAn9vwWIp2/kGRUNb5dXfYM=";
       };
-      WSOAuth = pkgs-unstable.php83.buildComposerProject2 rec {
+      WSOAuth = pkgs.php83.buildComposerProject2 rec {
         pname = "WSOAuth-with-tgstation";
         version = "1.0.0";
         src = fetchgit {
