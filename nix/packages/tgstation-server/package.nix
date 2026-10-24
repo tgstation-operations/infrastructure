@@ -65,6 +65,8 @@ in
 
     dontUnpack = true;
 
+    passthru.serverConsole = fixedOutput;
+
     installPhase = ''
       mkdir -p $out/bin
       unzip "${fixedOutput}/ServerConsole.zip" -d $out/bin
