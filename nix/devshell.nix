@@ -19,6 +19,7 @@ in
     shellHook = ''
       # Ahead of coreutils, whose fmt is a paragraph reflower.
       export PATH="${pkgs.lib.makeBinPath [fmt audit]}:$PATH"
+      git config core.hooksPath .githooks 2>/dev/null || true
       git config blame.ignoreRevsFile .git-blame-ignore-revs 2>/dev/null || true
     '';
   }
