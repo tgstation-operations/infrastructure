@@ -1,10 +1,6 @@
-{
-  config,
-  self,
-  ...
-}: {
+{config, ...}: {
   imports = [
-    self.inputs.tgstation-pr-announcer.nixosModules.default
+    ./service.nix
   ];
   age.secrets.tgstation-pr-announcer = {
     file = ../../secrets/tgstation-pr-announcer.age;
