@@ -31,6 +31,18 @@
       runtimeInputs = [pkgs.git pkgs.jq pkgs.lix];
       text = builtins.readFile ./audit/secrets.sh;
     })
+    (stage {
+      name = "actions";
+      tier = "hook";
+      runtimeInputs = [pkgs.git];
+      text = builtins.readFile ./audit/actions.sh;
+    })
+    (stage {
+      name = "shellcheck";
+      tier = "hook";
+      runtimeInputs = [pkgs.git pkgs.shellcheck];
+      text = "git ls-files -z -- '*.sh' '.githooks/*' | xargs -0 shellcheck -S warning";
+    })
   ];
 
   count = tier:

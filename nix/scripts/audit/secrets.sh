@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Every age file is declared in the secrets.nix beside it, every declared file
 # exists, and every age file a module names by path is tracked. agenix -r
 # rekeys only what secrets.nix declares, so an undeclared file keeps whatever
