@@ -2,7 +2,7 @@
   lib,
   pkgs,
 }: let
-  pnpm = pkgs.pnpm;
+  inherit (pkgs) pnpm;
 in
   pkgs.buildGoModule (finalAttrs: {
     pname = "garage-webui";

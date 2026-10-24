@@ -70,7 +70,7 @@ in {
       config = {
         Urls = "http://localhost:${raw-port}";
         TargetUrl = "http://localhost:${raw-internal-port}";
-        OpenIDConnectSettings = oidc-settings.OpenIDConnectSettings;
+        inherit (oidc-settings) OpenIDConnectSettings;
       };
       environmentFile = config.age.secrets."${oidc-settings.age-name}".path;
     };
