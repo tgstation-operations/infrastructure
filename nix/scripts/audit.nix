@@ -18,13 +18,28 @@
     });
   };
 
+  # The exit status of a skipped test under automake and meson.
+  skipped = 77;
+
+  # The derivation determines the test, so a test whose derivation has passed
+  # has nothing to check. Where AUDIT_PASSED names a directory, a pass is
+  # recorded there as a file named for the derivation.
   vmTest = name:
     stage {
       inherit name;
       tier = "ci";
       text = ''
-        nix --extra-experimental-features "nix-command flakes" --option accept-flake-config false \
-          build --no-link .#checks.x86_64-linux.${name}
+        nix=(nix --extra-experimental-features "nix-command flakes" --option accept-flake-config false)
+        drv=$("''${nix[@]}" path-info --derivation .#checks.x86_64-linux.${name})
+        pass=''${AUDIT_PASSED:+$AUDIT_PASSED/$(basename "$drv")}
+        if [ -n "$pass" ] && [ -e "$pass" ]; then
+          exit ${toString skipped}
+        fi
+        "''${nix[@]}" build --no-link "$drv^*"
+        if [ -n "$pass" ]; then
+          mkdir -p "$AUDIT_PASSED"
+          touch "$pass"
+        fi
       '';
     };
 
@@ -120,19 +135,22 @@ in
 
       failed=()
       run() {
-        local tier_of=$1 name=$2 bin=$3 log start
+        local tier_of=$1 name=$2 bin=$3 log start status=0
         if [ "$tier" = hook ] && [ "$tier_of" != hook ]; then
           return 0
         fi
         log=$(mktemp)
         start=$SECONDS
-        if "$bin" >"$log" 2>&1; then
-          echo "ok    $name ($((SECONDS - start))s)"
-        else
-          echo "FAIL  $name ($((SECONDS - start))s)"
-          sed 's/^/      /' "$log"
-          failed+=("$name")
-        fi
+        "$bin" >"$log" 2>&1 || status=$?
+        case $status in
+          0) echo "ok    $name ($((SECONDS - start))s)" ;;
+          ${toString skipped}) echo "skip  $name ($((SECONDS - start))s)" ;;
+          *)
+            echo "FAIL  $name ($((SECONDS - start))s)"
+            sed 's/^/      /' "$log"
+            failed+=("$name")
+            ;;
+        esac
         rm -f "$log"
       }
 

@@ -50,5 +50,24 @@ jobs:
             experimental-features = nix-command flakes
             system-features = nixos-test benchmark big-parallel kvm
 
+      - name: Restore VM test passes
+        id: passed
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ${{ runner.temp }}/audit-passed
+          key: audit-passed-${{ github.sha }}
+          restore-keys: audit-passed-
+
       - name: Audit
         run: nix run --option accept-flake-config false .#audit
+        env:
+          AUDIT_PASSED: ${{ runner.temp }}/audit-passed
+
+      # A pull request's entries would be scoped to its merge ref, which only
+      # its own re-runs read, so passes are recorded on main.
+      - name: Save VM test passes
+        if: github.event_name == 'push' && steps.passed.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ${{ runner.temp }}/audit-passed
+          key: audit-passed-${{ github.sha }}
