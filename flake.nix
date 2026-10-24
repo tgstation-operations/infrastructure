@@ -355,6 +355,12 @@
           (import ./modules/openssh.nix)
         ];
     };
+
+    perSystem = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (system:
+      import ./nix/per-system.nix {
+        inherit inputs;
+        pkgs = nixpkgs.legacyPackages.${system};
+      });
   in {
     colmenaHive = colmena.lib.makeHive self.outputs.colmena;
     colmena = {
@@ -547,6 +553,9 @@
         };
       };
     };
+
+    packages = builtins.mapAttrs (_: s: s.packages) perSystem;
+    devShells = builtins.mapAttrs (_: s: {default = s.devShell;}) perSystem;
 
     formatter.x86_64-linux = alejandra.defaultPackage.x86_64-linux;
     formatter.x86_64-darwin = alejandra.defaultPackage.x86_64-darwin;
