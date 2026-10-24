@@ -150,10 +150,7 @@ in {
         WatchdogSignal = "SIGTERM";
         LogsDirectory = "tgstation-server";
       };
-      restartTriggers = [
-        (lib.mkIf (cfg.environmentFile != null) [cfg.environmentFile])
-        cfg.production-appsettings
-      ];
+      restartTriggers = [cfg.production-appsettings];
       # A deploy would otherwise stop and start a changed unit, and stopping TGS
       # stops its game servers. A reload detaches from them instead.
       reloadIfChanged = true;

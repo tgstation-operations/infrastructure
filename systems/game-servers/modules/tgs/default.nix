@@ -268,6 +268,9 @@ in {
   };
 
   systemd.services.tgstation-server.environment = tgs-env-vars;
+  # agenix decrypts to the same path whatever the secret holds, so the
+  # encrypted file is what changes with it.
+  systemd.services.tgstation-server.restartTriggers = [config.age.secrets.tgs.file];
   age.secrets.rsc-cdn = {
     file = ../../secrets/rsc-cdn.age;
     owner = "${config.services.tgstation-server.username}";
