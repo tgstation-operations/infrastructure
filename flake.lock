@@ -404,6 +404,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-headscale": {
+      "locked": {
+        "lastModified": 1751984180,
+        "narHash": "sha256-LwWRsENAZJKUdD3SpLluwDmdXY9F45ZEgCb0X+xgOL0=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "9807714d6944a957c2e036f84b0ff8caf9930bc0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "9807714d6944a957c2e036f84b0ff8caf9930bc0",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1785031560,
@@ -563,6 +579,7 @@
         "impermanence": "impermanence",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
+        "nixpkgs-headscale": "nixpkgs-headscale",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "oidc-reverse-proxy": "oidc-reverse-proxy",
         "server-info-fetcher": "server-info-fetcher",

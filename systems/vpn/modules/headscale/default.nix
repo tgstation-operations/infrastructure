@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}: {
   networking.firewall.allowedTCPPorts = [
     80
     443
@@ -9,6 +14,9 @@
   ];
   services.headscale = {
     enable = true;
+    # The release vpn runs. headscale refuses to skip a minor version, so it
+    # moves up one at a time, each from its own nixpkgs revision.
+    package = inputs.nixpkgs-headscale.legacyPackages.${pkgs.stdenv.hostPlatform.system}.headscale;
     address = "0.0.0.0";
     port = 443;
 
@@ -37,7 +45,7 @@
       owner = "headscale";
       group = "headscale";
       capabilities = "cap_net_bind_service+eip";
-      source = "${pkgs.headscale}/bin/headscale";
+      source = "${config.services.headscale.package}/bin/headscale";
     };
   };
 }
