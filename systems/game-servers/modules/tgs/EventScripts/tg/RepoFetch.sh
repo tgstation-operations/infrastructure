@@ -5,4 +5,4 @@ export GH_TOKEN="$2"
 export GH_REPO="tgstation/tgstation"
 
 @NIX_GH_PATH@/bin/gh workflow run compile_changelogs.yml > /dev/null
-@NIX_GH_PATH@/bin/gh run watch $(@NIX_GH_PATH@/bin/gh run list -wcompile_changelogs.yml --json databaseId --limit 1 -q ".[0].databaseId") > /dev/null
+@NIX_GH_PATH@/bin/gh run watch "$(@NIX_GH_PATH@/bin/gh run list -wcompile_changelogs.yml --json databaseId --limit 1 -q ".[0].databaseId")" > /dev/null
