@@ -317,44 +317,6 @@
           (import ./systems/edge-nodes/systems/eu-knipp.nix)
         ];
     };
-    tg-cockroachdb-node-alpha = {
-      deployment = {
-        targetHost = "tg-cockroachdb-node-alpha.tg.lan";
-        targetUser = "deploy";
-        tags = [
-          "pmx-node"
-        ];
-      };
-      nixpkgs.system = "x86_64-linux";
-      imports =
-        flakeModules
-        ++ [
-          (import "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix")
-          (import ./modules/base.nix)
-          (import ./modules/users)
-          (import ./modules/tailscale.nix)
-          (import ./modules/openssh.nix)
-        ];
-    };
-    tg-cockroachdb-node-beta = {
-      deployment = {
-        targetHost = "tg-cockroachdb-node-beta.tg.lan";
-        targetUser = "deploy";
-        tags = [
-          "pmx-node"
-        ];
-      };
-      nixpkgs.system = "x86_64-linux";
-      imports =
-        flakeModules
-        ++ [
-          (import "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix")
-          (import ./modules/base.nix)
-          (import ./modules/users)
-          (import ./modules/tailscale.nix)
-          (import ./modules/openssh.nix)
-        ];
-    };
 
     perSystem = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (system:
       import ./nix/per-system.nix {
@@ -377,8 +339,6 @@
         bratwurst
         dachshund
         knipp
-        tg-cockroachdb-node-alpha
-        tg-cockroachdb-node-beta
         ;
 
       meta = {
