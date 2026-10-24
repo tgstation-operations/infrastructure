@@ -5,7 +5,7 @@
   inputs,
   ...
 }: let
-  phpWithProfiling = pkgs.php83.buildEnv {
+  phpWithProfiling = pkgs-unstable.php83.buildEnv {
     extensions = {
       enabled,
       all,
@@ -51,7 +51,7 @@ in {
 
   # For manual usage of composer or php
   environment.systemPackages = [
-    pkgs.php83Packages.composer
+    pkgs-unstable.php83Packages.composer
     pkgs.imagemagick
     phpWithProfiling
   ];
