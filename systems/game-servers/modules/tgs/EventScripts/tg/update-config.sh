@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd "${TGS_INSTANCE_ROOT}/Configuration/GameStaticFiles"
+cd "${TGS_INSTANCE_ROOT}/Configuration/GameStaticFiles" || exit 1
 
 . "${TGS_INSTANCE_ROOT}/Configuration/EventScripts/parse-server.sh"
 
@@ -11,7 +11,7 @@ if [ ! -d $TARGET_DIR ]; then
   git clone $CONFIG_URI $TARGET_DIR
 fi
 
-cd $TARGET_DIR
+cd $TARGET_DIR || exit 1
 git fetch
 git checkout origin/main
 git sparse-checkout set $SERVER/ title_screens/
