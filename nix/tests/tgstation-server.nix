@@ -188,12 +188,17 @@ in
           machine.succeed(f"grep -x {stand_in} ${cgroup}/cgroup.procs")
           machine.succeed("journalctl -u tgstation-server.service | grep -F 'Received SIGUSR2, forwarding to main TGS process!'")
 
-      with subtest("a deploy that changes the unit otherwise leaves TGS running as it was"):
+      with subtest("a deploy that changes the unit reloads TGS onto it"):
           pid = main_pid()
-          assert switch("unit-changed") == ["NOT restarting"]
-          machine.succeed("systemctl show --property Environment --value tgstation-server.service | grep -F TGS_TEST_UNIT_CHANGED=1")
-          assert main_pid() == pid
-          assert instance_limit() == 11
+          forwards, detaches = journal_count(forwarded), log_count(detaching)
+          assert switch("unit-changed") == ["reloading"]
+          machine.wait_until_succeeds(api("GET", ""), timeout=120)
+          new_pid = main_pid()
+          assert new_pid != pid
+          machine.succeed(f"tr '\\0' '\\n' < /proc/{new_pid}/environ | grep -x TGS_TEST_UNIT_CHANGED=1")
+          assert instance_limit() == 12
+          assert journal_count(forwarded) == forwards + 1
+          assert log_count(detaching) == detaches + 1
           machine.succeed(f"grep -x {stand_in} ${cgroup}/cgroup.procs")
     '';
   }

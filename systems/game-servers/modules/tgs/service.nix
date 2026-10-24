@@ -150,10 +150,13 @@ in {
         WatchdogSignal = "SIGTERM";
         LogsDirectory = "tgstation-server";
       };
-      reloadTriggers = [
+      restartTriggers = [
         (lib.mkIf (cfg.environmentFile != null) [cfg.environmentFile])
         cfg.production-appsettings
       ];
+      # A deploy would otherwise stop and start a changed unit, and stopping TGS
+      # stops its game servers. A reload detaches from them instead.
+      reloadIfChanged = true;
       restartIfChanged = false; # So that the TGS service doesn't just get restarted whenever it's updated, and boots players
       wantedBy = ["multi-user.target"];
       wants = ["network-online.target"];
