@@ -126,6 +126,7 @@ in {
   boot = {
     supportedFilesystems = ["zfs"];
     zfs.package = pkgs.zfs;
+    zfs.forceImportRoot = false;
     loader.systemd-boot.enable = true;
   };
 

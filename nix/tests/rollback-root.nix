@@ -14,6 +14,7 @@ in
       networking.hostId = hostId;
       boot.supportedFilesystems = ["zfs"];
       boot.zfs.package = pkgs.zfs;
+      boot.zfs.forceImportRoot = false;
       fileSystems."/persist".neededForBoot = true;
     };
     extraTestScript = ''
