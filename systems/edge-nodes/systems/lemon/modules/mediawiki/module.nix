@@ -32,7 +32,7 @@
   stateDir = "/var/lib/mediawiki";
 
   # https://www.mediawiki.org/wiki/Compatibility
-  php = pkgs.php82;
+  php = pkgs.php83;
 
   pkg = pkgs.stdenv.mkDerivation rec {
     pname = "mediawiki-full";
