@@ -11,5 +11,6 @@ in {
   checks = pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isx86_64 {
     rollback-root = import ./tests/rollback-root.nix {inherit pkgs inputs;};
     tgstation-server = import ./tests/tgstation-server.nix {inherit pkgs inputs;};
+    byond-authentication-bridge = import ./tests/byond-authentication-bridge.nix {inherit pkgs;};
   };
 }
