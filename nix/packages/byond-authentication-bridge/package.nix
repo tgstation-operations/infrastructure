@@ -33,6 +33,9 @@ in
       rev = "7f8c0572b3b546523a65246e14e9d80f6b20cf03";
       hash = "sha256-8jb08XbHu3padD7kfnmuxGFkSCqxdGHB+yZ8/u7ddU8=";
     };
+    # bab's hourly timers otherwise keep it running after SIGTERM, until systemd
+    # gives up and kills it.
+    patches = [./unref-intervals.patch];
     npmDepsHash = "sha256-dK8gACPM9GIZS5GvDfsssHm8+Y7IPY9AVI6d9gC7Myo=";
     env = prismaEnv;
     preBuild = ''
