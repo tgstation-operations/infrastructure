@@ -88,6 +88,7 @@
     ++ lib.optionals pkgs.stdenv.hostPlatform.isx86_64 (map vmTest [
       "rollback-root"
       "tgstation-server"
+      "byond-authentication-bridge"
     ]);
 
   count = tier:
