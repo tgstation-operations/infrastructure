@@ -3,7 +3,7 @@
 
   version = "6.18.0";
 
-  fixedOutput = stdenv.mkDerivation {
+  fixedOutput = pkgs.fetchurl {
     pname = "tgstation-server-release-server-console-zip";
     inherit version;
 
@@ -15,25 +15,14 @@
       platforms = platforms.x86_64;
     };
 
-    nativeBuildInputs = with pkgs; [
-      curl
-      cacert
-    ];
-
-    dontUnpack = true;
-
-    buildPhase = ''
-      curl -L https://github.com/tgstation/tgstation-server/releases/download/tgstation-server-v${version}/ServerConsole.zip -o ServerConsole.zip
-    '';
-
-    installPhase = ''
+    url = "https://github.com/tgstation/tgstation-server/releases/download/tgstation-server-v${version}/ServerConsole.zip";
+    hash = "sha256-tHe8NQFSf6omeSduqCq4FrE0Jy64HXNeEZ8kNCZkUgE=";
+    recursiveHash = true;
+    downloadToTemp = true;
+    postFetch = ''
       mkdir -p $out
-      mv ServerConsole.zip $out/ServerConsole.zip
+      mv $downloadedFile $out/ServerConsole.zip
     '';
-
-    outputHashAlgo = "sha256";
-    outputHashMode = "recursive";
-    outputHash = "sha256-tHe8NQFSf6omeSduqCq4FrE0Jy64HXNeEZ8kNCZkUgE=";
   };
 in
   stdenv.mkDerivation {
