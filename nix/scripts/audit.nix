@@ -25,6 +25,12 @@
       runtimeInputs = [fmt];
       text = "fmt --check";
     })
+    (stage {
+      name = "secrets";
+      tier = "hook";
+      runtimeInputs = [pkgs.git pkgs.jq pkgs.lix];
+      text = builtins.readFile ./audit/secrets.sh;
+    })
   ];
 
   count = tier:
