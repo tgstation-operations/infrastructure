@@ -47,7 +47,7 @@
       (stage {
         name = "hosts";
         tier = "ci";
-        runtimeInputs = [pkgs.jq];
+        runtimeInputs = [pkgs.findutils pkgs.gnugrep pkgs.jq];
         text = builtins.readFile ./audit/hosts.sh;
       })
       (stage {

@@ -1,28 +1,37 @@
 # shellcheck shell=bash
-# Every host evaluates, in the colmena hive and in nixosConfigurations, and the
-# two give a host the same system. CI builds and deploys the hive; the copy in
-# nixosConfigurations is what nixos-rebuild and other tools read. One host per
+# Every host evaluates, and its system does not depend on the repository's own
+# source, which would change every host on every commit. nixosConfigurations is
+# the hive's nodes, so the hive is all there is to evaluate. One host per
 # process: evaluating them all in one took 40 GB.
 nix=(nix --extra-experimental-features "nix-command flakes" --option accept-flake-config false)
 err=$(mktemp)
 trap 'rm -f "$err"' EXIT
 
-names() {
-  "${nix[@]}" eval --json ".#$1" --apply builtins.attrNames | jq -r '.[]'
-}
+# With host names given, only those.
+hosts=("$@")
+if [ ${#hosts[@]} -eq 0 ]; then
+  if ! names=$("${nix[@]}" eval --json .#colmenaHive.toplevel --apply builtins.attrNames 2>"$err"); then
+    cat "$err"
+    exit 1
+  fi
+  mapfile -t hosts < <(jq -r '.[]' <<<"$names")
+fi
 
 status=0
-for host in $({ names colmenaHive.toplevel && names nixosConfigurations; } | sort -u); do
-  expr="let f = builtins.getFlake (toString ./.); in {
-    hive = f.colmenaHive.toplevel.\"$host\".drvPath or null;
-    nixos = f.nixosConfigurations.\"$host\".config.system.build.toplevel.drvPath or null;
-  }"
-  if ! paths=$("${nix[@]}" eval --impure --json --expr "$expr" 2>"$err"); then
+for host in "${hosts[@]}"; do
+  if ! out=$("${nix[@]}" eval --json ".#colmenaHive.nodes.$host" --apply \
+    'n: { self = n._module.specialArgs.self.outPath; drv = n.config.system.build.toplevel.drvPath; }' 2>"$err"); then
     echo "$host does not evaluate:"
     grep -E '^[[:space:]]*error' -A3 "$err" | grep -v '^--$' | head -8 | sed 's/^/  /'
     status=1
-  elif ! jq -e '.hive == null or .nixos == null or .hive == .nixos' <<<"$paths" >/dev/null; then
-    echo "$host: the hive builds $(jq -r .hive <<<"$paths"), nixosConfigurations $(jq -r .nixos <<<"$paths")"
+    continue
+  fi
+  self=$(jq -r .self <<<"$out")
+  drv=$(jq -r .drv <<<"$out")
+  mapfile -t uses < <(nix-store -qR "$drv" | grep '\.drv$' | xargs grep -lF "$(basename "$self")" || true)
+  if [ ${#uses[@]} -gt 0 ]; then
+    echo "$host depends on the repository's own source through:"
+    printf '  %s\n' "${uses[@]}"
     status=1
   fi
 done
