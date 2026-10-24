@@ -46,7 +46,7 @@ jobs:
 
       # colmena apply builds every system it deploys on the runner first, so on
       # a host that already runs its system it costs as much as a real deploy.
-      - name: Find hosts that do not run their systems
+      - name: Find hosts to deploy to
         id: undeployed
         env:
           NODE: ${{ inputs.node }}
