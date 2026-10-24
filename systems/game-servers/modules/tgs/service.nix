@@ -81,7 +81,6 @@ in {
 
       production-appsettings = lib.mkOption {
         type = lib.types.path;
-        default = '''';
         description = ''
           A formatted appsettings.Production.yml file.
         '';
