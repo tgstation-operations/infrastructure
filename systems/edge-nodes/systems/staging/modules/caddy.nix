@@ -46,6 +46,7 @@
     php-caddy = {
       user = "php-caddy";
       group = "caddy";
+      phpPackage = pkgs-unstable.php84;
       settings = {
         "pm" = "dynamic";
         "pm.max_children" = 75;

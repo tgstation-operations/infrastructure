@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
   lib,
   ...
 }: let
@@ -32,7 +33,7 @@
   stateDir = "/var/lib/mediawiki";
 
   # https://www.mediawiki.org/wiki/Compatibility
-  php = pkgs.php83;
+  php = pkgs-unstable.php83;
 
   pkg = pkgs.stdenv.mkDerivation rec {
     pname = "mediawiki-full";
