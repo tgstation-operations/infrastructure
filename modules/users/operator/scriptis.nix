@@ -49,8 +49,10 @@
       enable = true;
       lfs.enable = true;
 
-      userName = "scriptis";
-      userEmail = "me@scriptis.net";
+      settings.user = {
+        name = "scriptis";
+        email = "me@scriptis.net";
+      };
     };
 
     home.stateVersion = config.system.stateVersion;
