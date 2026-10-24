@@ -13,7 +13,6 @@
     (import hw.common-cpu-amd)
     self.inputs.oidc-reverse-proxy.nixosModules.default
     self.inputs.tg-public-log-parser.nixosModules.default
-    self.inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
     ../../../../modules/fail2ban.nix
@@ -31,6 +30,7 @@
     ../../modules/rollback-root.nix
     ../../modules/docker.nix
     ../../modules/tgs
+    ../../modules/tgs/service.nix
     (import ../../modules/cloudflared.nix {
       inherit pkgs config lib;
       age-file = ./secrets/cloudflared.age;

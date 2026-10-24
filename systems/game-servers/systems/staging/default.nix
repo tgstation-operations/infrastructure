@@ -12,7 +12,6 @@
     (import hw.common-cpu-intel)
     inputs.oidc-reverse-proxy.nixosModules.default
     inputs.tg-public-log-parser.nixosModules.default
-    inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -28,6 +27,7 @@
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
     ../../modules/tgs
+    ../../modules/tgs/service.nix
     (import ../../modules/logs {
       inherit pkgs config tg-globals;
       instance-name = "funnyname";

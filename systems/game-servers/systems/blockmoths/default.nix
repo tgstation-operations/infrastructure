@@ -12,7 +12,6 @@
     (import hw.common-cpu-amd)
     inputs.oidc-reverse-proxy.nixosModules.default
     inputs.tg-public-log-parser.nixosModules.default
-    inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
     ./disko.nix
@@ -44,6 +43,7 @@
     ../../modules/muffin-button.nix
     ../../modules/docker.nix
     ../../modules/tgs
+    ../../modules/tgs/service.nix
   ];
 in {
   networking.hostName = "blockmoths";
