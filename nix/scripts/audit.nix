@@ -18,32 +18,53 @@
     });
   };
 
-  stages = [
-    (stage {
-      name = "fmt";
-      tier = "hook";
-      runtimeInputs = [fmt];
-      text = "fmt --check";
-    })
-    (stage {
-      name = "secrets";
-      tier = "hook";
-      runtimeInputs = [pkgs.git pkgs.jq pkgs.lix];
-      text = builtins.readFile ./audit/secrets.sh;
-    })
-    (stage {
-      name = "actions";
-      tier = "hook";
-      runtimeInputs = [pkgs.git];
-      text = builtins.readFile ./audit/actions.sh;
-    })
-    (stage {
-      name = "shellcheck";
-      tier = "hook";
-      runtimeInputs = [pkgs.git pkgs.shellcheck];
-      text = "git ls-files -z -- '*.sh' '.githooks/*' | xargs -0 shellcheck -S warning";
-    })
-  ];
+  stages =
+    [
+      (stage {
+        name = "fmt";
+        tier = "hook";
+        runtimeInputs = [fmt];
+        text = "fmt --check";
+      })
+      (stage {
+        name = "secrets";
+        tier = "hook";
+        runtimeInputs = [pkgs.git pkgs.jq pkgs.lix];
+        text = builtins.readFile ./audit/secrets.sh;
+      })
+      (stage {
+        name = "actions";
+        tier = "hook";
+        runtimeInputs = [pkgs.git];
+        text = builtins.readFile ./audit/actions.sh;
+      })
+      (stage {
+        name = "shellcheck";
+        tier = "hook";
+        runtimeInputs = [pkgs.git pkgs.shellcheck];
+        text = "git ls-files -z -- '*.sh' '.githooks/*' | xargs -0 shellcheck -S warning";
+      })
+      (stage {
+        name = "hosts";
+        tier = "ci";
+        runtimeInputs = [pkgs.jq];
+        text = builtins.readFile ./audit/hosts.sh;
+      })
+      (stage {
+        name = "rekey";
+        tier = "ci";
+        runtimeInputs = [pkgs.git pkgs.lix pkgs.python3];
+        text = "python3 ${./audit/rekey.py}";
+      })
+    ]
+    ++ lib.optional pkgs.stdenv.hostPlatform.isx86_64 (stage {
+      name = "rollback-root";
+      tier = "ci";
+      text = ''
+        nix --extra-experimental-features "nix-command flakes" --option accept-flake-config false \
+          build --no-link .#checks.x86_64-linux.rollback-root
+      '';
+    });
 
   count = tier:
     toString (builtins.length (
