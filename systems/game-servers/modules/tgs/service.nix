@@ -142,6 +142,12 @@ in {
         WorkingDirectory = "${package}/bin";
         ExecStart = "${tgs-wrapper}/bin/tgs-path-wrapper";
         Restart = "always";
+        # A start fails while the database is down, and at the default 100 ms
+        # between attempts that used up the start limit within seconds and left
+        # TGS down. Paced, it keeps retrying, backing off to a minute.
+        RestartSec = "5s";
+        RestartSteps = 5;
+        RestartMaxDelaySec = "1min";
         KillMode = "process";
         ReloadSignal = "SIGUSR2";
         RestartKillSignal = "SIGUSR2";

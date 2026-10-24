@@ -170,6 +170,15 @@ in
           assert journal_count(forwarded) == forwards + 1
           assert log_count(detaching) == detaches + 1
 
+      with subtest("a start while the database is down is retried until it is back"):
+          machine.succeed("systemctl stop mysql.service")
+          machine.succeed("systemctl restart --no-block tgstation-server.service")
+          machine.sleep(30)
+          machine.fail("systemctl is-failed tgstation-server.service")
+          machine.succeed("systemctl start mysql.service")
+          machine.wait_until_succeeds(api("GET", ""), timeout=180)
+          assert int(machine.succeed("systemctl show --property NRestarts --value tgstation-server.service")) > 0
+
       with subtest("a deploy that changes only the appsettings reloads TGS and keeps its game servers"):
           # A stand-in for a running game server: a process in the unit's
           # control group that systemd has to leave alone.
