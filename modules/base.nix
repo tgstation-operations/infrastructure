@@ -1,5 +1,4 @@
 {
-  self,
   pkgs,
   lib,
   ...
@@ -8,8 +7,6 @@
     ./node-exporter.nix
     ./systemd-exporter.nix
   ];
-
-  environment.variables."FLAKE" = "${self}";
 
   security.sudo.execWheelOnly = true;
   security.sudo.extraConfig = ''
@@ -53,7 +50,6 @@
     lsd
     neovim
     networkd-dispatcher
-    nh
     nil
     nixfmt
     pciutils
