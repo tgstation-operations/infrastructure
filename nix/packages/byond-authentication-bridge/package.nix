@@ -1,42 +1,48 @@
 {
   buildNpmPackage,
   fetchFromGitHub,
-  jq,
-  prisma,
-  prisma-engines,
-  runCommand,
+  prisma-engines_6,
+  rustPlatform,
 }: let
-  source = fetchFromGitHub {
-    owner = "alexkar598";
-    repo = "bab";
-    rev = "7f8c0572b3b546523a65246e14e9d80f6b20cf03";
-    hash = "sha256-8jb08XbHu3padD7kfnmuxGFkSCqxdGHB+yZ8/u7ddU8=";
+  # Prisma's CLI and client come from bab's package-lock.json, and need engines
+  # of the same version.
+  prisma-engines = prisma-engines_6.overrideAttrs (finalAttrs: previousAttrs: {
+    version = "6.4.1";
+    src = fetchFromGitHub {
+      owner = "prisma";
+      repo = "prisma-engines";
+      tag = finalAttrs.version;
+      hash = "sha256-X7HR0C8Yu34lCuGsCXzhQ8+i1NsTx9dRt9eHa0aHmnc=";
+    };
+    cargoDeps = rustPlatform.fetchCargoVendor {
+      inherit (finalAttrs) pname version src patches;
+      hash = "sha256-3nTNfoTswEpDmInoSC9EjyJFRg6sXtz8AZMkqc7o2tQ=";
+    };
+  });
+  prismaEnv = {
+    PRISMA_QUERY_ENGINE_LIBRARY = "${prisma-engines}/lib/libquery_engine.node";
+    PRISMA_SCHEMA_ENGINE_BINARY = "${prisma-engines}/bin/schema-engine";
   };
-  prisma-version = runCommand "prisma-version" {} ''
-    cat ${source}/package-lock.json | ${jq}/bin/jq -r '.packages."node_modules/prisma".version' > $out
-  '';
-  prisma' = prisma.overrideAttrs (finalAttrs: previousAttrs: {
-    version = builtins.readFile prisma-version;
-    __intentionallyOverridingVersion = true;
-  });
-  prisma-engines' = prisma-engines.overrideAttrs (finalAttrs: previousAttrs: {
-    version = builtins.readFile prisma-version;
-    __intentionallyOverridingVersion = true;
-  });
 in
   buildNpmPackage {
     pname = "byond-authentication-bridge";
     version = "1.0.0";
-    src = source;
+    src = fetchFromGitHub {
+      owner = "alexkar598";
+      repo = "bab";
+      rev = "7f8c0572b3b546523a65246e14e9d80f6b20cf03";
+      hash = "sha256-8jb08XbHu3padD7kfnmuxGFkSCqxdGHB+yZ8/u7ddU8=";
+    };
     npmDepsHash = "sha256-dK8gACPM9GIZS5GvDfsssHm8+Y7IPY9AVI6d9gC7Myo=";
+    env = prismaEnv;
     preBuild = ''
+      prisma_version=$(node -p 'require("prisma/package.json").version')
+      if [ "$prisma_version" != ${prisma-engines.version} ]; then
+        echo "bab pins prisma $prisma_version, but the engines are ${prisma-engines.version}" >&2
+        exit 1
+      fi
       sed -i 's/"name": "bab",/"name": "bab","bin":{"bab":"dist\/index.js"},/g' package.json
-      sed -i 's/  provider = "prisma-client-js"/  provider = "prisma-client-js"\n  binaryTargets = [ "native" ]/g' prisma/schema.prisma
-      export PRISMA_QUERY_ENGINE_BINARY="${prisma-engines'}/bin/query-engine"
-      export PRISMA_QUERY_ENGINE_LIBRARY="${prisma-engines'}/lib/libquery_engine.node"
-      export PRISMA_INTROSPECTION_ENGINE_BINARY="${prisma-engines'}/bin/introspection-engine"
-      export PRISMA_FMT_BINARY="${prisma-engines'}/bin/prisma-fmt"
-      ${prisma'}/bin/prisma generate
+      npm run generateDbClient
     '';
-    passthru.prisma-engines = prisma-engines';
+    passthru = {inherit prismaEnv;};
   }

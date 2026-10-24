@@ -4,7 +4,6 @@
   ...
 }: let
   package = pkgs.callPackage ../../../../nix/packages/byond-authentication-bridge/package.nix {};
-  inherit (package) prisma-engines;
 in {
   imports = [
     ../../../../modules/postgres.nix
@@ -15,10 +14,10 @@ in {
   systemd.services.byond-authentication-bridge = {
     enable = true;
     wantedBy = ["multi-user.target"];
+    environment = package.prismaEnv // {NODE_ENV = "production";};
     serviceConfig = {
       DynamicUser = "true";
       ExecStart = "${package}/bin/bab";
-      Environment = "NODE_ENV=production PRISMA_QUERY_ENGINE_BINARY=\"${prisma-engines}/bin/query-engine\" PRISMA_QUERY_ENGINE_LIBRARY=\"${prisma-engines}/lib/libquery_engine.node\" PRISMA_INTROSPECTION_ENGINE_BINARY=\"${prisma-engines}/bin/introspection-engine\" PRISMA_FMT_BINARY=\"${prisma-engines}/bin/prisma-fmt\"";
       EnvironmentFile = config.age.secrets.bab_db_connection_string.path;
       WorkingDirectory = "/etc/byond-authentication-bridge";
     };
