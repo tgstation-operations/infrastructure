@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   services.tailscale = {
     enable = true;
     openFirewall = true;
@@ -18,14 +15,14 @@
   systemd.services.tgstation-wait-online = {
     enable = true;
     description = "tgstation-NetworkManager-wait-online-replacement";
-    requires = [ "NetworkManager.service" ];
-    after = [ "NetworkManager.service" ];
+    requires = ["NetworkManager.service"];
+    after = ["NetworkManager.service"];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.networkmanager}/bin/nm-online -q";
       Environment = "NM_ONLINE_TIMEOUT=60";
     };
-    wantedBy = [ "network-online.target" ];
+    wantedBy = ["network-online.target"];
   };
 
   systemd.services.tailscaled = {
@@ -36,7 +33,7 @@
       "TS_DEBUG_MTU" = "1350";
     };
     after = ["systemd-networkd-wait-online.service" "tgstation-wait-online.service"];
-    requires = [ "tgstation-wait-online.service" ];
+    requires = ["tgstation-wait-online.service"];
   };
 
   systemd.services.tg-tailscale-wait-dhcp = {
@@ -45,10 +42,10 @@
       # See https://github.com/tailscale/tailscale/issues/11504#issuecomment-2692132659
       ExecStart = "${pkgs.coreutils}/bin/timeout 60s ${pkgs.bash}/bin/bash -c \'until ${pkgs.tailscale}/bin/tailscale status --peers=false; do ${pkgs.coreutils}/bin/sleep 1; done\'";
     };
-    wantedBy = [ "network-online.target" ];
-    before = [ "network-online.target" ];
-    after = [ "tailscaled.service" ];
-    requires = [ "tailscaled.service" ];
+    wantedBy = ["network-online.target"];
+    before = ["network-online.target"];
+    after = ["tailscaled.service"];
+    requires = ["tailscaled.service"];
   };
 
   networking.firewall.trustedInterfaces = ["tailscale0"];

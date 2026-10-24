@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{config, ...}: let
   systemdPromPort = toString config.services.prometheus.exporters.systemd.port;
   nodeExporterPort = toString config.services.prometheus.exporters.node.port;
   # Needs to be moved into a common config

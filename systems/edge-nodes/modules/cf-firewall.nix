@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+_: let
   ips-v4 = builtins.readFile (builtins.fetchurl {
     url = "https://www.cloudflare.com/ips-v4";
     sha256 = "sha256:0ywy9sg7spafi3gm9q5wb59lbiq0swvf0q3iazl0maq1pj1nsb7h";
@@ -20,10 +16,10 @@ in {
   networking.firewall.extraInputRules = ''
     # Allow connections from cloudflare
     tcp dport { http, https } ip saddr {
-      ${builtins.replaceStrings [ "\n" ] [",\n"] ips-v4 }
+      ${builtins.replaceStrings ["\n"] [",\n"] ips-v4}
     } accept
     tcp dport { http, https } ip6 saddr {
-      ${builtins.replaceStrings [ "\n" ] [",\n"] ips-v6 }
+      ${builtins.replaceStrings ["\n"] [",\n"] ips-v6}
     } accept
   '';
 }

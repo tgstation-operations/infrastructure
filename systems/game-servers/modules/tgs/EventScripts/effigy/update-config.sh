@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd "${TGS_INSTANCE_ROOT}/Configuration/GameStaticFiles"
+cd "${TGS_INSTANCE_ROOT}/Configuration/GameStaticFiles" || exit 1
 
 CONFIG_URI="https://github.com/tgstation-operations/server-config-effigy.git"
 TARGET_DIR="${TGS_INSTANCE_ROOT}/Configuration/GameStaticFiles/config"
@@ -9,7 +9,7 @@ if [ ! -d $TARGET_DIR ]; then
   git clone $CONFIG_URI $TARGET_DIR
 fi
 
-cd $TARGET_DIR
+cd $TARGET_DIR || exit 1
 git fetch
 git checkout origin/main
 git reset --hard origin/main

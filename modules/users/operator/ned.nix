@@ -1,8 +1,4 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
   users.users.ned = {
     isNormalUser = true;
 
@@ -13,18 +9,5 @@
       "wheel"
     ];
     shell = pkgs.fish;
-  };
-
-  home-manager.users.ned = {
-    programs.fish = {
-      enable = true;
-      shellInit = ''
-        if status is-interactive
-          set fish_greeting
-          eval $(${pkgs.starship}/bin/starship init fish)
-        end
-      '';
-    };
-    home.stateVersion = config.system.stateVersion;
   };
 }

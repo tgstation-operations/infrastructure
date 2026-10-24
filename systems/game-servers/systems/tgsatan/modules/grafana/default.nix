@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{config, ...}: {
   age.secrets.grafana_smtp = {
     file = ../../secrets/grafana_smtp.age;
     owner = "${config.systemd.services.grafana.serviceConfig.User}";
@@ -30,6 +26,9 @@
         admin_username = "admin";
         admin_password = "$__file{${config.age.secrets.grafana_admin.path}}";
         strict_transport_security = true;
+        # The default nixpkgs dropped. Grafana encrypts the secrets in its
+        # database with it, so changing it needs a re-encryption first.
+        secret_key = "SW2YcwTIb9zpOOhoPsMm";
       };
 
       server = {

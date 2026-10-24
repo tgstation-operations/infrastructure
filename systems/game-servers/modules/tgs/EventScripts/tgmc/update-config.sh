@@ -7,7 +7,7 @@ if [ ! -d $TARGET_DIR ]; then
   git clone $CONFIG_URI $TARGET_DIR
 fi
 
-cd $TARGET_DIR
+cd $TARGET_DIR || exit 1
 git fetch
 git checkout origin/main
 git reset --hard origin/main

@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{lib, ...}: {
   hardware.nvidia = {
     # We use lib.mkOverride 500 here to ensure it doesn't go under any upstream hardware modules using lib.mkDefault, but will be overriden by host modules
     # recommended for RTX and later cards

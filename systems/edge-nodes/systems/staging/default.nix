@@ -1,7 +1,4 @@
-{
-  self,
-  ...
-}: {
+{self, ...}: {
   imports = [
     ./base.nix
     ../../modules/server-info-fetcher.nix

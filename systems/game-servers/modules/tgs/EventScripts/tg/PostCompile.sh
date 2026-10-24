@@ -3,7 +3,7 @@
 work_directory="${TGS_INSTANCE_ROOT}/Configuration/EventScriptsScratch"
 
 mkdir -p $work_directory
-cd $work_directory
+cd $work_directory || exit 1
 
 . "${TGS_INSTANCE_ROOT}/Configuration/EventScripts/parse-server.sh"
 

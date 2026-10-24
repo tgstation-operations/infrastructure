@@ -1,8 +1,4 @@
-({authDomain, ...}: {
-  config,
-  inputs,
-  ...
-}: {
+({authDomain, ...}: {inputs, ...}: {
   imports = [
     inputs.authentik-nix.nixosModules.default
   ];

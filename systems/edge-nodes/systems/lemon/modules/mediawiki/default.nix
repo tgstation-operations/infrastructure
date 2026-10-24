@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  pkgs-unstable,
   lib,
   ...
 }: let
@@ -89,7 +88,7 @@ in {
         rev = "a89e96396fc9c3b3a0637552ef35fa092081ac65";
         hash = "sha256-XKmlNf70cNbInXdNlZ4JaAn9vwWIp2/kGRUNb5dXfYM=";
       };
-      WSOAuth = pkgs-unstable.php83.buildComposerProject2 rec {
+      WSOAuth = pkgs.php83.buildComposerProject2 rec {
         pname = "WSOAuth-with-tgstation";
         version = "1.0.0";
         src = fetchgit {
@@ -100,7 +99,7 @@ in {
         composerLock = ./composer.wsoauth.lock; # because wsoauth does not have its own lockfile
         composerNoDev = true;
         composerStrictValidation = false; # we dont care if the composer json does not define a package name
-        vendorHash = "sha256-9GqqYVInp0kF2niT2HvuOX0UtLx5QVtRUW6I6P6yTkI=";
+        vendorHash = "sha256-32wmWgu3KC79bCP1+vZG8YrfdE6KncGSHElynsZgrQE=";
         postPatch = ''
           cat <<'EOF' > src/AuthenticationProvider/TgForumAuthProvider.php
           ${builtins.readFile ./TgForumAuthProvider.php}

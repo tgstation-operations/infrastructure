@@ -13,7 +13,6 @@
     (import hw.common-cpu-amd)
     self.inputs.oidc-reverse-proxy.nixosModules.default
     self.inputs.tg-public-log-parser.nixosModules.default
-    self.inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
     ../../../../modules/fail2ban.nix
@@ -28,8 +27,10 @@
     })
     ../../modules/motd.nix
     ../../modules/muffin-button.nix
+    ../../modules/rollback-root.nix
     ../../modules/docker.nix
     ../../modules/tgs
+    ../../modules/tgs/service.nix
     (import ../../modules/cloudflared.nix {
       inherit pkgs config lib;
       age-file = ./secrets/cloudflared.age;
@@ -125,6 +126,7 @@ in {
   boot = {
     supportedFilesystems = ["zfs"];
     zfs.package = pkgs.zfs;
+    zfs.forceImportRoot = false;
     loader.systemd-boot.enable = true;
   };
 
@@ -151,10 +153,6 @@ in {
       ];
     };
   };
-
-  boot.initrd.postResumeCommands = lib.mkAfter ''
-    zfs rollback -r zroot/root@blank
-  '';
 
   fileSystems."/persist" = {
     neededForBoot = true;
