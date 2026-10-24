@@ -13,6 +13,7 @@
       enabled ++ (with all; [memcached]);
   };
   admin_port = 2019;
+  website = pkgs.callPackage ../../../../../nix/packages/tgstation-website/package.nix {baseUrl = "https://tgstation13.org";};
 in {
   imports = [
     ../../../modules/cf-firewall.nix
@@ -155,7 +156,10 @@ in {
         useACMEHost = "tgstation13.org";
         extraConfig = ''
           encode gzip zstd
-          root ${
+          root ${website}
+          # The old site still has the toolbox and readme, and the assets they load.
+          @old_site path /assets/* /readme /readme/* /toolbox /toolbox/*
+          root @old_site ${
             toString inputs.tgstation-website.packages.x86_64-linux.default
           }
           file_server
