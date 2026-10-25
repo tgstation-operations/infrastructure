@@ -36,6 +36,14 @@
     ];
   };
 
+  # nixpkgs 26.05 dropped network.target from network-addresses-lo's wantedBy and
+  # relies on a udev add event instead, which never fires for lo. Without this
+  # nothing starts it, 10.248.1.1 never appears and every backend check fails.
+  systemd.services.network-addresses-lo = {
+    wantedBy = ["network.target"];
+    before = ["network.target"];
+  };
+
   systemd.services.haproxy-iproute2 = {
     wantedBy = ["multi-user.target"];
     after = ["network.target"];
