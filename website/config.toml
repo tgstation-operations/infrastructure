@@ -1,3 +1,7 @@
 base_url = "https://tgstation13.org"
 title = "tgstation13"
 compile_sass = true
+
+[markdown]
+# The front page carries every newsletter and its pictures.
+lazy_async_image = true

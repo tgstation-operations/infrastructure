@@ -3,14 +3,50 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>tgstation13: the Premier Space Station 13 Experience</title>
-    {# The page is the site's root, so its references are relative to it rather
-    than made absolute by get_url: the one build then works on any host and
-    under any path, staging and a fork's GitHub Pages included. #}
-    <link rel="stylesheet" href="main.css" />
+    <title>{% block title %}tgstation13: the Premier Space Station 13 Experience{% endblock title %}</title>
+    <link rel="stylesheet" href="{{ get_url(path="main.css") }}" />
     {% block head %}{% endblock head %}
   </head>
   <body>
-    {% block body %}{% endblock body %}
+    <div class="Parallax">
+      <div class="Parallax__Layer Parallax__Layer-0"></div>
+      <div class="Parallax__Planet"></div>
+      <div class="Parallax__Layer Parallax__Layer-1"></div>
+      <div class="Parallax__Layer Parallax__Layer-2"></div>
+    </div>
+    <main class="App">
+      <div class="Content">
+        <header class="Header">
+          <div class="Header__LogoContainer">
+            <a class="Header__Link" href="{{ get_url(path="@/_index.md") }}">
+              <img
+                class="Header__Logo"
+                src="{{ get_url(path="tgstation13.png") }}"
+                width="574"
+                height="70"
+                alt="tgstation13 Logo"
+                title="tgstation 13"
+              />
+            </a>
+          </div>
+          <nav class="Header__Nav">
+            <a class="Header__NavItem" rel="noreferrer noorigin" href="https://forums.tgstation13.org">Forums</a>
+            <a class="Header__NavItem" target="_blank" rel="noreferrer noorigin" href="https://discord.gg/tg13">Discord <span>↗</span></a>
+            <a class="Header__NavItem" target="_blank" rel="noreferrer noorigin" href="https://opencollective.com/tgstation13">Donate <span>↗</span></a>
+            <a class="Header__NavItem" rel="noreferrer noorigin" href="https://wiki.tgstation13.org">Wiki</a>
+            <a class="Header__NavItem" href="{{ get_url(path="@/newsletters/_index.md") }}">Newsletter</a>
+          </nav>
+        </header>
+
+        {% block content %}{% endblock content %}
+      </div>
+
+      <footer class="Footer">
+        Made with ❤️ by
+        <a class="ExternalLink" href="https://forums.tgstation13.org/viewtopic.php?t=32076">Scriptis</a>, based on prior designs by
+        <a class="ExternalLink" rel="noreferrer noorigin" href="https://github.com/tgstation/tgstation13.org/issues/70">mozi_h <span>↗</span></a> and jeb! Artwork licensed under
+        <a class="ExternalLink" rel="noreferrer noorigin" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons 3.0 BY-SA <span>↗</span></a> and source code licensed under AGPLv3. Risk of electrical shock. May contain bananas or banana derivatives. Handle with care.
+      </footer>
+    </main>
   </body>
 </html>

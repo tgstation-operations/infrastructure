@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title }} - tgstation13{% endblock title %}
+
+{% block content %}
+    <div class="Content__Inner">
+      <p class="Terminal Terminal--Cursor">
+        {% for page in section.pages %}
+        {{ page.date | date(format="%Y-%m-%d") }} <a href="{{ page.permalink | safe }}">{{ page.title }}</a><br />
+        {% endfor %}
+      </p>
+    </div>
+{% endblock content %}

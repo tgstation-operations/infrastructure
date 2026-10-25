@@ -1,0 +1,42 @@
+@use "variables" as *;
+
+.Newsletter {
+  &__Header {
+    margin-bottom: 1rem;
+  }
+
+  &__Body {
+    h2 {
+      font-family: $monospace;
+      font-size: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    h2:first-child {
+      margin-top: 0;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__Nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    font-family: $monospace;
+    margin-top: 1rem;
+
+    > :last-child {
+      text-align: right;
+    }
+  }
+}

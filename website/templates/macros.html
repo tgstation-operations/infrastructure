@@ -1,0 +1,11 @@
+{% macro newsletter(page, latest=false) %}
+<article class="Content__Inner Newsletter">
+  <header class="Terminal Newsletter__Header{% if latest %} Terminal--Cursor{% endif %}">
+    SUBJECT: <a href="{{ page.permalink | safe }}">{{ page.title }}</a><br />
+    DATE: {{ page.date | date(format="%B %Y") }}
+  </header>
+  <div class="Newsletter__Body">
+    {{ page.content | safe }}
+  </div>
+</article>
+{% endmacro newsletter %}

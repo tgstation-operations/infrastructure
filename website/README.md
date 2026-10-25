@@ -1,8 +1,9 @@
 # tgstation13.org
 
-The landing page of [tgstation13.org](https://tgstation13.org), built with
-[Zola](https://www.getzola.org). The server cards fill themselves in from
-`serverinfo.json`, which tgstation13.org keeps up to date from the game servers.
+The landing page of [tgstation13.org](https://tgstation13.org) and its
+newsletters, built with [Zola](https://www.getzola.org). The server cards fill
+themselves in from `serverinfo.json`, which tgstation13.org keeps up to date
+from the game servers.
 
 ## Make your own copy
 
@@ -24,6 +25,8 @@ Every change you push to `main` under `website/` publishes again.
 ## What is where
 
 - `content/_index.md`: the list of servers on the page.
+- `content/newsletters/`: one directory per newsletter, with its `index.md` and
+  its pictures. The front page shows the three newest.
 - `templates/`: the page itself.
 - `sass/`: the styles.
 - `static/`: images, fonts, and `servers.js`, which fills in the server cards.

@@ -8,7 +8,19 @@
   padding: 1rem;
   text-shadow: 0 0 8px #0f0;
 
-  &:after {
+  a {
+    color: inherit;
+    text-decoration: underline;
+
+    &:focus,
+    &:hover {
+      color: inherit;
+      animation: none;
+      text-shadow: 0 0 16px #0f0;
+    }
+  }
+
+  &--Cursor:after {
     display: inline-block;
     content: ".";
     width: 1rem;

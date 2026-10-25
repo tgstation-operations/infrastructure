@@ -2,6 +2,7 @@
   lib,
   runCommand,
   zola,
+  baseUrl,
 }: let
   root = ../../../website;
   # Only what Zola reads: the mock server data beside it stays out of the site.
@@ -17,5 +18,5 @@
   };
 in
   runCommand "tgstation-website" {nativeBuildInputs = [zola];} ''
-    zola --root ${src} build --output-dir $out
+    zola --root ${src} build --base-url ${baseUrl} --output-dir $out
   ''

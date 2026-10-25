@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}{{ page.title }} - tgstation13{% endblock title %}
+
+{% block content %}
+    {{ macros::newsletter(page=page) }}
+    <nav class="Newsletter__Nav">
+      <span>{% if page.higher %}<a href="{{ page.higher.permalink | safe }}">&lt; {{ page.higher.title }}</a>{% endif %}</span>
+      <a href="{{ get_url(path="@/newsletters/_index.md") }}">All newsletters</a>
+      <span>{% if page.lower %}<a href="{{ page.lower.permalink | safe }}">{{ page.lower.title }} &gt;</a>{% endif %}</span>
+    </nav>
+{% endblock content %}
