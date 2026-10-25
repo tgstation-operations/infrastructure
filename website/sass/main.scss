@@ -4,6 +4,7 @@
 @use "terminal";
 @use "newsletter";
 @use "server";
+@use "alert";
 @use "variables" as *;
 
 body {
@@ -103,6 +104,13 @@ a {
     padding: 1rem;
     margin: 1rem 0 0 0;
   }
+}
+
+.Dismiss {
+  background: none;
+  border: 0;
+  color: inherit;
+  padding: 0;
 }
 
 .Footer {

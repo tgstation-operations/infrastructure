@@ -9,4 +9,7 @@ servers = [
   { identifier = "manuel", name = "Manuel [US-Central]", address = "manuel.tgstation13.org:1447", icon = "manuel.webp" },
   { identifier = "TGMC", name = "TerraGov Marine Corps [US-Central]", address = "tgmc.tgstation13.org:5337", icon = "tgmc.svg" },
 ]
+# Shown above the servers. level is info, warning or danger and message is HTML;
+# a dismissible alert stays hidden for a reader who has dismissed it.
+alerts = []
 +++

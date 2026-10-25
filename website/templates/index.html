@@ -6,6 +6,19 @@
 {% endblock head %}
 
 {% block content %}
+    {% if section.extra.alerts %}
+    <div class="Alerts">
+      {% for alert in section.extra.alerts %}
+      <div class="Alert Alert--{{ alert.level }}"{% if alert.dismissible %} data-dismiss="{{ alert.message | slugify }}"{% endif %}>
+        <span>{{ alert.message | safe }}</span>
+        {% if alert.dismissible %}<button class="Dismiss" type="button" title="Dismiss this alert" hidden>[x]</button>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {# Run before the page goes on rendering, so a dismissed alert does not flash. #}
+    <script src="{{ get_url(path="dismiss.js") }}"></script>
+    {% endif %}
+
     <div class="Servers">
       {% for server in section.extra.servers %}
       <a class="Server" href="byond://{{ server.address }}" data-server="{{ server.identifier }}">

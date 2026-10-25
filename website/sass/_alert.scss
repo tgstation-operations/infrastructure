@@ -1,0 +1,44 @@
+@use "variables" as *;
+
+.Alerts {
+  margin-bottom: 0.5rem;
+}
+
+.Alert {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid;
+  font-family: $monospace;
+  padding: 0.5rem;
+
+  & + & {
+    margin-top: 0.5rem;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+
+    &:focus,
+    &:hover {
+      color: inherit;
+    }
+  }
+
+  &--info {
+    background-color: #00173c;
+    color: #79d3ff;
+  }
+
+  &--warning {
+    background-color: #2b1a00;
+    color: #ff9900;
+  }
+
+  &--danger {
+    background-color: #3c0000;
+    color: #ff5555;
+  }
+}

@@ -24,12 +24,13 @@ Every change you push to `main` under `website/` publishes again.
 
 ## What is where
 
-- `content/_index.md`: the list of servers on the page.
+- `content/_index.md`: the servers on the page, and any alerts above them.
 - `content/newsletters/`: one directory per newsletter, with its `index.md` and
   its pictures. The front page shows the three newest.
 - `templates/`: the page itself.
 - `sass/`: the styles.
-- `static/`: images, fonts, and `servers.js`, which fills in the server cards.
+- `static/`: images, fonts, `servers.js`, which fills in the server cards, and
+  `dismiss.js`, which lets a reader dismiss an alert.
 - `mock/serverinfo.json`: the made-up server data your copy shows. Set a
   server's `data` to `null` to see it go offline.
 
