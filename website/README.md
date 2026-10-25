@@ -30,8 +30,9 @@ Every change you push to `main` under `website/` publishes again.
   its pictures. The front page shows the three newest.
 - `templates/`: the page itself.
 - `sass/`: the styles.
-- `static/`: images, fonts, `servers.js`, which fills in the server cards, and
-  `dismiss.js`, which lets a reader dismiss an alert or the introduction.
+- `static/`: images, fonts, and the scripts: `servers.js` fills in the server
+  cards, `dismiss.js` lets a reader dismiss an alert or the introduction,
+  `banner.js` picks a banner, and `ian.js` pets Ian.
 - `sprites/`: the list of the sprites in `static/sprites/`, and `cut.py`, which
   cuts them out of tgstation's icons.
 - `mock/serverinfo.json`: the made-up server data your copy shows. Set a

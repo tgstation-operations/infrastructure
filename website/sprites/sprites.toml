@@ -2,6 +2,17 @@
 # are CC BY-SA 3.0, as tgstation's art is.
 revision = "ef1444885d77a94f38a910ef556554ca2a9fc549"
 
+# Ian, facing each way in the order he turns when he spins.
+[sprites.ian]
+icon = "icons/mob/simple/pets.dmi"
+layers = ["corgi"]
+dirs = ["south", "west", "north", "east"]
+trim = true
+
+[sprites.heart]
+icon = "icons/mob/simple/animal.dmi"
+layers = ["heart"]
+
 [sprites.newscaster]
 icon = "icons/obj/machines/wallmounts.dmi"
 layers = ["newscaster_off", "newscaster_normal"]

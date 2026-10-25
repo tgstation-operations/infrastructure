@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}tgstation13: the Premier Space Station 13 Experience{% endblock title %}</title>
     <link rel="stylesheet" href="{{ get_url(path="main.css") }}" />
+    <script src="{{ get_url(path="ian.js") }}" defer></script>
     {% block head %}{% endblock head %}
   </head>
   <body>
@@ -43,12 +44,17 @@
       </div>
 
       <footer class="Footer">
-        Made with ❤️ by
-        <a class="ExternalLink" href="https://forums.tgstation13.org/viewtopic.php?t=32076">Scriptis</a>, based on prior designs by
-        <a class="ExternalLink" rel="noreferrer noorigin" href="https://github.com/tgstation/tgstation13.org/issues/70">mozi_h <span>↗</span></a> and jeb! Sprites from
-        <a class="ExternalLink" rel="noreferrer" href="https://github.com/tgstation/tgstation">tgstation <span>&#x2197;</span></a>. Artwork licensed under
-        <a class="ExternalLink" rel="noreferrer noorigin" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons 3.0 BY-SA <span>↗</span></a> and
-        <a class="ExternalLink" rel="noreferrer" href="https://github.com/tgstation-operations/infrastructure">source code <span>&#x2197;</span></a> licensed under AGPLv3. Risk of electrical shock. May contain bananas or banana derivatives. Handle with care.
+        <div class="Footer__Text">
+          Made with ❤️ by
+          <a class="ExternalLink" href="https://forums.tgstation13.org/viewtopic.php?t=32076">Scriptis</a>, based on prior designs by
+          <a class="ExternalLink" rel="noreferrer noorigin" href="https://github.com/tgstation/tgstation13.org/issues/70">mozi_h <span>↗</span></a> and jeb! Sprites from
+          <a class="ExternalLink" rel="noreferrer" href="https://github.com/tgstation/tgstation">tgstation <span>&#x2197;</span></a>. Artwork licensed under
+          <a class="ExternalLink" rel="noreferrer noorigin" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons 3.0 BY-SA <span>↗</span></a> and
+          <a class="ExternalLink" rel="noreferrer" href="https://github.com/tgstation-operations/infrastructure">source code <span>&#x2197;</span></a> licensed under AGPLv3. Risk of electrical shock. May contain bananas or banana derivatives. Handle with care.
+        </div>
+        <button class="Ian" type="button" title="Ian" data-heart="{{ get_url(path="sprites/heart.webp") }}">
+          <img class="Ian__Sprite" src="{{ get_url(path="sprites/ian.webp") }}" width="56" height="48" alt="Ian" />
+        </button>
       </footer>
     </main>
   </body>

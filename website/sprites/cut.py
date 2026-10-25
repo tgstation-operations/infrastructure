@@ -37,17 +37,27 @@ def read_dmi(path):
 
 
 def cut(checkout, sprite):
+    """Stack a sprite's layers, one frame per direction it lists, in a row."""
     image, width, height, states = read_dmi(checkout / sprite["icon"])
     columns = image.width // width
-    out = Image.new("RGBA", (width, height))
-    for layer in sprite["layers"]:
-        first, dirs = states[layer]
-        direction = min(DIRS.index(sprite.get("dir", "south")), dirs - 1)
-        index = first + sprite.get("frame", 0) * dirs + direction
-        x, y = index % columns * width, index // columns * height
-        out.alpha_composite(image.crop((x, y, x + width, y + height)))
+    frames = []
+    for name in sprite.get("dirs", [sprite.get("dir", "south")]):
+        frame = Image.new("RGBA", (width, height))
+        for layer in sprite["layers"]:
+            first, dirs = states[layer]
+            direction = min(DIRS.index(name), dirs - 1)
+            index = first + sprite.get("frame", 0) * dirs + direction
+            x, y = index % columns * width, index // columns * height
+            frame.alpha_composite(image.crop((x, y, x + width, y + height)))
+        frames.append(frame)
     if sprite.get("trim"):
-        out = out.crop(out.getbbox())
+        boxes = [frame.getbbox() for frame in frames]
+        box = (min(b[0] for b in boxes), min(b[1] for b in boxes),
+               max(b[2] for b in boxes), max(b[3] for b in boxes))
+        frames = [frame.crop(box) for frame in frames]
+    out = Image.new("RGBA", (frames[0].width * len(frames), frames[0].height))
+    for i, frame in enumerate(frames):
+        out.paste(frame, (i * frame.width, 0))
     return out
 
 
