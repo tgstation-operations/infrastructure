@@ -1,4 +1,4 @@
-{...}: {
+_: {
   users.users.aiia = {
     isNormalUser = true;
     shell = "/bin/nologin";

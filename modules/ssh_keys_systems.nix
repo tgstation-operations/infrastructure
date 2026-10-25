@@ -38,5 +38,5 @@ rec {
 
   edge-nodes-all = edge-nodes-live ++ edge-nodes-staging;
 
-  all = game-nodes-all ++ edge-nodes-all ++ [ vpn ];
+  all = game-nodes-all ++ edge-nodes-all ++ [vpn];
 }

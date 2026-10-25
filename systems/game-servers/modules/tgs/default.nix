@@ -3,7 +3,6 @@
   pkgs,
   lib,
   fenix,
-  nixpkgs,
   tg-globals,
   ...
 }: let
@@ -36,10 +35,9 @@
     remaining-lines = lib.tail lines;
     rest = lib.concatStringsSep "\n" remaining-lines;
   in
-    if lib.hasPrefix "#!" first-line then
-      "${first-line}\n${tgs-env-setup}\n${rest}"
-    else
-      "#!/usr/bin/env bash\n${tgs-env-setup}\n${script}";
+    if lib.hasPrefix "#!" first-line
+    then "${first-line}\n${tgs-env-setup}\n${rest}"
+    else "#!/usr/bin/env bash\n${tgs-env-setup}\n${script}";
 in {
   environment.systemPackages = with pkgs; [
     rclone
@@ -69,9 +67,9 @@ in {
       mode = "0755";
     };
     "tgs-EventScripts.d/tg/RepoFetch.sh" = {
-      text = builtins.readFile (pkgs.replaceVars ./EventScripts/tg/RepoFetch.sh {
+      source = pkgs.replaceVars ./EventScripts/tg/RepoFetch.sh {
         NIX_GH_PATH = "${pkgs.gh}";
-      });
+      };
       group = config.services.tgstation-server.groupname;
       mode = "0755";
     };
@@ -130,9 +128,9 @@ in {
       mode = "0755";
     };
     "tgs-EventScripts.d/effigy/RepoFetch.sh" = {
-      text = builtins.readFile (pkgs.replaceVars ./EventScripts/effigy/RepoFetch.sh {
+      source = pkgs.replaceVars ./EventScripts/effigy/RepoFetch.sh {
         NIX_GH_PATH = "${pkgs.gh}";
-      });
+      };
       group = config.services.tgstation-server.groupname;
       mode = "0755";
     };
@@ -228,9 +226,9 @@ in {
       group = "${config.services.tgstation-server.groupname}";
     };
     #effigy-tts_secrets = { for a rainy day...
-      #file = ../../secrets/effigy-tts_secrets.age;
-      #owner = "${config.services.tgstation-server.username}";
-      #group = "${config.services.tgstation-server.groupname}";
+    #file = ../../secrets/effigy-tts_secrets.age;
+    #owner = "${config.services.tgstation-server.username}";
+    #group = "${config.services.tgstation-server.groupname}";
     #};
     effigy-extra_config-rclone = {
       file = ../../secrets/effigy-extra_config-rclone.age;
@@ -245,50 +243,7 @@ in {
   };
   services.tgstation-server = {
     enable = true;
-    production-appsettings = pkgs.writeText "tgs_config.yml" (lib.generators.toYAML {} {
-      Database = {
-        DatabaseType = "MariaDB";
-        ResetAdminPassword = false;
-      };
-      General = {
-        ConfigVersion = "5.5.0";
-        # GitHubAccessToken = TODO;
-        HostApiDocumentation = true;
-        PrometheusPort = 5001;
-        ValidInstancePaths = [
-          tg-globals.tgs.instances-path
-        ];
-      };
-      FileLogging = {
-        Disable = false;
-        LogLevel = "Trace";
-      };
-      Kestrel = {
-        Endpoints = {
-          Http = {
-            Url = "http://localhost:${tg-globals.tgs.port}";
-          };
-        };
-      };
-      ControlPanel = {
-        Enable = true;
-        AllowAnyOrigin = true;
-      };
-      Swarm = {
-        UpdateRequiredNodeCount = 2;
-      };
-      Security = {
-        OidcStrictMode = true;
-        OpenIDConnect = {
-          Auth = {
-            Authority = "https://auth.tgstation13.org/application/o/tgstation-server";
-            ClientId = "YDKw6NpQtKp6KHONGXfjuL4OhdhWVgCj0xIqwQ4z";
-            FriendlyName = "/tg/ Identity";
-            ThemeIconUrl = "https://tgstation13.org/assets/img/favicon.ico";
-          };
-        };
-      };
-    });
+    production-appsettings = pkgs.writeText "tgs_config.yml" (lib.generators.toYAML {} (import ./appsettings.nix {inherit tg-globals;}));
     home-directory = tg-globals.tgs.root-path;
     # environmentFile =  # Required, add to host config to specify the database URI
     extra-path = lib.makeBinPath (
@@ -313,6 +268,9 @@ in {
   };
 
   systemd.services.tgstation-server.environment = tgs-env-vars;
+  # agenix decrypts to the same path whatever the secret holds, so the
+  # encrypted file is what changes with it.
+  systemd.services.tgstation-server.restartTriggers = [config.age.secrets.tgs.file];
   age.secrets.rsc-cdn = {
     file = ../../secrets/rsc-cdn.age;
     owner = "${config.services.tgstation-server.username}";

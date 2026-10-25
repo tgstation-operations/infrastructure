@@ -1,0 +1,26 @@
+diff --git a/src/controllers/garbageCollector.ts b/src/controllers/garbageCollector.ts
+index f39b16e..aad569e 100644
+--- a/src/controllers/garbageCollector.ts
++++ b/src/controllers/garbageCollector.ts
+@@ -26,7 +26,7 @@ export function registerCollector() {
+     });
+   }
+   //1 hour
+-  setInterval(asyncWrapper, 60 * 60 * 1000);
++  setInterval(asyncWrapper, 60 * 60 * 1000).unref();
+   setImmediate(asyncWrapper);
+ }
+ 
+diff --git a/src/controllers/keyController.ts b/src/controllers/keyController.ts
+index ea8906b..08712bc 100644
+--- a/src/controllers/keyController.ts
++++ b/src/controllers/keyController.ts
+@@ -84,7 +84,7 @@ function registerKeyController() {
+     });
+   }
+   //1 hour
+-  setInterval(asyncWrapper, 60 * 60 * 1000);
++  setInterval(asyncWrapper, 60 * 60 * 1000).unref();
+   setImmediate(asyncWrapper);
+ }
+ 

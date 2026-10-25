@@ -12,7 +12,6 @@
     (import hw.common-cpu-amd)
     inputs.oidc-reverse-proxy.nixosModules.default
     inputs.tg-public-log-parser.nixosModules.default
-    inputs.tgstation-server.nixosModules.default
   ];
   localModules = [
     ./disko.nix
@@ -31,6 +30,7 @@
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
     ../../../../modules/restic.nix
+    ../../modules/rollback-root.nix
     (import ../../modules/cloudflared.nix {
       inherit pkgs config lib;
       age-file = ./secrets/cloudflared.age;
@@ -43,6 +43,7 @@
     ../../modules/muffin-button.nix
     ../../modules/docker.nix
     ../../modules/tgs
+    ../../modules/tgs/service.nix
   ];
 in {
   networking.hostName = "blockmoths";
@@ -92,10 +93,6 @@ in {
     "127.0.0.1" = ["terry.tgstation13.org" "blockmoths.eu.tgstation13.org" "tgs.blockmoths.eu.tgstation13.org" "s3.blockmoths.eu.tgstation13.org" "s3.tgstation13.org"];
   };
 
-  boot.initrd.postResumeCommands = lib.mkAfter ''
-    zfs rollback -r zroot/root@blank
-  '';
-
   fileSystems."/persist" = {
     neededForBoot = true;
   };
@@ -103,6 +100,7 @@ in {
   boot = {
     supportedFilesystems = ["zfs"];
     zfs.package = pkgs.zfs;
+    zfs.forceImportRoot = false;
     loader.systemd-boot.enable = true;
   };
 

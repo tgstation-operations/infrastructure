@@ -1,15 +1,8 @@
-{
-  self,
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./node-exporter.nix
     ./systemd-exporter.nix
   ];
-
-  environment.variables."FLAKE" = "${self}";
 
   security.sudo.execWheelOnly = true;
   security.sudo.extraConfig = ''
@@ -38,7 +31,7 @@
   programs.command-not-found.enable = false;
   nixpkgs.config.allowUnfree = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_6_15;
+  boot.kernelPackages = pkgs.linuxPackages;
   environment.systemPackages = with pkgs; [
     alejandra
     btop
@@ -53,9 +46,8 @@
     lsd
     neovim
     networkd-dispatcher
-    nh
     nil
-    nixfmt-rfc-style
+    nixfmt
     pciutils
     restic
     ripgrep
@@ -119,6 +111,4 @@
   # Raise UDP send/recv buffer size since we rely _very_ heavily on QUIC/WireGuard
   boot.kernel.sysctl."net.core.wmem_max" = 7500000;
   boot.kernel.sysctl."net.core.rmem_max" = 7500000;
-
-  home-manager.backupFileExtension = ".hm-backup";
 }

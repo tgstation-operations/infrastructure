@@ -1,8 +1,4 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
   users.users.iain0 = {
     isNormalUser = true;
 
@@ -14,24 +10,5 @@
       "wheel"
     ];
     shell = pkgs.fish;
-  };
-
-  home-manager.users.iain0 = {
-    programs.bash = {
-      enable = true;
-      initExtra = ''
-        eval $(${pkgs.starship}/bin/starship init bash)
-        eval $(${pkgs.nix-your-shell}/bin/nix-your-shell bash)
-      '';
-    };
-
-    # Put personal packages here, listed are just examples
-    # home.packages = with pkgs; [
-    #   bandwhich
-    #   btop
-    #   termscp
-    #   lazygit
-    # ];
-    home.stateVersion = config.system.stateVersion;
   };
 }

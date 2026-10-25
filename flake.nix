@@ -4,35 +4,23 @@
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
-      "https://alejandra.cachix.org"
       "https://attic.tgstation13.org/tgstation-infrastructure"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "alejandra.cachix.org-1:NjZ8kI0mf4HCq8yPnBfiTurb96zp1TBWl8EC54Pzjm0="
       "tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA="
     ];
   };
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs-headscale.url = "github:nixos/nixpkgs/9807714d6944a957c2e036f84b0ff8caf9930bc0";
     agenix = {
       url = "github:ryantm/agenix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    alejandra = {
-      url = "github:kamadorueda/alejandra/3.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dragon-bot.url = "github:tgstation/dragon-bot";
@@ -44,11 +32,6 @@
       url = "github:tgstation/tg-public-log-parser";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    tgstation-server = {
-      url = "github:tgstation/tgstation-server/4204cc13a035545aa61c8116976b5e4a5c68c1a5?dir=build/package/nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    tgstation-pr-announcer.url = "github:tgstation/tgstation/be9ae13cd50cc2f2f6680883424b86feb3c22725?dir=tools/Tgstation.PRAnnouncer";
     tgstation-website = {
       url = "github:tgstation-operations/website-v2";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -87,12 +70,10 @@
     nixpkgs,
     nixpkgs-unstable,
     colmena,
-    alejandra,
     fenix,
     ...
   }: let
     flakeModules = [
-      inputs.home-manager.nixosModules.home-manager
       inputs.agenix.nixosModules.default
       inputs.disko.nixosModules.default
       # inputs.lix-module.nixosModules.default
@@ -119,7 +100,8 @@
           (import nixpkgs-unstable {
             system = "x86_64-linux";
             config.allowUnfree = true;
-          }).caddy;
+          })
+          .caddy;
       };
     };
 
@@ -316,46 +298,16 @@
           (import ./systems/edge-nodes/systems/eu-knipp.nix)
         ];
     };
-    tg-cockroachdb-node-alpha = {
-      deployment = {
-        targetHost = "tg-cockroachdb-node-alpha.tg.lan";
-        targetUser = "deploy";
-        tags = [
-          "pmx-node"
-        ];
-      };
-      nixpkgs.system = "x86_64-linux";
-      imports =
-        flakeModules
-        ++ [
-          (import "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix")
-          (import ./modules/base.nix)
-          (import ./modules/users)
-          (import ./modules/tailscale.nix)
-          (import ./modules/openssh.nix)
-        ];
-    };
-    tg-cockroachdb-node-beta = {
-      deployment = {
-        targetHost = "tg-cockroachdb-node-beta.tg.lan";
-        targetUser = "deploy";
-        tags = [
-          "pmx-node"
-        ];
-      };
-      nixpkgs.system = "x86_64-linux";
-      imports =
-        flakeModules
-        ++ [
-          (import "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix")
-          (import ./modules/base.nix)
-          (import ./modules/users)
-          (import ./modules/tailscale.nix)
-          (import ./modules/openssh.nix)
-        ];
-    };
+
+    perSystem = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (system:
+      import ./nix/per-system.nix {
+        inherit inputs;
+        pkgs = nixpkgs.legacyPackages.${system};
+      });
   in {
-    colmenaHive = colmena.lib.makeHive self.outputs.colmena;
+    colmenaHive = assert nixpkgs.lib.assertMsg (colmenaPackages.colmena.src.outPath == colmena.outPath)
+    "nixpkgs' colmena deploys the hive the colmena input builds, so the input must be at its source.";
+      colmena.lib.makeHive self.outputs.colmena;
     colmena = {
       inherit
         tgsatan
@@ -370,8 +322,6 @@
         bratwurst
         dachshund
         knipp
-        tg-cockroachdb-node-alpha
-        tg-cockroachdb-node-beta
         ;
 
       meta = {
@@ -420,136 +370,15 @@
         };
       };
     };
-    nixosConfigurations = {
-      tgsatan = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = flakeModules ++ tgsatan.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix tg-globals;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-          headscaleIPv4 = "100.64.0.1";
-        };
-      };
-      blockmoths = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = flakeModules ++ blockmoths.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix tg-globals;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-          headscaleIPv4 = "100.64.0.11";
-        };
-      };
-      wiggle = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = flakeModules ++ wiggle.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix tg-globals;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-          headscaleIPv4 = "100.64.0.25";
-        };
-      };
-      vpn = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = flakeModules ++ vpn.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix tg-globals;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-        };
-      };
-      dallas = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = flakeModules ++ dallas.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix tg-globals;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-        };
-      };
-      chicago = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = flakeModules ++ chicago.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix tg-globals;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-        };
-      };
-      atlanta = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = flakeModules ++ atlanta.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix tg-globals;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-        };
-      };
-      warsaw = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = flakeModules ++ warsaw.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix tg-globals;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-        };
-      };
-      bratwurst = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = flakeModules ++ bratwurst.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix tg-globals;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "aarch64-linux";
-            config.allowUnfree = true;
-          };
-        };
-      };
-      dachshund = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = flakeModules ++ dachshund.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix tg-globals;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "aarch64-linux";
-            config.allowUnfree = true;
-          };
-        };
-      };
-      knipp = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = flakeModules ++ knipp.imports;
-        specialArgs = {
-          inherit self inputs nixpkgs fenix tg-globals;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "aarch64-linux";
-            config.allowUnfree = true;
-          };
-        };
-      };
-    };
+    nixosConfigurations = self.colmenaHive.nodes;
 
-    formatter.x86_64-linux = alejandra.defaultPackage.x86_64-linux;
-    formatter.x86_64-darwin = alejandra.defaultPackage.x86_64-darwin;
-    formatter.aarch64-darwin = alejandra.defaultPackage.aarch64-darwin;
-    formatter.aarch64-linux = alejandra.defaultPackage.aarch64-linux;
+    packages = builtins.mapAttrs (_: s: s.packages) perSystem;
+    devShells = builtins.mapAttrs (_: s: {default = s.devShell;}) perSystem;
+    checks = builtins.mapAttrs (_: s: s.checks) perSystem;
+
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+    formatter.x86_64-darwin = nixpkgs.legacyPackages.x86_64-darwin.alejandra;
+    formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
+    formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.alejandra;
   };
 }

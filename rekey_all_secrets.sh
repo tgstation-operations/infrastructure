@@ -2,7 +2,7 @@
 
 dirs=$(find . -type d -name 'secrets')
 for d in $dirs; do
-        pushd $d
+        pushd $d || exit 1
         agenix -r
-        popd
+        popd || exit 1
 done

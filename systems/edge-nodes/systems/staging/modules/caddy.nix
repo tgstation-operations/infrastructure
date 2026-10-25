@@ -46,7 +46,7 @@
     php-caddy = {
       user = "php-caddy";
       group = "caddy";
-      phpPackage = pkgs-unstable.php84;
+      phpPackage = pkgs.php84;
       settings = {
         "pm" = "dynamic";
         "pm.max_children" = 75;
@@ -65,7 +65,7 @@
       plugins = [
         "github.com/WeidiDeng/caddy-cloudflare-ip@v0.0.0-20231130002422-f53b62aa13cb" # Module to retrieve trusted proxy IPs from cloudflare
       ];
-      hash = "sha256-w0pJEcwbawr9WKvnyWO++gGHYRUUUxGmGYkXqRvCQ8A=";
+      hash = "sha256-58ugBemZ2lNKW0SmafiToEc4pYVI/igUtxmhaxDSGug=";
     };
     enableReload = true; # Reload caddy instead of restarting it on config changes
     globalConfig = ''

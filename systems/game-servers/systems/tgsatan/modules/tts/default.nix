@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{pkgs, ...}: let
   name = "tgtts";
   port = 5011;
   source-directory = "/persist/flakes/tgtts2/fish-speech";
@@ -15,7 +10,7 @@
   };
   compose-file = pkgs.writeTextFile {
     name = "tgtts-docker-compose.yml";
-    text = builtins.replaceStrings [ "$TGTTS_HAPROXY_CFG_PATH$" "$TGTTS_BLIPS_PATH$" "$TGTTS_IMAGE_NAME$" "$TGTTS_PUBLIC_PORT$" ] [ "${haproxy-cfg}" workspace-directory name "${toString port}" ] (builtins.readFile ./docker-compose.yml);
+    text = builtins.replaceStrings ["$TGTTS_HAPROXY_CFG_PATH$" "$TGTTS_BLIPS_PATH$" "$TGTTS_IMAGE_NAME$" "$TGTTS_PUBLIC_PORT$"] ["${haproxy-cfg}" workspace-directory name "${toString port}"] (builtins.readFile ./docker-compose.yml);
   };
 in {
   users = {
@@ -28,25 +23,13 @@ in {
     groups."${name}" = {};
   };
 
-  home-manager.users."${name}" = {
-    programs.bash = {
-      enable = true;
-      enableCompletion = true;
-      initExtra = ''
-        eval $(${pkgs.starship}/bin/starship init bash)
-      '';
-    };
-
-    home.stateVersion = config.system.stateVersion;
-  };
-
   systemd.user.services = {
     "${build-service-name}" = {
       enable = true;
       unitConfig.ConditionUser = name;
       description = "tgstation TTS Server Image Build";
-      requires = [ "docker.service" ];
-      after = [ "docker.service" ];
+      requires = ["docker.service"];
+      after = ["docker.service"];
       serviceConfig = {
         Type = "oneshot";
         User = name;
@@ -65,14 +48,14 @@ in {
       enable = true;
       unitConfig.ConditionUser = name;
       description = "tgstation TTS Server";
-      requires = [ "docker.service" "${build-service-name}.service" ];
-      after = [ "docker.service" "${build-service-name}.service" ];
+      requires = ["docker.service" "${build-service-name}.service"];
+      after = ["docker.service" "${build-service-name}.service"];
       serviceConfig = {
         Type = "simple";
         User = name;
         ExecStart = "${pkgs.docker}/bin/docker compose -f ${compose-file} up";
       };
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = ["multi-user.target"];
     };
   };
 }

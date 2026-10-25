@@ -1,8 +1,4 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
   users.users.riggle = {
     isNormalUser = true;
 
@@ -17,30 +13,10 @@
     ];
 
     shell = pkgs.zsh;
-  };
 
-  home-manager.users.riggle = {
-    programs.zsh.enable = true;
-    programs.zsh.autosuggestion.enable = true;
-    programs.zsh.autosuggestion.highlight = "fg=#999";
-    programs.zsh.syntaxHighlighting.enable = true;
-
-    programs.starship.enable = true;
-    programs.zoxide.enable = true;
-
-    programs.zsh.initContent = ''
-      eval $(${pkgs.nix-your-shell}/bin/nix-your-shell zsh)
-      bindkey '^H' backward-kill-word
-      bindkey '5~' kill-word
-      bindkey "^[[1;5C" forward-word
-      bindkey "^[[1;5D" backward-word
-    '';
-
-    home.stateVersion = config.system.stateVersion;
-
-    home.packages = with pkgs; [
+    packages = with pkgs; [
       bat
-      dogdns
+      doggo
       jq
       tshark
       zoxide

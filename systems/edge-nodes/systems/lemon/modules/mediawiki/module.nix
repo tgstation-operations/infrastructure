@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  pkgs-unstable,
   lib,
   ...
 }: let
@@ -10,9 +9,7 @@
     mkDefault
     mkEnableOption
     mkPackageOption
-    mkForce
     mkIf
-    mkMerge
     mkOption
     ;
   inherit
@@ -27,13 +24,12 @@
     ;
 
   cfg = config.services.mediawiki;
-  fpm = config.services.phpfpm.pools.mediawiki;
 
   cacheDir = "/var/cache/mediawiki";
   stateDir = "/var/lib/mediawiki";
 
   # https://www.mediawiki.org/wiki/Compatibility
-  php = pkgs-unstable.php83;
+  php = pkgs.php83;
 
   pkg = pkgs.stdenv.mkDerivation rec {
     pname = "mediawiki-full";
@@ -235,11 +231,6 @@
         ${cfg.extraConfig}
     '';
   };
-
-  withTrailingSlash = str:
-    if lib.hasSuffix "/" str
-    then str
-    else "${str}/";
 in {
   # interface
   options = {

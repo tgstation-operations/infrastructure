@@ -1,8 +1,4 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+_: {
   users.users.mothblocks = {
     isNormalUser = true;
 
@@ -14,17 +10,5 @@
     extraGroups = [
       "wheel"
     ];
-  };
-
-  home-manager.users.mothblocks = {
-    programs.bash = {
-      enable = true;
-      enableCompletion = true;
-      initExtra = ''
-        eval $(${pkgs.starship}/bin/starship init bash)
-      '';
-    };
-
-    home.stateVersion = config.system.stateVersion;
   };
 }

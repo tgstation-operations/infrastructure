@@ -16,36 +16,25 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build
+  # Picks the hosts to build, those whose systems are not in attic yet. The jobs
+  # after it check out the commit it evaluated, since a pull request's merge ref
+  # moves with main.
+  plan:
+    name: Plan
     # Only run if secrets are enabled
     if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id || !contains(github.event.pull_request.labels.*.name, 'CI Cleared') }}
-    strategy:
-      matrix:
-        runner:
-          - ubuntu-24.04
-        node:
-          - "tgsatan"
-          - "blockmoths"
-          - "vpn"
-          - "@relay-amd64"
-          - "@staging"
-        include:
-          - node: "@relay-arm"
-            runner: ubuntu-24.04-arm
-    runs-on: ${{ matrix.runner }}
-    env:
-      USE_ATTIC: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id) && 'yes' || 'no' }}
-      UPLOAD_TO_ATTIC: "no" # This is here to shut up the GitHub Actions intellisense in VSC
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    outputs:
+      build: ${{ steps.plan.outputs.build }}
+      systems: ${{ steps.plan.outputs.systems }}
+      rev: ${{ steps.plan.outputs.rev }}
     steps:
-      - name: Set UPLOAD_TO_ATTIC envvar
-        if: ${{ env.USE_ATTIC == 'yes' && (github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main' && matrix.node == '@staging'))) }}
-        run: echo "UPLOAD_TO_ATTIC=yes" >> $GITHUB_ENV
-
-      # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
+      # attic is only on the tailnet. Without it, everything is built.
       - name: Login to headscale
         uses: tailscale/github-action@94b700f285f67fc55c0486504d82d7e9008191d0 # Connect to headscale
-        if: ${{ env.USE_ATTIC == 'yes' }}
+        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id }}
         with:
           authkey: ${{ secrets.TS_BUILD_AUTHKEY }}
           args: --login-server=https://vpn.tgstation13.org
@@ -59,6 +48,53 @@ jobs:
         if: github.event_name == 'pull_request_target'
         with:
           ref: "refs/pull/${{ inputs.pull_request_number }}/merge"
+
+      - name: Install Nix
+        run: sh .github/workflows/install_lix.sh
+        env:
+          EXTRA_NIX_CONFIG: |
+            access-tokens = github.com=${{ github.token }}
+            experimental-features = nix-command flakes
+
+      - name: Plan
+        id: plan
+        run: |
+          echo "rev=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          bash .github/workflows/colmena_plan.sh https://attic.tgstation13.org/tgstation-infrastructure
+
+  build:
+    name: Build
+    needs: plan
+    # The matrix is applied after this, so an empty one is never expanded
+    if: ${{ needs.plan.outputs.build != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.build) }}
+    runs-on: ${{ matrix.system == 'aarch64-linux' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    env:
+      USE_ATTIC: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id) && 'yes' || 'no' }}
+      UPLOAD_TO_ATTIC: "no" # This is here to shut up the GitHub Actions intellisense in VSC
+    steps:
+      # Same-repo pull requests push every group, so the run on main after a
+      # merge finds them built. A fork's builds push only what staging deploys:
+      # main does not build again a system that attic has.
+      - name: Set UPLOAD_TO_ATTIC envvar
+        if: ${{ env.USE_ATTIC == 'yes' && (github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main' && (matrix.node == '@staging' || github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id)))) }}
+        run: echo "UPLOAD_TO_ATTIC=yes" >> $GITHUB_ENV
+
+      # We use commit hashes for specifying versions here, so a malicious tag can't gain access to our secrets (At least while sha-1 collisions are rare, anyway)
+      - name: Login to headscale
+        uses: tailscale/github-action@94b700f285f67fc55c0486504d82d7e9008191d0 # Connect to headscale
+        if: ${{ env.USE_ATTIC == 'yes' }}
+        with:
+          authkey: ${{ secrets.TS_BUILD_AUTHKEY }}
+          args: --login-server=https://vpn.tgstation13.org
+
+      - name: Checkout
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+        with:
+          ref: ${{ needs.plan.outputs.rev }}
 
       - name: Mount compressed fs at /nix
         shell: bash
@@ -97,41 +133,52 @@ jobs:
             extra-substituters = https://nix-community.cachix.org https://attic.tgstation13.org/tgstation-infrastructure
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= tgstation-infrastructure:07mCKRLs4Y+ietmQ5A1Wn3hRYHVUu1vZ20xPmwMyrBA=
 
-      - name: Setup attic Binary Cache
-        if: ${{ env.USE_ATTIC == 'yes' }}
-        # Format for pointing to caches is server:cache in these commands
-        run: |
-          nix profile install nixpkgs#attic-client
-          attic login tgstation https://attic.tgstation13.org ${{ secrets.ATTIC_JWT_TOKEN }}
-
       - name: Print nix config before Build
         run: nix config show
 
-      - name: Install Colmena
-        run: |
-          COLMENA_REVISION=$(jq -r '.nodes.colmena.locked.rev' flake.lock)
-          echo "Current Colmena revision is: $COLMENA_REVISION"
-          nix profile install github:zhaofengli/colmena/$COLMENA_REVISION
+      # From the nixpkgs the build evaluates anyway, where cache.nixos.org has
+      # them.
+      - name: Install Colmena and attic
+        run: nix profile install --inputs-from . nixpkgs#colmena nixpkgs#attic-client
 
+      # keep-going builds what a failure leaves buildable, for the push. colmena
+      # passes its --nix-option to evaluation only, not to nix-store --realise.
       - name: Build closure
+        id: build
+        env:
+          ON: ${{ matrix.on }}
+          NIX_CONFIG: keep-going = true
         run: |
-          colmena build --impure -v --eval-node-limit 2 --keep-result --on ${{ matrix.node }}
+          colmena build --impure -v --eval-node-limit 2 --keep-result --on "$ON"
 
+      # Logged in only now, so the token is not on disk while the checked-out
+      # code evaluates. Format for pointing to caches is server:cache in these
+      # commands
+      #
+      # After a failed or cancelled build too: what it finished is valid in the
+      # store, and attic serves a path only once its upload completes. A failed
+      # build never produces the system, so the next plan still builds the host.
       - name: Push closure to attic
-        if: ${{ env.UPLOAD_TO_ATTIC == 'yes' }}
-        run: attic push tgstation:tgstation-infrastructure $(ls -d /nix/store/*/)
+        if: ${{ always() && env.UPLOAD_TO_ATTIC == 'yes' && steps.build.outcome != 'skipped' }}
+        shell: bash
+        env:
+          ATTIC_TOKEN: ${{ secrets.ATTIC_JWT_TOKEN }}
+        run: |
+          attic login tgstation https://attic.tgstation13.org "$ATTIC_TOKEN"
+          nix path-info --all | grep -v '\.drv$' | attic push --stdin tgstation:tgstation-infrastructure
 
   deploy-staging:
     name: Deploy Staging
-    needs: build
-    if: ${{ github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || (((github.event_name == 'pull_request' && github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id) || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main')) }}
+    needs: [plan, build]
+    if: ${{ !cancelled() && needs.plan.result == 'success' && (needs.build.result == 'success' || needs.build.result == 'skipped') && github.repository == 'tgstation-operations/infrastructure' && ((github.ref == 'refs/heads/main' && github.event_name == 'push') || (((github.event_name == 'pull_request' && github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id) || github.event_name == 'pull_request_target') && github.event.pull_request.base.ref == 'main')) }}
     uses: ./.github/workflows/colmena_deploy.yml
     secrets: inherit
     with:
       environment: ${{ matrix.environment }}
       runner: ${{ matrix.runner }}
       node: ${{ matrix.node }}
-      pull_request_number: ${{ inputs.pull_request_number }}
+      ref: ${{ needs.plan.outputs.rev }}
+      systems: ${{ needs.plan.outputs.systems }}
     strategy:
       matrix:
         runner:
@@ -143,15 +190,16 @@ jobs:
 
   deploy-production:
     name: Deploy Production
-    needs: build
-    if: ${{ github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    needs: [plan, build]
+    if: ${{ !cancelled() && needs.plan.result == 'success' && (needs.build.result == 'success' || needs.build.result == 'skipped') && github.repository == 'tgstation-operations/infrastructure' && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
     uses: ./.github/workflows/colmena_deploy.yml
     secrets: inherit
     with:
       environment: ${{ matrix.environment }}
       runner: ${{ matrix.runner }}
       node: ${{ matrix.node }}
-      pull_request_number: ${{ inputs.pull_request_number }}
+      ref: ${{ needs.plan.outputs.rev }}
+      systems: ${{ needs.plan.outputs.systems }}
     strategy:
       matrix:
         runner:

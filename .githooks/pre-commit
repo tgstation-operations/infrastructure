@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# Audits the index, not the working tree. The staged tree becomes a commit no
+# ref names, checked out in a worktree under the git directory, and
+# `audit --hook` runs there through the flake as it will be committed. An
+# unstaged edit can neither pass nor fail a commit, and the checkout stays
+# editable while the audit runs.
+#
+# The devshell arms this (core.hooksPath). A commit that cannot pass the hook
+# tier is not finished, so it is not skipped; a slow stage moves to the ci tier.
+set -euo pipefail
+
+# Bash reads a script as it runs it, and this file can be edited while a commit
+# is running, so all of it is parsed before any of it runs.
+main() {
+  if ! command -v nix >/dev/null 2>&1; then
+    echo "pre-commit: no nix on PATH, so the index cannot be audited" >&2
+    exit 1
+  fi
+
+  # A fixed identity and date, so the same index always names the same commit
+  # and an unchanged retry costs no new checkout or evaluation.
+  local tree head merged merge_head commit git_dir parents=()
+  tree=$(git write-tree)
+  if head=$(git rev-parse -q --verify 'HEAD^{commit}'); then
+    parents+=(-p "$head")
+  fi
+  merge_head=$(git rev-parse --git-path MERGE_HEAD)
+  if [ -f "$merge_head" ]; then
+    while read -r merged _; do
+      parents+=(-p "$merged")
+    done <"$merge_head"
+  fi
+  commit=$(
+    GIT_AUTHOR_NAME=pre-commit GIT_AUTHOR_EMAIL=pre-commit@audit.invalid \
+      GIT_AUTHOR_DATE="@0 +0000" GIT_COMMITTER_NAME=pre-commit \
+      GIT_COMMITTER_EMAIL=pre-commit@audit.invalid GIT_COMMITTER_DATE="@0 +0000" \
+      git commit-tree "$tree" "${parents[@]}" -m "pre-commit audit"
+  )
+  git_dir=$(git rev-parse --absolute-git-dir)
+
+  # Exported for the commit in progress. Left set, GIT_INDEX_FILE points the
+  # audit tree's git, and nix's git fetcher, at this checkout's index.
+  # shellcheck disable=SC2046
+  unset $(git rev-parse --local-env-vars)
+
+  # Kept between commits so that only what a commit touched is rebuilt. Under
+  # a linked worktree's git directory, it goes when the worktree does.
+  local audit_tree="$git_dir/audit/tree"
+  if [ -f "$audit_tree/.git" ] &&
+    [ "$(git -C "$audit_tree" rev-parse --show-toplevel 2>/dev/null)" = "$(cd "$audit_tree" && pwd -P)" ]; then
+    git -C "$audit_tree" -c core.hooksPath=/dev/null checkout --quiet --detach --force "$commit"
+    git -C "$audit_tree" clean -ffdxq
+  else
+    echo "pre-commit: making the audit tree at $audit_tree" >&2
+    rm -rf "$audit_tree"
+    mkdir -p "$(dirname "$audit_tree")"
+    git -c core.hooksPath=/dev/null worktree add -f --detach --quiet "$audit_tree" "$commit"
+  fi
+  if [ "$(git -C "$audit_tree" rev-parse 'HEAD^{tree}')" != "$tree" ] ||
+    [ -n "$(git -C "$audit_tree" status --porcelain --untracked-files=all --ignored)" ]; then
+    echo "pre-commit: $audit_tree does not hold the index." >&2
+    echo "  Remove it, run 'git worktree prune', and commit again." >&2
+    exit 1
+  fi
+
+  echo "pre-commit: auditing the index (tree ${tree:0:12})" >&2
+  # nix run rather than nix develop, which would first build the whole devshell.
+  if ! (cd "$audit_tree" && nix run --option accept-flake-config false .#audit -- --hook); then
+    echo "pre-commit: the audit failed on the index; nothing was committed" >&2
+    exit 1
+  fi
+}
+main "$@"; exit
