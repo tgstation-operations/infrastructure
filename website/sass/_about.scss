@@ -1,0 +1,28 @@
+@use "variables" as *;
+
+.About {
+  // Above the servers, where the other panels sit below them.
+  &.Content__Inner {
+    margin: 0 0 1rem;
+  }
+
+  &__Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  &__Title {
+    font-family: $monospace;
+    font-size: 1.25rem;
+  }
+
+  &__Links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 2rem;
+    font-family: $monospace;
+  }
+}
