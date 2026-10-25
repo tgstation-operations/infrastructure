@@ -67,6 +67,15 @@
       {% endfor %}
     </div>
 
+    {% if section.extra.banners %}
+    <div class="Banner">
+      <img class="Banner__Image" width="728" height="90" alt="" data-banners="{% for banner in section.extra.banners %}{{ get_url(path="banners/" ~ banner) }} {% endfor %}" />
+      <noscript><img class="Banner__Image" src="{{ get_url(path="banners/" ~ section.extra.banners[0]) }}" width="728" height="90" alt="" /></noscript>
+    </div>
+    {# Run before the page goes on rendering, so the banner does not pop in. #}
+    <script src="{{ get_url(path="banner.js") }}"></script>
+    {% endif %}
+
 {% set newsletters = get_section(path="newsletters/_index.md") %}
     {% for page in newsletters.pages | slice(end=3) %}
     {{ macros::newsletter(page=page, latest=loop.first) }}

@@ -24,7 +24,8 @@ Every change you push to `main` under `website/` publishes again.
 
 ## What is where
 
-- `content/_index.md`: the servers on the page, and any alerts above them.
+- `content/_index.md`: the servers on the page, any alerts above them, and the
+  banners under them.
 - `content/newsletters/`: one directory per newsletter, with its `index.md` and
   its pictures. The front page shows the three newest.
 - `templates/`: the page itself.

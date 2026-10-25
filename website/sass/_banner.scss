@@ -1,0 +1,18 @@
+.Banner {
+  margin-top: 1rem;
+
+  &__Image {
+    display: block;
+    width: 100%;
+    // The art at its own 728 pixels, inside the border.
+    max-width: calc(728px + 0.25rem);
+    height: auto;
+    margin: 0 auto;
+    border: 0.125rem solid #333;
+    box-shadow: 0 0 8px #000000;
+
+    &:not([src]) {
+      display: none;
+    }
+  }
+}
