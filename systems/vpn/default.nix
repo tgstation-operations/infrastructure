@@ -6,6 +6,7 @@
     ../../modules/fail2ban.nix
     ../../modules/restic.nix
     ./modules/headscale
+    ./modules/caddy.nix
   ];
 
   networking.hostName = "vpn";
