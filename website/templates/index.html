@@ -8,7 +8,7 @@
 {% block content %}
     <div class="Servers">
       {% for server in section.extra.servers %}
-      <div class="Server" data-server="{{ server.identifier }}">
+      <a class="Server" href="byond://{{ server.address }}" data-server="{{ server.identifier }}">
         <div class="Server__Inner">
           <img src="{{ get_url(path=server.icon) }}" class="Server__Background-Image" alt="" />
           <div class="Server__Flags">
@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </a>
       {% endfor %}
     </div>
 

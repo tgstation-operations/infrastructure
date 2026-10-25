@@ -7,6 +7,13 @@
 }
 
 .Server {
+  display: block;
+
+  &:focus,
+  &:hover {
+    animation: none;
+  }
+
   &__Inner {
     background-color: #00173c;
     border: 1px solid #79d3ff;
@@ -91,11 +98,13 @@
     font-size: 0.8rem;
   }
 
+  &:focus &__Inner,
   &:hover &__Inner {
     box-shadow: 0 0 16px #79d3ff;
     transition: box-shadow 0.5s ease;
   }
 
+  &:focus &__Name,
   &:hover &__Name {
     text-shadow: 0 0 8px #79d3ff;
     transition: text-shadow 0.5s ease;
