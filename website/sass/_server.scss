@@ -1,16 +1,12 @@
 @use "variables" as *;
 
 .Servers {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin: -0.25rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 0.5rem;
 }
 
 .Server {
-  flex: 1 1 33%;
-  padding: 0.25rem;
-
   &__Inner {
     background-color: #00173c;
     border: 1px solid #79d3ff;
