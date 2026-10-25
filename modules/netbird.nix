@@ -8,7 +8,12 @@
     enable = true;
     package = pkgs-unstable.netbird;
     clients.default = {
-      environment.NB_MANAGEMENT_URL = "https://${tg-globals.netbird.domain}";
+      # The daemon reads the URL only from its config, and with none there it
+      # logs in to NetBird's cloud on first start, before the login unit runs.
+      config.ManagementURL = {
+        Scheme = "https";
+        Host = "${tg-globals.netbird.domain}:443";
+      };
       login = {
         enable = true;
         setupKeyFile = config.age.secrets.netbird-setup-key.path;
