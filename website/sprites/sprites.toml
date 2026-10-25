@@ -27,6 +27,11 @@ icon = "icons/obj/machines/research.dmi"
 layers = ["RD-server-on"]
 trim = true
 
+[sprites.clown]
+icon = "icons/mob/simple/clown_mobs.dmi"
+layers = ["clown"]
+trim = true
+
 [sprites.floor-dark]
 icon = "icons/turf/floors.dmi"
 layers = ["darkfull"]
