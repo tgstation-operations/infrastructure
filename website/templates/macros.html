@@ -3,6 +3,7 @@
   <header class="Terminal Newsletter__Header{% if latest %} Terminal--Cursor{% endif %}">
     SUBJECT: <a href="{{ page.permalink | safe }}">{{ page.title }}</a><br />
     DATE: {{ page.date | date(format="%B %Y") }}
+    <img class="Newsletter__Icon Sprite" src="{{ get_url(path="sprites/newscaster.webp") }}" width="44" height="50" alt="" />
   </header>
   <div class="Newsletter__Body">
     {{ page.content | safe }}

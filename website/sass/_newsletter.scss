@@ -1,8 +1,22 @@
+@use "floor";
 @use "variables" as *;
 
 .Newsletter {
+  &.Content__Inner {
+    @include floor.floor(reinforced, rgba(34, 34, 34, 0.85));
+  }
+
   &__Header {
     margin-bottom: 1rem;
+    padding-right: 5rem;
+    position: relative;
+  }
+
+  &__Icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   &__Body {

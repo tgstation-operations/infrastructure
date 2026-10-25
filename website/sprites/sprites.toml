@@ -1,0 +1,36 @@
+# The sprites in static/sprites/, cut from tgstation's icons by cut.py. They
+# are CC BY-SA 3.0, as tgstation's art is.
+revision = "ef1444885d77a94f38a910ef556554ca2a9fc549"
+
+[sprites.newscaster]
+icon = "icons/obj/machines/wallmounts.dmi"
+layers = ["newscaster_off", "newscaster_normal"]
+trim = true
+
+[sprites.air-alarm-info]
+icon = "icons/obj/machines/wallmounts.dmi"
+layers = ["alarmp", "alarm0"]
+trim = true
+
+[sprites.air-alarm-warning]
+icon = "icons/obj/machines/wallmounts.dmi"
+layers = ["alarmp", "alarm2"]
+trim = true
+
+[sprites.air-alarm-danger]
+icon = "icons/obj/machines/wallmounts.dmi"
+layers = ["alarmp", "alarm1"]
+trim = true
+
+[sprites.server]
+icon = "icons/obj/machines/research.dmi"
+layers = ["RD-server-on"]
+trim = true
+
+[sprites.floor-dark]
+icon = "icons/turf/floors.dmi"
+layers = ["darkfull"]
+
+[sprites.floor-reinforced]
+icon = "icons/turf/floors.dmi"
+layers = ["engine"]

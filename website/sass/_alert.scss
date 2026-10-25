@@ -27,6 +27,10 @@
     }
   }
 
+  &__Message {
+    flex: 1;
+  }
+
   &--info {
     background-color: #00173c;
     color: #79d3ff;

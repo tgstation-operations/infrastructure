@@ -31,6 +31,8 @@ Every change you push to `main` under `website/` publishes again.
 - `sass/`: the styles.
 - `static/`: images, fonts, `servers.js`, which fills in the server cards, and
   `dismiss.js`, which lets a reader dismiss an alert or the introduction.
+- `sprites/`: the list of the sprites in `static/sprites/`, and `cut.py`, which
+  cuts them out of tgstation's icons.
 - `mock/serverinfo.json`: the made-up server data your copy shows. Set a
   server's `data` to `null` to see it go offline.
 

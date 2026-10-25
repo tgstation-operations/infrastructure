@@ -1,0 +1,12 @@
+// A station floor tiled behind a panel, under a wash of the panel's color.
+@mixin floor($tile, $wash) {
+  background:
+    linear-gradient($wash, $wash),
+    url("sprites/floor-#{$tile}.webp") 0 0 / 64px 64px;
+  image-rendering: pixelated;
+
+  // image-rendering is inherited, and only the floor wants it.
+  > * {
+    image-rendering: auto;
+  }
+}

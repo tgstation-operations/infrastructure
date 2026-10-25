@@ -10,7 +10,8 @@
     <div class="Alerts">
       {% for alert in section.extra.alerts %}
       <div class="Alert Alert--{{ alert.level }}"{% if alert.dismissible %} data-dismiss="{{ alert.message | slugify }}"{% endif %}>
-        <span>{{ alert.message | safe }}</span>
+        <img class="Alert__Icon Sprite" src="{{ get_url(path="sprites/air-alarm-" ~ alert.level ~ ".webp") }}" width="46" height="34" alt="" />
+        <span class="Alert__Message">{{ alert.message | safe }}</span>
         {% if alert.dismissible %}<button class="Dismiss" type="button" title="Dismiss this alert" hidden>[x]</button>{% endif %}
       </div>
       {% endfor %}
@@ -29,7 +30,7 @@
       </p>
       <nav class="About__Links">
         <a target="_blank" rel="noopener noreferrer" href="https://www.byond.com/download/">Get Byond <span>&#x2197;</span></a>
-        <a target="_blank" rel="noopener noreferrer" href="https://github.com/tgstation/tgstation/blob/master/.github/guides/RUNNING_A_SERVER.md">Host a Server <span>&#x2197;</span></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/tgstation/tgstation/blob/master/.github/guides/RUNNING_A_SERVER.md"><img class="Sprite" src="{{ get_url(path="sprites/server.webp") }}" width="28" height="26" alt="" /> Host a Server <span>&#x2197;</span></a>
       </nav>
     </section>
     {# Run before the page goes on rendering, so a dismissed block does not flash. #}
