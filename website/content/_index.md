@@ -1,5 +1,5 @@
 +++
-title = "tgstation13: the Premier Space Station 13 Experience"
+title = "/tg/station 13: the Premier Space Station 13 Experience"
 
 [extra]
 # The identifiers are the ones serverinfo.json reports each server under.
