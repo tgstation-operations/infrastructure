@@ -12,6 +12,6 @@ servers = [
 # Shown above the servers. level is info, warning or danger and message is HTML;
 # a dismissible alert stays hidden for a reader who has dismissed it.
 alerts = []
-# Community artwork in static/banners/, one shown at random under the servers.
-banners = ["googlepixel1.webp", "mmmiracles1.webp", "tgmc1.webp", "zara1.webp", "zara2.webp", "zara3.webp"]
+# Community artwork in static/artwork/, one shown at random under the servers.
+artwork = ["googlepixel1.webp", "mmmiracles1.webp", "tgmc1.webp", "zara1.webp", "zara2.webp", "zara3.webp"]
 +++

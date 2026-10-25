@@ -1,0 +1,20 @@
+// The artwork is the size of a banner ad, and ad blockers hide images that say
+// they are 728 by 90, so that size is here rather than on the image.
+.Artwork {
+  margin-top: 1rem;
+
+  &__Image {
+    display: block;
+    box-sizing: content-box;
+    width: calc(100% - 0.25rem);
+    max-width: 728px;
+    aspect-ratio: 728 / 90;
+    margin: 0 auto;
+    border: 0.125rem solid #333;
+    box-shadow: 0 0 8px #000000;
+
+    &:not([src]) {
+      display: none;
+    }
+  }
+}

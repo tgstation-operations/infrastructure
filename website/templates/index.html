@@ -67,13 +67,13 @@
       {% endfor %}
     </div>
 
-    {% if section.extra.banners %}
-    <div class="Banner">
-      <img class="Banner__Image" width="728" height="90" alt="" data-banners="{% for banner in section.extra.banners %}{{ get_url(path="banners/" ~ banner) }} {% endfor %}" />
-      <noscript><img class="Banner__Image" src="{{ get_url(path="banners/" ~ section.extra.banners[0]) }}" width="728" height="90" alt="" /></noscript>
+    {% if section.extra.artwork %}
+    <div class="Artwork">
+      <img class="Artwork__Image" alt="" data-artwork="{% for piece in section.extra.artwork %}{{ get_url(path="artwork/" ~ piece) }} {% endfor %}" />
+      <noscript><img class="Artwork__Image" src="{{ get_url(path="artwork/" ~ section.extra.artwork[0]) }}" alt="" /></noscript>
     </div>
-    {# Run before the page goes on rendering, so the banner does not pop in. #}
-    <script src="{{ get_url(path="banner.js") }}"></script>
+    {# Run before the page goes on rendering, so the artwork does not pop in. #}
+    <script src="{{ get_url(path="artwork.js") }}"></script>
     {% endif %}
 
 {% set newsletters = get_section(path="newsletters/_index.md") %}
