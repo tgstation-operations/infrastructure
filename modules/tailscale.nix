@@ -62,7 +62,11 @@
   systemd.services.optimize-tailscale = {
     enable = true;
     description = "fixup UDP GRO rules for tailscale";
-    before = ["tailscale.service"];
+    # Needs the default route to find the uplink device. Not network-online.target:
+    # tg-tailscale-wait-dhcp holds that until after tailscaled, which would be a cycle.
+    wants = ["tgstation-wait-online.service"];
+    after = ["tgstation-wait-online.service"];
+    before = ["tailscaled.service"];
     wantedBy = ["multi-user.target"];
     path = with pkgs; [
       ethtool
