@@ -7,6 +7,7 @@
     ../../modules/restic.nix
     ./modules/headscale
     ./modules/caddy.nix
+    ./modules/netbird.nix
   ];
 
   networking.hostName = "vpn";
@@ -43,6 +44,7 @@
   services.restic.backups.persist.paths = [
     "/var/lib/tailscale"
     "/var/lib/headscale"
+    "/var/lib/netbird-mgmt"
     "/etc"
   ];
 }
