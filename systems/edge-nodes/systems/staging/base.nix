@@ -11,9 +11,11 @@
     ./modules/haproxy
     ./modules/caddy.nix
     ./modules/tailscale.nix
+    ../../../../modules/netbird.nix
   ];
 
   services.tailscale.useRoutingFeatures = lib.mkForce "server";
+  age.secrets.netbird-setup-key.file = ../../../../secrets/netbird-setup-key-staging.age;
 
   nix.settings = {
     experimental-features = [

@@ -29,6 +29,7 @@
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
+    ../../../../modules/netbird.nix
     ../../../../modules/restic.nix
     ../../modules/rollback-root.nix
     (import ../../modules/cloudflared.nix {
@@ -65,6 +66,7 @@ in {
 
   programs.nix-ld.enable = true;
 
+  age.secrets.netbird-setup-key.file = ../../../../secrets/netbird-setup-key-backend.age;
   age.secrets.tgs = {
     file = ./secrets/tgs.age;
     owner = "${config.services.tgstation-server.username}";
@@ -83,6 +85,7 @@ in {
       "/var/lib/systemd/coredump"
       "/var/lib/headscale"
       "/var/lib/tailscale"
+      "/var/lib/netbird"
       "/etc/NetworkManager/system-connections"
       "/var/lib/acme"
       "/var/lib/docker"

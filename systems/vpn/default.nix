@@ -3,6 +3,7 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     ../../modules/openssh.nix
     ../../modules/tailscale.nix
+    ../../modules/netbird.nix
     ../../modules/fail2ban.nix
     ../../modules/restic.nix
     ./modules/headscale
@@ -15,6 +16,7 @@
   services.tailscale = {
     openFirewall = true;
   };
+  age.secrets.netbird-setup-key.file = ../../secrets/netbird-setup-key-backend.age;
 
   boot.loader.grub = {
     efiSupport = true;

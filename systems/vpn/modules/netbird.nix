@@ -3,9 +3,10 @@
   lib,
   inputs,
   pkgs-unstable,
+  tg-globals,
   ...
 }: let
-  domain = "netbird.tgstation13.org";
+  inherit (tg-globals.netbird) domain;
   issuer = "https://${domain}/oauth2";
   relayAddress = "rels://${domain}:443/relay";
   ownerEmail = "scriptis@tgstation13.org";
