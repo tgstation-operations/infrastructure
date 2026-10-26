@@ -1,0 +1,111 @@
+@use "variables" as *;
+
+.Servers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 0.5rem;
+}
+
+.Server {
+  display: block;
+
+  &:focus,
+  &:hover {
+    animation: none;
+  }
+
+  &__Inner {
+    background-color: #00173c;
+    border: 1px solid #79d3ff;
+    color: #79d3ff;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    font-family: $monospace;
+    overflow: hidden;
+    padding: 0.5rem;
+    position: relative;
+    user-select: none;
+  }
+
+  &__GameMode,
+  &__Map {
+    font-size: 0.75rem;
+    opacity: 0.8;
+  }
+
+  &__Name {
+    font-weight: bold;
+  }
+
+  &__Flags {
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.5rem;
+  }
+
+  &__Flags-Content {
+    display: flex;
+  }
+
+  &__Address {
+    align-self: flex-start;
+    flex: 1 1 100%;
+  }
+
+  &__Flag {
+    filter: grayscale(1);
+    padding: 0 0 0 0.5rem;
+  }
+
+  &__PlayerCount {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &__PlayerSlash,
+  &__MaxPlayers,
+  &__Server_Flag {
+    opacity: 0.8;
+    font-size: 0.75rem;
+  }
+
+  &__Background-Image {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: auto;
+    opacity: 0.25;
+    padding: 0.5rem;
+  }
+
+  &__Stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  &__Stats--Right,
+  &__Stats--Left {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &__Timer {
+    font-size: 0.8rem;
+  }
+
+  &:focus &__Inner,
+  &:hover &__Inner {
+    box-shadow: 0 0 16px #79d3ff;
+    transition: box-shadow 0.5s ease;
+  }
+
+  &:focus &__Name,
+  &:hover &__Name {
+    text-shadow: 0 0 8px #79d3ff;
+    transition: text-shadow 0.5s ease;
+  }
+}

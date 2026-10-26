@@ -1,0 +1,12 @@
+{% macro newsletter(title, url, date, content, latest=false) %}
+<article class="Content__Inner Newsletter">
+  <header class="Terminal Newsletter__Header{% if latest %} Terminal--Cursor{% endif %}">
+    SUBJECT: <a href="{{ url }}">{{ title }}</a><br />
+    DATE: {{ date | monthYear }}
+    <img class="Newsletter__Icon Sprite" src="/sprites/newscaster.webp" width="44" height="50" alt="" />
+  </header>
+  <div class="Newsletter__Body">
+    {{ content | safe }}
+  </div>
+</article>
+{% endmacro %}

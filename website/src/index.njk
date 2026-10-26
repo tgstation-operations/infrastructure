@@ -1,0 +1,100 @@
+---
+# The identifiers are the ones serverinfo.json reports each server under.
+servers:
+  - { identifier: "terry", name: "Terry [EU]", address: "terry.tgstation13.org:3336", icon: "terry.webp" }
+  - { identifier: "sybil", name: "Sybil [US-Central]", address: "sybil.tgstation13.org:1337", icon: "sybil.webp" }
+  - { identifier: "manuel", name: "Manuel [US-Central]", address: "manuel.tgstation13.org:1447", icon: "manuel.webp" }
+  - { identifier: "TGMC", name: "TerraGov Marine Corps [US-Central]", address: "tgmc.tgstation13.org:5337", icon: "tgmc.svg" }
+# Shown above the servers. level is info, warning or danger and message is HTML;
+# a dismissible alert stays hidden for a reader who has dismissed it.
+alerts: []
+# Community artwork in static/artwork/, one shown at random under the servers.
+artwork: ["googlepixel1.webp", "mmmiracles1.webp", "tgmc1.webp", "zara1.webp", "zara2.webp", "zara3.webp"]
+---
+{% extends "base.njk" %}
+{% import "macros.njk" as macros %}
+
+{% block head %}
+<script src="/servers.js" defer></script>
+{% endblock head %}
+
+{% block content %}
+    {% if alerts | length %}
+    <div class="Alerts">
+      {% for alert in alerts %}
+      <div class="Alert Alert--{{ alert.level }}"{% if alert.dismissible %} data-dismiss="{{ alert.message | slugify }}"{% endif %}>
+        <img class="Alert__Icon Sprite" src="/sprites/air-alarm-{{ alert.level }}.webp" width="46" height="34" alt="" />
+        <span class="Alert__Message">{{ alert.message | safe }}</span>
+        {% if alert.dismissible %}<button class="Dismiss" type="button" title="Dismiss this alert" hidden>[x]</button>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <section class="Content__Inner About" data-dismiss="about">
+      <div class="About__Header">
+        <h2 class="About__Title">What is Space Station 13?</h2>
+        <button class="Dismiss" type="button" title="Dismiss this section" hidden>[x]</button>
+      </div>
+      <p>
+        Space Station 13 is a paranoia-laden round-based roleplaying game set against the backdrop of a nonsensical, metal
+        death trap masquerading as a space station, with charming spritework designed to represent the sci-fi setting and its
+        dangerous undertones. Have fun, and survive!
+      </p>
+      <nav class="About__Links">
+        <a target="_blank" rel="noopener noreferrer" href="https://www.byond.com/download/"><img class="Sprite About__Byond" src="/byond-16.webp" srcset="/byond-32.webp 2x" width="16" height="16" alt="" /> Get Byond <span>&#x2197;</span></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/tgstation/tgstation/blob/master/.github/guides/RUNNING_A_SERVER.md"><img class="Sprite" src="/sprites/server.webp" width="28" height="26" alt="" /> Host a Server <span>&#x2197;</span></a>
+      </nav>
+    </section>
+    {# Run before the page goes on rendering, so a dismissed block does not flash. #}
+    <script src="/dismiss.js"></script>
+
+    <div class="Servers">
+      {% for server in servers %}
+      <a class="Server" href="byond://{{ server.address }}" data-server="{{ server.identifier }}">
+        <div class="Server__Inner">
+          <img src="/{{ server.icon }}" class="Server__Background-Image" alt="" />
+          <div class="Server__Flags">
+            <div class="Server__Address">{{ server.address }}</div>
+            <div class="Server__Flags-Content">
+              <div class="Server__Flag Server__Flag--Commit" hidden></div>
+              <div class="Server__Flag Server__Flag--Hub" hidden>
+                <span title="This server is listed on the BYOND Hub.">🌎</span>
+              </div>
+            </div>
+          </div>
+          <div class="Server__Name">{{ server.name }}</div>
+          <div class="Server__GameMode">Status unknown</div>
+          <div class="Server__Stats">
+            <div class="Server__Stats--Left">
+              <div class="Server__CurrentPlayers">--</div>
+              <div class="Server__PlayerSlash">/</div>
+              <div class="Server__MaxPlayers">--</div>
+            </div>
+            <div class="Server__Stats--Right">
+              <div class="Server__Timer">--:--</div>
+            </div>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+
+    {% if artwork | length %}
+    <div class="Artwork">
+      <img class="Artwork__Image" alt="" data-artwork="{% for piece in artwork %}{{ ("/artwork/" ~ piece) | htmlBaseUrl }} {% endfor %}" />
+      <noscript><img class="Artwork__Image" src="/artwork/{{ artwork[0] }}" alt="" /></noscript>
+    </div>
+    {# Run before the page goes on rendering, so the artwork does not pop in. #}
+    <script src="/artwork.js"></script>
+    {% endif %}
+
+    {% for newsletter in (collections.newsletters | reverse).slice(0, 3) %}
+    {{ macros.newsletter(newsletter.data.title, newsletter.url, newsletter.date, newsletter.content, latest=loop.first) }}
+    {% endfor %}
+    <nav class="Newsletter__Nav">
+      <span></span>
+      <a href="/newsletters/">All newsletters</a>
+      <span></span>
+    </nav>
+{% endblock content %}

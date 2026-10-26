@@ -13,6 +13,7 @@ in
       pkgs.alejandra
       pkgs.deadnix
       pkgs.jq
+      pkgs.nodejs
       pkgs.statix
       fmt
       audit
