@@ -34,7 +34,10 @@ in {
         # rpc_secret is set by $GARAGE_RPC_SECRET
         s3_api = {
           s3_region = "garage";
-          api_bind_addr = "127.0.0.1:3900";
+          # Garage never sets TCP_NODELAY on its API connections, so over TCP an
+          # object smaller than loopback's MSS waits for caddy's delayed ACK,
+          # 40 ms per object. A Unix socket has no Nagle.
+          api_bind_addr = "/run/garage/s3.sock";
           root_domain = ".s3.tgstation13.org";
         };
         s3_web = {
@@ -72,6 +75,7 @@ in {
         User = "garage";
         Group = "garage";
         DynamicUser = false;
+        RuntimeDirectory = "garage";
       };
     };
 

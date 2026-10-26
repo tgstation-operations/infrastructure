@@ -116,9 +116,9 @@ in {
         useACMEHost = "s3.tgstation13.org";
         extraConfig = ''
           encode gzip zstd
-          reverse_proxy localhost:3900 {
+          reverse_proxy unix/${config.services.garage.settings.s3_api.api_bind_addr} {
             health_uri /health
-            health_port 3903
+            health_upstream localhost:3903
           }
         '';
       };
@@ -126,9 +126,9 @@ in {
         useACMEHost = "s3.blockmoths.eu.tgstation13.org";
         extraConfig = ''
           encode gzip zstd
-          reverse_proxy localhost:3900 {
+          reverse_proxy unix/${config.services.garage.settings.s3_api.api_bind_addr} {
             health_uri /health
-            health_port 3903
+            health_upstream localhost:3903
           }
         '';
       };
