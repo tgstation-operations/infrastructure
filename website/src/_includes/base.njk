@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}/tg/station 13: the Premier Space Station 13 Experience{% endblock title %}</title>
+    <link rel="stylesheet" href="/main.css" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <script src="/ian.js" defer></script>
+    <script src="/menus.js" defer></script>
+    {% block head %}{% endblock head %}
+  </head>
+  <body>
+    <div class="Parallax">
+      <div class="Parallax__Layer Parallax__Layer-0"></div>
+      <div class="Parallax__Planet"></div>
+      <div class="Parallax__Clown"><img src="/sprites/clown.webp" width="50" height="62" alt="" /></div>
+      <div class="Parallax__Layer Parallax__Layer-1"></div>
+      <div class="Parallax__Layer Parallax__Layer-2"></div>
+    </div>
+    <main class="App">
+      <div class="Content">
+        <header class="Header">
+          <div class="Header__LogoContainer">
+            <a class="Header__Link" href="/">
+              <img
+                class="Header__Logo"
+                src="/tgstation13.png"
+                width="574"
+                height="70"
+                alt="/tg/station 13 Logo"
+                title="/tg/station 13"
+              />
+            </a>
+          </div>
+          <nav class="Header__Nav">
+            <a class="Header__NavItem" rel="noreferrer noorigin" href="https://forums.tgstation13.org">Forums</a>
+            <a class="Header__NavItem Offsite" target="_blank" rel="noreferrer noorigin" href="https://discord.gg/tg13">Discord</a>
+            <a class="Header__NavItem Offsite" target="_blank" rel="noreferrer noorigin" href="https://opencollective.com/tgstation13">Donate</a>
+            <a class="Header__NavItem" rel="noreferrer noorigin" href="https://wiki.tgstation13.org">Wiki</a>
+            <a class="Header__NavItem" href="/newsletters/">Newsletter</a>
+            <div class="Header__Menus">
+              <details class="Header__NavItem Menu" name="nav">
+                <summary class="Menu__Title">Dev</summary>
+                <ul class="Menu__List">
+                  <li><a class="Offsite" rel="noreferrer" href="https://github.com/tgstation/tgstation">/tg/station 13 GitHub</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://github.com/tgstation-operations/infrastructure">/tg/station 13 Infrastructure</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://github.com/tgstation-operations/server-config">Server Config</a></li>
+                </ul>
+              </details>
+              <details class="Header__NavItem Menu" name="nav">
+                <summary class="Menu__Title">Social Media</summary>
+                <ul class="Menu__List">
+                  <li><a class="Offsite" rel="noreferrer" href="https://www.youtube.com/@TGStation13">YouTube</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://www.reddit.com/user/TGstation13/">Reddit</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://bsky.app/profile/tgstation13.org">Bluesky</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://twitter.com/TGStation13">Twitter</a></li>
+                </ul>
+              </details>
+              <details class="Header__NavItem Menu" name="nav">
+                <summary class="Menu__Title">Cool Shit</summary>
+                <ul class="Menu__List">
+                  <li><a class="Offsite" rel="noreferrer" href="https://statbus.space">Stats</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://bsky.app/profile/polytheparrot.bsky.social">@PolyTheParrot</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://spacestationidle.com/">Space Station Idle</a></li>
+                </ul>
+              </details>
+            </div>
+          </nav>
+        </header>
+
+        {% block content %}{% endblock content %}
+      </div>
+
+      <footer class="Footer">
+        <div class="Footer__Text">
+          Made with ❤️ by
+          <a class="ExternalLink" href="https://forums.tgstation13.org/viewtopic.php?t=32076">Scriptis</a>, based on prior designs by
+          <a class="ExternalLink Offsite" rel="noreferrer noorigin" href="https://github.com/tgstation/tgstation13.org/issues/70">mozi_h</a> and jeb! Sprites from
+          <a class="ExternalLink Offsite" rel="noreferrer" href="https://github.com/tgstation/tgstation">tgstation</a>. Artwork licensed under
+          <a class="ExternalLink Offsite" rel="noreferrer noorigin" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons 3.0 BY-SA</a> and
+          <a class="ExternalLink Offsite" rel="noreferrer" href="https://github.com/tgstation-operations/infrastructure">source code</a> licensed under AGPLv3. Risk of electrical shock. May contain bananas or banana derivatives. Handle with care.
+        </div>
+        <button class="Ian" type="button" title="Ian" data-heart="{{ "/sprites/heart.webp" | htmlBaseUrl }}">
+          <img class="Ian__Sprite" src="/sprites/ian.webp" width="56" height="48" alt="Ian" />
+        </button>
+      </footer>
+    </main>
+  </body>
+</html>

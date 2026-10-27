@@ -1,0 +1,15 @@
+{% extends "base.njk" %}
+{% import "macros.njk" as macros %}
+
+{% block title %}{{ title }} - /tg/station 13{% endblock title %}
+
+{% block content %}
+    {{ macros.newsletter(title, page.url, page.date, content) }}
+    {% set older = collections.newsletters | getPreviousCollectionItem %}
+    {% set newer = collections.newsletters | getNextCollectionItem %}
+    <nav class="Newsletter__Nav">
+      <span>{% if older %}<a href="{{ older.url }}">&lt; {{ older.data.title }}</a>{% endif %}</span>
+      <a href="/newsletters/">All newsletters</a>
+      <span>{% if newer %}<a href="{{ newer.url }}">{{ newer.data.title }} &gt;</a>{% endif %}</span>
+    </nav>
+{% endblock content %}

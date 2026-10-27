@@ -1,0 +1,46 @@
+// Ian's sprite is a row of his four facings, shown one at a time. He turns as
+// mobs do in game when they spin, a facing every tenth of a second, three
+// times around. Everything is at twice the game's size.
+.Ian {
+  position: relative;
+  flex: none;
+  padding: 0;
+  background: none;
+  border: 0;
+
+  &__Sprite {
+    display: block;
+    object-fit: cover;
+    object-position: 0 0;
+    image-rendering: pixelated;
+  }
+
+  &--Spinning &__Sprite {
+    animation: IanSpin 0.4s steps(4) 3;
+  }
+
+  @keyframes IanSpin {
+    100% {
+      object-position: calc(400% / 3) 0;
+    }
+  }
+
+  // Petting him sends up a heart, as in game: it starts in his tile, up to
+  // four pixels off either way, and rises a tile as it fades. His sprite is
+  // trimmed from (2, 8) in that tile, so the heart's starts that far back.
+  &__Heart {
+    position: absolute;
+    left: calc(-4px + var(--x));
+    top: calc(-16px + var(--y));
+    pointer-events: none;
+    image-rendering: pixelated;
+    animation: IanHeart 2.5s linear forwards;
+  }
+
+  @keyframes IanHeart {
+    100% {
+      transform: translateY(-64px);
+      opacity: 0;
+    }
+  }
+}

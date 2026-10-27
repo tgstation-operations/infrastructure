@@ -4,7 +4,9 @@
   pkgs-unstable,
   inputs,
   ...
-}: {
+}: let
+  website = pkgs.callPackage ../../../../../nix/packages/tgstation-website/package.nix {};
+in {
   # For Unix sockets, unused for now
   systemd.tmpfiles.rules = [
     "d /run/caddy 644 ${config.services.caddy.user} ${config.services.caddy.group}"
@@ -88,7 +90,10 @@
         useACMEHost = "web.staging.tgstation13.org";
         extraConfig = ''
           encode gzip zstd
-          root ${toString inputs.tgstation-website.packages.x86_64-linux.default}
+          root ${website}
+          # The old site still has the toolbox and readme, and the assets they load.
+          @old_site path /assets/* /readme /readme/* /toolbox /toolbox/*
+          root @old_site ${toString inputs.tgstation-website.packages.x86_64-linux.default}
           file_server
           php_fastcgi unix/${toString config.services.phpfpm.pools.php-caddy.socket} {
             env _GET 127.0.0.1

@@ -1,0 +1,16 @@
+---
+title: "Newsletters"
+---
+{% extends "base.njk" %}
+
+{% block title %}{{ title }} - /tg/station 13{% endblock title %}
+
+{% block content %}
+    <div class="Content__Inner">
+      <p class="Terminal Terminal--Cursor">
+        {% for newsletter in collections.newsletters | reverse %}
+        {{ newsletter.date | isoDate }} <a href="{{ newsletter.url }}">{{ newsletter.data.title }}</a><br />
+        {% endfor %}
+      </p>
+    </div>
+{% endblock content %}

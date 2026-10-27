@@ -1,0 +1,187 @@
+@use "sass:color";
+@use "fonts";
+@use "reboot";
+@use "parallax";
+@use "terminal";
+@use "newsletter";
+@use "server";
+@use "alert";
+@use "about";
+@use "artwork";
+@use "ian";
+@use "menu";
+@use "variables" as *;
+
+body {
+  margin: 0;
+  color: #ff9900;
+}
+
+@keyframes LinkFlicker {
+  0% {
+    text-shadow: 0 0 2px #ff9900;
+  }
+
+  20% {
+    text-shadow: 0 0 2px color.adjust(#ff9900, $alpha: -1);
+  }
+
+  70% {
+    text-shadow: 0 0 2px #ff9900;
+  }
+
+  90% {
+    text-shadow: 0 0 2px color.adjust(#ff9900, $alpha: -1);
+  }
+}
+
+@keyframes SpriteFlicker {
+  0% {
+    filter: saturate(2) brightness(1.3);
+  }
+
+  20% {
+    filter: saturate(1) brightness(1);
+  }
+
+  70% {
+    filter: saturate(2) brightness(1.3);
+  }
+
+  90% {
+    filter: saturate(1) brightness(1);
+  }
+}
+
+a {
+  color: #d88200;
+  text-shadow: 0 0 0 transparent;
+  transition: color 0.5s ease;
+  text-decoration: none;
+
+  &:focus,
+  &:hover {
+    color: #ff9900;
+    animation: LinkFlicker 0.5s linear infinite;
+
+    .Sprite {
+      animation: SpriteFlicker 0.5s linear infinite;
+    }
+  }
+}
+
+.App {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  max-width: 800px;
+  margin: auto;
+}
+
+.Header {
+  text-align: center;
+  padding: 2rem 0;
+
+  &__LogoContainer {
+    display: inline-block;
+    max-width: 24rem;
+    position: relative;
+  }
+
+  &__Link {
+    display: inline-block;
+
+    &:focus,
+    &:hover {
+      filter: brightness(1.1);
+      transition: filter 0.25s ease;
+    }
+  }
+
+  &__Logo {
+    max-width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+  }
+
+  &__Nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  // The menus get a row of their own under the links.
+  &__Menus {
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  &__NavItem {
+    font-family: $monospace;
+    display: inline-block;
+    padding: 0 1rem;
+    margin: 1.5rem 0 0 0;
+    color: #ff9900;
+  }
+}
+
+.Content {
+  &__Inner {
+    border: 0.125rem solid #333;
+    background-color: #222;
+    box-shadow:
+      0 0 8px #000000,
+      inset 0 0 8px #000000;
+    padding: 1rem;
+    margin: 1rem 0 0 0;
+  }
+}
+
+.Sprite {
+  image-rendering: pixelated;
+}
+
+.Dismiss {
+  background: none;
+  border: 0;
+  color: inherit;
+  padding: 0;
+}
+
+.ExternalLink {
+  white-space: nowrap;
+}
+
+// A link off tgstation13.org's sites. The arrow is drawn in the link's color
+// rather than as the character, which some platforms draw as a blue emoji.
+.Offsite::after {
+  content: "";
+  display: inline-block;
+  width: 1cap;
+  height: 1cap;
+  margin-left: 0.5em;
+  background-color: currentColor;
+  mask: url("arrow.svg") center / contain no-repeat;
+}
+
+.Footer {
+  border: 0.125rem solid #333;
+  background-color: #222;
+  box-shadow:
+    0 0 8px #000000,
+    inset 0 0 8px #000000;
+  padding: 1rem;
+  margin: 1rem 0 0 0;
+  text-align: justify;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  &__Text {
+    flex: 1;
+  }
+}
