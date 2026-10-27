@@ -4,21 +4,11 @@
   pkgs,
   ...
 }: {
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
-  networking.firewall.allowedUDPPorts = [
-    80
-    443
-  ];
   services.headscale = {
     enable = true;
     # The release vpn runs. headscale refuses to skip a minor version, so it
     # moves up one at a time, each from its own nixpkgs revision.
     package = inputs.nixpkgs-headscale.legacyPackages.${pkgs.stdenv.hostPlatform.system}.headscale;
-    address = "0.0.0.0";
-    port = 443;
 
     settings = {
       log.level = "warn";
@@ -27,7 +17,6 @@
         base_domain = "tg.lan";
       };
       server_url = "https://vpn.tgstation13.org";
-      tls_letsencrypt_hostname = "vpn.tgstation13.org";
       metrics_listen_addr = "127.0.0.1:9532";
       dns = {
         override_local_dns = false;
@@ -39,6 +28,13 @@
         ];
       };
     };
+  };
+  security.acme.certs."vpn.tgstation13.org" = {};
+  services.caddy.virtualHosts."vpn.tgstation13.org" = {
+    useACMEHost = "vpn.tgstation13.org";
+    extraConfig = ''
+      reverse_proxy ${config.services.headscale.address}:${toString config.services.headscale.port}
+    '';
   };
   security.wrappers = {
     headscale = {

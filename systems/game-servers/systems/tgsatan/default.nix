@@ -20,6 +20,7 @@
     ../../../../modules/postgres.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
+    ../../../../modules/netbird.nix
     ../../../../modules/restic.nix
     (import ../../modules/garage {
       inherit pkgs config lib headscaleIPv4;
@@ -140,6 +141,7 @@ in {
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
       "/var/lib/tailscale"
+      "/var/lib/netbird"
       "/etc/NetworkManager/system-connections"
       "/var/lib/acme"
       "/var/lib/postgresql"
@@ -178,6 +180,7 @@ in {
     trim.enable = true;
     autoSnapshot.enable = false;
   };
+  age.secrets.netbird-setup-key.file = ../../../../secrets/netbird-setup-key-backend.age;
   age.secrets.tgs = {
     file = ./secrets/tgs.age;
     owner = "${config.services.tgstation-server.username}";

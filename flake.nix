@@ -105,6 +105,7 @@
           })
           .caddy;
       };
+      netbird.domain = "netbird.tgstation13.org";
     };
 
     tgsatan = {

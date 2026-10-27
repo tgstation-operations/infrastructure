@@ -9,10 +9,12 @@
     ../../modules/openssh.nix
     ../../modules/colmena_ci.nix
     ./modules/tailscale.nix
+    ../../modules/netbird.nix
     ./modules/haproxy
   ];
 
   services.tailscale.useRoutingFeatures = lib.mkForce "server";
+  age.secrets.netbird-setup-key.file = ../../secrets/netbird-setup-key-relay.age;
 
   nix.settings = {
     experimental-features = [

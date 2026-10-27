@@ -19,6 +19,7 @@
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/tailscale.nix
+    ../../../../modules/netbird.nix
     ../../../../modules/maria.nix
     (import ../../modules/cloudflared.nix {
       inherit pkgs config lib;
@@ -57,6 +58,7 @@ in {
     "1.1.1.1"
   ];
 
+  age.secrets.netbird-setup-key.file = ../../../../secrets/netbird-setup-key-staging.age;
   age.secrets.tgs = {
     file = ./secrets/tgs.age;
     owner = "${config.services.tgstation-server.username}";

@@ -3,9 +3,12 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     ../../modules/openssh.nix
     ../../modules/tailscale.nix
+    ../../modules/netbird.nix
     ../../modules/fail2ban.nix
     ../../modules/restic.nix
     ./modules/headscale
+    ./modules/caddy.nix
+    ./modules/netbird.nix
   ];
 
   networking.hostName = "vpn";
@@ -13,6 +16,7 @@
   services.tailscale = {
     openFirewall = true;
   };
+  age.secrets.netbird-setup-key.file = ../../secrets/netbird-setup-key-backend.age;
 
   boot.loader.grub = {
     efiSupport = true;
@@ -42,6 +46,7 @@
   services.restic.backups.persist.paths = [
     "/var/lib/tailscale"
     "/var/lib/headscale"
+    "/var/lib/netbird-mgmt"
     "/etc"
   ];
 }
