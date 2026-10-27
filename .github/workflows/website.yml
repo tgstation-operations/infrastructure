@@ -28,7 +28,7 @@ permissions:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       contents: read
       # configure-pages reads the Pages site for its URL.
@@ -71,7 +71,7 @@ jobs:
     name: Deploy
     needs: build
     if: github.event_name != 'pull_request' && github.event.repository.has_pages
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       pages: write
       id-token: write
