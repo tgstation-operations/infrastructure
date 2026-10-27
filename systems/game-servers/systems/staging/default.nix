@@ -5,6 +5,7 @@
   modulesPath,
   config,
   tg-globals,
+  headscaleIPv4,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
@@ -37,7 +38,6 @@
       raw-port = "23337";
       raw-internal-port = "23338";
     })
-    ./modules/haproxy
     ./modules/motd
     ./modules/caddy.nix
   ];
@@ -50,6 +50,14 @@ in {
   services.qemuGuest.enable = true;
 
   imports = baseModules ++ localModules;
+
+  tgstation.haproxy = {
+    address = headscaleIPv4;
+    games = {
+      funnyname = 8989;
+      cool = 8085;
+    };
+  };
 
   programs.nix-ld.enable = true;
 

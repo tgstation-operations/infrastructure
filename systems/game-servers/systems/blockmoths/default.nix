@@ -16,7 +16,6 @@
   localModules = [
     ./disko.nix
     ./modules/caddy
-    ./modules/haproxy
     ./modules/motd
     (import ../../modules/logs {
       inherit pkgs config tg-globals;
@@ -63,6 +62,14 @@ in {
   services.xserver.xkb.layout = "us";
 
   imports = baseModules ++ localModules;
+
+  tgstation.haproxy = {
+    address = headscaleIPv4;
+    games = {
+      terry = 3336;
+      cool = 8085;
+    };
+  };
 
   programs.nix-ld.enable = true;
 

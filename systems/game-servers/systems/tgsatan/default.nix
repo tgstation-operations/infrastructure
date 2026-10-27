@@ -104,9 +104,20 @@ in {
     ++ localModules
     ++ [
       ./disko.nix
-      ./modules/haproxy
       ./modules/caddy
     ];
+
+  tgstation.haproxy = {
+    address = headscaleIPv4;
+    games = {
+      sybil = 1337;
+      manuel = 1447;
+      manuel2 = 1887;
+      tgmc = 5337;
+      effigy = 7337;
+      eventus = 7777;
+    };
+  };
 
   hardware.nvidia-container-toolkit.enable = true;
   # Allow the 10.10.11.0/24 range to talk to each other over bridge

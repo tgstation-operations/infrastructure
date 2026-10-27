@@ -8,11 +8,12 @@
     ../../../../modules/fail2ban.nix
     ../../../../modules/openssh.nix
     ../../../../modules/colmena_ci_staging.nix
-    ./modules/haproxy
     ./modules/caddy.nix
     ./modules/tailscale.nix
     ../../../../modules/netbird.nix
   ];
+
+  tgstation.haproxy.relay-for = ["wiggle"];
 
   services.tailscale.useRoutingFeatures = lib.mkForce "server";
   age.secrets.netbird-setup-key.file = ../../../../secrets/netbird-setup-key-staging.age;

@@ -80,6 +80,7 @@
       inputs.disko.nixosModules.default
       # inputs.lix-module.nixosModules.default
       (import ./modules/colmena_ci.nix)
+      (import ./nix/modules/haproxy)
     ];
 
     colmenaPackages = import nixpkgs {

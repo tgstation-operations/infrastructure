@@ -104,6 +104,7 @@
       "rollback-root"
       "tgstation-server"
       "byond-authentication-bridge"
+      "haproxy"
     ]);
 
   count = tier:
