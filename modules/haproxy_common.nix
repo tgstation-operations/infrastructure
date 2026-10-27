@@ -18,4 +18,11 @@
       PROMETHEUS_PORT = "8405";
     };
   };
+
+  # The stats and metrics frontends bind every address, so haproxy starts
+  # whether or not the overlay is up, and only the overlay may reach them.
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
+    8888
+    (lib.toInt config.systemd.services.haproxy.environment.PROMETHEUS_PORT)
+  ];
 }
