@@ -9,6 +9,7 @@
 @use "about";
 @use "artwork";
 @use "ian";
+@use "menu";
 @use "variables" as *;
 
 body {
@@ -106,6 +107,14 @@ a {
   }
 
   &__Nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  // The menus get a row of their own under the links.
+  &__Menus {
+    flex-basis: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

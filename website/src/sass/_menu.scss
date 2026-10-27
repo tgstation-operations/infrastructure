@@ -1,0 +1,50 @@
+// A nav item that opens a list of links under it. It is a <details>, so it
+// opens and closes without JavaScript; menus.js closes it on a click elsewhere
+// and keeps its list on screen.
+.Menu {
+  position: relative;
+
+  &__Title {
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &:focus-visible,
+    &:hover {
+      animation: LinkFlicker 0.5s linear infinite;
+    }
+
+    // A caret centered on the capitals, which turns up while the menu is open.
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 1cap;
+      height: 1cap;
+      margin-left: 0.5em;
+      background-color: currentColor;
+      clip-path: polygon(10% 30%, 90% 30%, 50% 70%);
+    }
+  }
+
+  &[open] &__Title::after {
+    rotate: 180deg;
+  }
+
+  &__List {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    list-style: none;
+    text-align: left;
+    white-space: nowrap;
+    border: 0.125rem solid #333;
+    background-color: #222;
+    box-shadow: 0 0 8px #000000;
+  }
+}

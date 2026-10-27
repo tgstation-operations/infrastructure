@@ -33,8 +33,8 @@ Every change you push to `main` under `website/` publishes again.
 - `src/sass/`: the styles.
 - `src/static/`: images, fonts, and the scripts: `servers.js` fills in the
   server cards, `dismiss.js` lets a reader dismiss an alert or the
-  introduction, `artwork.js` picks a piece of community artwork, and `ian.js`
-  pets Ian.
+  introduction, `artwork.js` picks a piece of community artwork, `menus.js`
+  closes an open nav menu, and `ian.js` pets Ian.
 - `sprites/`: the list of the sprites in `src/static/sprites/`, and `cut.py`,
   which cuts them out of tgstation's icons.
 - `mock/serverinfo.json`: the made-up server data your copy shows. Set a

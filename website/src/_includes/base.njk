@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/main.css" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <script src="/ian.js" defer></script>
+    <script src="/menus.js" defer></script>
     {% block head %}{% endblock head %}
   </head>
   <body>
@@ -38,6 +39,33 @@
             <a class="Header__NavItem Offsite" target="_blank" rel="noreferrer noorigin" href="https://opencollective.com/tgstation13">Donate</a>
             <a class="Header__NavItem" rel="noreferrer noorigin" href="https://wiki.tgstation13.org">Wiki</a>
             <a class="Header__NavItem" href="/newsletters/">Newsletter</a>
+            <div class="Header__Menus">
+              <details class="Header__NavItem Menu" name="nav">
+                <summary class="Menu__Title">Dev</summary>
+                <ul class="Menu__List">
+                  <li><a class="Offsite" rel="noreferrer" href="https://github.com/tgstation/tgstation">/tg/station 13 GitHub</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://github.com/tgstation-operations/infrastructure">/tg/station 13 Infrastructure</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://github.com/tgstation-operations/server-config">Server Config</a></li>
+                </ul>
+              </details>
+              <details class="Header__NavItem Menu" name="nav">
+                <summary class="Menu__Title">Social Media</summary>
+                <ul class="Menu__List">
+                  <li><a class="Offsite" rel="noreferrer" href="https://www.youtube.com/@TGStation13">YouTube</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://www.reddit.com/user/TGstation13/">Reddit</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://bsky.app/profile/tgstation13.org">Bluesky</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://twitter.com/TGStation13">Twitter</a></li>
+                </ul>
+              </details>
+              <details class="Header__NavItem Menu" name="nav">
+                <summary class="Menu__Title">Cool Shit</summary>
+                <ul class="Menu__List">
+                  <li><a class="Offsite" rel="noreferrer" href="https://statbus.space">Stats</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://bsky.app/profile/polytheparrot.bsky.social">@PolyTheParrot</a></li>
+                  <li><a class="Offsite" rel="noreferrer" href="https://spacestationidle.com/">Space Station Idle</a></li>
+                </ul>
+              </details>
+            </div>
           </nav>
         </header>
 
