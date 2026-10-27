@@ -51,7 +51,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     fenix = {
-      url = "github:nix-community/fenix";
+      # TGS builds the games' Rust libraries with this toolchain on every
+      # deploy, and Rust 1.100 cannot build dreamluau 0.1.2, which they pin.
+      url = "github:nix-community/fenix?rev=eee23db5a2c4a6d3d4ed117370f5f490da65b665";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     authentik-nix = {
