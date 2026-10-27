@@ -16,8 +16,6 @@
     PKG_CONFIG_PATH_i686_unknown_linux_gnu = lib.makeSearchPath "lib/pkgconfig" (with pkgs.pkgsi686Linux; [
       openssl.dev
       zlib.dev
-      mariadb
-      sqlite.dev
     ]);
     # bindgen runs on the host arch, so LIBCLANG_PATH must point at host libclang.
     LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
@@ -248,7 +246,7 @@ in {
     # environmentFile =  # Required, add to host config to specify the database URI
     extra-path = lib.makeBinPath (
       with pkgs; [
-        (with fenix.packages.x86_64-linux; combine [minimal.toolchain targets.i686-unknown-linux-gnu.minimal.rust-std])
+        (with fenix.packages.x86_64-linux; combine [stable.minimalToolchain targets.i686-unknown-linux-gnu.stable.rust-std])
         clangMultiStdenv.cc
         llvmPackages.libclang
         which
