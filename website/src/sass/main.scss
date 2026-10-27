@@ -147,6 +147,18 @@ a {
   white-space: nowrap;
 }
 
+// A link off tgstation13.org's sites. The arrow is drawn in the link's color
+// rather than as the character, which some platforms draw as a blue emoji.
+.Offsite::after {
+  content: "";
+  display: inline-block;
+  width: 1cap;
+  height: 1cap;
+  margin-left: 0.5em;
+  background-color: currentColor;
+  mask: url("arrow.svg") center / contain no-repeat;
+}
+
 .Footer {
   border: 0.125rem solid #333;
   background-color: #222;
