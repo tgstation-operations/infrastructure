@@ -71,7 +71,8 @@ in
       gameserver.wait_until_succeeds("${checkedUp "sybilout" "sybil" "L7OK"}")
       relay.wait_until_succeeds("${checkedUp "sybilout" "gameserver" "L4OK"}")
 
-      with subtest("DreamDaemon sees the player's own address"):
+      with subtest("DreamDaemon sees the player's own address, with forwarding off"):
+          gameserver.succeed("sysctl -n net.ipv4.conf.all.forwarding | grep -Fx 0")
           client.succeed("echo hi | nc -N -w 5 relay ${toString port} | grep -Fx ${nodes.client.networking.primaryIPAddress}")
 
       with subtest("metrics are reachable over the overlay, not from outside"):

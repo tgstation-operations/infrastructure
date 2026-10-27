@@ -110,8 +110,6 @@ in {
 
       networking.firewall.interfaces.${cfg.interface}.allowedTCPPorts = map proxyPort (lib.attrValues cfg.games);
 
-      services.tailscale.useRoutingFeatures = lib.mkForce "both"; # IP Forwarding
-
       networking.iproute2 = {
         enable = true;
         rttablesExtraConfig = "100 haproxy";
