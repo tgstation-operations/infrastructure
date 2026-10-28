@@ -13,9 +13,6 @@ in {
     "d /run/php/caddy 770 ${config.services.caddy.user} ${config.services.caddy.group}"
   ];
 
-  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
-    2019 # Caddy admin API and metrics
-  ];
   networking.firewall.allowedTCPPorts = [
     80
     443

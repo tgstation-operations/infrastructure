@@ -13,9 +13,6 @@ in {
     "d /run/php/caddy 770 ${config.services.caddy.user} ${config.services.caddy.group}"
   ];
 
-  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
-    2019 # Caddy admin API and metrics
-  ];
   age.secrets = {
     cloudflare-api.file = ../../../../../../secrets/cloudflare-api.age;
     aws_credentials.file = ../../secrets/aws_credentials.age;

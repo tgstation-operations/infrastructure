@@ -14,7 +14,6 @@ in {
   ];
 
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
-    2019 # Caddy admin API and metrics
     443
     80
   ];
