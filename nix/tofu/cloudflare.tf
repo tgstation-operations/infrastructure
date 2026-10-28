@@ -61,7 +61,7 @@ locals {
     "raw-tgmc-logs CNAME"                               = { name = "raw-tgmc-logs", type = "CNAME", content = "dfdeb88f-c4e3-43a9-8964-a23f97dc3832.cfargotunnel.com", proxied = true }
     "rsc CNAME"                                         = { name = "rsc", type = "CNAME", content = "public.r2.dev", proxied = true }
     "s3 CNAME"                                          = { name = "s3", type = "CNAME", content = "tgsatan.vpn.tgstation13.org" }
-    "funnyname.staging CNAME"                           = { name = "funnyname.staging", type = "CNAME", content = "wiggle.tg.lan" }
+    "funnyname.staging A"                               = { name = "funnyname.staging", type = "A", content = "70.34.252.234" }
     "web.staging CNAME"                                 = { name = "web.staging", type = "CNAME", content = "warsaw.vpn.tgstation13.org" }
     "tgs.wiggle.staging CNAME"                          = { name = "tgs.wiggle.staging", type = "CNAME", content = "wiggle.vpn.tgstation13.org" }
     "sybil CNAME"                                       = { name = "sybil", type = "CNAME", content = "tgsatan.us.tgstation13.org" }
@@ -90,4 +90,9 @@ resource "cloudflare_dns_record" "tgstation13_org" {
   proxied  = try(each.value.proxied, false)
   priority = try(each.value.priority, null)
   comment  = try(each.value.comment, null)
+}
+
+moved {
+  from = cloudflare_dns_record.tgstation13_org["funnyname.staging CNAME"]
+  to   = cloudflare_dns_record.tgstation13_org["funnyname.staging A"]
 }
