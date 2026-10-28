@@ -18,11 +18,15 @@
         enable = true;
         setupKeyFile = config.age.secrets.netbird-setup-key.path;
       };
-      # tg.lan still resolves through tailscale, and both daemons would rewrite
-      # resolv.conf under NetworkManager.
-      config.DisableDNS = true;
+      # The module overwrites only the keys it is given in the daemon's
+      # config.json, so a host where DNS was once disabled keeps it disabled.
+      config.DisableDNS = false;
     };
   };
+
+  # Each daemon hands resolved its own domain on its own link, tg.internal on
+  # NetBird's, where without it both would rewrite resolv.conf.
+  services.resolved.enable = true;
 
   # The daemon reads this file only in its preStart, and nixpkgs gives the unit
   # no trigger on it, so a change to the config above would otherwise wait for

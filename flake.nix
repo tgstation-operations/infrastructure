@@ -106,7 +106,10 @@
           })
           .caddy;
       };
-      netbird.domain = "netbird.tgstation13.org";
+      netbird = {
+        domain = "netbird.tgstation13.org";
+        dns-domain = "tg.internal";
+      };
     };
 
     tgsatan = {
