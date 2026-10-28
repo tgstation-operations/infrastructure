@@ -246,21 +246,4 @@ in {
       "atticd"
     ];
   };
-
-  virtualisation.oci-containers = {
-    backend = "docker";
-    containers = {
-      nvidia-stats = {
-        hostname = "nvidia-stats";
-        image = "nvcr.io/nvidia/k8s/dcgm-exporter:3.3.8-3.6.0-ubuntu22.04";
-        ports = ["127.0.0.1:9400:9400"];
-        extraOptions = [
-          "--cap-add"
-          "SYS_ADMIN"
-          "--device"
-          "nvidia.com/gpu=all"
-        ];
-      };
-    };
-  };
 }

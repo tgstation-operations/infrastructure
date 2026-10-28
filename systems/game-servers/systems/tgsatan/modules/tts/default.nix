@@ -13,6 +13,8 @@
     text = builtins.replaceStrings ["$TGTTS_HAPROXY_CFG_PATH$" "$TGTTS_BLIPS_PATH$" "$TGTTS_IMAGE_NAME$" "$TGTTS_PUBLIC_PORT$"] ["${haproxy-cfg}" workspace-directory name "${toString port}"] (builtins.readFile ./docker-compose.yml);
   };
 in {
+  virtualisation.docker.enable = true;
+
   users = {
     users."${name}" = {
       group = name;

@@ -10,6 +10,11 @@
     inherit lib pkgs;
   };
   webui-port = "3919";
+  # The public halves of each node's /persist/garage/meta/node_key.
+  nodeIds = {
+    tgsatan = "72f76b955ffcb45e43150a3dc031a3a00111e1bf58a78919d886a2cdb1ce194f";
+    blockmoths = "f7e406943d08fe0741bab5844286538abd92ee599ead4f2a25d6c53747c903dc";
+  };
 in {
   networking.firewall.interfaces.wt0.allowedTCPPorts = [
     3901 # RPC
@@ -31,6 +36,9 @@ in {
         compression_level = 9;
         rpc_bind_addr = "[::]:3901";
         rpc_public_addr = "${netbirdIPv4}:3901";
+        # A node otherwise dials its peers at the addresses it last stored for
+        # them, and resolves these names again whenever it looks for peers.
+        bootstrap_peers = lib.mapAttrsToList (name: id: "${id}@${name}.tg.internal:3901") (removeAttrs nodeIds [config.networking.hostName]);
         # rpc_secret is set by $GARAGE_RPC_SECRET
         s3_api = {
           s3_region = "garage";
