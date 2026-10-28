@@ -140,6 +140,22 @@ resource "netbird_policy" "deploy_from_ci" {
   }
 }
 
+resource "netbird_policy" "lemon_forums_database" {
+  name    = "Lemon Forums Database"
+  enabled = true
+
+  rule {
+    name                 = "Lemon Forums Database"
+    action               = "accept"
+    protocol             = "tcp"
+    bidirectional        = false
+    enabled              = true
+    ports                = ["3306"]
+    source_resource      = { type = "peer", id = data.netbird_peer.this["lemon"].id }
+    destination_resource = { type = "peer", id = data.netbird_peer.this["tgsatan"].id }
+  }
+}
+
 resource "netbird_policy" "lemon_game_server_status_scraping" {
   name    = "Lemon Game Server Status Scraping"
   enabled = true
