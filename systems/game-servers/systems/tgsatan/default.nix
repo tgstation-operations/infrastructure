@@ -119,6 +119,9 @@ in {
     };
   };
 
+  # Egress goes through a relay, by NetBird's exit route.
+  services.netbird.useRoutingFeatures = "client";
+
   hardware.nvidia-container-toolkit.enable = true;
   # Allow the 10.10.11.0/24 range to talk to each other over bridge
   # This allows docker container 2 container networking to work for a specific network only

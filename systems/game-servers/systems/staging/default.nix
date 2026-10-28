@@ -59,6 +59,9 @@ in {
     };
   };
 
+  # Egress goes through a relay, by NetBird's exit route.
+  services.netbird.useRoutingFeatures = "client";
+
   programs.nix-ld.enable = true;
 
   networking.nameservers = [
