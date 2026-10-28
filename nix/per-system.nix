@@ -5,9 +5,13 @@
   inherit (pkgs) alejandra;
   fmt = import ./scripts/fmt.nix {inherit pkgs alejandra;};
   audit = import ./scripts/audit.nix {inherit pkgs fmt;};
+  tofu = import ./scripts/tofu.nix {
+    inherit pkgs;
+    agenix = inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  };
 in {
   packages = {
-    inherit fmt audit;
+    inherit fmt audit tofu;
     tgstation-website = pkgs.callPackage ./packages/tgstation-website/package.nix {};
     website-sprites = pkgs.writers.writePython3Bin "website-sprites" {libraries = [pkgs.python3Packages.pillow];} (builtins.readFile ../website/sprites/cut.py);
   };
