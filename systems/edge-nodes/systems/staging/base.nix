@@ -15,6 +15,12 @@
 
   tgstation.haproxy.relay-for = ["wiggle"];
 
+  # A relay can be the exit route game servers egress through; which peers use
+  # it is NetBird's to decide.
+  networking.firewall.extraForwardRules = ''
+    iifname "wt0" oifname != "wt0" accept
+  '';
+
   services.tailscale.useRoutingFeatures = lib.mkForce "server";
   age.secrets.netbird-setup-key.file = ../../../../secrets/netbird-setup-key-staging.age;
 
