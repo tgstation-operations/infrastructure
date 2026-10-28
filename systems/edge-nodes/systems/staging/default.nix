@@ -12,6 +12,10 @@
     efiInstallAsRemovable = true;
     device = "nodev";
   };
+  services.tgstation-server-info-fetcher.servers = [
+    "wiggle.tg.lan:8989"
+    "wiggle.tg.lan:8085"
+  ];
   services.tgstation-phpbb = {
     enable = true;
     groupname = "caddy";
