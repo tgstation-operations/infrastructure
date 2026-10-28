@@ -14,12 +14,7 @@
     owner = "${config.systemd.services.grafana.serviceConfig.User}";
   };
 
-  # http_addr is the tailscale IP, which only exists once tailscale is up;
-  # tg-tailscale-wait-dhcp holds network-online.target until then.
-  systemd.services.grafana = {
-    wants = ["network-online.target"];
-    after = ["network-online.target"];
-  };
+  networking.firewall.interfaces.wt0.allowedTCPPorts = [config.services.grafana.settings.server.http_port];
 
   services.grafana = {
     enable = true;
@@ -39,7 +34,7 @@
       };
 
       server = {
-        http_addr = "100.64.0.1"; # tailscale IP
+        http_addr = "::";
         http_port = 3000;
         protocol = "https";
         enforce_domain = false;

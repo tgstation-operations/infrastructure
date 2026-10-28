@@ -11,7 +11,7 @@
   };
   webui-port = "3919";
 in {
-  networking.firewall.allowedTCPPorts = [
+  networking.firewall.interfaces.wt0.allowedTCPPorts = [
     3901 # RPC
   ];
   age.secrets.garage.file = ../../secrets/garage.age;
@@ -29,7 +29,7 @@ in {
         db_engine = "lmdb";
         block_size = "1M"; # Default
         compression_level = 9;
-        rpc_bind_addr = "${headscaleIPv4}:3901";
+        rpc_bind_addr = "[::]:3901";
         rpc_public_addr = "${headscaleIPv4}:3901";
         # rpc_secret is set by $GARAGE_RPC_SECRET
         s3_api = {
