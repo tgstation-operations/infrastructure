@@ -14,8 +14,6 @@ locals {
     "@ TXT google-site-verification"                    = { name = "@", type = "TXT", content = "\"google-site-verification=V6bISpp89hDDQr49DThXX9LCGxGXNeWVnyotKfo7_e4\"", ttl = 3600 }
     "@ TXT protonmail-verification"                     = { name = "@", type = "TXT", content = "\"protonmail-verification=06d259e716f721d9e032ee0c93c46c45cdcca281\"" }
     "@ TXT spf1"                                        = { name = "@", type = "TXT", content = "\"v=spf1 include:_spf.google.com include:amazonses.com include:spf.brevo.com -all\"", ttl = 3600 }
-    "2fa CNAME"                                         = { name = "2fa", type = "CNAME", content = "lemon.tgstation13.org", proxied = true }
-    "2fa-staging CNAME"                                 = { name = "2fa-staging", type = "CNAME", content = "wiggle.tg.lan" }
     "_atproto TXT"                                      = { name = "_atproto", type = "TXT", content = "\"did=did:plc:lsemx47wrx4izbfubapz2csn\"", comment = "Bluesky Handle Domain Verification" }
     "_dmarc TXT"                                        = { name = "_dmarc", type = "TXT", content = "\"v=DMARC1; p=reject; rua=mailto:rua@dmarc.brevo.com\"" }
     "3mnlnd4i2jpq7hq5k23slnczu7eceywn._domainkey CNAME" = { name = "3mnlnd4i2jpq7hq5k23slnczu7eceywn._domainkey", type = "CNAME", content = "3mnlnd4i2jpq7hq5k23slnczu7eceywn.dkim.amazonses.com", ttl = 300 }
@@ -43,7 +41,6 @@ locals {
     "garage CNAME"                                      = { name = "garage", type = "CNAME", content = "tgsatan.vpn.tgstation13.org" }
     "github-webhooks CNAME"                             = { name = "github-webhooks", type = "CNAME", content = "lemon.tgstation13.org", proxied = true }
     "lemon A"                                           = { name = "lemon", type = "A", content = "51.79.52.10", proxied = true }
-    "lime A"                                            = { name = "lime", type = "A", content = "15.204.224.136", proxied = true }
     "mail MX"                                           = { name = "mail", type = "MX", content = "feedback-smtp.us-east-1.amazonses.com", priority = 10 }
     "manuel CNAME"                                      = { name = "manuel", type = "CNAME", content = "tgsatan.us.tgstation13.org" }
     "manuel-2 CNAME"                                    = { name = "manuel-2", type = "CNAME", content = "tgsatan.us.tgstation13.org" }
