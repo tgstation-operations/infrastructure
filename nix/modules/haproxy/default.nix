@@ -27,7 +27,7 @@ in {
   options.tgstation.haproxy = {
     interface = lib.mkOption {
       type = lib.types.str;
-      default = "tailscale0";
+      default = "wt0";
       description = "The overlay network's interface, over which relays reach game servers and monitoring reaches HAProxy.";
     };
 
@@ -108,7 +108,9 @@ in {
           '')
           cfg.games);
 
-      networking.firewall.interfaces.${cfg.interface}.allowedTCPPorts = map proxyPort (lib.attrValues cfg.games);
+      # server-info-fetcher and the PR announcer query DreamDaemon's topic port
+      # directly, past the relays.
+      networking.firewall.interfaces.${cfg.interface}.allowedTCPPorts = map proxyPort (lib.attrValues cfg.games) ++ lib.attrValues cfg.games;
 
       networking.iproute2 = {
         enable = true;

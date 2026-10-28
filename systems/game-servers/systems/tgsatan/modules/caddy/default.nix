@@ -13,6 +13,13 @@ in {
     "d /run/php/caddy 770 ${config.services.caddy.user} ${config.services.caddy.group}"
   ];
 
+  networking.firewall.interfaces.wt0 = {
+    allowedTCPPorts = [
+      80
+      443
+    ];
+    allowedUDPPorts = [443];
+  };
   age.secrets = {
     cloudflare-api.file = ../../../../../../secrets/cloudflare-api.age;
     aws_credentials.file = ../../secrets/aws_credentials.age;

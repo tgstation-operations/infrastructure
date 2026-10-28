@@ -37,8 +37,8 @@ in
       environment.systemPackages = [pkgs.curl pkgs.netcat-openbsd];
     };
 
-    # vlan 1 stands in for the internet and vlan 2 for the overlay, which is not
-    # a trusted interface the way tailscale0 is.
+    # vlan 1 stands in for the internet and vlan 2 for the overlay, which, like
+    # wt0, is not a trusted interface.
     nodes = {
       client.virtualisation.vlans = [1];
 

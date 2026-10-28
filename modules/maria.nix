@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
+  networking.firewall.interfaces.wt0.allowedTCPPorts = [
     3306
   ];
   services.mysql = {
