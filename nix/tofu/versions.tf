@@ -6,6 +6,9 @@ terraform {
     cloudflare = {
       source = "cloudflare/cloudflare"
     }
+    netbird = {
+      source = "netbirdio/netbird"
+    }
   }
 
   backend "s3" {
@@ -43,3 +46,7 @@ provider "aws" {
 }
 
 provider "cloudflare" {}
+
+provider "netbird" {
+  management_url = "https://netbird.tgstation13.org"
+}

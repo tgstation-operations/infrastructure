@@ -5,7 +5,11 @@
 pkgs.writeShellApplication {
   name = "tofu";
   runtimeInputs = [
-    (pkgs.opentofu.withPlugins (p: [p.hashicorp_aws p.cloudflare_cloudflare]))
+    (pkgs.opentofu.withPlugins (p: [
+      p.hashicorp_aws
+      p.cloudflare_cloudflare
+      (pkgs.callPackage ../packages/terraform-provider-netbird/package.nix {})
+    ]))
     agenix
     pkgs.git
   ];
@@ -21,9 +25,13 @@ pkgs.writeShellApplication {
     while IFS= read -r line || [ -n "$line" ]; do
       name=''${line%%=*}
       case $name in
-        AWS_ACCESS_KEY_ID | AWS_SECRET_ACCESS_KEY | TF_VAR_state_passphrase) export "$name=''${line#*=}" ;;
+        AWS_ACCESS_KEY_ID | AWS_SECRET_ACCESS_KEY | NB_PAT | TF_VAR_state_passphrase) export "$name=''${line#*=}" ;;
       esac
-    done < <(decrypt nix/tofu/secrets aws.age; decrypt nix/tofu/secrets state-passphrase.age)
+    done < <(
+      decrypt nix/tofu/secrets aws.age
+      decrypt nix/tofu/secrets netbird-pat.age
+      decrypt nix/tofu/secrets state-passphrase.age
+    )
 
     exec tofu -chdir="$root/nix/tofu" "$@"
   '';
