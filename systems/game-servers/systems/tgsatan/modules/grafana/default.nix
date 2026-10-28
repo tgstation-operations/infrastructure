@@ -39,7 +39,7 @@
         protocol = "https";
         enforce_domain = false;
         enable_gzip = true;
-        domain = "tgsatan.tg.lan";
+        domain = "tgsatan.tg.internal";
         cookie_secure = true;
       };
 
@@ -71,7 +71,7 @@
           name = "prometheus";
           type = "prometheus";
           access = "proxy";
-          url = "http://tgsatan.tg.lan:9090"; # Change when prometheus is moved
+          url = "http://127.0.0.1:9090"; # Change when prometheus is moved
           isDefault = true;
         }
       ];

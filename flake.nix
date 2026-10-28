@@ -114,7 +114,7 @@
 
     tgsatan = {
       deployment = {
-        targetHost = "tgsatan.tg.lan";
+        targetHost = "tgsatan.tg.internal";
         targetUser = "deploy";
       };
       imports =
@@ -143,7 +143,7 @@
 
     dallas = {
       deployment = {
-        targetHost = "dallas.tg.lan";
+        targetHost = "dallas.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-amd64"
@@ -160,7 +160,7 @@
 
     chicago = {
       deployment = {
-        targetHost = "chicago.tg.lan";
+        targetHost = "chicago.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-amd64"
@@ -177,7 +177,7 @@
 
     atlanta = {
       deployment = {
-        targetHost = "atlanta.tg.lan";
+        targetHost = "atlanta.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-amd64"
@@ -194,7 +194,7 @@
 
     blockmoths = {
       deployment = {
-        targetHost = "blockmoths.tg.lan";
+        targetHost = "blockmoths.tg.internal";
         targetUser = "deploy";
       };
       imports =
@@ -208,7 +208,7 @@
     };
     wiggle = {
       deployment = {
-        targetHost = "wiggle.tg.lan";
+        targetHost = "wiggle.tg.internal";
         targetUser = "deploy";
         tags = [
           "staging"
@@ -224,7 +224,7 @@
     };
     warsaw = {
       deployment = {
-        targetHost = "warsaw.tg.lan";
+        targetHost = "warsaw.tg.internal";
         targetUser = "deploy";
         tags = [
           "staging"
@@ -240,7 +240,7 @@
     };
     lemon = {
       deployment = {
-        targetHost = "lemon.tg.lan";
+        targetHost = "lemon.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-amd64"
@@ -256,7 +256,7 @@
     };
     bratwurst = {
       deployment = {
-        targetHost = "bratwurst.tg.lan";
+        targetHost = "bratwurst.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-arm"
@@ -273,7 +273,7 @@
     };
     dachshund = {
       deployment = {
-        targetHost = "dachshund.tg.lan";
+        targetHost = "dachshund.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-arm"
@@ -290,7 +290,7 @@
     };
     knipp = {
       deployment = {
-        targetHost = "knipp.tg.lan";
+        targetHost = "knipp.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-arm"

@@ -208,7 +208,7 @@ in {
     enable = true;
     settings = {
       server = {
-        domain = "tgsatan.tg.lan";
+        domain = "tgsatan.tg.internal";
       };
     };
   };
