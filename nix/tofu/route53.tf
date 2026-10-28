@@ -44,3 +44,34 @@ resource "aws_route53_record" "this" {
     }
   }
 }
+
+data "aws_route53_zone" "this" {
+  for_each = local.route53_zone_ids
+  zone_id  = each.value
+}
+
+# Cloudflare's zone delegates us and eu to every name server their hosted
+# zones have, so that no single one is needed to find them.
+resource "cloudflare_dns_record" "route53_delegation" {
+  for_each = {
+    for d in flatten([
+      for zone, z in data.aws_route53_zone.this : [for ns in z.name_servers : { zone = zone, ns = ns }]
+    ]) : "${d.zone} ${d.ns}" => d
+  }
+
+  zone_id = local.cloudflare_zone_id
+  name    = "${each.value.zone}.tgstation13.org"
+  type    = "NS"
+  content = each.value.ns
+  ttl     = 1
+}
+
+moved {
+  from = cloudflare_dns_record.tgstation13_org["us NS"]
+  to   = cloudflare_dns_record.route53_delegation["us ns-362.awsdns-45.com"]
+}
+
+moved {
+  from = cloudflare_dns_record.tgstation13_org["eu NS"]
+  to   = cloudflare_dns_record.route53_delegation["eu ns-1071.awsdns-05.org"]
+}
