@@ -4,10 +4,12 @@
   config,
   lib,
   tg-globals,
-  headscaleIPv4,
+  netbirdIPv4,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
+  # Ahead of NetBird's rules, at 105 and 110.
+  publicAddressRule = "from 116.202.146.157 lookup main priority 100";
   baseModules = [
     (import hw.common-cpu-amd)
     inputs.oidc-reverse-proxy.nixosModules.default
@@ -16,7 +18,6 @@
   localModules = [
     ./disko.nix
     ./modules/caddy
-    ./modules/haproxy
     ./modules/motd
     (import ../../modules/logs {
       inherit pkgs config tg-globals;
@@ -37,7 +38,7 @@
       age-file = ./secrets/cloudflared.age;
     })
     (import ../../modules/garage {
-      inherit pkgs config lib headscaleIPv4;
+      inherit pkgs config lib netbirdIPv4;
       enable-webui = false;
     })
     ../../modules/motd.nix
@@ -63,6 +64,35 @@ in {
   services.xserver.xkb.layout = "us";
 
   imports = baseModules ++ localModules;
+
+  tgstation.haproxy = {
+    address = netbirdIPv4;
+    games = {
+      terry = 3336;
+      cool = 8085;
+    };
+  };
+
+  # Egress goes through a relay, by NetBird's exit route.
+  services.netbird.useRoutingFeatures = "client";
+
+  # The exit route takes everything the main table has no more specific route
+  # for, replies to connections on the public address included, which would
+  # leave through knipp instead of the uplink they arrived on.
+  systemd.services.public-address-replies = {
+    description = "Route replies from the public address out the uplink";
+    wantedBy = ["multi-user.target"];
+    path = [pkgs.iproute2];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      ip rule del ${publicAddressRule} 2>/dev/null || true
+      ip rule add ${publicAddressRule}
+    '';
+    preStop = "ip rule del ${publicAddressRule}";
+  };
 
   programs.nix-ld.enable = true;
 

@@ -57,7 +57,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     authentik-nix = {
-      url = "github:nix-community/authentik-nix?rev=afdb2eeca1e0b38fabb93c4a8944be73d3581268";
+      url = "github:nix-community/authentik-nix?rev=48ddf622759f590470b69374fd999f08de96d190";
       # add this follows back when we bump nixpkgs
       # inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -80,6 +80,7 @@
       inputs.disko.nixosModules.default
       # inputs.lix-module.nixosModules.default
       (import ./modules/colmena_ci.nix)
+      (import ./nix/modules/haproxy)
     ];
 
     colmenaPackages = import nixpkgs {
@@ -105,12 +106,15 @@
           })
           .caddy;
       };
-      netbird.domain = "netbird.tgstation13.org";
+      netbird = {
+        domain = "netbird.tgstation13.org";
+        dns-domain = "tg.internal";
+      };
     };
 
     tgsatan = {
       deployment = {
-        targetHost = "tgsatan.tg.lan";
+        targetHost = "tgsatan.tg.internal";
         targetUser = "deploy";
       };
       imports =
@@ -139,7 +143,7 @@
 
     dallas = {
       deployment = {
-        targetHost = "dallas.tg.lan";
+        targetHost = "dallas.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-amd64"
@@ -156,7 +160,7 @@
 
     chicago = {
       deployment = {
-        targetHost = "chicago.tg.lan";
+        targetHost = "chicago.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-amd64"
@@ -173,7 +177,7 @@
 
     atlanta = {
       deployment = {
-        targetHost = "atlanta.tg.lan";
+        targetHost = "atlanta.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-amd64"
@@ -190,7 +194,7 @@
 
     blockmoths = {
       deployment = {
-        targetHost = "blockmoths.tg.lan";
+        targetHost = "blockmoths.tg.internal";
         targetUser = "deploy";
       };
       imports =
@@ -204,7 +208,7 @@
     };
     wiggle = {
       deployment = {
-        targetHost = "wiggle.tg.lan";
+        targetHost = "wiggle.tg.internal";
         targetUser = "deploy";
         tags = [
           "staging"
@@ -220,7 +224,7 @@
     };
     warsaw = {
       deployment = {
-        targetHost = "warsaw.tg.lan";
+        targetHost = "warsaw.tg.internal";
         targetUser = "deploy";
         tags = [
           "staging"
@@ -236,7 +240,7 @@
     };
     lemon = {
       deployment = {
-        targetHost = "lemon.tg.lan";
+        targetHost = "lemon.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-amd64"
@@ -252,7 +256,7 @@
     };
     bratwurst = {
       deployment = {
-        targetHost = "bratwurst.tg.lan";
+        targetHost = "bratwurst.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-arm"
@@ -269,7 +273,7 @@
     };
     dachshund = {
       deployment = {
-        targetHost = "dachshund.tg.lan";
+        targetHost = "dachshund.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-arm"
@@ -286,7 +290,7 @@
     };
     knipp = {
       deployment = {
-        targetHost = "knipp.tg.lan";
+        targetHost = "knipp.tg.internal";
         targetUser = "deploy";
         tags = [
           "relay-arm"
@@ -344,13 +348,13 @@
         };
         nodeSpecialArgs = {
           tgsatan = {
-            headscaleIPv4 = "100.64.0.1";
+            netbirdIPv4 = "100.13.161.130";
           };
           wiggle = {
-            headscaleIPv4 = "100.64.0.25";
+            netbirdIPv4 = "100.13.81.56";
           };
           blockmoths = {
-            headscaleIPv4 = "100.64.0.11";
+            netbirdIPv4 = "100.13.184.17";
           };
           bratwurst = {
             pkgs-unstable = import nixpkgs-unstable {

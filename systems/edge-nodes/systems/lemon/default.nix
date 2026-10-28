@@ -18,6 +18,15 @@
   ];
   networking.hostName = "lemon";
   services = {
+    tgstation-server-info-fetcher.servers = [
+      "blockmoths.tg.internal:3336"
+      "tgsatan.tg.internal:1337"
+      "tgsatan.tg.internal:1447"
+      "tgsatan.tg.internal:1887"
+      "tgsatan.tg.internal:5337"
+      "tgsatan.tg.internal:7337"
+      "tgsatan.tg.internal:7777"
+    ];
     mysql = {
       settings = {
         mariadb = {
@@ -40,10 +49,7 @@
     };
   };
 
-  age.secrets.authentik = {
-    file = ../../secrets/authentik.age;
-    owner = "${config.systemd.services.authentik.serviceConfig.User}";
-  };
+  age.secrets.authentik.file = ../../secrets/authentik.age;
 
   system.stateVersion = "24.11";
   nixpkgs.hostPlatform = "x86_64-linux";

@@ -13,11 +13,11 @@ in {
     scrapeConfigs = [
       {
         job_name = "tgsatan_gpu_1";
-        static_configs = [{targets = ["tgsatan.tg.lan:9400"];}];
+        static_configs = [{targets = ["127.0.0.1:9400"];}];
       }
       {
         job_name = "caddy";
-        static_configs = [{targets = ["tgsatan.tg.lan:2019"];}];
+        static_configs = [{targets = ["127.0.0.1:2019"];}];
       }
       # {
       #  job_name = "tgsatan_forgejo";
@@ -28,10 +28,10 @@ in {
         static_configs = [
           {
             targets = [
-              "tgsatan.tg.lan:${systemdPromPort}"
-              "blockmoths.tg.lan:${systemdPromPort}"
-              "wiggle.tg.lan:${systemdPromPort}"
-              "vpn.tg.lan:${systemdPromPort}"
+              "tgsatan.tg.internal:${systemdPromPort}"
+              "blockmoths.tg.internal:${systemdPromPort}"
+              "wiggle.tg.internal:${systemdPromPort}"
+              "vpn.tg.internal:${systemdPromPort}"
             ];
           }
         ];
@@ -41,10 +41,10 @@ in {
         static_configs = [
           {
             targets = [
-              "tgsatan.tg.lan:${nodeExporterPort}"
-              "blockmoths.tg.lan:${nodeExporterPort}"
-              "wiggle.tg.lan:${nodeExporterPort}"
-              "vpn.tg.lan:${nodeExporterPort}"
+              "tgsatan.tg.internal:${nodeExporterPort}"
+              "blockmoths.tg.internal:${nodeExporterPort}"
+              "wiggle.tg.internal:${nodeExporterPort}"
+              "vpn.tg.internal:${nodeExporterPort}"
             ];
           }
         ];
@@ -54,9 +54,9 @@ in {
         static_configs = [
           {
             targets = [
-              "tgsatan.tg.lan:${haproxyPromPort}"
-              "blockmoths.tg.lan:${haproxyPromPort}"
-              "wiggle.tg.lan:${haproxyPromPort}"
+              "tgsatan.tg.internal:${haproxyPromPort}"
+              "blockmoths.tg.internal:${haproxyPromPort}"
+              "wiggle.tg.internal:${haproxyPromPort}"
             ];
           }
         ];
@@ -66,9 +66,9 @@ in {
         static_configs = [
           {
             targets = [
-              "tgsatan.tg.lan:${tgsPromPort}"
-              "blockmoths.tg.lan:${tgsPromPort}"
-              "wiggle.tg.lan:${tgsPromPort}"
+              "tgsatan.tg.internal:${tgsPromPort}"
+              "blockmoths.tg.internal:${tgsPromPort}"
+              "wiggle.tg.internal:${tgsPromPort}"
             ];
           }
         ];
@@ -78,7 +78,7 @@ in {
         static_configs = [
           {
             targets = [
-              "lemon.tg.lan:${prAnnouncerPort}"
+              "lemon.tg.internal:${prAnnouncerPort}"
             ];
           }
         ];
@@ -101,7 +101,7 @@ in {
           {
             targets =
               [
-                "warsaw.tg.lan:${nodeExporterPort}"
+                "warsaw.tg.internal:${nodeExporterPort}"
               ]
               ++ (import ./relay-nodes.nix) nodeExporterPort;
           }
@@ -113,7 +113,7 @@ in {
           {
             targets =
               [
-                "warsaw.tg.lan:${haproxyPromPort}"
+                "warsaw.tg.internal:${haproxyPromPort}"
               ]
               ++ (import ./relay-nodes.nix) haproxyPromPort;
           }

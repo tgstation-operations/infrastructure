@@ -6,6 +6,8 @@
   tg-globals,
   ...
 }: let
+  appsettings = import ./appsettings.nix {inherit tg-globals;};
+
   # Common environment variables for 32-bit cross-compilation
   tgs-env-vars = {
     CC_i686_unknown_linux_gnu = "${pkgs.pkgsi686Linux.stdenv.cc}/bin/cc";
@@ -239,9 +241,11 @@ in {
       group = "${config.services.tgstation-server.groupname}";
     };
   };
+  networking.firewall.interfaces.wt0.allowedTCPPorts = [appsettings.General.PrometheusPort];
+
   services.tgstation-server = {
     enable = true;
-    production-appsettings = pkgs.writeText "tgs_config.yml" (lib.generators.toYAML {} (import ./appsettings.nix {inherit tg-globals;}));
+    production-appsettings = pkgs.writeText "tgs_config.yml" (lib.generators.toYAML {} appsettings);
     home-directory = tg-globals.tgs.root-path;
     # environmentFile =  # Required, add to host config to specify the database URI
     extra-path = lib.makeBinPath (

@@ -26,10 +26,6 @@ in {
     "d /run/php/caddy 770 ${config.services.caddy.user} ${config.services.caddy.group}"
   ];
 
-  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
-    admin_port # Caddy admin API and metrics
-  ];
-
   age.secrets.cloudflare-api.file = ../../../../../secrets/cloudflare-api.age;
   security.acme = {
     acceptTerms = true;

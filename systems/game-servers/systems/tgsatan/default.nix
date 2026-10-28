@@ -3,7 +3,7 @@
   pkgs,
   lib,
   self,
-  headscaleIPv4,
+  netbirdIPv4,
   tg-globals,
   ...
 }: let
@@ -23,7 +23,7 @@
     ../../../../modules/netbird.nix
     ../../../../modules/restic.nix
     (import ../../modules/garage {
-      inherit pkgs config lib headscaleIPv4;
+      inherit pkgs config lib netbirdIPv4;
       enable-webui = true;
     })
     ../../modules/motd.nix
@@ -104,9 +104,23 @@ in {
     ++ localModules
     ++ [
       ./disko.nix
-      ./modules/haproxy
       ./modules/caddy
     ];
+
+  tgstation.haproxy = {
+    address = netbirdIPv4;
+    games = {
+      sybil = 1337;
+      manuel = 1447;
+      manuel2 = 1887;
+      tgmc = 5337;
+      effigy = 7337;
+      eventus = 7777;
+    };
+  };
+
+  # Egress goes through a relay, by NetBird's exit route.
+  services.netbird.useRoutingFeatures = "client";
 
   hardware.nvidia-container-toolkit.enable = true;
   # Allow the 10.10.11.0/24 range to talk to each other over bridge
@@ -194,7 +208,7 @@ in {
     enable = true;
     settings = {
       server = {
-        domain = "tgsatan.tg.lan";
+        domain = "tgsatan.tg.internal";
       };
     };
   };

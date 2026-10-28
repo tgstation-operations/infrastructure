@@ -54,6 +54,7 @@ in {
     management = {
       package = pkgs-unstable.netbird-management;
       turnDomain = domain;
+      dnsDomain = tg-globals.netbird.dns-domain;
       oidcConfigEndpoint = "${issuer}/.well-known/openid-configuration";
       settings = {
         DataStoreEncryptionKey = secret "netbird-datastore-key";

@@ -9,11 +9,13 @@
     "d /run/php/caddy 770 ${config.services.caddy.user} ${config.services.caddy.group}"
   ];
 
-  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
-    2019 # Caddy admin API and metrics
-    80
-    443
-  ];
+  networking.firewall.interfaces.wt0 = {
+    allowedTCPPorts = [
+      80
+      443
+    ];
+    allowedUDPPorts = [443];
+  };
   age.secrets.cloudflare-api.file = ../../../../../secrets/cloudflare-api.age;
   security.acme = {
     acceptTerms = true;

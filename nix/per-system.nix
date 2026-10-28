@@ -5,9 +5,13 @@
   inherit (pkgs) alejandra;
   fmt = import ./scripts/fmt.nix {inherit pkgs alejandra;};
   audit = import ./scripts/audit.nix {inherit pkgs fmt;};
+  tofu = import ./scripts/tofu.nix {
+    inherit pkgs;
+    agenix = inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  };
 in {
   packages = {
-    inherit fmt audit;
+    inherit fmt audit tofu;
     tgstation-website = pkgs.callPackage ./packages/tgstation-website/package.nix {};
     website-sprites = pkgs.writers.writePython3Bin "website-sprites" {libraries = [pkgs.python3Packages.pillow];} (builtins.readFile ../website/sprites/cut.py);
   };
@@ -16,5 +20,6 @@ in {
     rollback-root = import ./tests/rollback-root.nix {inherit pkgs inputs;};
     tgstation-server = import ./tests/tgstation-server.nix {inherit pkgs inputs;};
     byond-authentication-bridge = import ./tests/byond-authentication-bridge.nix {inherit pkgs;};
+    haproxy = import ./tests/haproxy.nix {inherit pkgs;};
   };
 }

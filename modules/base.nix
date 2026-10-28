@@ -61,6 +61,8 @@
   services.timesyncd.enable = true;
 
   networking.firewall.enable = true;
+  networking.firewall.rejectPackets = true;
+  networking.firewall.filterForward = true;
 
   security.apparmor.enable = true;
 
@@ -81,6 +83,22 @@
   users.defaultUserShell = pkgs.bash;
 
   networking.networkmanager.enable = true;
+
+  # Bunch of workarounds here due to https://github.com/NixOS/nixpkgs/issues/180175
+  systemd.services.NetworkManager-wait-online.enable = false;
+
+  systemd.services.tgstation-wait-online = {
+    enable = true;
+    description = "tgstation-NetworkManager-wait-online-replacement";
+    requires = ["NetworkManager.service"];
+    after = ["NetworkManager.service"];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.networkmanager}/bin/nm-online -q";
+      Environment = "NM_ONLINE_TIMEOUT=60";
+    };
+    wantedBy = ["network-online.target"];
+  };
 
   networking.nftables.enable = true;
 
