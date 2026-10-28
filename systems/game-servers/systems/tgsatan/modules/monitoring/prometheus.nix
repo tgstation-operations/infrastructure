@@ -6,14 +6,20 @@
   prAnnouncerPort = "5004";
   # The following is already a string, so no need to convert it
   haproxyPromPort = config.systemd.services.haproxy.environment.PROMETHEUS_PORT;
+  gpuExporter = config.services.prometheus.exporters.nvidia-gpu;
 in {
+  services.prometheus.exporters.nvidia-gpu = {
+    enable = true;
+    listenAddress = "127.0.0.1";
+  };
+
   services.prometheus = {
     enable = true;
     globalConfig.scrape_interval = "10s";
     scrapeConfigs = [
       {
         job_name = "tgsatan_gpu_1";
-        static_configs = [{targets = ["127.0.0.1:9400"];}];
+        static_configs = [{targets = ["${gpuExporter.listenAddress}:${toString gpuExporter.port}"];}];
       }
       {
         job_name = "caddy";
