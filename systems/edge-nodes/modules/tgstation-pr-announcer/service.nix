@@ -71,6 +71,7 @@ in {
 
     systemd.services.tgstation-pr-announcer = {
       description = "tgstation-pr-announcer";
+      restartTriggers = [cfg.production-appsettings];
       serviceConfig = {
         EnvironmentFile = lib.mkIf (cfg.environmentFile != null) cfg.environmentFile;
         User = cfg.username;
