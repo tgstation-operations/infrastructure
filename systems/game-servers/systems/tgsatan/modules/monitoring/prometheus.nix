@@ -13,11 +13,11 @@ in {
     scrapeConfigs = [
       {
         job_name = "tgsatan_gpu_1";
-        static_configs = [{targets = ["tgsatan.tg.lan:9400"];}];
+        static_configs = [{targets = ["127.0.0.1:9400"];}];
       }
       {
         job_name = "caddy";
-        static_configs = [{targets = ["tgsatan.tg.lan:2019"];}];
+        static_configs = [{targets = ["127.0.0.1:2019"];}];
       }
       # {
       #  job_name = "tgsatan_forgejo";
