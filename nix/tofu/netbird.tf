@@ -7,6 +7,12 @@ data "netbird_group" "all" {
   name = "All"
 }
 
+locals {
+  # Every host joins one of these through its setup key, and people's devices
+  # join none of them.
+  hosts = [netbird_group.backend.id, netbird_group.relay.id, netbird_group.staging.id]
+}
+
 resource "netbird_group" "attic_enjoyer" {
   name = "Attic Enjoyer"
 }
@@ -88,10 +94,6 @@ resource "netbird_group" "us_relay" {
   ]
 }
 
-resource "netbird_group" "webserver" {
-  name = "Webserver"
-}
-
 resource "netbird_policy" "all_hosts_to_atticd" {
   name    = "All Hosts to Atticd"
   enabled = true
@@ -103,7 +105,7 @@ resource "netbird_policy" "all_hosts_to_atticd" {
     bidirectional        = false
     enabled              = true
     ports                = ["443"]
-    sources              = [data.netbird_group.all.id]
+    sources              = local.hosts
     destination_resource = { type = "peer", id = data.netbird_peer.this["tgsatan"].id }
   }
 }
@@ -136,7 +138,7 @@ resource "netbird_policy" "deploy_from_ci" {
     enabled       = true
     ports         = ["22"]
     sources       = [netbird_group.ci.id]
-    destinations  = [data.netbird_group.all.id]
+    destinations  = local.hosts
   }
 }
 
@@ -231,7 +233,7 @@ resource "netbird_policy" "tgsatan_prometheus_scrapers" {
     enabled         = true
     ports           = ["5001", "5004", "8405", "9100", "9558"]
     source_resource = { type = "peer", id = data.netbird_peer.this["tgsatan"].id }
-    destinations    = [data.netbird_group.all.id]
+    destinations    = local.hosts
   }
 }
 
