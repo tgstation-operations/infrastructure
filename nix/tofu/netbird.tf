@@ -229,7 +229,7 @@ resource "netbird_policy" "warsaw_wiggle_game_traffic" {
     protocol             = "tcp"
     bidirectional        = false
     enabled              = true
-    ports                = ["18085", "18989"]
+    ports                = ["8085", "8989", "18085", "18989"]
     source_resource      = { type = "peer", id = data.netbird_peer.this["warsaw"].id }
     destination_resource = { type = "peer", id = data.netbird_peer.this["wiggle"].id }
   }
