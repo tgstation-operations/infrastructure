@@ -4,7 +4,7 @@
   config,
   lib,
   tg-globals,
-  headscaleIPv4,
+  netbirdIPv4,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
@@ -38,7 +38,7 @@
       age-file = ./secrets/cloudflared.age;
     })
     (import ../../modules/garage {
-      inherit pkgs config lib headscaleIPv4;
+      inherit pkgs config lib netbirdIPv4;
       enable-webui = false;
     })
     ../../modules/motd.nix
@@ -66,7 +66,7 @@ in {
   imports = baseModules ++ localModules;
 
   tgstation.haproxy = {
-    address = headscaleIPv4;
+    address = netbirdIPv4;
     games = {
       terry = 3336;
       cool = 8085;

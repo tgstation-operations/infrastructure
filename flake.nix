@@ -348,13 +348,13 @@
         };
         nodeSpecialArgs = {
           tgsatan = {
-            headscaleIPv4 = "100.64.0.1";
+            netbirdIPv4 = "100.13.161.130";
           };
           wiggle = {
-            headscaleIPv4 = "100.64.0.25";
+            netbirdIPv4 = "100.13.81.56";
           };
           blockmoths = {
-            headscaleIPv4 = "100.64.0.11";
+            netbirdIPv4 = "100.13.184.17";
           };
           bratwurst = {
             pkgs-unstable = import nixpkgs-unstable {

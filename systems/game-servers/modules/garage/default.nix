@@ -2,7 +2,7 @@
   config,
   pkgs,
   lib,
-  headscaleIPv4,
+  netbirdIPv4,
   enable-webui,
   ...
 }: let
@@ -30,7 +30,7 @@ in {
         block_size = "1M"; # Default
         compression_level = 9;
         rpc_bind_addr = "[::]:3901";
-        rpc_public_addr = "${headscaleIPv4}:3901";
+        rpc_public_addr = "${netbirdIPv4}:3901";
         # rpc_secret is set by $GARAGE_RPC_SECRET
         s3_api = {
           s3_region = "garage";

@@ -3,7 +3,7 @@
   pkgs,
   lib,
   self,
-  headscaleIPv4,
+  netbirdIPv4,
   tg-globals,
   ...
 }: let
@@ -23,7 +23,7 @@
     ../../../../modules/netbird.nix
     ../../../../modules/restic.nix
     (import ../../modules/garage {
-      inherit pkgs config lib headscaleIPv4;
+      inherit pkgs config lib netbirdIPv4;
       enable-webui = true;
     })
     ../../modules/motd.nix
@@ -108,7 +108,7 @@ in {
     ];
 
   tgstation.haproxy = {
-    address = headscaleIPv4;
+    address = netbirdIPv4;
     games = {
       sybil = 1337;
       manuel = 1447;

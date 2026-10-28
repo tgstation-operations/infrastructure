@@ -5,7 +5,7 @@
   modulesPath,
   config,
   tg-globals,
-  headscaleIPv4,
+  netbirdIPv4,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
@@ -52,7 +52,7 @@ in {
   imports = baseModules ++ localModules;
 
   tgstation.haproxy = {
-    address = headscaleIPv4;
+    address = netbirdIPv4;
     games = {
       funnyname = 8989;
       cool = 8085;
