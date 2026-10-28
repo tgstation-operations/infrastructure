@@ -40,10 +40,7 @@
     };
   };
 
-  age.secrets.authentik = {
-    file = ../../secrets/authentik.age;
-    owner = "${config.systemd.services.authentik.serviceConfig.User}";
-  };
+  age.secrets.authentik.file = ../../secrets/authentik.age;
 
   system.stateVersion = "24.11";
   nixpkgs.hostPlatform = "x86_64-linux";
