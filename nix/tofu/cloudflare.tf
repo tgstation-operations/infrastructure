@@ -32,7 +32,6 @@ locals {
     "effigy CNAME"                                      = { name = "effigy", type = "CNAME", content = "tgsatan.us.tgstation13.org" }
     "effigy-logs CNAME"                                 = { name = "effigy-logs", type = "CNAME", content = "dfdeb88f-c4e3-43a9-8964-a23f97dc3832.cfargotunnel.com", proxied = true }
     "eu NS"                                             = { name = "eu", type = "NS", content = "ns-1071.awsdns-05.org" }
-    "tgs.blockmoths.eu CNAME"                           = { name = "tgs.blockmoths.eu", type = "CNAME", content = "blockmoths.tg.lan" }
     "eventhall CNAME"                                   = { name = "eventhall", type = "CNAME", content = "tgsatan.us.tgstation13.org" }
     "eventhallus-logs CNAME"                            = { name = "eventhallus-logs", type = "CNAME", content = "dfdeb88f-c4e3-43a9-8964-a23f97dc3832.cfargotunnel.com", proxied = true }
     "eventus-logs CNAME"                                = { name = "eventus-logs", type = "CNAME", content = "dfdeb88f-c4e3-43a9-8964-a23f97dc3832.cfargotunnel.com", proxied = true }
@@ -67,7 +66,6 @@ locals {
     "terry-logs CNAME"                                  = { name = "terry-logs", type = "CNAME", content = "276b7e4a-f91c-4b23-8060-78a0a1542e8d.cfargotunnel.com", proxied = true }
     "tgmc CNAME"                                        = { name = "tgmc", type = "CNAME", content = "tgsatan.us.tgstation13.org" }
     "us NS"                                             = { name = "us", type = "NS", content = "ns-362.awsdns-45.com", ttl = 300 }
-    "tgs.tgsatan.us CNAME"                              = { name = "tgs.tgsatan.us", type = "CNAME", content = "tgsatan.tg.lan" }
     "vpn A"                                             = { name = "vpn", type = "A", content = "144.202.94.16" }
     "tgsatan.vpn A"                                     = { name = "tgsatan.vpn", type = "A", content = "100.13.161.130" }
     "warsaw.vpn A"                                      = { name = "warsaw.vpn", type = "A", content = "100.64.0.140" }
