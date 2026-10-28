@@ -62,7 +62,7 @@ locals {
     "rsc CNAME"                                         = { name = "rsc", type = "CNAME", content = "public.r2.dev", proxied = true }
     "s3 CNAME"                                          = { name = "s3", type = "CNAME", content = "tgsatan.vpn.tgstation13.org" }
     "funnyname.staging CNAME"                           = { name = "funnyname.staging", type = "CNAME", content = "wiggle.tg.lan" }
-    "web.staging CNAME"                                 = { name = "web.staging", type = "CNAME", content = "wiggle.vpn.tgstation13.org" }
+    "web.staging CNAME"                                 = { name = "web.staging", type = "CNAME", content = "warsaw.vpn.tgstation13.org" }
     "tgs.wiggle.staging CNAME"                          = { name = "tgs.wiggle.staging", type = "CNAME", content = "wiggle.vpn.tgstation13.org" }
     "sybil CNAME"                                       = { name = "sybil", type = "CNAME", content = "tgsatan.us.tgstation13.org" }
     "sybil-logs CNAME"                                  = { name = "sybil-logs", type = "CNAME", content = "dfdeb88f-c4e3-43a9-8964-a23f97dc3832.cfargotunnel.com", proxied = true }
