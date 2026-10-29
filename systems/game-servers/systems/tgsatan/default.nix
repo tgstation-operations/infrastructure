@@ -92,7 +92,6 @@
     ./modules/motd
     ./modules/nvidia.nix
     ./modules/redbot.nix
-    ./modules/tgtts-qwen-cache-cleaner.nix
   ];
 in {
   networking.hostName = "tgsatan";
@@ -132,23 +131,6 @@ in {
   # Egress goes through a relay, by NetBird's exit route.
   services.netbird.useRoutingFeatures = "client";
 
-  # Runs only the tgtts-qwen3 compose stack tgtts replaced, stopped and kept
-  # for a rollback.
-  virtualisation.docker.enable = true;
-  hardware.nvidia-container-toolkit.enable = true;
-  # Allow the 10.10.11.0/24 range to talk to each other over bridge
-  # This allows docker container 2 container networking to work for a specific network only
-  # if you change the container network you should update this.
-  networking.firewall = {
-    enable = true;
-    # Allow docker bridges and docker default network traffic in
-    trustedInterfaces = ["docker0" "br-*"];
-    # This appends rules to the 'forward-allow' chain in the nixos-fw table
-    extraForwardRules = ''
-      iifname "br-*" accept
-      iifname "docker0" accept
-    '';
-  };
   programs.nix-ld.enable = true;
 
   boot = {
@@ -172,7 +154,6 @@ in {
       "/etc/NetworkManager/system-connections"
       "/var/lib/acme"
       "/var/lib/postgresql"
-      "/var/lib/docker"
       # Where systemd keeps the state of services with a DynamicUser, such as
       # tgtts. It refuses a parent more open than this.
       {
