@@ -681,11 +681,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1793306613,
-        "narHash": "sha256-49TpnaIh/4b17AVyLBVfo9h2wM16jGSdBzl+aJEiRps=",
+        "lastModified": 1793307227,
+        "narHash": "sha256-LPlaajdGd5PHCrvYb087y8Dg7iPH+mL6WVTx0IyR/io=",
         "owner": "tgstation-operations",
         "repo": "tgtts-v4",
-        "rev": "1806ab8e8791d0856e05d999523dc19e4aadadd1",
+        "rev": "32f3515eb1c137e851edf0e531cc333a032ac806",
         "type": "github"
       },
       "original": {
