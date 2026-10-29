@@ -20,10 +20,10 @@ The Jellypeople species is now available for you to pick! Be wary, they’re a b
 The Manuel and Terry scheduled rounds, every week on Saturday and Friday respectively. See the events calendar on our Discord for more info.
 
 ## The Last 30 Days of Successful Policy changes
-- Enable Roundstart Jellypeople
+- [Enable Roundstart Jellypeople](https://forums.tgstation13.org/viewtopic.php?t=39762)
 
 ## Open Policy That Might be Important to You
-- Drone Laws - Definition of an “Interaction”
+- [Drone Laws - Definition of an “Interaction”](https://forums.tgstation13.org/viewtopic.php?t=39766)
 
 ## Config Changes
 N/A
@@ -43,4 +43,4 @@ Congratulations to fallcat for winning the picture contest with this absolute wi
 
 You can win too, with a major antag token up for grabs, who wouldn’t want to join in? Check the pinned thread in screenshots-general to try vie for a slice of the victory pie, see how I rhyme.
 
-![](newsletter-09-2026.webp)
+![fallcat catching a huge carp!](newsletter-09-2026.webp)

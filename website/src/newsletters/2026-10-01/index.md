@@ -29,8 +29,8 @@ The Terry and Manuel weekly scheduled rounds, on Friday and Saturday respectivel
 A lot of posts have been blitzed and closed, so you can check all the closed posts here.
 
 ## Open Policy That Might be Important to You
-- Enable Respawns
-- Remove Black Orbit
+- [Enable Respawns](https://forums.tgstation13.org/viewtopic.php?t=39816)
+- [Remove Black Orbit](https://forums.tgstation13.org/viewtopic.php?t=39777)
 
 ## Config Changes
 N/A.
@@ -50,4 +50,4 @@ Congratulations to Viola 林 Professional E-Girl for winning the picture contest
 
 You can win a token too, through the monthly contest held in screenshots-general. Vie for your major antag token and get any normal antag you could get normally. That means no asking for Chrono Legionaire. I mean it.
 
-![](newsletter-10-2026.webp)
+![Viola's Poster Collection](newsletter-10-2026.webp)
