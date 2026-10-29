@@ -22,6 +22,7 @@ function show(card, data) {
   card.classList.toggle("Server--Offline", !data);
   card.classList.toggle("Server--Startup", data?.gamestate === startup);
   card.classList.toggle("Server--Pregame", data?.gamestate === pregame);
+  card.classList.toggle("Server--Escape", data?.shuttle_mode === "escape");
   const commit = field("Flag--Commit");
   commit.hidden = !data;
   field("Flag--Hub").hidden = !data?.hub;

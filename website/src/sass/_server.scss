@@ -26,6 +26,32 @@
     --server-background: #3c0000;
   }
 
+  // The card beats in anticipation of the next round: slowly in the lobby, and
+  // twice as fast once the shuttle has left.
+  &--Pregame &__Inner {
+    animation: ServerHeartbeat 2s infinite;
+  }
+
+  &--Escape &__Inner {
+    animation: ServerHeartbeat 1s infinite;
+  }
+
+  @keyframes ServerHeartbeat {
+    0% {
+      filter: saturate(1);
+      animation-timing-function: ease-in;
+    }
+
+    10% {
+      filter: saturate(2);
+      animation-timing-function: ease-out;
+    }
+
+    100% {
+      filter: saturate(1);
+    }
+  }
+
   &:focus,
   &:hover {
     animation: none;
