@@ -151,6 +151,7 @@ in {
       "tgstation13.org" = {
         useACMEHost = "tgstation13.org";
         extraConfig = ''
+          import anubis /serverinfo.json
           encode gzip zstd
           root ${website}
           # The old site still has the toolbox and readme, and the assets they load.
@@ -179,6 +180,7 @@ in {
       "forums.tgstation13.org" = {
         useACMEHost = "forums.tgstation13.org";
         extraConfig = ''
+          import anubis
           encode gzip zstd
           root /run/tgstation-phpbb/source
           file_server
@@ -204,6 +206,7 @@ in {
       "wiki.tgstation13.org" = {
         useACMEHost = "wiki.tgstation13.org";
         extraConfig = ''
+          import anubis
           encode gzip zstd
           root ${config.services.mediawiki.finalPackage}/share/mediawiki
 
@@ -215,6 +218,7 @@ in {
             not path_regexp ^/images/
             not path_regexp ^/(mw-config/)?(index|load|api|thumb|opensearch_desc|rest|img_auth)\.php
             not path_regexp ^/(resources/(assets|lib|src)|COPYING|CREDITS|(skins|extensions)/.+\.(css|js|gif|jpg|jpeg|png|svg|wasm|ttf|woff|woff2)$)
+            not path /.within.website/*
           }
 
           ## Handle everything that would not be a file as a page name
