@@ -13,6 +13,7 @@
     ../../modules/tgstation-pr-announcer
     ../../modules/server-info-fetcher.nix
     ./modules/mediawiki
+    ./modules/anubis.nix
     ./modules/caddy.nix
     self.inputs.tgstation-phpbb.nixosModules.default
   ];

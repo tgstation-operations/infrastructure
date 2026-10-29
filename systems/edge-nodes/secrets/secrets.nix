@@ -12,4 +12,7 @@ in {
   "phpbb_db.age".publicKeys = lemon-final;
   "authentik.age".publicKeys = lemon-final;
   "bab_db_connection_string.age".publicKeys = lemon-final;
+  # head -c32 /dev/urandom | od -An -v -tx1 | tr -d ' \n'
+  # Anubis signs its cookies with this, and reads it as 64 hex characters.
+  "anubis_ed25519_key.age".publicKeys = lemon-final;
 }

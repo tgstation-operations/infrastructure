@@ -1,0 +1,225 @@
+diff --git a/lib/http.go b/lib/http.go
+index 147db2ae..43d08ec2 100644
+--- a/lib/http.go
++++ b/lib/http.go
+@@ -280,8 +280,8 @@ func (s *Server) RenderIndex(w http.ResponseWriter, r *http.Request, cr policy.C
+ 	}
+ 
+ 	page := web.BaseWithChallengeAndOGTags(
+-		localizer.T("making_sure_not_bot"),
+-		component,
++		"You can't outrun a radio!",
++		templ.Join(web.Subtitle("Checking if you're a bot"), component),
+ 		s.policy.Impressum,
+ 		s.policy.Honeypot,
+ 		chall,
+@@ -345,7 +345,7 @@ func (s *Server) respondWithStatus(w http.ResponseWriter, r *http.Request, msg,
+ 	localizer := localization.GetLocalizer(r)
+ 
+ 	component := web.Base(
+-		localizer.T("oh_noes"),
++		"I. AM. THE LAW.",
+ 		web.ErrorPage(msg, s.opts.WebmasterEmail, code, localizer),
+ 		s.policy.Impressum,
+ 		s.policy.Honeypot,
+diff --git a/web/index.templ b/web/index.templ
+index e95a2f72..96531304 100644
+--- a/web/index.templ
++++ b/web/index.templ
+@@ -48,11 +48,11 @@ templ base(title string, body templ.Component, impressum *config.Impressum, hone
+             overflow: hidden;
+             margin: 1rem 0 2rem;
+             outline-offset: 2px;
+-            outline: #b16286 solid 4px;
++            outline: var(--progress-bar-outline);
+         }
+ 
+         .bar-inner {
+-            background-color: #b16286;
++            background-color: var(--progress-bar-fill);
+             height: 100%;
+             width: 0;
+             transition: width 0.25s ease-in;
+@@ -68,16 +68,19 @@ templ base(title string, body templ.Component, impressum *config.Impressum, hone
+ 				@honeypotLink(anubis.BasePrefix + fmt.Sprintf("%shoneypot/%s/init", anubis.APIPrefix, uuid.NewString()))
+ 			}
+ 			<main>
++				<a href="https://tgstation13.org"><img id="logo" alt="/tg/station 13" src={ anubis.BasePrefix + "/.within.website/x/cmd/anubis/static/img/tgstation13.png?cacheBuster=" + anubis.Version }/></a>
+ 				<h1 id="title" class="centered-div">{ title }</h1>
+ 				@body
+ 				<footer>
+-					<div class="centered-div">
++					<img id="mascot" alt="Anubis" src={ anubis.BasePrefix + "/.within.website/x/cmd/anubis/static/img/anubis.webp?cacheBuster=" + anubis.Version }/>
++					<div>
+ 						<p>
+ 							{ localizer.T("protected_by") } <a href="https://github.com/TecharoHQ/anubis">Anubis</a> { localizer.T("protected_from") } <a
+ 	href="https://techaro.lol"
+ >Techaro</a>. { localizer.T("made_with") }.
+ 						</p>
+ 						<p>{ localizer.T("mascot_design") } <a href="https://bsky.app/profile/celphase.bsky.social">{ localizer.T("celphase") }</a>.</p>
++						<p>Officer Beepsky is from <a href="https://github.com/tgstation/tgstation">/tg/station</a>, under <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.</p>
+ 						if impressum != nil {
+ 							<p>
+ 								@templ.Raw(impressum.Footer)
+@@ -92,9 +95,13 @@ templ base(title string, body templ.Component, impressum *config.Impressum, hone
+ 	</html>
+ }
+ 
++templ Subtitle(text string) {
++	<p id="subtitle" class="centered-div">{ text }</p>
++}
++
+ templ errorPage(message, mail, code string, localizer *localization.SimpleLocalizer) {
+ 	<div class="centered-div">
+-		<img id="image" alt="Sad Anubis" style="width:100%;max-width:256px;" src={ anubis.BasePrefix + "/.within.website/x/cmd/anubis/static/img/reject.webp?cacheBuster=" + anubis.Version }/>
++		<img id="image" alt="Officer Beepsky" style="width:100%;max-width:256px;" src={ anubis.BasePrefix + "/.within.website/x/cmd/anubis/static/img/reject.webp?cacheBuster=" + anubis.Version }/>
+ 		<p>{ message }.</p>
+ 		if code != "" {
+ 			<code><pre>{ code }</pre></code>
+diff --git a/web/js/main.ts b/web/js/main.ts
+index d2909bd6..948fa2e3 100644
+--- a/web/js/main.ts
++++ b/web/js/main.ts
+@@ -220,10 +220,10 @@ interface OhNoesParams {
+       container.style.height = "2rem";
+       container.style.borderRadius = "1rem";
+       container.style.cursor = "pointer";
+-      container.style.background = "#b16286";
+-      container.style.color = "white";
++      container.style.background = "var(--progress-bar-fill)";
++      container.style.color = "var(--background)";
+       container.style.fontWeight = "bold";
+-      container.style.outline = "4px solid #b16286";
++      container.style.outline = "var(--progress-bar-outline)";
+       container.style.outlineOffset = "2px";
+       container.style.width = "min(20rem, 90%)";
+       container.style.margin = "1rem auto 2rem";
+diff --git a/xess/xess.css b/xess/xess.css
+index 67a0c4ba..9755544a 100644
+--- a/xess/xess.css
++++ b/xess/xess.css
+@@ -1,52 +1,36 @@
+ :root {
+-  --body-sans-font: Geist, sans-serif;
+-  --body-preformatted-font: Iosevka Curly Iaso, monospace;
+-  --body-title-font: Podkova, serif;
+-
+-  --background: #1d2021;
+-  --text: #f9f5d7;
+-  --text-selection: #d3869b;
+-  --preformatted-background: #3c3836;
+-  --link-foreground: #b16286;
+-  --link-background: #282828;
+-  --blockquote-border-left: 1px solid #bdae93;
+-
+-  --progress-bar-outline: #b16286 solid 4px;
+-  --progress-bar-fill: #b16286;
+-}
+-@media (prefers-color-scheme: light) {
+-  :root {
+-    --background: #f9f5d7;
+-    --text: #1d2021;
+-    --text-selection: #d3869b;
+-    --preformatted-background: #ebdbb2;
+-    --link-foreground: #b16286;
+-    --link-background: #fbf1c7;
+-    --blockquote-border-left: 1px solid #655c54;
+-  }
++  --body-sans-font: "Fira Sans", system-ui, sans-serif;
++  --body-preformatted-font: "Fira Code", monospace;
++  --body-title-font: "Fira Code", monospace;
++
++  --background: #000;
++  --text: #ff9900;
++  --text-selection: #704400;
++  --preformatted-background: #111;
++  --link-foreground: #d88200;
++  --link-background: transparent;
++  --blockquote-border-left: 1px solid #333;
++
++  --progress-bar-outline: #ff9900 solid 4px;
++  --progress-bar-fill: #ff9900;
+ }
+ 
+ @font-face {
+-  font-family: "Geist";
+-  font-style: normal;
+-  font-weight: 100 900;
++  font-family: "Fira Sans";
+   font-display: swap;
+-  src: url("./static/geist.woff2") format("woff2");
++  src: url("./static/firasans.woff2") format("woff2");
+ }
+ 
+ @font-face {
+-  font-family: "Podkova";
+-  font-style: normal;
+-  font-weight: 400 800;
++  font-family: "Fira Code";
+   font-display: swap;
+-  src: url("./static/podkova.woff2") format("woff2");
++  src: url("./static/firacode.woff2") format("woff2");
+ }
+ 
+-@font-face {
+-  font-family: "Iosevka Curly";
+-  font-style: monospace;
+-  font-display: swap;
+-  src: url("./static/iosevka-curly.woff2") format("woff2");
++html {
++  background: var(--background) url("./static/layer1.webp");
++  background-size: 480px 480px;
++  image-rendering: pixelated;
+ }
+ 
+ main {
+@@ -54,6 +38,22 @@ main {
+   max-width: 50rem;
+   padding: 2rem;
+   margin: auto;
++  border: 0.125rem solid #333;
++  background-color: rgba(34, 34, 34, 0.85);
++  box-shadow:
++    0 0 8px #000,
++    inset 0 0 8px #000;
++}
++
++#logo {
++  display: block;
++  width: min(24rem, 100%);
++  margin: 0 auto;
++}
++
++#subtitle {
++  margin: 0;
++  font-size: 1.25rem;
+ }
+ 
+ ::selection {
+@@ -61,7 +61,6 @@ main {
+ }
+ 
+ body {
+-  background: var(--background);
+   color: var(--text);
+ }
+ 
+@@ -145,5 +144,17 @@ blockquote {
+ }
+ 
+ footer {
+-  text-align: center;
++  display: flex;
++  flex-wrap: wrap;
++  justify-content: center;
++  align-items: center;
++  gap: 0 1.5rem;
++  margin-top: 2rem;
++  border-top: 0.125rem solid #333;
++  font-size: 0.875rem;
++}
++
++#mascot {
++  width: 128px;
++  image-rendering: auto;
+ }
