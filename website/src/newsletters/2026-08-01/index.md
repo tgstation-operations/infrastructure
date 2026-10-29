@@ -23,7 +23,7 @@ The upcoming Manuel and Terry scheduled round, held on Friday and Saturday every
 N/A.
 
 ## Open Policy That Might be Important to You
-- Crew should treat fugitives like fugitives
+- [Crew should treat fugitives like fugitives](https://forums.tgstation13.org/viewtopic.php?t=39731)
 
 ## Config Changes
 Wawastation has been removed from map rotation, with Kilostation replacing it.
@@ -41,4 +41,4 @@ Congratulations to Cultist of Pupcup for winning the picture contest, with their
 
 You can win too, if you submit to the contest in screenshots-general. Be it a screenshot in game, original art you’ve made that’s SS13 themed, or similar, you can submit it and vie for the major antag token on offer for the winner.
 
-![](newsletter-08-2026.webp)
+![Cultist of Pupcup's Amazing Casino](newsletter-08-2026.webp)
