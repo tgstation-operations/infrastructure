@@ -288,6 +288,23 @@
         "type": "github"
       }
     },
+    "llvm-project": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790825590,
+        "narHash": "sha256-iAdnkgu9Gfe+V4A1In/40xgJmnkFPyxVgbemeLLi80M=",
+        "owner": "ROCm",
+        "repo": "llvm-project",
+        "rev": "bdf04ebb32d7a5dce853f9b399dcbd3ed11a5aa7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ROCm",
+        "repo": "llvm-project",
+        "rev": "bdf04ebb32d7a5dce853f9b399dcbd3ed11a5aa7",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "inputs": {
         "nixpkgs": "nixpkgs_3"
@@ -502,7 +519,8 @@
         "server-info-fetcher": "server-info-fetcher",
         "tg-public-log-parser": "tg-public-log-parser",
         "tgstation-phpbb": "tgstation-phpbb",
-        "tgstation-website": "tgstation-website"
+        "tgstation-website": "tgstation-website",
+        "tgtts-v4": "tgtts-v4"
       }
     },
     "rust-analyzer-src": {
@@ -519,6 +537,27 @@
         "owner": "rust-lang",
         "ref": "nightly",
         "repo": "rust-analyzer",
+        "type": "github"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "tgtts-v4",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792913333,
+        "narHash": "sha256-wjoZGhxH/Yr+OsFRpNyV9DpMGQIdNEjjAOinfzQvadk=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "fad80eb74614f7dc37c1c83df8caae64361eda22",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
         "type": "github"
       }
     },
@@ -630,6 +669,28 @@
       "original": {
         "owner": "tgstation-operations",
         "repo": "website-v2",
+        "type": "github"
+      }
+    },
+    "tgtts-v4": {
+      "inputs": {
+        "llvm-project": "llvm-project",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1793306613,
+        "narHash": "sha256-49TpnaIh/4b17AVyLBVfo9h2wM16jGSdBzl+aJEiRps=",
+        "owner": "tgstation-operations",
+        "repo": "tgtts-v4",
+        "rev": "1806ab8e8791d0856e05d999523dc19e4aadadd1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tgstation-operations",
+        "repo": "tgtts-v4",
         "type": "github"
       }
     },
