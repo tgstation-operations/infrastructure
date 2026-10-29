@@ -270,6 +270,9 @@ in {
   };
 
   systemd.services.tgstation-server.environment = tgs-env-vars;
+  # Each DreamDaemon TGS starts inherits it, which keeps the games ahead of
+  # builds and the other services sharing their hosts.
+  systemd.services.tgstation-server.serviceConfig.Nice = -5;
   # agenix decrypts to the same path whatever the secret holds, so the
   # encrypted file is what changes with it.
   systemd.services.tgstation-server.restartTriggers = [config.age.secrets.tgs.file];
