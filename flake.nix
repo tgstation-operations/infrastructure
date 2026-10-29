@@ -44,6 +44,13 @@
       url = "github:tgstation-operations/server-info-fetcher";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    tgtts-v4 = {
+      # Its GPU kernels are compiled by an LLVM built from source against this
+      # nixpkgs, which a bump touching its toolchain rebuilds; attic keeps the
+      # build.
+      url = "github:tgstation-operations/tgtts-v4";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     impermanence.url = "github:nix-community/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     colmena = {
