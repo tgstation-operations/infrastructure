@@ -7,7 +7,50 @@
 }
 
 .Server {
+  --server-color: #79d3ff;
+  --server-background: #00173c;
   display: block;
+
+  &--Startup {
+    --server-color: #ffdd33;
+    --server-background: #2b2500;
+  }
+
+  &--Pregame {
+    --server-color: #55ff55;
+    --server-background: #002200;
+  }
+
+  &--Offline {
+    --server-color: #ff5555;
+    --server-background: #3c0000;
+  }
+
+  // The card beats in anticipation of the next round: slowly in the lobby, and
+  // twice as fast once the shuttle has left.
+  &--Pregame &__Inner {
+    animation: ServerHeartbeat 2s infinite;
+  }
+
+  &--Escape &__Inner {
+    animation: ServerHeartbeat 1s infinite;
+  }
+
+  @keyframes ServerHeartbeat {
+    0% {
+      filter: saturate(1);
+      animation-timing-function: ease-in;
+    }
+
+    10% {
+      filter: saturate(2);
+      animation-timing-function: ease-out;
+    }
+
+    100% {
+      filter: saturate(1);
+    }
+  }
 
   &:focus,
   &:hover {
@@ -15,9 +58,9 @@
   }
 
   &__Inner {
-    background-color: #00173c;
-    border: 1px solid #79d3ff;
-    color: #79d3ff;
+    background-color: var(--server-background);
+    border: 1px solid var(--server-color);
+    color: var(--server-color);
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -99,13 +142,13 @@
 
   &:focus &__Inner,
   &:hover &__Inner {
-    box-shadow: 0 0 16px #79d3ff;
+    box-shadow: 0 0 16px var(--server-color);
     transition: box-shadow 0.5s ease;
   }
 
   &:focus &__Name,
   &:hover &__Name {
-    text-shadow: 0 0 8px #79d3ff;
+    text-shadow: 0 0 8px var(--server-color);
     transition: text-shadow 0.5s ease;
   }
 }

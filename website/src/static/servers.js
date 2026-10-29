@@ -3,6 +3,10 @@
 // The edge polls the game servers and publishes what they answered beside this
 // page. A server it has no data for, or does not list, is offline.
 const refreshMs = 4000;
+// The game's GAME_STATE_STARTUP and GAME_STATE_PREGAME: a server still starting
+// up, and one waiting in the lobby for its round.
+const startup = 0;
+const pregame = 1;
 const unlimited = "\u221e";
 
 function duration(seconds) {
@@ -15,6 +19,10 @@ function duration(seconds) {
 
 function show(card, data) {
   const field = (name) => card.querySelector(`.Server__${name}`);
+  card.classList.toggle("Server--Offline", !data);
+  card.classList.toggle("Server--Startup", data?.gamestate === startup);
+  card.classList.toggle("Server--Pregame", data?.gamestate === pregame);
+  card.classList.toggle("Server--Escape", data?.shuttle_mode === "escape");
   const commit = field("Flag--Commit");
   commit.hidden = !data;
   field("Flag--Hub").hidden = !data?.hub;
