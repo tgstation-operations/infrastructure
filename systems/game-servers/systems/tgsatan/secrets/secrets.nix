@@ -23,4 +23,6 @@ in {
   "grafana_smtp.age".publicKeys = final;
   "grafana_admin.age".publicKeys = final;
   "tgmc-raw-logs-oidc-reverse-proxy.age".publicKeys = final;
+  # tgtts, the token the games send in their Authorization header
+  "tgtts-token.age".publicKeys = final;
 }

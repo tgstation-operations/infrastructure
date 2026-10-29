@@ -32,6 +32,7 @@
     ../../modules/docker.nix
     ../../modules/tgs
     ../../modules/tgs/service.nix
+    ../../../../nix/modules/tts
     (import ../../modules/cloudflared.nix {
       inherit pkgs config lib;
       age-file = ./secrets/cloudflared.age;
@@ -91,7 +92,6 @@
     ./modules/motd
     ./modules/nvidia.nix
     ./modules/redbot.nix
-    ./modules/tts
     ./modules/tgtts-qwen-cache-cleaner.nix
   ];
 in {
@@ -119,9 +119,22 @@ in {
     };
   };
 
+  tgstation.tts = {
+    port = 5011;
+    token-file = config.age.secrets.tgtts-token.path;
+    checkpoint-dir = "/persist/tgtts-v4/VoxCPM2-32279eff";
+    voices-dir = "/persist/tgtts-v4/voices";
+    assets-dir = "/persist/tgtts-v4/assets";
+    voice-levels-file = "/persist/tgtts-v4/levels.json";
+  };
+  age.secrets.tgtts-token.file = ./secrets/tgtts-token.age;
+
   # Egress goes through a relay, by NetBird's exit route.
   services.netbird.useRoutingFeatures = "client";
 
+  # Runs only the tgtts-qwen3 compose stack tgtts replaced, stopped and kept
+  # for a rollback.
+  virtualisation.docker.enable = true;
   hardware.nvidia-container-toolkit.enable = true;
   # Allow the 10.10.11.0/24 range to talk to each other over bridge
   # This allows docker container 2 container networking to work for a specific network only
@@ -160,14 +173,13 @@ in {
       "/var/lib/acme"
       "/var/lib/postgresql"
       "/var/lib/docker"
+      # Where systemd keeps the state of services with a DynamicUser, such as
+      # tgtts. It refuses a parent more open than this.
+      {
+        directory = "/var/lib/private";
+        mode = "0700";
+      }
     ];
-
-    users.tgtts = {
-      directories = [
-        ".local/share/docker"
-        ".config/docker"
-      ];
-    };
   };
 
   fileSystems."/persist" = {
