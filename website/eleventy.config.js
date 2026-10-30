@@ -1,6 +1,8 @@
 import path from "node:path";
 import { HtmlBasePlugin } from "@11ty/eleventy";
 import * as sass from "sass";
+import * as fs from 'fs';
+import * as yaml from 'js-yaml';
 
 export const config = {
   dir: {
@@ -8,12 +10,21 @@ export const config = {
   },
 };
 
+//Loads data from a yaml file
+function readDataFile(filename, fallback) {
+  const filePath = fs.existsSync(filename) ? filename : fallback;
+  return yaml.load(fs.readFileSync(filePath, "utf-8"));
+}
+
 export default function (eleventyConfig) {
   // Adds --pathprefix to root-relative URLs, for a GitHub Pages project path.
   eleventyConfig.addPlugin(HtmlBasePlugin);
-
   eleventyConfig.addPassthroughCopy({ "src/static": "/" });
   eleventyConfig.addPassthroughCopy("src/newsletters/**/*.webp");
+
+  const alertsData = readDataFile("alerts.yaml", "example-alerts.yaml");
+  eleventyConfig.addGlobalData("alerts", alertsData);
+
 
   // A newsletter's pictures show on the front page too, where their relative
   // URLs would not resolve, so they are made root-relative from its URL. They

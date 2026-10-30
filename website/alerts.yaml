@@ -1,0 +1,6 @@
+info:
+  - "Hello world I am an alert"
+warning:
+  - "Hello world I am an alert"
+danger:
+  - "Hello world I am an alert"
