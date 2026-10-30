@@ -5,9 +5,6 @@ servers:
   - { identifier: "sybil", name: "Sybil [US-Central]", address: "sybil.tgstation13.org:1337", icon: "sybil.webp" }
   - { identifier: "manuel", name: "Manuel [US-Central]", address: "manuel.tgstation13.org:1447", icon: "manuel.webp" }
   - { identifier: "TGMC", name: "TerraGov Marine Corps [US-Central]", address: "tgmc.tgstation13.org:5337", icon: "tgmc.svg" }
-# Shown above the servers. level is info, warning or danger and message is HTML;
-# a dismissible alert stays hidden for a reader who has dismissed it.
-alerts: []
 # Community artwork in static/artwork/, one shown at random under the servers.
 artwork: ["googlepixel1.webp", "mmmiracles1.webp", "tgmc1.webp", "zara1.webp", "zara2.webp", "zara3.webp"]
 ---
@@ -21,12 +18,14 @@ artwork: ["googlepixel1.webp", "mmmiracles1.webp", "tgmc1.webp", "zara1.webp", "
 {% block content %}
     {% if alerts | length %}
     <div class="Alerts">
-      {% for alert in alerts %}
-      <div class="Alert Alert--{{ alert.level }}"{% if alert.dismissible %} data-dismiss="{{ alert.message | slugify }}"{% endif %}>
-        <img class="Alert__Icon Sprite" src="/sprites/air-alarm-{{ alert.level }}.webp" width="46" height="34" alt="" />
-        <span class="Alert__Message">{{ alert.message | safe }}</span>
-        {% if alert.dismissible %}<button class="Dismiss" type="button" title="Dismiss this alert" hidden>[x]</button>{% endif %}
-      </div>
+      {% for level, messages in alerts %}
+        {% for message in messages %}
+          <div class="Alert Alert--{{ level }}" data-dismiss="{{ message | slugify }}">
+            <img class="Alert__Icon Sprite" src="/sprites/air-alarm-{{ level }}.webp" width="46" height="34" alt="" />
+            <span class="Alert__Message">{{ message | safe }}</span>
+            <button class="Dismiss" type="button" title="Dismiss this alert" hidden>[x]</button>
+          </div>
+        {% endfor %}
       {% endfor %}
     </div>
     {% endif %}
