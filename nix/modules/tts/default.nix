@@ -64,6 +64,9 @@ in {
       # systemd orders a DynamicUser's state after the mounts for the path it
       # is named by, /var/lib/tgtts, but keeps it in /var/lib/private.
       unitConfig.RequiresMountsFor = "/var/lib/private/tgtts";
+      # Restarted after a switch's activation rather than stopped before it,
+      # speech is down only for its own start, not for the activation too.
+      stopIfChanged = false;
       environment = {
         TGTTS_TOKEN_FILE = "%d/token";
         # NVIDIA's driver keeps the pipelines it compiled here, and a start that
