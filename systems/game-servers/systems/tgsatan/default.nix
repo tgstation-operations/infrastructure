@@ -127,6 +127,8 @@ in {
     voice-levels-file = "/persist/tgtts-v4/levels.json";
   };
   age.secrets.tgtts-token.file = ./secrets/tgtts-token.age;
+  # lemon serves it to other servers' games, as tts.tgstation13.org.
+  networking.firewall.interfaces.wt0.allowedTCPPorts = [config.tgstation.tts.port];
 
   # Egress goes through a relay, by NetBird's exit route.
   services.netbird.useRoutingFeatures = "client";

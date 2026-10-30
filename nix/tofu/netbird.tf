@@ -174,6 +174,22 @@ resource "netbird_policy" "lemon_game_server_status_scraping" {
   }
 }
 
+resource "netbird_policy" "lemon_tts" {
+  name    = "Lemon TTS"
+  enabled = true
+
+  rule {
+    name                 = "Lemon TTS"
+    action               = "accept"
+    protocol             = "tcp"
+    bidirectional        = false
+    enabled              = true
+    ports                = ["5011"]
+    source_resource      = { type = "peer", id = data.netbird_peer.this["lemon"].id }
+    destination_resource = { type = "peer", id = data.netbird_peer.this["tgsatan"].id }
+  }
+}
+
 resource "netbird_policy" "maria_garage_cluster" {
   name    = "Maria/Garage Cluster"
   enabled = true
