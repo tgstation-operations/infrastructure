@@ -3,6 +3,7 @@
   pkgs,
   pkgs-unstable,
   inputs,
+  nodes,
   ...
 }: let
   phpWithProfiling = pkgs.php83.buildEnv {
@@ -43,6 +44,7 @@ in {
       "forums.tgstation13.org" = {};
       "github-webhooks.tgstation13.org" = {};
       "wiki.tgstation13.org" = {};
+      "tts.tgstation13.org" = {};
     };
   };
 
@@ -254,6 +256,18 @@ in {
             header Cache-Control "public"
             file_server
           }
+        '';
+      };
+      "tts.tgstation13.org" = {
+        useACMEHost = "tts.tgstation13.org";
+        # Other servers' games send the token ours do, so they reach only the
+        # routes the game calls, not /toggle-logging and the like.
+        extraConfig = ''
+          @game path /tts /tts-* /pitch-available
+          handle @game {
+            reverse_proxy tgsatan.tg.internal:${toString nodes.tgsatan.config.tgstation.tts.port}
+          }
+          respond 404
         '';
       };
     };

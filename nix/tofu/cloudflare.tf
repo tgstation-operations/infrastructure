@@ -64,6 +64,7 @@ locals {
     "terry CNAME"                                       = { name = "terry", type = "CNAME", content = "blockmoths.eu.tgstation13.org" }
     "terry-logs CNAME"                                  = { name = "terry-logs", type = "CNAME", content = "276b7e4a-f91c-4b23-8060-78a0a1542e8d.cfargotunnel.com", proxied = true }
     "tgmc CNAME"                                        = { name = "tgmc", type = "CNAME", content = "tgsatan.us.tgstation13.org" }
+    "tts CNAME"                                         = { name = "tts", type = "CNAME", content = "lemon.tgstation13.org", proxied = true }
     "vpn A"                                             = { name = "vpn", type = "A", content = "144.202.94.16" }
     "tgsatan.vpn A"                                     = { name = "tgsatan.vpn", type = "A", content = "100.13.161.130" }
     "warsaw.vpn A"                                      = { name = "warsaw.vpn", type = "A", content = "100.64.0.140" }
