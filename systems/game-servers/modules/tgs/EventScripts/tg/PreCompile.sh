@@ -98,6 +98,24 @@ cd "$1"
 env TG_BOOTSTRAP_CACHE="$work_directory" CBT_BUILD_MODE="TGS" tools/bootstrap/javascript.sh tools/build/build.ts
 echo "tgui: deployment finish"
 
+# compile navmap-pathfinder
+
+echo "navmap-pathfinder: deployment begin"
+if [ ! -d "navmap-pathfinder" ]; then
+  echo "navmap-pathfinder: cloning"
+  git clone https://github.com/CabinetOnFire/navmap-pathfinder >/dev/null
+  cd navmap-pathfinder
+else
+  echo "navmap-pathfinder: fetching"
+  cd navmap-pathfinder
+  git fetch >/dev/null
+fi
+echo "navmap-pathfinder: checkout"
+git checkout master >/dev/null
+echo "navmap-pathfinder: building"
+PKG_CONFIG_ALLOW_CROSS=1 cargo build --locked --release --target=i686-unknown-linux-gnu
+cp target/i686-unknown-linux-gnu/release/libnavmap_pathfinder.so "$1/libnavmap_pathfinder.so"
+
 # create symlinks for custom map persistence
 
 mkdir -p "${TGS_INSTANCE_ROOT}/Configuration/event_maps"
