@@ -241,7 +241,11 @@ in {
       group = "${config.services.tgstation-server.groupname}";
     };
   };
-  networking.firewall.interfaces.wt0.allowedTCPPorts = [appsettings.General.PrometheusPort];
+  networking.firewall.interfaces.wt0.allowedTCPPorts = [
+    appsettings.General.PrometheusPort
+    # The swarm's nodes call each other's API.
+    (lib.toInt tg-globals.tgs.port)
+  ];
 
   services.tgstation-server = {
     enable = true;

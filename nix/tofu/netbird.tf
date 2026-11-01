@@ -84,6 +84,15 @@ resource "netbird_group" "staging" {
   ]
 }
 
+resource "netbird_group" "tgs_swarm" {
+  name = "TGS Swarm"
+  peers = [
+    data.netbird_peer.this["tgsatan"].id,
+    data.netbird_peer.this["blockmoths"].id,
+    data.netbird_peer.this["wiggle"].id,
+  ]
+}
+
 resource "netbird_group" "us_relay" {
   name = "US Relay"
   peers = [
@@ -218,6 +227,38 @@ resource "netbird_policy" "relay_game_server_game_traffic" {
     ports         = ["11337", "11447", "11887", "13336", "15337", "17337", "17777", "18085"]
     sources       = [netbird_group.relay.id]
     destinations  = [netbird_group.game_server.id]
+  }
+}
+
+resource "netbird_policy" "tgs_swarm" {
+  name    = "TGS Swarm"
+  enabled = true
+
+  rule {
+    name          = "TGS Swarm"
+    action        = "accept"
+    protocol      = "tcp"
+    bidirectional = true
+    enabled       = true
+    ports         = ["5000"]
+    sources       = [netbird_group.tgs_swarm.id]
+    destinations  = [netbird_group.tgs_swarm.id]
+  }
+}
+
+resource "netbird_policy" "tgs_swarm_database" {
+  name    = "TGS Swarm Database"
+  enabled = true
+
+  rule {
+    name                 = "TGS Swarm Database"
+    action               = "accept"
+    protocol             = "tcp"
+    bidirectional        = false
+    enabled              = true
+    ports                = ["3306"]
+    sources              = [netbird_group.tgs_swarm.id]
+    destination_resource = { type = "peer", id = data.netbird_peer.this["tgsatan"].id }
   }
 }
 
