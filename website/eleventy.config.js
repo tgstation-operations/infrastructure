@@ -1,6 +1,7 @@
 import path from "node:path";
 import { HtmlBasePlugin } from "@11ty/eleventy";
 import * as sass from "sass";
+import posthtml from 'posthtml';
 
 export const config = {
   dir: {
@@ -52,4 +53,65 @@ export default function (eleventyConfig) {
       return () => css;
     },
   });
+   const siteUrl = new URL('https://tgstation13.org');
+
+    eleventyConfig.addTransform('external-links', function(content) {
+      console.log(this.page.outputFileExtension)
+        if ('html' != this.page.outputFileExtension) {
+            return content;
+        }
+
+        return posthtml([
+            tree => {
+                tree.walk(node => {
+                    if (node.tag !== 'a' || !node.attrs?.href) {
+                        return node;
+                    }
+
+                    let url;
+
+                    try {
+                        url = new URL(node.attrs.href, siteUrl);
+                    } catch {
+                        return node;
+                    }
+
+                    if (!['http:', 'https:'].includes(url.protocol)) {
+                        return node;
+                    }
+
+                    if (url.hostname.endsWith(siteUrl.hostname)) {
+                        return node;
+                    }
+
+                    const attrs = node.attrs;
+
+                    const classes = (attrs.class || '').split(/\s+/).filter(Boolean);
+
+                    if (!classes.includes('ExternalLink') || !classes.includes('Offsite')) {
+                        classes.push('ExternalLink')
+                        classes.push('Offsite')
+                    }
+
+                    attrs.class = classes.join(' ');
+
+                    attrs.target ??= '_blank';
+
+                    const rel = (attrs.rel || '').split(/\s+/).filter(Boolean);
+
+                    for (const value of ['noopener', 'noreferrer']) {
+                        if (!rel.includes(value)) {
+                            rel.push(value);
+                        }
+                    }
+
+                    attrs.rel = rel.join(' ');
+
+                    return node;
+                });
+
+                return tree;
+            }
+        ]).process(content).then(result => result.html);
+    });
 }
