@@ -15,4 +15,6 @@ in {
   # head -c32 /dev/urandom | od -An -v -tx1 | tr -d ' \n'
   # Anubis signs its cookies with this, and reads it as 64 hex characters.
   "anubis_ed25519_key.age".publicKeys = lemon-final;
+  # ssh-keygen -t ed25519 -N "", whose public half systems/vpn/modules/backup.nix authorizes
+  "vpn-backup-ssh-key.age".publicKeys = lemon-final;
 }

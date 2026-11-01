@@ -5,10 +5,10 @@
     ../../modules/tailscale.nix
     ../../modules/netbird.nix
     ../../modules/fail2ban.nix
-    ../../modules/restic.nix
     ./modules/headscale
     ./modules/caddy.nix
     ./modules/netbird.nix
+    ./modules/backup.nix
   ];
 
   networking.hostName = "vpn";
@@ -42,11 +42,4 @@
     device = "/dev/vda2";
     fsType = "ext4";
   };
-
-  services.restic.backups.persist.paths = [
-    "/var/lib/tailscale"
-    "/var/lib/headscale"
-    "/var/lib/netbird-mgmt"
-    "/etc"
-  ];
 }
