@@ -3,7 +3,6 @@
 // and keeps its list on screen.
 .Menu {
   position: relative;
-
   &__Title {
     list-style: none;
 
@@ -46,5 +45,8 @@
     border: 0.125rem solid #333;
     background-color: #222;
     box-shadow: 0 0 8px #000000;
+    a {
+      color: #ff9900;
+    }
   }
 }
