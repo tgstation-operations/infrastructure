@@ -56,7 +56,6 @@ export default function (eleventyConfig) {
    const siteUrl = new URL('https://tgstation13.org');
 
     eleventyConfig.addTransform('external-links', function(content) {
-      console.log(this.page.outputFileExtension)
         if ('html' != this.page.outputFileExtension) {
             return content;
         }
