@@ -19,19 +19,19 @@ body {
 
 @keyframes LinkFlicker {
   0% {
-    text-shadow: 0 0 2px #ff9900;
+    text-shadow: 0 0 2px currentColor;
   }
 
   20% {
-    text-shadow: 0 0 2px color.adjust(#ff9900, $alpha: -1);
+    text-shadow: 0 0 2px transparent;
   }
 
   70% {
-    text-shadow: 0 0 2px #ff9900;
+    text-shadow: 0 0 2px currentColor;
   }
 
   90% {
-    text-shadow: 0 0 2px color.adjust(#ff9900, $alpha: -1);
+    text-shadow: 0 0 2px transparent;
   }
 }
 
