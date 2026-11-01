@@ -8,6 +8,7 @@
     ./modules/headscale
     ./modules/caddy.nix
     ./modules/netbird.nix
+    ./modules/backup.nix
   ];
 
   networking.hostName = "vpn";
