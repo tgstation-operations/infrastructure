@@ -15,6 +15,7 @@
     ./modules/mediawiki
     ./modules/anubis.nix
     ./modules/caddy.nix
+    ./modules/vpn-backup.nix
     self.inputs.tgstation-phpbb.nixosModules.default
   ];
   networking.hostName = "lemon";
