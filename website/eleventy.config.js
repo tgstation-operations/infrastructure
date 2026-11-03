@@ -1,6 +1,8 @@
 import path from "node:path";
 import { HtmlBasePlugin } from "@11ty/eleventy";
 import * as sass from "sass";
+import * as fs from 'fs';
+import * as yaml from 'js-yaml';
 
 export const config = {
   dir: {
@@ -8,12 +10,16 @@ export const config = {
   },
 };
 
+
 export default function (eleventyConfig) {
   // Adds --pathprefix to root-relative URLs, for a GitHub Pages project path.
   eleventyConfig.addPlugin(HtmlBasePlugin);
-
   eleventyConfig.addPassthroughCopy({ "src/static": "/" });
   eleventyConfig.addPassthroughCopy("src/newsletters/**/*.webp");
+
+  const alertsData = yaml.load(fs.readFileSync('alerts.yaml', "utf-8"));
+  eleventyConfig.addGlobalData("alerts", alertsData);
+
 
   // A newsletter's pictures show on the front page too, where their relative
   // URLs would not resolve, so they are made root-relative from its URL. They

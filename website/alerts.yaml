@@ -1,0 +1,6 @@
+info:
+  # - This is an info alert
+warning:
+  # - This is a warning alert
+danger:
+  # - This is a danger alert
