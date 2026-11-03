@@ -10,11 +10,6 @@ export const config = {
   },
 };
 
-//Loads data from a yaml file
-function readDataFile(filename, fallback) {
-  const filePath = fs.existsSync(filename) ? filename : fallback;
-  return yaml.load(fs.readFileSync(filePath, "utf-8"));
-}
 
 export default function (eleventyConfig) {
   // Adds --pathprefix to root-relative URLs, for a GitHub Pages project path.
@@ -22,7 +17,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/static": "/" });
   eleventyConfig.addPassthroughCopy("src/newsletters/**/*.webp");
 
-  const alertsData = readDataFile("alerts.yaml", "example-alerts.yaml");
+  const alertsData = yaml.load(fs.readFileSync('alerts.yaml', "utf-8"));
   eleventyConfig.addGlobalData("alerts", alertsData);
 
 
