@@ -80,9 +80,10 @@ artwork: ["googlepixel1.webp", "mmmiracles1.webp", "tgmc1.webp", "zara1.webp", "
       {% endfor %}
     </div>
 
-    {% if artwork | length %}
+{% if banners | length %}
     <div class="Artwork">
-      <img class="Artwork__Image" alt="" data-artwork="{% for piece in artwork %}{{ ("/artwork/" ~ piece) | htmlBaseUrl }} {% endfor %}" />
+  <img class="Artwork__Image" alt=""
+    data-artwork="{% for piece in banners %}{{ ("/artwork/" ~ piece) | htmlBaseUrl }} {% endfor %}" />
       <noscript><img class="Artwork__Image" src="/artwork/{{ artwork[0] }}" alt="" /></noscript>
     </div>
     {# Run before the page goes on rendering, so the artwork does not pop in. #}
