@@ -7,6 +7,15 @@ data "netbird_group" "all" {
   name = "All"
 }
 
+# People's Authentik groups arrive in the groups claim of the tokens Dex issues.
+# The sync fills only groups it created itself, never one made here under the
+# same name, so a policy names a synced group through a data source:
+# https://github.com/netbirdio/netbird/blob/v0.81.2/management/server/account.go#L197
+resource "netbird_account_settings" "this" {
+  jwt_groups_enabled    = true
+  jwt_groups_claim_name = "groups"
+}
+
 locals {
   # Every host joins one of these through its setup key, and people's devices
   # join none of them.
