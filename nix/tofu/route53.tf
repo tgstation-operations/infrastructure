@@ -12,13 +12,13 @@ locals {
     "s3.blockmoths.eu A"        = { zone = "eu", name = "s3.blockmoths.eu", type = "A", ttl = 300, records = ["100.64.0.11"] }
     "admin.s3.blockmoths.eu A"  = { zone = "eu", name = "admin.s3.blockmoths.eu", type = "A", ttl = 300, records = ["100.64.0.11"] }
     "s3-web.blockmoths.eu A"    = { zone = "eu", name = "s3-web.blockmoths.eu", type = "A", ttl = 300, records = ["100.64.0.11"] }
-    "tgs.blockmoths.eu A"       = { zone = "eu", name = "tgs.blockmoths.eu", type = "A", ttl = 300, records = ["100.64.0.11"] }
+    "tgs.blockmoths.eu A"       = { zone = "eu", name = "tgs.blockmoths.eu", type = "A", ttl = 300, records = ["100.13.184.17"] }
     "tgsatan.us A Atlanta"      = { zone = "us", name = "tgsatan.us", type = "A", ttl = 300, records = ["155.138.214.204"], set_identifier = "Atlanta", geoproximity = { latitude = "33.75", longitude = "-84.38", bias = 0 } }
     "tgsatan.us A Dallas"       = { zone = "us", name = "tgsatan.us", type = "A", ttl = 300, records = ["108.61.222.116"], set_identifier = "Dallas", geoproximity = { latitude = "32.77", longitude = "-96.80", bias = 0 } }
     "s3.tgsatan.us A"           = { zone = "us", name = "s3.tgsatan.us", type = "A", ttl = 300, records = ["100.64.0.1"] }
     "admin.s3.tgsatan.us A"     = { zone = "us", name = "admin.s3.tgsatan.us", type = "A", ttl = 300, records = ["100.64.0.1"] }
     "s3-web.tgsatan.us A"       = { zone = "us", name = "s3-web.tgsatan.us", type = "A", ttl = 300, records = ["100.64.0.1"] }
-    "tgs.tgsatan.us A"          = { zone = "us", name = "tgs.tgsatan.us", type = "A", ttl = 300, records = ["100.64.0.1"] }
+    "tgs.tgsatan.us A"          = { zone = "us", name = "tgs.tgsatan.us", type = "A", ttl = 300, records = ["100.13.161.130"] }
   }
 }
 
