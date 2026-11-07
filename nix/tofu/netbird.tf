@@ -295,6 +295,22 @@ resource "netbird_policy" "tgs_swarm_database" {
   }
 }
 
+resource "netbird_policy" "tgs_swarm_tts" {
+  name    = "TGS Swarm TTS"
+  enabled = true
+
+  rule {
+    name                 = "TGS Swarm TTS"
+    action               = "accept"
+    protocol             = "tcp"
+    bidirectional        = false
+    enabled              = true
+    ports                = ["5011"]
+    sources              = [netbird_group.tgs_swarm.id]
+    destination_resource = { type = "peer", id = data.netbird_peer.this["tgsatan"].id }
+  }
+}
+
 resource "netbird_policy" "tgsatan_prometheus_scrapers" {
   name    = "TGSatan Prometheus Scrapers"
   enabled = true
