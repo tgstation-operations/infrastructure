@@ -66,8 +66,8 @@ locals {
     "tgmc CNAME"                                        = { name = "tgmc", type = "CNAME", content = "tgsatan.us.tgstation13.org" }
     "vpn A"                                             = { name = "vpn", type = "A", content = "144.202.94.16" }
     "tgsatan.vpn A"                                     = { name = "tgsatan.vpn", type = "A", content = "100.13.161.130" }
-    "warsaw.vpn A"                                      = { name = "warsaw.vpn", type = "A", content = "100.64.0.140" }
-    "wiggle.vpn A"                                      = { name = "wiggle.vpn", type = "A", content = "100.64.0.25" }
+    "warsaw.vpn A"                                      = { name = "warsaw.vpn", type = "A", content = "100.13.246.214" }
+    "wiggle.vpn A"                                      = { name = "wiggle.vpn", type = "A", content = "100.13.81.56" }
     "wiki CNAME"                                        = { name = "wiki", type = "CNAME", content = "lemon.tgstation13.org", proxied = true }
   }
 }
