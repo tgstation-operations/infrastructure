@@ -19,7 +19,7 @@ resource "netbird_account_settings" "this" {
 # Authentik's net-bird provider adds each person's ancestor groups to the claim,
 # so everyone tgstation-server admits carries Base Webpanel Access.
 data "netbird_group" "authentik" {
-  for_each = toset(["Base Webpanel Access", "TG Webpanel Access", "TGS Operator"])
+  for_each = toset(["authentik Admins", "Base Webpanel Access", "TG Webpanel Access", "TGS Operator"])
   name     = each.key
 }
 
@@ -72,6 +72,8 @@ resource "netbird_group" "maria_garage_cluster" {
   ]
 }
 
+# The owner's local login carries no groups to sync, so its device is held here
+# by hand. Authentik admins reach the same access through authentik Admins.
 resource "netbird_group" "operator" {
   name = "Operator"
   peers = [
@@ -225,7 +227,7 @@ resource "netbird_policy" "operator_access" {
     protocol      = "all"
     bidirectional = false
     enabled       = true
-    sources       = [netbird_group.operator.id]
+    sources       = [netbird_group.operator.id, data.netbird_group.authentik["authentik Admins"].id]
     destinations  = [data.netbird_group.all.id]
   }
 }
