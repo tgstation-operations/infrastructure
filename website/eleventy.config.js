@@ -2,6 +2,7 @@ import path from "node:path";
 import { HtmlBasePlugin } from "@11ty/eleventy";
 import * as sass from "sass";
 import posthtml from 'posthtml';
+import * as fs from "fs";
 
 export const config = {
   dir: {
@@ -15,7 +16,14 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy({ "src/static": "/" });
   eleventyConfig.addPassthroughCopy("src/newsletters/**/*.webp");
-
+  const banners = [];
+  fs.readdir(path.join(import.meta.dirname, "src/static/artwork"), (err, files) => {
+    console.log(err)
+    files.forEach((file) => {
+      banners.push(file);
+    });
+  });
+  eleventyConfig.addGlobalData("banners", banners);
   // A newsletter's pictures show on the front page too, where their relative
   // URLs would not resolve, so they are made root-relative from its URL. They
   // load lazily, as the front page carries three newsletters' worth.

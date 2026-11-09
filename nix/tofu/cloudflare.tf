@@ -44,6 +44,7 @@ locals {
     "manuel-2 CNAME"                                    = { name = "manuel-2", type = "CNAME", content = "tgsatan.us.tgstation13.org" }
     "manuel-logs CNAME"                                 = { name = "manuel-logs", type = "CNAME", content = "dfdeb88f-c4e3-43a9-8964-a23f97dc3832.cfargotunnel.com", proxied = true }
     "manuel2-logs CNAME"                                = { name = "manuel2-logs", type = "CNAME", content = "dfdeb88f-c4e3-43a9-8964-a23f97dc3832.cfargotunnel.com", proxied = true }
+    "mariadb CNAME"                                     = { name = "mariadb", type = "CNAME", content = "tgsatan.vpn.tgstation13.org" }
     "netbird CNAME"                                     = { name = "netbird", type = "CNAME", content = "vpn.tgstation13.org", ttl = 300 }
     "opencollective CNAME"                              = { name = "opencollective", type = "CNAME", content = "81829d31-62fd-4cb0-9f82-f91eb6385a38.cfargotunnel.com", proxied = true }
     "raw-effigy-logs CNAME"                             = { name = "raw-effigy-logs", type = "CNAME", content = "dfdeb88f-c4e3-43a9-8964-a23f97dc3832.cfargotunnel.com", proxied = true }
@@ -64,10 +65,12 @@ locals {
     "terry CNAME"                                       = { name = "terry", type = "CNAME", content = "blockmoths.eu.tgstation13.org" }
     "terry-logs CNAME"                                  = { name = "terry-logs", type = "CNAME", content = "276b7e4a-f91c-4b23-8060-78a0a1542e8d.cfargotunnel.com", proxied = true }
     "tgmc CNAME"                                        = { name = "tgmc", type = "CNAME", content = "tgsatan.us.tgstation13.org" }
+    "tts CNAME"                                         = { name = "tts", type = "CNAME", content = "tgsatan.vpn.tgstation13.org" }
     "vpn A"                                             = { name = "vpn", type = "A", content = "144.202.94.16" }
+    "blockmoths.vpn A"                                  = { name = "blockmoths.vpn", type = "A", content = "100.13.184.17" }
     "tgsatan.vpn A"                                     = { name = "tgsatan.vpn", type = "A", content = "100.13.161.130" }
-    "warsaw.vpn A"                                      = { name = "warsaw.vpn", type = "A", content = "100.64.0.140" }
-    "wiggle.vpn A"                                      = { name = "wiggle.vpn", type = "A", content = "100.64.0.25" }
+    "warsaw.vpn A"                                      = { name = "warsaw.vpn", type = "A", content = "100.13.246.214" }
+    "wiggle.vpn A"                                      = { name = "wiggle.vpn", type = "A", content = "100.13.81.56" }
     "wiki CNAME"                                        = { name = "wiki", type = "CNAME", content = "lemon.tgstation13.org", proxied = true }
   }
 }

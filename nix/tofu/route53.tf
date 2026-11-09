@@ -7,18 +7,18 @@ locals {
   # The us and eu zones are delegated from Cloudflare's. Their apex NS and SOA
   # records belong to the hosted zones and are left to Route53.
   route53_records = {
-    "blockmoths.eu A bratwurst" = { zone = "eu", name = "blockmoths.eu", type = "A", ttl = 300, records = ["159.69.40.186"], set_identifier = "bratwurst", multivalue = true }
-    "blockmoths.eu A knipp"     = { zone = "eu", name = "blockmoths.eu", type = "A", ttl = 300, records = ["188.245.253.9"], set_identifier = "knipp", multivalue = true }
-    "s3.blockmoths.eu A"        = { zone = "eu", name = "s3.blockmoths.eu", type = "A", ttl = 300, records = ["100.64.0.11"] }
-    "admin.s3.blockmoths.eu A"  = { zone = "eu", name = "admin.s3.blockmoths.eu", type = "A", ttl = 300, records = ["100.64.0.11"] }
-    "s3-web.blockmoths.eu A"    = { zone = "eu", name = "s3-web.blockmoths.eu", type = "A", ttl = 300, records = ["100.64.0.11"] }
-    "tgs.blockmoths.eu A"       = { zone = "eu", name = "tgs.blockmoths.eu", type = "A", ttl = 300, records = ["100.64.0.11"] }
-    "tgsatan.us A Atlanta"      = { zone = "us", name = "tgsatan.us", type = "A", ttl = 300, records = ["155.138.214.204"], set_identifier = "Atlanta", geoproximity = { latitude = "33.75", longitude = "-84.38", bias = 0 } }
-    "tgsatan.us A Dallas"       = { zone = "us", name = "tgsatan.us", type = "A", ttl = 300, records = ["108.61.222.116"], set_identifier = "Dallas", geoproximity = { latitude = "32.77", longitude = "-96.80", bias = 0 } }
-    "s3.tgsatan.us A"           = { zone = "us", name = "s3.tgsatan.us", type = "A", ttl = 300, records = ["100.64.0.1"] }
-    "admin.s3.tgsatan.us A"     = { zone = "us", name = "admin.s3.tgsatan.us", type = "A", ttl = 300, records = ["100.64.0.1"] }
-    "s3-web.tgsatan.us A"       = { zone = "us", name = "s3-web.tgsatan.us", type = "A", ttl = 300, records = ["100.64.0.1"] }
-    "tgs.tgsatan.us A"          = { zone = "us", name = "tgs.tgsatan.us", type = "A", ttl = 300, records = ["100.64.0.1"] }
+    "blockmoths.eu A bratwurst"    = { zone = "eu", name = "blockmoths.eu", type = "A", ttl = 300, records = ["159.69.40.186"], set_identifier = "bratwurst", multivalue = true }
+    "blockmoths.eu A knipp"        = { zone = "eu", name = "blockmoths.eu", type = "A", ttl = 300, records = ["188.245.253.9"], set_identifier = "knipp", multivalue = true }
+    "s3.blockmoths.eu CNAME"       = { zone = "eu", name = "s3.blockmoths.eu", type = "CNAME", ttl = 300, records = ["blockmoths.vpn.tgstation13.org"] }
+    "admin.s3.blockmoths.eu CNAME" = { zone = "eu", name = "admin.s3.blockmoths.eu", type = "CNAME", ttl = 300, records = ["blockmoths.vpn.tgstation13.org"] }
+    "s3-web.blockmoths.eu CNAME"   = { zone = "eu", name = "s3-web.blockmoths.eu", type = "CNAME", ttl = 300, records = ["blockmoths.vpn.tgstation13.org"] }
+    "tgs.blockmoths.eu A"          = { zone = "eu", name = "tgs.blockmoths.eu", type = "A", ttl = 300, records = ["100.13.184.17"] }
+    "tgsatan.us A Atlanta"         = { zone = "us", name = "tgsatan.us", type = "A", ttl = 300, records = ["155.138.214.204"], set_identifier = "Atlanta", geoproximity = { latitude = "33.75", longitude = "-84.38", bias = 0 } }
+    "tgsatan.us A Dallas"          = { zone = "us", name = "tgsatan.us", type = "A", ttl = 300, records = ["108.61.222.116"], set_identifier = "Dallas", geoproximity = { latitude = "32.77", longitude = "-96.80", bias = 0 } }
+    "s3.tgsatan.us CNAME"          = { zone = "us", name = "s3.tgsatan.us", type = "CNAME", ttl = 300, records = ["tgsatan.vpn.tgstation13.org"] }
+    "admin.s3.tgsatan.us CNAME"    = { zone = "us", name = "admin.s3.tgsatan.us", type = "CNAME", ttl = 300, records = ["tgsatan.vpn.tgstation13.org"] }
+    "s3-web.tgsatan.us CNAME"      = { zone = "us", name = "s3-web.tgsatan.us", type = "CNAME", ttl = 300, records = ["tgsatan.vpn.tgstation13.org"] }
+    "tgs.tgsatan.us A"             = { zone = "us", name = "tgs.tgsatan.us", type = "A", ttl = 300, records = ["100.13.161.130"] }
   }
 }
 
@@ -74,4 +74,34 @@ moved {
 moved {
   from = cloudflare_dns_record.tgstation13_org["eu NS"]
   to   = cloudflare_dns_record.route53_delegation["eu ns-1071.awsdns-05.org"]
+}
+
+moved {
+  from = aws_route53_record.this["s3.blockmoths.eu A"]
+  to   = aws_route53_record.this["s3.blockmoths.eu CNAME"]
+}
+
+moved {
+  from = aws_route53_record.this["admin.s3.blockmoths.eu A"]
+  to   = aws_route53_record.this["admin.s3.blockmoths.eu CNAME"]
+}
+
+moved {
+  from = aws_route53_record.this["s3-web.blockmoths.eu A"]
+  to   = aws_route53_record.this["s3-web.blockmoths.eu CNAME"]
+}
+
+moved {
+  from = aws_route53_record.this["s3.tgsatan.us A"]
+  to   = aws_route53_record.this["s3.tgsatan.us CNAME"]
+}
+
+moved {
+  from = aws_route53_record.this["admin.s3.tgsatan.us A"]
+  to   = aws_route53_record.this["admin.s3.tgsatan.us CNAME"]
+}
+
+moved {
+  from = aws_route53_record.this["s3-web.tgsatan.us A"]
+  to   = aws_route53_record.this["s3-web.tgsatan.us CNAME"]
 }

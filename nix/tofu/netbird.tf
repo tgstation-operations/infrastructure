@@ -7,6 +7,22 @@ data "netbird_group" "all" {
   name = "All"
 }
 
+# People's Authentik groups arrive in the groups claim of the tokens Dex issues.
+# The sync fills only groups it created itself, never one made here under the
+# same name, so a policy names a synced group through a data source:
+# https://github.com/netbirdio/netbird/blob/v0.81.2/management/server/account.go#L197
+resource "netbird_account_settings" "this" {
+  jwt_groups_enabled    = true
+  jwt_groups_claim_name = "groups"
+}
+
+# Authentik's net-bird provider adds each person's ancestor groups to the claim,
+# so everyone tgstation-server admits carries Base Webpanel Access.
+data "netbird_group" "authentik" {
+  for_each = toset(["authentik Admins", "Base Webpanel Access", "TG Webpanel Access", "TGS Operator"])
+  name     = each.key
+}
+
 locals {
   # Every host joins one of these through its setup key, and people's devices
   # join none of them.
@@ -56,6 +72,8 @@ resource "netbird_group" "maria_garage_cluster" {
   ]
 }
 
+# The owner's local login carries no groups to sync, so its device is held here
+# by hand. Authentik admins reach the same access through authentik Admins.
 resource "netbird_group" "operator" {
   name = "Operator"
   peers = [
@@ -80,6 +98,15 @@ resource "netbird_group" "staging" {
   name = "Staging"
   peers = [
     data.netbird_peer.this["warsaw"].id,
+    data.netbird_peer.this["wiggle"].id,
+  ]
+}
+
+resource "netbird_group" "tgs_swarm" {
+  name = "TGS Swarm"
+  peers = [
+    data.netbird_peer.this["tgsatan"].id,
+    data.netbird_peer.this["blockmoths"].id,
     data.netbird_peer.this["wiggle"].id,
   ]
 }
@@ -200,7 +227,7 @@ resource "netbird_policy" "operator_access" {
     protocol      = "all"
     bidirectional = false
     enabled       = true
-    sources       = [netbird_group.operator.id]
+    sources       = [netbird_group.operator.id, data.netbird_group.authentik["authentik Admins"].id]
     destinations  = [data.netbird_group.all.id]
   }
 }
@@ -218,6 +245,71 @@ resource "netbird_policy" "relay_game_server_game_traffic" {
     ports         = ["11337", "11447", "11887", "13336", "15337", "17337", "17777", "18085"]
     sources       = [netbird_group.relay.id]
     destinations  = [netbird_group.game_server.id]
+  }
+}
+
+# Tailscale gave staging to tg's keyholders and the operators alone.
+resource "netbird_policy" "staging_webpanel" {
+  name    = "Staging Webpanel"
+  enabled = true
+
+  rule {
+    name          = "Staging Webpanel"
+    action        = "accept"
+    protocol      = "tcp"
+    bidirectional = false
+    enabled       = true
+    ports         = ["80", "443"]
+    sources       = [data.netbird_group.authentik["TG Webpanel Access"].id, data.netbird_group.authentik["TGS Operator"].id]
+    destinations  = [netbird_group.staging.id]
+  }
+}
+
+resource "netbird_policy" "tgs_swarm" {
+  name    = "TGS Swarm"
+  enabled = true
+
+  rule {
+    name          = "TGS Swarm"
+    action        = "accept"
+    protocol      = "tcp"
+    bidirectional = true
+    enabled       = true
+    ports         = ["5000"]
+    sources       = [netbird_group.tgs_swarm.id]
+    destinations  = [netbird_group.tgs_swarm.id]
+  }
+}
+
+resource "netbird_policy" "tgs_swarm_database" {
+  name    = "TGS Swarm Database"
+  enabled = true
+
+  rule {
+    name                 = "TGS Swarm Database"
+    action               = "accept"
+    protocol             = "tcp"
+    bidirectional        = false
+    enabled              = true
+    ports                = ["3306"]
+    sources              = [netbird_group.tgs_swarm.id]
+    destination_resource = { type = "peer", id = data.netbird_peer.this["tgsatan"].id }
+  }
+}
+
+resource "netbird_policy" "tgs_swarm_tts" {
+  name    = "TGS Swarm TTS"
+  enabled = true
+
+  rule {
+    name                 = "TGS Swarm TTS"
+    action               = "accept"
+    protocol             = "tcp"
+    bidirectional        = false
+    enabled              = true
+    ports                = ["5011"]
+    sources              = [netbird_group.tgs_swarm.id]
+    destination_resource = { type = "peer", id = data.netbird_peer.this["tgsatan"].id }
   }
 }
 
@@ -250,6 +342,22 @@ resource "netbird_policy" "warsaw_wiggle_game_traffic" {
     ports                = ["8085", "8989", "18085", "18989"]
     source_resource      = { type = "peer", id = data.netbird_peer.this["warsaw"].id }
     destination_resource = { type = "peer", id = data.netbird_peer.this["wiggle"].id }
+  }
+}
+
+resource "netbird_policy" "webpanel" {
+  name    = "Webpanel"
+  enabled = true
+
+  rule {
+    name          = "Webpanel"
+    action        = "accept"
+    protocol      = "tcp"
+    bidirectional = false
+    enabled       = true
+    ports         = ["80", "443"]
+    sources       = [data.netbird_group.authentik["Base Webpanel Access"].id]
+    destinations  = [netbird_group.game_server.id]
   }
 }
 
