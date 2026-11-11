@@ -38,7 +38,7 @@ else
   git fetch >/dev/null
 fi
 echo "byond-tracy: checkout"
-git checkout master >/dev/null
+git reset --hard origin/master >/dev/null
 echo "byond-tracy: building"
 clang -D_FILE_OFFSET_BITS=64 -std=c11 -m32 -shared -fPIC -O3 -s -DNDEBUG prof.c -pthread -o libprof.so
 cp ./libprof.so "$1/libprof.so"
