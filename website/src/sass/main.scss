@@ -19,19 +19,19 @@ body {
 
 @keyframes LinkFlicker {
   0% {
-    text-shadow: 0 0 2px #ff9900;
+    text-shadow: 0 0 2px currentColor;
   }
 
   20% {
-    text-shadow: 0 0 2px color.adjust(#ff9900, $alpha: -1);
+    text-shadow: 0 0 2px transparent;
   }
 
   70% {
-    text-shadow: 0 0 2px #ff9900;
+    text-shadow: 0 0 2px currentColor;
   }
 
   90% {
-    text-shadow: 0 0 2px color.adjust(#ff9900, $alpha: -1);
+    text-shadow: 0 0 2px transparent;
   }
 }
 
@@ -54,14 +54,14 @@ body {
 }
 
 a {
-  color: #d88200;
+  color: #00afd8;
   text-shadow: 0 0 0 transparent;
   transition: color 0.5s ease;
   text-decoration: none;
 
   &:focus,
   &:hover {
-    color: #ff9900;
+    color: #00afd8;
     animation: LinkFlicker 0.5s linear infinite;
 
     .Sprite {
@@ -175,10 +175,10 @@ a {
     0 0 8px #000000,
     inset 0 0 8px #000000;
   padding: 1rem;
-  margin: 1rem 0 0 0;
+  margin: 1rem 0;
   text-align: justify;
   display: flex;
-  align-items: center;
+  align-items: end;
   gap: 1rem;
 
   &__Text {
