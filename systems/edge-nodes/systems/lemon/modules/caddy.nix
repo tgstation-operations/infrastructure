@@ -160,11 +160,6 @@ in {
             toString inputs.tgstation-website.packages.x86_64-linux.default
           }
           file_server
-          php_fastcgi unix/${
-            toString config.services.phpfpm.pools.php-caddy.socket
-          } {
-            env _GET 127.0.0.1
-          }
           handle_path /serverinfo.json {
             import cors *
             root /run/tgstation-server-info-fetcher/serverinfo.json
