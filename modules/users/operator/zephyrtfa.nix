@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   users.users.zephyrtfa = {
     shell = pkgs.fish;
     isNormalUser = true;
