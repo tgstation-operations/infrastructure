@@ -1,6 +1,5 @@
 {
   pkgs,
-  config,
   ...
 }: {
   users.users.zephyrtfa = {
