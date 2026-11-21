@@ -11,5 +11,6 @@
     ./scriptis.nix
     ./smartkar.nix
     ./sothanforax.nix
+    ./zephyrtfa.nix
   ];
 }
